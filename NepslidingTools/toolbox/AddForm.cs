@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
+using Maticsoft.Model;
 
 namespace NepslidingTools.toolbox
 {
@@ -43,7 +44,28 @@ namespace NepslidingTools.toolbox
 
         private void send_bt_Click(object sender, EventArgs e)
         {
-
+            Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
+            Maticsoft.Model.parts us = new parts()
+            {
+                
+                PN = bom_no_tb.Text,
+                name = bomname_tb.Text,
+                jobnum = gdno_tb.Text,
+                ARef = scbh_tb.Text,
+                size= cicun_tb.Text,
+                sm= sandsm_tb.Text,
+                Barcode= tm_tb.Text,
+            };
+            use.Add(us);
+            MessageBox.Show("±£´æ³É¹¦");
+            foreach (Control Ctrol in this.Controls)
+            {
+                if (Ctrol is TextBox)
+                {
+                    Ctrol.Text = "";
+                }
+            }
+            this.Close();
         }
     }
 }

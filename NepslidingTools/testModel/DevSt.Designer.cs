@@ -31,6 +31,7 @@ namespace NepslidingTools.testModel
             this.components = new System.ComponentModel.Container();
             this.main_tlp = new System.Windows.Forms.TableLayoutPanel();
             this.main_panel = new DevComponents.DotNetBar.PanelEx();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabNavigationPage3 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
@@ -44,15 +45,14 @@ namespace NepslidingTools.testModel
             this.test_bt = new DevComponents.DotNetBar.ButtonX();
             this.textBoxX1 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.main_tlp.SuspendLayout();
             this.main_panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabPane1.SuspendLayout();
             this.tabNavigationPage3.SuspendLayout();
             this.last_flp.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // main_tlp
@@ -107,6 +107,16 @@ namespace NepslidingTools.testModel
             this.main_panel.StyleMouseOver.BorderColor.Color = System.Drawing.Color.FromArgb(((int)(((byte)(170)))), ((int)(((byte)(170)))), ((int)(((byte)(170)))));
             this.main_panel.StyleMouseOver.ForeColor.Color = System.Drawing.Color.Black;
             this.main_panel.TabIndex = 6;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.ForeColor = System.Drawing.Color.Black;
+            this.pictureBox1.Image = global::NepslidingTools.Properties.Resources.Desktop_72px_1197687_easyicon_net;
+            this.pictureBox1.Location = new System.Drawing.Point(39, 9);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(80, 80);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // groupBox1
             // 
@@ -283,16 +293,6 @@ namespace NepslidingTools.testModel
             // 
             this.defaultLookAndFeel1.LookAndFeel.SkinName = "iMaginary";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.ForeColor = System.Drawing.Color.Black;
-            this.pictureBox1.Image = global::NepslidingTools.Properties.Resources.Desktop_72px_1197687_easyicon_net;
-            this.pictureBox1.Location = new System.Drawing.Point(39, 9);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(80, 80);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            // 
             // DevSt
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -311,12 +311,12 @@ namespace NepslidingTools.testModel
             this.Load += new System.EventHandler(this.DevSt_Load);
             this.main_tlp.ResumeLayout(false);
             this.main_panel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.tabPane1.ResumeLayout(false);
             this.tabNavigationPage3.ResumeLayout(false);
             this.last_flp.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

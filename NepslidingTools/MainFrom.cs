@@ -1,4 +1,5 @@
-﻿using NepslidingTools.testModel;
+﻿using Maticsoft.Model;
+using NepslidingTools.testModel;
 using NepslidingTools.toolbox;
 using System;
 using System.Collections.Generic;
@@ -68,15 +69,30 @@ namespace NepslidingTools
 
         private void MainFrom_Deactivate(object sender, EventArgs e)
         {
-            if (global.CurActive == this.name)
-            {
-                Console.WriteLine("当前激活界面是: " + this.name);
-                Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
-                this.Size = ScreenArea.Size;
-                Location = (Point)new Size(0, 0);
-                this.TopMost = true;
-                this.Activate();
-            }
+            //if (global.CurActive == this.name)
+            //{
+            //    Console.WriteLine("当前激活界面是: " + this.name);
+            //    Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
+            //    this.Size = ScreenArea.Size;
+            //    Location = (Point)new Size(0, 0);
+            //    this.TopMost = true;
+            //    this.Activate();
+            //}
+        }
+
+        private void MainFrom_Load(object sender, EventArgs e)
+        {
+            //Maticsoft.BLL.test a = new Maticsoft.BLL.test();
+            //MessageBox.Show(Convert.ToString(a.GetList(" sadsa = '1 ' ")));
+
+
+            //Maticsoft.Model.test aaa = new test()
+            //{
+            //    measureb = "aa",
+
+            //};
+            //a.Add(aaa);
+            //a.Update(aaa);
         }
     }
 }

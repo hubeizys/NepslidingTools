@@ -1,0 +1,9 @@
+C:\Users\Administrator\NepslidingTools\Common\bin\Debug\Maticsoft.Common.dll
+C:\Users\Administrator\NepslidingTools\Common\bin\Debug\Maticsoft.Common.pdb
+C:\Users\Administrator\NepslidingTools\Common\bin\Debug\COM.Excel.dll
+C:\Users\Administrator\NepslidingTools\Common\bin\Debug\Excel.dll
+C:\Users\Administrator\NepslidingTools\Common\bin\Debug\OpenSmtp.dll
+C:\Users\Administrator\NepslidingTools\Common\bin\Debug\OWC10Chart.dll
+C:\Users\Administrator\NepslidingTools\Common\obj\Debug\Maticsoft.Common.dll
+C:\Users\Administrator\NepslidingTools\Common\obj\Debug\Maticsoft.Common.pdb
+C:\Users\Administrator\NepslidingTools\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache

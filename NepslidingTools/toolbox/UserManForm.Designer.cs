@@ -28,6 +28,7 @@ namespace NepslidingTools.toolbox
         /// </summary>
         private void InitializeComponent()
         {
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.main_tlp = new System.Windows.Forms.TableLayoutPanel();
             this.search_gb = new System.Windows.Forms.GroupBox();
             this.head_tlp = new System.Windows.Forms.TableLayoutPanel();
@@ -44,6 +45,7 @@ namespace NepslidingTools.toolbox
             this.info_bt = new DevComponents.DotNetBar.ButtonX();
             this.users_gc = new DevExpress.XtraGrid.GridControl();
             this.manuser = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.num = new DevExpress.XtraGrid.Columns.GridColumn();
             this.username = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Manager = new DevExpress.XtraGrid.Columns.GridColumn();
             this.addTime = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -267,6 +269,7 @@ namespace NepslidingTools.toolbox
             this.add_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.add_bt.TabIndex = 0;
             this.add_bt.Text = "添加";
+            this.add_bt.Click += new System.EventHandler(this.add_bt_Click);
             // 
             // del_bt
             // 
@@ -279,6 +282,7 @@ namespace NepslidingTools.toolbox
             this.del_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.del_bt.TabIndex = 1;
             this.del_bt.Text = "删除";
+            this.del_bt.Click += new System.EventHandler(this.del_bt_Click);
             // 
             // edit_bt
             // 
@@ -291,6 +295,7 @@ namespace NepslidingTools.toolbox
             this.edit_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.edit_bt.TabIndex = 2;
             this.edit_bt.Text = "编辑";
+            this.edit_bt.Click += new System.EventHandler(this.edit_bt_Click);
             // 
             // info_bt
             // 
@@ -307,10 +312,13 @@ namespace NepslidingTools.toolbox
             // users_gc
             // 
             this.users_gc.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.users_gc.EmbeddedNavigator.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(239)))), ((int)(((byte)(242)))));
+            this.users_gc.EmbeddedNavigator.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.users_gc.EmbeddedNavigator.Appearance.ForeColor = System.Drawing.Color.Black;
             this.users_gc.EmbeddedNavigator.Appearance.Options.UseBackColor = true;
             this.users_gc.EmbeddedNavigator.Appearance.Options.UseForeColor = true;
+            gridLevelNode1.RelationName = "Level1";
+            this.users_gc.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
+            gridLevelNode1});
             this.users_gc.Location = new System.Drawing.Point(3, 183);
             this.users_gc.MainView = this.manuser;
             this.users_gc.Name = "users_gc";
@@ -322,6 +330,7 @@ namespace NepslidingTools.toolbox
             // manuser
             // 
             this.manuser.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.num,
             this.username,
             this.Manager,
             this.addTime,
@@ -329,41 +338,46 @@ namespace NepslidingTools.toolbox
             this.manuser.GridControl = this.users_gc;
             this.manuser.Name = "manuser";
             // 
+            // num
+            // 
+            this.num.Caption = "序号";
+            this.num.FieldName = "ID";
+            this.num.Name = "num";
+            this.num.OptionsEditForm.Caption = "nummm";
+            this.num.Visible = true;
+            this.num.VisibleIndex = 0;
+            // 
             // username
             // 
             this.username.Caption = "用户名";
-            this.username.FieldName = "username";
+            this.username.FieldName = "user";
             this.username.Name = "username";
-            this.username.OptionsColumn.AllowEdit = false;
             this.username.Visible = true;
-            this.username.VisibleIndex = 0;
+            this.username.VisibleIndex = 1;
             // 
             // Manager
             // 
             this.Manager.Caption = "管理者";
-            this.Manager.FieldName = "Manager";
+            this.Manager.FieldName = "password";
             this.Manager.Name = "Manager";
-            this.Manager.OptionsColumn.AllowEdit = false;
             this.Manager.Visible = true;
-            this.Manager.VisibleIndex = 1;
+            this.Manager.VisibleIndex = 2;
             // 
             // addTime
             // 
             this.addTime.Caption = "添加时间";
-            this.addTime.FieldName = "addTime";
+            this.addTime.FieldName = "addtime";
             this.addTime.Name = "addTime";
-            this.addTime.OptionsColumn.AllowEdit = false;
             this.addTime.Visible = true;
-            this.addTime.VisibleIndex = 2;
+            this.addTime.VisibleIndex = 3;
             // 
             // power
             // 
             this.power.Caption = "权利";
             this.power.FieldName = "power";
             this.power.Name = "power";
-            this.power.OptionsColumn.AllowEdit = false;
             this.power.Visible = true;
-            this.power.VisibleIndex = 3;
+            this.power.VisibleIndex = 4;
             // 
             // UserManForm
             // 
@@ -411,5 +425,6 @@ namespace NepslidingTools.toolbox
         private DevComponents.DotNetBar.LabelX labelX2;
         private DevComponents.Editors.DateTimeAdv.DateTimeInput time_dtp;
         private DevComponents.DotNetBar.Controls.TextBoxX username_tb;
+        private DevExpress.XtraGrid.Columns.GridColumn num;
     }
 }

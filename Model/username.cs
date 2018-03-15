@@ -1,0 +1,62 @@
+﻿using System;
+namespace Maticsoft.Model
+{
+	/// <summary>
+	/// username:实体类(属性说明自动提取数据库字段的描述信息)
+	/// </summary>
+	[Serializable]
+	public partial class username
+	{
+		public username()
+		{}
+		#region Model
+		private int _id;
+		private string _user;
+		private DateTime? _addtime;
+		private string _password;
+		private string _power;
+		/// <summary>
+		/// auto_increment
+		/// </summary>
+		public int ID
+		{
+			set{ _id=value;}
+			get{return _id;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string user
+		{
+			set{ _user=value;}
+			get{return _user;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public DateTime? addtime
+		{
+			set{ _addtime=value;}
+			get{return _addtime;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string password
+		{
+			set{ _password=value;}
+			get{return _password;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string power
+		{
+			set{ _power=value;}
+			get{return _power;}
+		}
+		#endregion Model
+
+	}
+}
+

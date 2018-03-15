@@ -42,13 +42,7 @@ namespace NepslidingTools.testModel
             this.testloc_lab = new DevComponents.DotNetBar.LabelX();
             this.testtoolname_lab = new DevComponents.DotNetBar.LabelX();
             this.bom_no_lab = new DevComponents.DotNetBar.LabelX();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.testlocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bzz = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sgc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xgc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgv = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.mdf_bt = new DevComponents.DotNetBar.ButtonX();
             this.new_bt = new DevComponents.DotNetBar.ButtonX();
@@ -58,7 +52,17 @@ namespace NepslidingTools.testModel
             this.sy_bt = new DevComponents.DotNetBar.ButtonX();
             this.button1 = new System.Windows.Forms.Button();
             this.textbox_ljh = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.bz = new DevComponents.DotNetBar.Controls.TextBoxX();
+            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.testlocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cicun = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bzz = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sgc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xgc = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gjh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -269,66 +273,28 @@ namespace NepslidingTools.testModel
             this.bom_no_lab.TabIndex = 15;
             this.bom_no_lab.Text = "零件编号";
             // 
-            // dataGridView1
+            // dgv
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToDeleteRows = false;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.step,
             this.tool,
             this.testlocal,
+            this.cicun,
             this.bzz,
             this.sgc,
-            this.xgc});
-            this.dataGridView1.Location = new System.Drawing.Point(12, 68);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(643, 316);
-            this.dataGridView1.TabIndex = 30;
-            // 
-            // step
-            // 
-            this.step.DataPropertyName = "step";
-            this.step.HeaderText = "步骤";
-            this.step.Name = "step";
-            this.step.ReadOnly = true;
-            // 
-            // tool
-            // 
-            this.tool.DataPropertyName = "tool";
-            this.tool.HeaderText = "测量工具";
-            this.tool.Name = "tool";
-            this.tool.ReadOnly = true;
-            // 
-            // testlocal
-            // 
-            this.testlocal.DataPropertyName = "testlocal";
-            this.testlocal.HeaderText = "测量位置";
-            this.testlocal.Name = "testlocal";
-            this.testlocal.ReadOnly = true;
-            // 
-            // bzz
-            // 
-            this.bzz.DataPropertyName = "bzz";
-            this.bzz.HeaderText = "标准值";
-            this.bzz.Name = "bzz";
-            this.bzz.ReadOnly = true;
-            // 
-            // sgc
-            // 
-            this.sgc.DataPropertyName = "sgc";
-            this.sgc.HeaderText = "上公差";
-            this.sgc.Name = "sgc";
-            this.sgc.ReadOnly = true;
-            // 
-            // xgc
-            // 
-            this.xgc.DataPropertyName = "xgc";
-            this.xgc.HeaderText = "下公差";
-            this.xgc.Name = "xgc";
-            this.xgc.ReadOnly = true;
+            this.xgc,
+            this.xh,
+            this.gjh});
+            this.dgv.Location = new System.Drawing.Point(12, 68);
+            this.dgv.Name = "dgv";
+            this.dgv.ReadOnly = true;
+            this.dgv.RowTemplate.Height = 23;
+            this.dgv.Size = new System.Drawing.Size(746, 316);
+            this.dgv.TabIndex = 30;
+            this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
             // 
             // groupBox1
             // 
@@ -365,6 +331,7 @@ namespace NepslidingTools.testModel
             this.mdf_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.mdf_bt.TabIndex = 31;
             this.mdf_bt.Text = "提交修改";
+            this.mdf_bt.Click += new System.EventHandler(this.mdf_bt_Click);
             // 
             // new_bt
             // 
@@ -376,6 +343,7 @@ namespace NepslidingTools.testModel
             this.new_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.new_bt.TabIndex = 30;
             this.new_bt.Text = "提交添加";
+            this.new_bt.Click += new System.EventHandler(this.new_bt_Click);
             // 
             // groupBox2
             // 
@@ -453,16 +421,98 @@ namespace NepslidingTools.testModel
             this.textbox_ljh.Size = new System.Drawing.Size(257, 22);
             this.textbox_ljh.TabIndex = 35;
             // 
+            // bz
+            // 
+            this.bz.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.bz.Border.Class = "TextBoxBorder";
+            this.bz.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.bz.DisabledBackColor = System.Drawing.Color.White;
+            this.bz.ForeColor = System.Drawing.Color.Black;
+            this.bz.Location = new System.Drawing.Point(108, 407);
+            this.bz.Name = "bz";
+            this.bz.PreventEnterBeep = true;
+            this.bz.Size = new System.Drawing.Size(157, 22);
+            this.bz.TabIndex = 36;
+            // 
+            // step
+            // 
+            this.step.DataPropertyName = "step";
+            this.step.HeaderText = "步骤";
+            this.step.Name = "step";
+            this.step.ReadOnly = true;
+            // 
+            // tool
+            // 
+            this.tool.DataPropertyName = "Tools";
+            this.tool.HeaderText = "测量工具";
+            this.tool.Name = "tool";
+            this.tool.ReadOnly = true;
+            // 
+            // testlocal
+            // 
+            this.testlocal.DataPropertyName = "position";
+            this.testlocal.HeaderText = "测量位置";
+            this.testlocal.Name = "testlocal";
+            this.testlocal.ReadOnly = true;
+            // 
+            // cicun
+            // 
+            this.cicun.DataPropertyName = "CC";
+            this.cicun.HeaderText = "尺寸";
+            this.cicun.Name = "cicun";
+            this.cicun.ReadOnly = true;
+            // 
+            // bzz
+            // 
+            this.bzz.DataPropertyName = "standardv";
+            this.bzz.HeaderText = "标准值";
+            this.bzz.Name = "bzz";
+            this.bzz.ReadOnly = true;
+            // 
+            // sgc
+            // 
+            this.sgc.DataPropertyName = "up";
+            this.sgc.HeaderText = "上公差";
+            this.sgc.Name = "sgc";
+            this.sgc.ReadOnly = true;
+            // 
+            // xgc
+            // 
+            this.xgc.DataPropertyName = "down";
+            this.xgc.HeaderText = "下公差";
+            this.xgc.Name = "xgc";
+            this.xgc.ReadOnly = true;
+            // 
+            // xh
+            // 
+            this.xh.DataPropertyName = "id";
+            this.xh.HeaderText = "序号";
+            this.xh.Name = "xh";
+            this.xh.ReadOnly = true;
+            this.xh.Visible = false;
+            // 
+            // gjh
+            // 
+            this.gjh.DataPropertyName = "PN";
+            this.gjh.HeaderText = "零件号";
+            this.gjh.Name = "gjh";
+            this.gjh.ReadOnly = true;
+            this.gjh.Visible = false;
+            // 
             // TestBZFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(677, 728);
+            this.ClientSize = new System.Drawing.Size(801, 728);
+            this.Controls.Add(this.bz);
             this.Controls.Add(this.textbox_ljh);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv);
             this.Controls.Add(this.send_bt);
             this.Controls.Add(this.bom_no_lab);
             this.DoubleBuffered = true;
@@ -472,7 +522,7 @@ namespace NepslidingTools.testModel
             this.Deactivate += new System.EventHandler(this.TestBZFrom_Deactivate);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TestBZFrom_FormClosed);
             this.Load += new System.EventHandler(this.TestBZFrom_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -496,7 +546,7 @@ namespace NepslidingTools.testModel
         private DevComponents.DotNetBar.LabelX testloc_lab;
         private DevComponents.DotNetBar.LabelX testtoolname_lab;
         private DevComponents.DotNetBar.LabelX bom_no_lab;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.GroupBox groupBox1;
         private DevComponents.DotNetBar.ButtonX new_bt;
         private DevComponents.DotNetBar.ButtonX mdf_bt;
@@ -504,13 +554,17 @@ namespace NepslidingTools.testModel
         private DevComponents.DotNetBar.ButtonX sy_bt;
         private DevComponents.DotNetBar.ButtonX xy_xzh;
         private DevComponents.DotNetBar.ButtonX del_bt;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textbox_ljh;
+        private DevComponents.DotNetBar.Controls.TextBoxX bz;
         private System.Windows.Forms.DataGridViewTextBoxColumn step;
         private System.Windows.Forms.DataGridViewTextBoxColumn tool;
         private System.Windows.Forms.DataGridViewTextBoxColumn testlocal;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cicun;
         private System.Windows.Forms.DataGridViewTextBoxColumn bzz;
         private System.Windows.Forms.DataGridViewTextBoxColumn sgc;
         private System.Windows.Forms.DataGridViewTextBoxColumn xgc;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textbox_ljh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn xh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gjh;
     }
 }

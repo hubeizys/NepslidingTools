@@ -1,0 +1,5 @@
+C:\Users\Administrator\NepslidingTools\Model\bin\Debug\Maticsoft.Model.dll
+C:\Users\Administrator\NepslidingTools\Model\bin\Debug\Maticsoft.Model.pdb
+C:\Users\Administrator\NepslidingTools\Model\obj\Debug\Maticsoft.Model.dll
+C:\Users\Administrator\NepslidingTools\Model\obj\Debug\Maticsoft.Model.pdb
+C:\Users\Administrator\NepslidingTools\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

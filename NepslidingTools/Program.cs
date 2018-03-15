@@ -11,22 +11,31 @@ using System.Reflection;
 
 namespace NepslidingTools
 {
+   
     static class Program
     {
+        public static string gdvid;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            try
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
 
-            BonusSkins.Register();
-            SkinManager.EnableFormSkins();
-            UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
-            //Application.Run(new Login());
-            SysHelper.RunFrmOnly<login4>();
+                BonusSkins.Register();
+                SkinManager.EnableFormSkins();
+                UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
+                //Application.Run(new Login());
+                SysHelper.RunFrmOnly<login4>();
+            }
+            catch (IndexOutOfRangeException err)
+            {
+                MessageBox.Show(err.Message);
+            }
         }
     }
 

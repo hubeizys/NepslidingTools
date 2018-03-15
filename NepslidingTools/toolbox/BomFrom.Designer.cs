@@ -52,6 +52,7 @@ namespace NepslidingTools.toolbox
             this.cc = new DevExpress.XtraGrid.Columns.GridColumn();
             this.sandsm = new DevExpress.XtraGrid.Columns.GridColumn();
             this.tm = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.XH = new DevExpress.XtraGrid.Columns.GridColumn();
             this.clbz = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.clsj = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -62,6 +63,7 @@ namespace NepslidingTools.toolbox
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.main_tlp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
@@ -165,6 +167,7 @@ namespace NepslidingTools.toolbox
             this.del_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.del_bt.TabIndex = 4;
             this.del_bt.Text = "删除";
+            this.del_bt.Click += new System.EventHandler(this.del_bt_Click);
             // 
             // add_bt
             // 
@@ -188,6 +191,7 @@ namespace NepslidingTools.toolbox
             this.query_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.query_bt.TabIndex = 1;
             this.query_bt.Text = "查询";
+            this.query_bt.Click += new System.EventHandler(this.query_bt_Click);
             // 
             // groupControl1
             // 
@@ -227,6 +231,7 @@ namespace NepslidingTools.toolbox
             this.expend_line_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.expend_line_bt.TabIndex = 1;
             this.expend_line_bt.Text = "导出选中行";
+            this.expend_line_bt.Click += new System.EventHandler(this.expend_line_bt_Click);
             // 
             // import_bt
             // 
@@ -238,6 +243,7 @@ namespace NepslidingTools.toolbox
             this.import_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.import_bt.TabIndex = 0;
             this.import_bt.Text = "通过excel导入";
+            this.import_bt.Click += new System.EventHandler(this.import_bt_Click);
             // 
             // main_gc
             // 
@@ -269,6 +275,7 @@ namespace NepslidingTools.toolbox
             this.cc,
             this.sandsm,
             this.tm,
+            this.XH,
             this.clbz,
             this.clsj});
             this.gridView1.GridControl = this.main_gc;
@@ -277,72 +284,73 @@ namespace NepslidingTools.toolbox
             // ljh
             // 
             this.ljh.Caption = "零件号";
-            this.ljh.FieldName = "ljh";
+            this.ljh.FieldName = "PN";
             this.ljh.Name = "ljh";
-            this.ljh.OptionsColumn.AllowEdit = false;
             this.ljh.Visible = true;
-            this.ljh.VisibleIndex = 0;
+            this.ljh.VisibleIndex = 1;
             this.ljh.Width = 78;
             // 
             // mc
             // 
             this.mc.Caption = "名称";
-            this.mc.FieldName = "mc";
+            this.mc.FieldName = "name";
             this.mc.Name = "mc";
-            this.mc.OptionsColumn.AllowEdit = false;
             this.mc.Visible = true;
-            this.mc.VisibleIndex = 1;
+            this.mc.VisibleIndex = 2;
             this.mc.Width = 78;
             // 
             // gdh
             // 
             this.gdh.Caption = "工单号";
-            this.gdh.FieldName = "gdh";
+            this.gdh.FieldName = "jobnum";
             this.gdh.Name = "gdh";
-            this.gdh.OptionsColumn.AllowEdit = false;
             this.gdh.Visible = true;
-            this.gdh.VisibleIndex = 2;
+            this.gdh.VisibleIndex = 3;
             this.gdh.Width = 78;
             // 
             // scbh
             // 
             this.scbh.Caption = "生产编号";
-            this.scbh.FieldName = "scbh";
+            this.scbh.FieldName = "ARef";
             this.scbh.Name = "scbh";
-            this.scbh.OptionsColumn.AllowEdit = false;
             this.scbh.Visible = true;
-            this.scbh.VisibleIndex = 3;
+            this.scbh.VisibleIndex = 4;
             this.scbh.Width = 78;
             // 
             // cc
             // 
             this.cc.Caption = "尺寸";
-            this.cc.FieldName = "cc";
+            this.cc.FieldName = "size";
             this.cc.Name = "cc";
-            this.cc.OptionsColumn.AllowEdit = false;
             this.cc.Visible = true;
-            this.cc.VisibleIndex = 4;
+            this.cc.VisibleIndex = 5;
             this.cc.Width = 78;
             // 
             // sandsm
             // 
             this.sandsm.Caption = "3D数模";
-            this.sandsm.FieldName = "sandsm";
+            this.sandsm.FieldName = "sm";
             this.sandsm.Name = "sandsm";
-            this.sandsm.OptionsColumn.AllowEdit = false;
             this.sandsm.Visible = true;
-            this.sandsm.VisibleIndex = 5;
+            this.sandsm.VisibleIndex = 6;
             this.sandsm.Width = 80;
             // 
             // tm
             // 
             this.tm.Caption = "条码";
-            this.tm.FieldName = "tm";
+            this.tm.FieldName = "Barcode";
             this.tm.Name = "tm";
-            this.tm.OptionsColumn.AllowEdit = false;
             this.tm.Visible = true;
-            this.tm.VisibleIndex = 6;
+            this.tm.VisibleIndex = 7;
             this.tm.Width = 77;
+            // 
+            // XH
+            // 
+            this.XH.Caption = "序号";
+            this.XH.FieldName = "id";
+            this.XH.Name = "XH";
+            this.XH.Visible = true;
+            this.XH.VisibleIndex = 0;
             // 
             // clbz
             // 
@@ -351,7 +359,7 @@ namespace NepslidingTools.toolbox
             this.clbz.FieldName = "clbz";
             this.clbz.Name = "clbz";
             this.clbz.Visible = true;
-            this.clbz.VisibleIndex = 7;
+            this.clbz.VisibleIndex = 8;
             this.clbz.Width = 77;
             // 
             // repositoryItemButtonEdit1
@@ -372,7 +380,7 @@ namespace NepslidingTools.toolbox
             this.clsj.FieldName = "clsj";
             this.clsj.Name = "clsj";
             this.clsj.Visible = true;
-            this.clsj.VisibleIndex = 8;
+            this.clsj.VisibleIndex = 9;
             this.clsj.Width = 86;
             // 
             // repositoryItemButtonEdit2
@@ -445,6 +453,10 @@ namespace NepslidingTools.toolbox
             // 
             this.defaultLookAndFeel1.LookAndFeel.SkinName = "iMaginary";
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // BomFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -504,5 +516,7 @@ namespace NepslidingTools.toolbox
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private DevComponents.DotNetBar.Controls.TextBoxX textBoxX_autolj;
+        private DevExpress.XtraGrid.Columns.GridColumn XH;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
