@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using Maticsoft.Model;
+using DevComponents.DotNetBar.Controls;
 
 namespace NepslidingTools.testModel
 {
@@ -80,7 +81,7 @@ namespace NepslidingTools.testModel
             Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
             Maticsoft.Model.measures us = new measures()
             {
-                step=Convert.ToInt32( bz.Text),
+                //step=Convert.ToInt32( bz.Text),
                 Tools = bomname_tb.Text,
                 position = gdno_tb.Text,
                 standardv = scbh_tb.Text,
@@ -93,7 +94,7 @@ namespace NepslidingTools.testModel
             MessageBox.Show("保存成功");
             foreach (Control Ctrol in this.Controls)
             {
-                if (Ctrol is TextBox)
+                if (Ctrol is TextBox||Ctrol is TextBoxX)
                 {
                     Ctrol.Text = "";
                 }
@@ -102,19 +103,38 @@ namespace NepslidingTools.testModel
 
         private void mdf_bt_Click(object sender, EventArgs e)
         {
+            //for (int i=0; i<dgv.Rows.Count;i++) {
+            //bomname_tb.Text = dgv.Rows[0].Cells["tool"].Value.ToString();
+            //gdno_tb.Text = dgv.Rows[0].Cells["testlocal"].Value.ToString();
+            //scbh_tb.Text = dgv.Rows[0].Cells["bzz"].Value.ToString();
+            //sandsm_tb.Text = dgv.Rows[0].Cells["sgc"].Value.ToString();
+            //tm_tb.Text = dgv.Rows[0].Cells["xgc"].Value.ToString();
+            //cicun_tb.Text = dgv.Rows[0].Cells["cicun"].Value.ToString();
+            string st = "";
+
+            int XH = Convert.ToInt32(dgv.Rows[0].Cells["xh"].Value);
+            String TO = bomname_tb.Text;
+            string PO = gdno_tb.Text;
+            string ST = scbh_tb.Text;
+            string SG = sandsm_tb.Text;
+            string XG = tm_tb.Text;
+            string CI = cicun_tb.Text;
+            string LJH = textbox_ljh.Text;
             Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
-            Maticsoft.Model.measures us = new measures()
-            {
-                step = Convert.ToInt32(bz.Text),
-                Tools = bomname_tb.Text,
-                position = gdno_tb.Text,
-                standardv = scbh_tb.Text,
-                up = sandsm_tb.Text,
-                down = tm_tb.Text,
-                CC = cicun_tb.Text,
-                PN = textbox_ljh.Text,
-            };
-            use.Update(us);
+                Maticsoft.Model.measures us = new measures()
+                {
+                    id=XH,
+                    //step = Convert.ToInt32(bz.Text),
+                    Tools = TO,
+                    position = PO,
+                    standardv = ST,
+                    up = SG,
+                    down = XG,
+                    CC = CI,                   
+                    PN = LJH,
+                };
+                use.Update(us);
+           // }
             MessageBox.Show("修改成功");
             foreach (Control Ctrol in this.Controls)
             {
@@ -133,7 +153,28 @@ namespace NepslidingTools.testModel
             scbh_tb.Text= dgv.Rows[dgv.CurrentRow.Index].Cells["bzz"].Value.ToString();
             sandsm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["sgc"].Value.ToString();
             tm_tb.Text= dgv.Rows[dgv.CurrentRow.Index].Cells["xgc"].Value.ToString();
-            cicun_tb.Text= dgv.Rows[dgv.CurrentRow.Index].Cells["cicun"].Value.ToString(); ;
+            cicun_tb.Text= dgv.Rows[dgv.CurrentRow.Index].Cells["cicun"].Value.ToString();
+            textbox_ljh.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["gjh"].Value.ToString();
+        }
+
+        private void del_bt_Click(object sender, EventArgs e)
+        {
+            string DR = dgv.Rows[dgv.CurrentRow.Index].Cells["xh"].Value.ToString();
+            Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
+            use.Delete(Convert.ToInt32( DR));
+            //MessageBox.Show(a["id"].ToString());
+            MessageBox.Show("删除成功");
+            Maticsoft.BLL.measures usec = new Maticsoft.BLL.measures();
+            DataSet ds = usec.GetAllList();
+            dgv.DataSource = ds.Tables[0];
+        }
+
+        private void dgv_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                row.Cells["step"].Value = row.Index + 1;
+            }
         }
     }
 }

@@ -295,6 +295,7 @@ namespace NepslidingTools.testModel
             this.dgv.Size = new System.Drawing.Size(746, 316);
             this.dgv.TabIndex = 30;
             this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
+            this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
             // 
             // groupBox1
             // 
@@ -369,6 +370,7 @@ namespace NepslidingTools.testModel
             this.del_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.del_bt.TabIndex = 2;
             this.del_bt.Text = "É¾³ýÑ¡ÖÐÐÐ";
+            this.del_bt.Click += new System.EventHandler(this.del_bt_Click);
             // 
             // xy_xzh
             // 
