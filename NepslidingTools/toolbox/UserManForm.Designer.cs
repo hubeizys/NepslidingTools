@@ -326,6 +326,7 @@ namespace NepslidingTools.toolbox
             this.users_gc.TabIndex = 2;
             this.users_gc.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.manuser});
+            this.users_gc.Click += new System.EventHandler(this.users_gc_Click);
             // 
             // manuser
             // 
@@ -344,8 +345,6 @@ namespace NepslidingTools.toolbox
             this.num.FieldName = "ID";
             this.num.Name = "num";
             this.num.OptionsEditForm.Caption = "nummm";
-            this.num.Visible = true;
-            this.num.VisibleIndex = 0;
             // 
             // username
             // 
@@ -353,7 +352,7 @@ namespace NepslidingTools.toolbox
             this.username.FieldName = "user";
             this.username.Name = "username";
             this.username.Visible = true;
-            this.username.VisibleIndex = 1;
+            this.username.VisibleIndex = 0;
             // 
             // Manager
             // 
@@ -361,7 +360,7 @@ namespace NepslidingTools.toolbox
             this.Manager.FieldName = "password";
             this.Manager.Name = "Manager";
             this.Manager.Visible = true;
-            this.Manager.VisibleIndex = 2;
+            this.Manager.VisibleIndex = 1;
             // 
             // addTime
             // 
@@ -369,7 +368,7 @@ namespace NepslidingTools.toolbox
             this.addTime.FieldName = "addtime";
             this.addTime.Name = "addTime";
             this.addTime.Visible = true;
-            this.addTime.VisibleIndex = 3;
+            this.addTime.VisibleIndex = 2;
             // 
             // power
             // 
@@ -377,7 +376,7 @@ namespace NepslidingTools.toolbox
             this.power.FieldName = "power";
             this.power.Name = "power";
             this.power.Visible = true;
-            this.power.VisibleIndex = 4;
+            this.power.VisibleIndex = 3;
             // 
             // UserManForm
             // 

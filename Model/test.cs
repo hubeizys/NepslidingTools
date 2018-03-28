@@ -11,6 +11,7 @@ namespace Maticsoft.Model
 		{}
 		#region Model
 		private int _id;
+		private string _pn;
 		private string _measureb;
 		private DateTime? _time;
 		private string _step1;
@@ -26,6 +27,14 @@ namespace Maticsoft.Model
 		{
 			set{ _id=value;}
 			get{return _id;}
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		public string PN
+		{
+			set{ _pn=value;}
+			get{return _pn;}
 		}
 		/// <summary>
 		/// 

@@ -119,5 +119,10 @@ namespace NepslidingTools.toolbox
             }
             MessageBox.Show("ÐÞ¸Ä³É¹¦");
         }
+
+        private void users_gc_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

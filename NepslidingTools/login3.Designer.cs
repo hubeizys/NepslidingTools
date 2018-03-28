@@ -60,7 +60,7 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1232, 1204);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1232, 788);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
             // panel1
@@ -68,7 +68,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(62)))), ((int)(((byte)(229)))));
             this.panel1.Controls.Add(this.tableLayoutPanel2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 1167);
+            this.panel1.Location = new System.Drawing.Point(3, 751);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1226, 34);
             this.panel1.TabIndex = 0;
@@ -92,7 +92,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label1.Location = new System.Drawing.Point(3, 10);
             this.label1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
@@ -105,7 +105,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.label2.Location = new System.Drawing.Point(935, 10);
             this.label2.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
@@ -133,14 +133,14 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 320F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.33333F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1226, 1158);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1226, 742);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Image = global::NepslidingTools.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(411, 76);
+            this.pictureBox1.Location = new System.Drawing.Point(411, 6);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(402, 314);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -150,9 +150,9 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label3.Location = new System.Drawing.Point(3, 393);
+            this.label3.Location = new System.Drawing.Point(3, 323);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(306, 41);
             this.label3.TabIndex = 0;
@@ -161,7 +161,7 @@
             // elementHost1
             // 
             this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.elementHost1.Location = new System.Drawing.Point(411, 396);
+            this.elementHost1.Location = new System.Drawing.Point(411, 326);
             this.elementHost1.Name = "elementHost1";
             this.elementHost1.Size = new System.Drawing.Size(402, 394);
             this.elementHost1.TabIndex = 1;
@@ -170,9 +170,9 @@
             // 
             // elementHost2
             // 
-            this.elementHost2.Location = new System.Drawing.Point(411, 796);
+            this.elementHost2.Location = new System.Drawing.Point(411, 726);
             this.elementHost2.Name = "elementHost2";
-            this.elementHost2.Size = new System.Drawing.Size(200, 100);
+            this.elementHost2.Size = new System.Drawing.Size(200, 13);
             this.elementHost2.TabIndex = 2;
             this.elementHost2.Text = "elementHost2";
             this.elementHost2.Child = null;
@@ -187,7 +187,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(141)))), ((int)(((byte)(217)))));
-            this.ClientSize = new System.Drawing.Size(1232, 1204);
+            this.ClientSize = new System.Drawing.Size(1232, 788);
             this.Controls.Add(this.tableLayoutPanel1);
             this.ForeColor = System.Drawing.SystemColors.ControlDark;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

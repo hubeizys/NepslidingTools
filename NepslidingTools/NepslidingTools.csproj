@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -294,6 +295,7 @@
     <Compile Include="testModel\QueryFrom.Designer.cs">
       <DependentUpon>QueryFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="testModel\SerPort.cs" />
     <Compile Include="testModel\StepTestFrom.cs">
       <SubType>Form</SubType>
     </Compile>

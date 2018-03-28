@@ -10,6 +10,8 @@ using NepslidingTools.testModel;
 using Maticsoft.Model;
 using System.Data.OleDb;
 using System.IO;
+using Microsoft.Office.Interop.Excel;
+
 
 namespace NepslidingTools.toolbox
 {
@@ -55,10 +57,10 @@ namespace NepslidingTools.toolbox
 
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
-           
+
             TestBZFrom tbz = new TestBZFrom();
             tbz.Show();
-           
+
         }
 
         private void buttonX1_Click(object sender, EventArgs e)
@@ -71,10 +73,10 @@ namespace NepslidingTools.toolbox
                 string LJH = gridView1.GetRowCellValue(i, "PN").ToString();
                 string NM = gridView1.GetRowCellValue(i, "name").ToString();
                 string GDH = gridView1.GetRowCellValue(i, "jobnum").ToString();
-                string CSBH = gridView1.GetRowCellValue(i,"ARef").ToString();
+                string CSBH = gridView1.GetRowCellValue(i, "ARef").ToString();
                 string CC = gridView1.GetRowCellValue(i, "size").ToString();
-                string sd = gridView1.GetRowCellValue(i,"sm").ToString();
-                string TM = gridView1.GetRowCellValue(i,"Barcode").ToString();
+                string sd = gridView1.GetRowCellValue(i, "sm").ToString();
+                string TM = gridView1.GetRowCellValue(i, "Barcode").ToString();
                 Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
                 Maticsoft.Model.parts us = new parts()
                 {
@@ -83,9 +85,9 @@ namespace NepslidingTools.toolbox
                     name = NM,
                     jobnum = GDH,
                     ARef = CSBH,
-                    size=CC,
-                    sm=sd,
-                    Barcode=TM,
+                    size = CC,
+                    sm = sd,
+                    Barcode = TM,
                 };
                 use.Update(us);
             }
@@ -94,6 +96,8 @@ namespace NepslidingTools.toolbox
 
         private void repositoryItemButtonEdit2_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
+            DataRow DR = gridView1.GetDataRow(gridView1.FocusedRowHandle);
+            Program.gdvid = DR["PN"].ToString();
             QueryFrom qf = new QueryFrom();
             qf.Show();
         }
@@ -102,7 +106,7 @@ namespace NepslidingTools.toolbox
         {
             DataRow DR = gridView1.GetDataRow(gridView1.FocusedRowHandle);
             Program.gdvid = DR["PN"].ToString();
-                           //string GDH = gridView1.GetRowCellValue(0, "jobnum").ToString();
+            //string GDH = gridView1.GetRowCellValue(0, "jobnum").ToString();
 
             TestBZFrom tbz = new TestBZFrom();
             tbz.Show();
@@ -114,11 +118,11 @@ namespace NepslidingTools.toolbox
         }
 
         private void query_bt_Click(object sender, EventArgs e)
-        {           
+        {
             Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
-            string sr = string.Format("PN = '{0}'or name = '{1}'or Barcode = '{2}' ", textBoxX_autolj.Text, textBoxX_autolj.Text, textBoxX_autolj.Text);        
-            DataSet ds = use.GetList(sr);           
-            main_gc.DataSource = ds.Tables[0];          
+            string sr = string.Format("PN = '{0}'or name = '{1}'or Barcode = '{2}' ", textBoxX_autolj.Text, textBoxX_autolj.Text, textBoxX_autolj.Text);
+            DataSet ds = use.GetList(sr);
+            main_gc.DataSource = ds.Tables[0];
         }
 
         private void del_bt_Click(object sender, EventArgs e)
@@ -135,33 +139,82 @@ namespace NepslidingTools.toolbox
 
         private void import_bt_Click(object sender, EventArgs e)
         {
-            string filepath = "";
-            OpenFileDialog opf = new OpenFileDialog();
-            if (opf.ShowDialog() == DialogResult.OK)
-            {
-                filepath = opf.FileName;
-            }
-            string connectionString;
-
-            connectionString = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=" + filepath + ";Extended Properties='Excel 8.0;HDR=False;IMEX=1'";
-
-            OleDbConnection conn = new OleDbConnection(connectionString);
-
-            String strQuery = "SELECT * FROM  [parts$]";   //可以更改工作表名称 
-
-            OleDbDataAdapter da = new OleDbDataAdapter(strQuery, conn);
-
+            //string filepath = "";
+            //OpenFileDialog opf = new OpenFileDialog();
+            //if (opf.ShowDialog() == DialogResult.OK)
+            //{
+            //    filepath = opf.FileName;
+            //}
             DataSet ds = new DataSet();
+            DataTable dt = null;
 
-            da.Fill(ds, "parts");
+            OpenFileDialog sflg = new OpenFileDialog();
+            sflg.Filter = "Excel(*.xls)|*.xls|Excel(*.xlsx)|*.xlsx";
+            if (sflg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
+            {
+                return;
+            }
+            FileStream fs = new FileStream(sflg.FileName, FileMode.Open, FileAccess.Read);
+            NPOI.HSSF.UserModel.HSSFWorkbook book = new NPOI.HSSF.UserModel.HSSFWorkbook(fs);
+            int sheetCount = book.NumberOfSheets;
+            for (int sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++)
+            {
+                string st_name = book.GetSheetName(sheetIndex);
+                //XtraTabPage xinka = new XtraTabPage();
+                //xinka.Name = "xin";
+                //xinka.Text = st_name;
+                //NepCalaTable xintab = new NepCalaTable();
+                //xintab.Dock = DockStyle.Fill;
+                //xinka.Controls.Add(xintab);
+                //this.xtraTabControl1.TabPages.Add(xinka);
+                //this.xtraTabControl1.SelectedTabPage = xinka;
+                //this.active_nepCalaTable = xintab;
 
-           
-            main_gc.DataSource = da;
+                NPOI.SS.UserModel.ISheet sheet = book.GetSheetAt(sheetIndex);
+                if (sheet == null) continue;
+
+                NPOI.SS.UserModel.IRow row = sheet.GetRow(0);
+                if (row == null) continue;
+
+                int firstCellNum = row.FirstCellNum;
+                int lastCellNum = row.LastCellNum;
+                if (firstCellNum == lastCellNum) continue;
+
+                dt = new DataTable(sheet.SheetName);
+                dt.Columns.Add("bushe_xianshu", typeof(int));
+                //MessageBox.Show(dt.Columns["bushe_xianshu"].DataType.ToString());
+                dt.Columns.Add("bushe_daoshu", typeof(int));
+                dt.Columns.Add("bushe_zongdaoshu", typeof(int));
+                dt.Columns.Add("banqian_daoshu", typeof(int));
+                dt.Columns.Add("ke_caiji", typeof(int));
+                dt.Columns.Add("banjia_daoshu", typeof(int));
+                dt.Columns.Add("hengxiangchang", typeof(int));
+                dt.Columns.Add("zongxiangchang", typeof(int));
+                dt.Columns.Add("zonghengbi", typeof(double));
+                dt.Columns.Add("paodaobi", typeof(double));
+                lastCellNum = 10;
+                for (int i = firstCellNum; i < lastCellNum; i++)
+                {
+                    dt.Columns.Add(row.GetCell(i).StringCellValue, typeof(string));
+                }
+
+                for (int i = 1; i <= sheet.LastRowNum; i++)
+                {
+                    DataRow newRow = dt.Rows.Add();
+                    for (int j = firstCellNum; j < lastCellNum; j++)
+                    {
+                        newRow[j] = sheet.GetRow(i).GetCell(j).StringCellValue;
+                    }
+                }
+
+
+
+            }
         }
 
         private void expend_line_bt_Click(object sender, EventArgs e)
         {
-            
+
         }
     }
-    }
+}

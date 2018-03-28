@@ -287,7 +287,7 @@ namespace NepslidingTools.toolbox
             this.ljh.FieldName = "PN";
             this.ljh.Name = "ljh";
             this.ljh.Visible = true;
-            this.ljh.VisibleIndex = 1;
+            this.ljh.VisibleIndex = 0;
             this.ljh.Width = 78;
             // 
             // mc
@@ -296,7 +296,7 @@ namespace NepslidingTools.toolbox
             this.mc.FieldName = "name";
             this.mc.Name = "mc";
             this.mc.Visible = true;
-            this.mc.VisibleIndex = 2;
+            this.mc.VisibleIndex = 1;
             this.mc.Width = 78;
             // 
             // gdh
@@ -305,7 +305,7 @@ namespace NepslidingTools.toolbox
             this.gdh.FieldName = "jobnum";
             this.gdh.Name = "gdh";
             this.gdh.Visible = true;
-            this.gdh.VisibleIndex = 3;
+            this.gdh.VisibleIndex = 2;
             this.gdh.Width = 78;
             // 
             // scbh
@@ -314,7 +314,7 @@ namespace NepslidingTools.toolbox
             this.scbh.FieldName = "ARef";
             this.scbh.Name = "scbh";
             this.scbh.Visible = true;
-            this.scbh.VisibleIndex = 4;
+            this.scbh.VisibleIndex = 3;
             this.scbh.Width = 78;
             // 
             // cc
@@ -323,7 +323,7 @@ namespace NepslidingTools.toolbox
             this.cc.FieldName = "size";
             this.cc.Name = "cc";
             this.cc.Visible = true;
-            this.cc.VisibleIndex = 5;
+            this.cc.VisibleIndex = 4;
             this.cc.Width = 78;
             // 
             // sandsm
@@ -332,7 +332,7 @@ namespace NepslidingTools.toolbox
             this.sandsm.FieldName = "sm";
             this.sandsm.Name = "sandsm";
             this.sandsm.Visible = true;
-            this.sandsm.VisibleIndex = 6;
+            this.sandsm.VisibleIndex = 5;
             this.sandsm.Width = 80;
             // 
             // tm
@@ -341,7 +341,7 @@ namespace NepslidingTools.toolbox
             this.tm.FieldName = "Barcode";
             this.tm.Name = "tm";
             this.tm.Visible = true;
-            this.tm.VisibleIndex = 7;
+            this.tm.VisibleIndex = 6;
             this.tm.Width = 77;
             // 
             // XH
@@ -349,8 +349,6 @@ namespace NepslidingTools.toolbox
             this.XH.Caption = "ÐòºÅ";
             this.XH.FieldName = "id";
             this.XH.Name = "XH";
-            this.XH.Visible = true;
-            this.XH.VisibleIndex = 0;
             // 
             // clbz
             // 
@@ -359,7 +357,7 @@ namespace NepslidingTools.toolbox
             this.clbz.FieldName = "clbz";
             this.clbz.Name = "clbz";
             this.clbz.Visible = true;
-            this.clbz.VisibleIndex = 8;
+            this.clbz.VisibleIndex = 7;
             this.clbz.Width = 77;
             // 
             // repositoryItemButtonEdit1
@@ -380,7 +378,7 @@ namespace NepslidingTools.toolbox
             this.clsj.FieldName = "clsj";
             this.clsj.Name = "clsj";
             this.clsj.Visible = true;
-            this.clsj.VisibleIndex = 9;
+            this.clsj.VisibleIndex = 8;
             this.clsj.Width = 86;
             // 
             // repositoryItemButtonEdit2

@@ -29,8 +29,15 @@ namespace NepslidingTools.testModel
 
         private void test_bt_Click(object sender, EventArgs e)
         {
+            Program.txtbh= textBoxX1.Text;
+            if (textBoxX1.Text=="")
+            {
+                MessageBox.Show("«Î ‰»Î¡„º˛∫≈");
+                return;
+            }
             StepTestFrom stf = new StepTestFrom();
             stf.ShowDialog();
+            
         }
 
         private void buttonX5_Click(object sender, EventArgs e)
@@ -56,9 +63,9 @@ namespace NepslidingTools.testModel
 
         private void DevSt_Load(object sender, EventArgs e)
         {
-            global.CurActive = "DevSt";
-            this.TopMost = true;
-            this.Activate();
+            //global.CurActive = "DevSt";
+            //this.TopMost = true;
+            //this.Activate();
         }
     }
 }

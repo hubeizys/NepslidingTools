@@ -46,10 +46,11 @@ namespace Maticsoft.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("insert into test(");
-			strSql.Append("measureb,time,step1,step2,step3,step4,step5,OKorNG)");
+			strSql.Append("PN,measureb,time,step1,step2,step3,step4,step5,OKorNG)");
 			strSql.Append(" values (");
-			strSql.Append("@measureb,@time,@step1,@step2,@step3,@step4,@step5,@OKorNG)");
+			strSql.Append("@PN,@measureb,@time,@step1,@step2,@step3,@step4,@step5,@OKorNG)");
 			MySqlParameter[] parameters = {
+					new MySqlParameter("@PN", MySqlDbType.VarChar,64),
 					new MySqlParameter("@measureb", MySqlDbType.VarChar,64),
 					new MySqlParameter("@time", MySqlDbType.DateTime),
 					new MySqlParameter("@step1", MySqlDbType.VarChar,64),
@@ -58,14 +59,15 @@ namespace Maticsoft.DAL
 					new MySqlParameter("@step4", MySqlDbType.VarChar,64),
 					new MySqlParameter("@step5", MySqlDbType.VarChar,64),
 					new MySqlParameter("@OKorNG", MySqlDbType.VarChar,64)};
-			parameters[0].Value = model.measureb;
-			parameters[1].Value = model.time;
-			parameters[2].Value = model.step1;
-			parameters[3].Value = model.step2;
-			parameters[4].Value = model.step3;
-			parameters[5].Value = model.step4;
-			parameters[6].Value = model.step5;
-			parameters[7].Value = model.OKorNG;
+			parameters[0].Value = model.PN;
+			parameters[1].Value = model.measureb;
+			parameters[2].Value = model.time;
+			parameters[3].Value = model.step1;
+			parameters[4].Value = model.step2;
+			parameters[5].Value = model.step3;
+			parameters[6].Value = model.step4;
+			parameters[7].Value = model.step5;
+			parameters[8].Value = model.OKorNG;
 
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -84,6 +86,7 @@ namespace Maticsoft.DAL
 		{
 			StringBuilder strSql=new StringBuilder();
 			strSql.Append("update test set ");
+			strSql.Append("PN=@PN,");
 			strSql.Append("measureb=@measureb,");
 			strSql.Append("time=@time,");
 			strSql.Append("step1=@step1,");
@@ -94,6 +97,7 @@ namespace Maticsoft.DAL
 			strSql.Append("OKorNG=@OKorNG");
 			strSql.Append(" where id=@id");
 			MySqlParameter[] parameters = {
+					new MySqlParameter("@PN", MySqlDbType.VarChar,64),
 					new MySqlParameter("@measureb", MySqlDbType.VarChar,64),
 					new MySqlParameter("@time", MySqlDbType.DateTime),
 					new MySqlParameter("@step1", MySqlDbType.VarChar,64),
@@ -103,15 +107,16 @@ namespace Maticsoft.DAL
 					new MySqlParameter("@step5", MySqlDbType.VarChar,64),
 					new MySqlParameter("@OKorNG", MySqlDbType.VarChar,64),
 					new MySqlParameter("@id", MySqlDbType.Int32,64)};
-			parameters[0].Value = model.measureb;
-			parameters[1].Value = model.time;
-			parameters[2].Value = model.step1;
-			parameters[3].Value = model.step2;
-			parameters[4].Value = model.step3;
-			parameters[5].Value = model.step4;
-			parameters[6].Value = model.step5;
-			parameters[7].Value = model.OKorNG;
-			parameters[8].Value = model.id;
+			parameters[0].Value = model.PN;
+			parameters[1].Value = model.measureb;
+			parameters[2].Value = model.time;
+			parameters[3].Value = model.step1;
+			parameters[4].Value = model.step2;
+			parameters[5].Value = model.step3;
+			parameters[6].Value = model.step4;
+			parameters[7].Value = model.step5;
+			parameters[8].Value = model.OKorNG;
+			parameters[9].Value = model.id;
 
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -175,7 +180,7 @@ namespace Maticsoft.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select id,measureb,time,step1,step2,step3,step4,step5,OKorNG from test ");
+			strSql.Append("select id,PN,measureb,time,step1,step2,step3,step4,step5,OKorNG from test ");
 			strSql.Append(" where id=@id");
 			MySqlParameter[] parameters = {
 					new MySqlParameter("@id", MySqlDbType.Int32)
@@ -206,6 +211,10 @@ namespace Maticsoft.DAL
 				if(row["id"]!=null && row["id"].ToString()!="")
 				{
 					model.id=int.Parse(row["id"].ToString());
+				}
+				if(row["PN"]!=null)
+				{
+					model.PN=row["PN"].ToString();
 				}
 				if(row["measureb"]!=null)
 				{
@@ -249,7 +258,7 @@ namespace Maticsoft.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select id,measureb,time,step1,step2,step3,step4,step5,OKorNG ");
+			strSql.Append("select id,PN,measureb,time,step1,step2,step3,step4,step5,OKorNG ");
 			strSql.Append(" FROM test ");
 			if(strWhere.Trim()!="")
 			{

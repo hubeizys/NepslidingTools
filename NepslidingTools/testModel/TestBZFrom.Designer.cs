@@ -43,16 +43,6 @@ namespace NepslidingTools.testModel
             this.testtoolname_lab = new DevComponents.DotNetBar.LabelX();
             this.bom_no_lab = new DevComponents.DotNetBar.LabelX();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.mdf_bt = new DevComponents.DotNetBar.ButtonX();
-            this.new_bt = new DevComponents.DotNetBar.ButtonX();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.del_bt = new DevComponents.DotNetBar.ButtonX();
-            this.xy_xzh = new DevComponents.DotNetBar.ButtonX();
-            this.sy_bt = new DevComponents.DotNetBar.ButtonX();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textbox_ljh = new System.Windows.Forms.TextBox();
-            this.bz = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.testlocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -62,6 +52,15 @@ namespace NepslidingTools.testModel
             this.xgc = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gjh = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.mdf_bt = new DevComponents.DotNetBar.ButtonX();
+            this.new_bt = new DevComponents.DotNetBar.ButtonX();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.del_bt = new DevComponents.DotNetBar.ButtonX();
+            this.xy_xzh = new DevComponents.DotNetBar.ButtonX();
+            this.sy_bt = new DevComponents.DotNetBar.ButtonX();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textbox_ljh = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -297,6 +296,71 @@ namespace NepslidingTools.testModel
             this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
             this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
             // 
+            // step
+            // 
+            this.step.DataPropertyName = "step";
+            this.step.HeaderText = "步骤";
+            this.step.Name = "step";
+            this.step.ReadOnly = true;
+            // 
+            // tool
+            // 
+            this.tool.DataPropertyName = "Tools";
+            this.tool.HeaderText = "测量工具";
+            this.tool.Name = "tool";
+            this.tool.ReadOnly = true;
+            // 
+            // testlocal
+            // 
+            this.testlocal.DataPropertyName = "position";
+            this.testlocal.HeaderText = "测量位置";
+            this.testlocal.Name = "testlocal";
+            this.testlocal.ReadOnly = true;
+            // 
+            // cicun
+            // 
+            this.cicun.DataPropertyName = "CC";
+            this.cicun.HeaderText = "尺寸";
+            this.cicun.Name = "cicun";
+            this.cicun.ReadOnly = true;
+            // 
+            // bzz
+            // 
+            this.bzz.DataPropertyName = "standardv";
+            this.bzz.HeaderText = "标准值";
+            this.bzz.Name = "bzz";
+            this.bzz.ReadOnly = true;
+            // 
+            // sgc
+            // 
+            this.sgc.DataPropertyName = "up";
+            this.sgc.HeaderText = "上公差";
+            this.sgc.Name = "sgc";
+            this.sgc.ReadOnly = true;
+            // 
+            // xgc
+            // 
+            this.xgc.DataPropertyName = "down";
+            this.xgc.HeaderText = "下公差";
+            this.xgc.Name = "xgc";
+            this.xgc.ReadOnly = true;
+            // 
+            // xh
+            // 
+            this.xh.DataPropertyName = "id";
+            this.xh.HeaderText = "序号";
+            this.xh.Name = "xh";
+            this.xh.ReadOnly = true;
+            this.xh.Visible = false;
+            // 
+            // gjh
+            // 
+            this.gjh.DataPropertyName = "PN";
+            this.gjh.HeaderText = "零件号";
+            this.gjh.Name = "gjh";
+            this.gjh.ReadOnly = true;
+            this.gjh.Visible = false;
+            // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -382,6 +446,7 @@ namespace NepslidingTools.testModel
             this.xy_xzh.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.xy_xzh.TabIndex = 1;
             this.xy_xzh.Text = "下移选中行";
+            this.xy_xzh.Click += new System.EventHandler(this.xy_xzh_Click);
             // 
             // sy_bt
             // 
@@ -393,6 +458,7 @@ namespace NepslidingTools.testModel
             this.sy_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.sy_bt.TabIndex = 0;
             this.sy_bt.Text = "上移选中行";
+            this.sy_bt.Click += new System.EventHandler(this.sy_bt_Click);
             // 
             // button1
             // 
@@ -423,93 +489,11 @@ namespace NepslidingTools.testModel
             this.textbox_ljh.Size = new System.Drawing.Size(257, 22);
             this.textbox_ljh.TabIndex = 35;
             // 
-            // bz
-            // 
-            this.bz.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.bz.Border.Class = "TextBoxBorder";
-            this.bz.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.bz.DisabledBackColor = System.Drawing.Color.White;
-            this.bz.ForeColor = System.Drawing.Color.Black;
-            this.bz.Location = new System.Drawing.Point(108, 407);
-            this.bz.Name = "bz";
-            this.bz.PreventEnterBeep = true;
-            this.bz.Size = new System.Drawing.Size(157, 22);
-            this.bz.TabIndex = 36;
-            // 
-            // step
-            // 
-            this.step.DataPropertyName = "step";
-            this.step.HeaderText = "步骤";
-            this.step.Name = "step";
-            this.step.ReadOnly = true;
-            // 
-            // tool
-            // 
-            this.tool.DataPropertyName = "Tools";
-            this.tool.HeaderText = "测量工具";
-            this.tool.Name = "tool";
-            this.tool.ReadOnly = true;
-            // 
-            // testlocal
-            // 
-            this.testlocal.DataPropertyName = "position";
-            this.testlocal.HeaderText = "测量位置";
-            this.testlocal.Name = "testlocal";
-            this.testlocal.ReadOnly = true;
-            // 
-            // cicun
-            // 
-            this.cicun.DataPropertyName = "CC";
-            this.cicun.HeaderText = "尺寸";
-            this.cicun.Name = "cicun";
-            this.cicun.ReadOnly = true;
-            // 
-            // bzz
-            // 
-            this.bzz.DataPropertyName = "standardv";
-            this.bzz.HeaderText = "标准值";
-            this.bzz.Name = "bzz";
-            this.bzz.ReadOnly = true;
-            // 
-            // sgc
-            // 
-            this.sgc.DataPropertyName = "up";
-            this.sgc.HeaderText = "上公差";
-            this.sgc.Name = "sgc";
-            this.sgc.ReadOnly = true;
-            // 
-            // xgc
-            // 
-            this.xgc.DataPropertyName = "down";
-            this.xgc.HeaderText = "下公差";
-            this.xgc.Name = "xgc";
-            this.xgc.ReadOnly = true;
-            // 
-            // xh
-            // 
-            this.xh.DataPropertyName = "id";
-            this.xh.HeaderText = "序号";
-            this.xh.Name = "xh";
-            this.xh.ReadOnly = true;
-            this.xh.Visible = false;
-            // 
-            // gjh
-            // 
-            this.gjh.DataPropertyName = "PN";
-            this.gjh.HeaderText = "零件号";
-            this.gjh.Name = "gjh";
-            this.gjh.ReadOnly = true;
-            this.gjh.Visible = false;
-            // 
             // TestBZFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(801, 728);
-            this.Controls.Add(this.bz);
             this.Controls.Add(this.textbox_ljh);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
@@ -558,7 +542,6 @@ namespace NepslidingTools.testModel
         private DevComponents.DotNetBar.ButtonX del_bt;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textbox_ljh;
-        private DevComponents.DotNetBar.Controls.TextBoxX bz;
         private System.Windows.Forms.DataGridViewTextBoxColumn step;
         private System.Windows.Forms.DataGridViewTextBoxColumn tool;
         private System.Windows.Forms.DataGridViewTextBoxColumn testlocal;

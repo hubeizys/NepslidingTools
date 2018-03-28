@@ -15,6 +15,8 @@ namespace NepslidingTools
     static class Program
     {
         public static string gdvid;
+        public static string txtstr;
+        public static string txtbh;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

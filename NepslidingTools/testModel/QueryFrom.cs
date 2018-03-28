@@ -19,6 +19,7 @@ namespace NepslidingTools.testModel
 
         private void QueryFrom_Load(object sender, EventArgs e)
         {
+            textBox_ljhao.Text = Program.gdvid;
             global.CurActive = "QueryFrom";
             //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
             //this.Size = ScreenArea.Size;
@@ -44,7 +45,8 @@ namespace NepslidingTools.testModel
 
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
-            StepTestFrom stf = new StepTestFrom();
+            Program.txtbh = textBox_ljhao.Text;
+             StepTestFrom stf = new StepTestFrom();
             stf.Show();
         }
 
