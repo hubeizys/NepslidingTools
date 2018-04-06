@@ -131,21 +131,26 @@ namespace NepslidingTools.testModel
             {
                 if (Ctrol is TextBox || Ctrol is TextBoxX)
                 {
-                    Ctrol.Text = "";
+                    //Ctrol.Text = "";
                         bomname_tb.Text = "";
                         gdno_tb.Text = "";
                         scbh_tb.Text = "";
                         sandsm_tb.Text = "";
                         tm_tb.Text = "";
                         cicun_tb.Text = "";
-                        textbox_ljh.Text = "";
+                        //textbox_ljh.Text = "";
                 }
             }
                 Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
-                string aa = string.Format("PN = '{0}'ORDER BY step", textbox_ljh.Text);
+                string aa = string.Format("PN = '{0}'ORDER BY step", textbox_ljh.Text);//ORDER BY step
                 DataSet ds = use1.GetList(aa);
                 dgv.DataSource = ds.Tables[0];
-            } catch (Exception err)
+                foreach (DataGridViewRow row in dgv.Rows)
+                {
+                    row.Cells["step"].Value = row.Index + 1;
+                }
+            }
+            catch (Exception err)
             {
                 Console.WriteLine(err.Message);
             }
@@ -202,6 +207,10 @@ namespace NepslidingTools.testModel
             string aa = string.Format("PN = '{0}'ORDER BY step", textbox_ljh.Text);
             DataSet ds = use1.GetList(aa);
             dgv.DataSource = ds.Tables[0];
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                row.Cells["step"].Value = row.Index + 1;
+            }
         }
 
         private void dgv_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)

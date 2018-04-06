@@ -17,6 +17,7 @@ namespace NepslidingTools.toolbox
 {
     public partial class BomFrom : DevComponents.DotNetBar.Metro.MetroForm
     {
+       
         public BomFrom()
         {
             InitializeComponent();
@@ -147,7 +148,6 @@ namespace NepslidingTools.toolbox
             //}
             DataSet ds = new DataSet();
             DataTable dt = null;
-
             OpenFileDialog sflg = new OpenFileDialog();
             sflg.Filter = "Excel(*.xls)|*.xls|Excel(*.xlsx)|*.xlsx";
             if (sflg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
@@ -159,17 +159,7 @@ namespace NepslidingTools.toolbox
             int sheetCount = book.NumberOfSheets;
             for (int sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++)
             {
-                string st_name = book.GetSheetName(sheetIndex);
-                //XtraTabPage xinka = new XtraTabPage();
-                //xinka.Name = "xin";
-                //xinka.Text = st_name;
-                //NepCalaTable xintab = new NepCalaTable();
-                //xintab.Dock = DockStyle.Fill;
-                //xinka.Controls.Add(xintab);
-                //this.xtraTabControl1.TabPages.Add(xinka);
-                //this.xtraTabControl1.SelectedTabPage = xinka;
-                //this.active_nepCalaTable = xintab;
-
+                string st_name = book.GetSheetName(sheetIndex);               
                 NPOI.SS.UserModel.ISheet sheet = book.GetSheetAt(sheetIndex);
                 if (sheet == null) continue;
 
@@ -181,19 +171,17 @@ namespace NepslidingTools.toolbox
                 if (firstCellNum == lastCellNum) continue;
 
                 dt = new DataTable(sheet.SheetName);
-                dt.Columns.Add("bushe_xianshu", typeof(int));
+                dt.Columns.Add("PN", typeof(string));
                 //MessageBox.Show(dt.Columns["bushe_xianshu"].DataType.ToString());
-                dt.Columns.Add("bushe_daoshu", typeof(int));
-                dt.Columns.Add("bushe_zongdaoshu", typeof(int));
-                dt.Columns.Add("banqian_daoshu", typeof(int));
-                dt.Columns.Add("ke_caiji", typeof(int));
-                dt.Columns.Add("banjia_daoshu", typeof(int));
-                dt.Columns.Add("hengxiangchang", typeof(int));
-                dt.Columns.Add("zongxiangchang", typeof(int));
-                dt.Columns.Add("zonghengbi", typeof(double));
-                dt.Columns.Add("paodaobi", typeof(double));
-                lastCellNum = 10;
-                for (int i = firstCellNum; i < lastCellNum; i++)
+                //dt.Columns.Add("", typeof(int));
+                dt.Columns.Add("name", typeof(string));
+                dt.Columns.Add("jobnum", typeof(string));
+                dt.Columns.Add("ARef", typeof(string));
+                dt.Columns.Add("size", typeof(string));
+                dt.Columns.Add("sm", typeof(string));
+                dt.Columns.Add("Barcode", typeof(string));
+                lastCellNum =7;
+                for (int i = firstCellNum; i <lastCellNum; i++)
                 {
                     dt.Columns.Add(row.GetCell(i).StringCellValue, typeof(string));
                 }
@@ -201,20 +189,60 @@ namespace NepslidingTools.toolbox
                 for (int i = 1; i <= sheet.LastRowNum; i++)
                 {
                     DataRow newRow = dt.Rows.Add();
-                    for (int j = firstCellNum; j < lastCellNum; j++)
+                    for (int j =firstCellNum; j < lastCellNum; j++)
                     {
                         newRow[j] = sheet.GetRow(i).GetCell(j).StringCellValue;
                     }
                 }
-
-
-
+                NPOI.SS.UserModel.IRow row0 = sheet.GetRow(0);
+                ds.Tables.Add(dt);
+                main_gc.DataSource = ds.Tables[0];
             }
+           
+            for (int i = 0; i < gridView1.RowCount; i++)
+            {
+                string LJH = gridView1.GetRowCellValue(i, "PN").ToString();
+                string mc = gridView1.GetRowCellValue(i, "name").ToString();
+                string gdh = gridView1.GetRowCellValue(i, "jobnum").ToString();
+                string BH = gridView1.GetRowCellValue(i, "ARef").ToString();
+                string cc = gridView1.GetRowCellValue(i, "size").ToString();
+                string dsm=gridView1.GetRowCellValue(i, "sm").ToString();
+                string tm= gridView1.GetRowCellValue(i, "Barcode").ToString();
+                Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
+                Maticsoft.Model.parts us = new parts()
+                {
+                    PN = LJH,
+                    name = mc,
+                    jobnum = gdh,
+                    ARef=BH,
+                    size=cc,
+                    sm=dsm,
+                    Barcode=tm,
+
+                };
+                use.Add(us);
+            }
+            DevExpress.XtraEditors.XtraMessageBox.Show("导入成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //MessageBox.Show("已成功导入");
+            Maticsoft.BLL.parts pr = new Maticsoft.BLL.parts();
+            DataSet ds2 = pr.GetAllList();
+            main_gc.DataSource = ds2.Tables[0];
         }
 
         private void expend_line_bt_Click(object sender, EventArgs e)
         {
-
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Title = "导出Excel";
+            saveFileDialog.Filter = "Excel文件(*.xls)|*.xls";
+            DialogResult dialogResult = saveFileDialog.ShowDialog(this);
+            if (dialogResult == DialogResult.OK)
+            {
+                //string xzh = gridView1.FocusedRowHandle.ToString();                
+                DevExpress.XtraPrinting.XlsExportOptions options = new DevExpress.XtraPrinting.XlsExportOptions();
+                main_gc.ExportToXls(saveFileDialog.FileName, options);  
+                //gridControl1.ExportToExcelOld(saveFileDialog.FileName);
+                DevExpress.XtraEditors.XtraMessageBox.Show("导出成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

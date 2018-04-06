@@ -93,7 +93,7 @@ namespace NepslidingTools.testModel
             // 
             this.selectdev_wiz.Controls.Add(this.groupBox2);
             this.selectdev_wiz.Name = "selectdev_wiz";
-            this.selectdev_wiz.Size = new System.Drawing.Size(565, 228);
+            this.selectdev_wiz.Size = new System.Drawing.Size(565, 210);
             this.selectdev_wiz.Text = "选择硬件类型";
             // 
             // groupBox2
@@ -103,7 +103,7 @@ namespace NepslidingTools.testModel
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(565, 228);
+            this.groupBox2.Size = new System.Drawing.Size(565, 210);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "选择类型";
@@ -111,7 +111,7 @@ namespace NepslidingTools.testModel
             // radioGroup1
             // 
             this.radioGroup1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.radioGroup1.Location = new System.Drawing.Point(3, 18);
+            this.radioGroup1.Location = new System.Drawing.Point(3, 22);
             this.radioGroup1.Name = "radioGroup1";
             this.radioGroup1.Properties.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -121,14 +121,14 @@ namespace NepslidingTools.testModel
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "扫描枪"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "热敏打印机"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "卡尺")});
-            this.radioGroup1.Size = new System.Drawing.Size(559, 207);
+            this.radioGroup1.Size = new System.Drawing.Size(559, 185);
             this.radioGroup1.TabIndex = 0;
             // 
             // wizardPage1
             // 
             this.wizardPage1.Controls.Add(this.groupBox1);
             this.wizardPage1.Name = "wizardPage1";
-            this.wizardPage1.Size = new System.Drawing.Size(565, 228);
+            this.wizardPage1.Size = new System.Drawing.Size(565, 210);
             this.wizardPage1.Text = "请选择设备";
             // 
             // groupBox1
@@ -138,7 +138,7 @@ namespace NepslidingTools.testModel
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(565, 228);
+            this.groupBox1.Size = new System.Drawing.Size(565, 210);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "硬件列表";
@@ -149,6 +149,7 @@ namespace NepslidingTools.testModel
             this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox1.ForeColor = System.Drawing.Color.Black;
             this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 19;
             this.listBox1.Items.AddRange(new object[] {
             "com1",
             "com2",
@@ -168,16 +169,16 @@ namespace NepslidingTools.testModel
             "com16",
             "com17",
             "com18"});
-            this.listBox1.Location = new System.Drawing.Point(3, 18);
+            this.listBox1.Location = new System.Drawing.Point(3, 22);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(559, 207);
+            this.listBox1.Size = new System.Drawing.Size(559, 185);
             this.listBox1.TabIndex = 0;
             // 
             // completionWizardPage1
             // 
             this.completionWizardPage1.Controls.Add(this.textBoxX2);
             this.completionWizardPage1.Name = "completionWizardPage1";
-            this.completionWizardPage1.Size = new System.Drawing.Size(565, 228);
+            this.completionWizardPage1.Size = new System.Drawing.Size(565, 210);
             this.completionWizardPage1.Text = "测试成功了！请命名";
             // 
             // textBoxX2
@@ -193,14 +194,14 @@ namespace NepslidingTools.testModel
             this.textBoxX2.Location = new System.Drawing.Point(13, 81);
             this.textBoxX2.Name = "textBoxX2";
             this.textBoxX2.PreventEnterBeep = true;
-            this.textBoxX2.Size = new System.Drawing.Size(253, 22);
+            this.textBoxX2.Size = new System.Drawing.Size(253, 26);
             this.textBoxX2.TabIndex = 0;
             // 
             // wizardPage2
             // 
             this.wizardPage2.Controls.Add(this.textBoxX1);
             this.wizardPage2.Name = "wizardPage2";
-            this.wizardPage2.Size = new System.Drawing.Size(565, 228);
+            this.wizardPage2.Size = new System.Drawing.Size(565, 210);
             this.wizardPage2.Text = "等待com的测试数据";
             // 
             // textBoxX1
@@ -216,13 +217,13 @@ namespace NepslidingTools.testModel
             this.textBoxX1.Location = new System.Drawing.Point(3, 62);
             this.textBoxX1.Name = "textBoxX1";
             this.textBoxX1.PreventEnterBeep = true;
-            this.textBoxX1.Size = new System.Drawing.Size(308, 22);
+            this.textBoxX1.Size = new System.Drawing.Size(308, 26);
             this.textBoxX1.TabIndex = 0;
             this.textBoxX1.Text = "00000011";
             // 
             // Devsimport
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(625, 396);
             this.Controls.Add(this.panel1);

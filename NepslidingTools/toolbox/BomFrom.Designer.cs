@@ -141,7 +141,7 @@ namespace NepslidingTools.toolbox
             this.textBoxX_autolj.Location = new System.Drawing.Point(9, 39);
             this.textBoxX_autolj.Name = "textBoxX_autolj";
             this.textBoxX_autolj.PreventEnterBeep = true;
-            this.textBoxX_autolj.Size = new System.Drawing.Size(269, 22);
+            this.textBoxX_autolj.Size = new System.Drawing.Size(269, 26);
             this.textBoxX_autolj.TabIndex = 6;
             this.textBoxX_autolj.WatermarkText = "输入零件号或者名称或者条码都可以查询";
             // 
@@ -230,7 +230,7 @@ namespace NepslidingTools.toolbox
             this.expend_line_bt.Size = new System.Drawing.Size(131, 23);
             this.expend_line_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.expend_line_bt.TabIndex = 1;
-            this.expend_line_bt.Text = "导出选中行";
+            this.expend_line_bt.Text = "导出至Excel";
             this.expend_line_bt.Click += new System.EventHandler(this.expend_line_bt_Click);
             // 
             // import_bt
@@ -457,7 +457,7 @@ namespace NepslidingTools.toolbox
             // 
             // BomFrom
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(747, 608);
             this.Controls.Add(this.main_tlp);

@@ -21,11 +21,12 @@ namespace NepslidingTools.toolbox
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string aa = DTP.Value.ToString("yyyy-MM-dd HH:mm:ss");
             Maticsoft.BLL.username use = new Maticsoft.BLL.username();
             Maticsoft.Model.username us = new username()
             {
                 user = txt_n.Text,
-                addtime = DTP.Value,
+                addtime =Convert.ToDateTime(aa),
                 password =txt_p.Text,
                 power=txt_q.Text,
 

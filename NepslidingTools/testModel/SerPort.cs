@@ -33,7 +33,7 @@ namespace NepslidingTools.testModel
                 sp1.Close();
             }
 
-            //sp1.Open();     //打开串口
+            sp1.Open();     //打开串口
             if (!sp1.IsOpen) //如果没打开
             {
                 MessageBox.Show("串口没有打开！", "Error");

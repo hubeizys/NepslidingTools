@@ -31,14 +31,58 @@ namespace NepslidingTools
 
         private void label5_Click(object sender, EventArgs e)
         {
-            MainFrom mf = new MainFrom();
-            mf.Show();
+            string zh = "";
+            string mm = "";
+            Maticsoft.BLL.username use = new Maticsoft.BLL.username();          
+            DataSet ds = use.GetAllList();
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                zh = ds.Tables[0].Rows[i]["user"].ToString();
+                mm = ds.Tables[0].Rows[i]["password"].ToString();
+            }
+
+                if (txtzh.Text == zh && txtmm.Text == mm)
+                {
+                    MainFrom mf = new MainFrom();
+                    mf.Show();
+                }
+                else
+                {
+                    MessageBox.Show("密码或账号不正确");
+                    return;
+                }
+            
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            MainFrom mf = new MainFrom();
-            mf.Show();
+            string zh = "";
+            string mm = "";
+            Maticsoft.BLL.username use = new Maticsoft.BLL.username();
+            DataSet ds = use.GetAllList();
+            for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
+            {
+                zh = ds.Tables[0].Rows[i]["user"].ToString();
+                mm = ds.Tables[0].Rows[i]["password"].ToString();
+            }
+
+            if (txtzh.Text == zh && txtmm.Text == mm)
+            {
+                MainFrom mf = new MainFrom();
+                mf.Show();
+            }
+            else
+            {
+                MessageBox.Show("密码或账号不正确");
+                return;
+            }
+            //MainFrom mf = new MainFrom();
+            //mf.Show();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

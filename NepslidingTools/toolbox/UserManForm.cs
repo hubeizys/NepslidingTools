@@ -54,7 +54,7 @@ namespace NepslidingTools.toolbox
             if (username_tb.Text != "" && time_dtp.Text != "")
             {
                 Maticsoft.BLL.username use = new Maticsoft.BLL.username();
-                string aa = string.Format("addtime = '{0}',user='{1}'", time_dtp.Text,username_tb.Text);
+                string aa = string.Format("addtime = '{0}'and user='{1}'", time_dtp.Text,username_tb.Text);
                 DataSet ds = use.GetList(aa);
                 users_gc.DataSource = ds.Tables[0];
             }

@@ -79,7 +79,7 @@ namespace NepslidingTools.testModel
             this.tm_tb.Location = new System.Drawing.Point(96, 166);
             this.tm_tb.Name = "tm_tb";
             this.tm_tb.PreventEnterBeep = true;
-            this.tm_tb.Size = new System.Drawing.Size(157, 22);
+            this.tm_tb.Size = new System.Drawing.Size(157, 26);
             this.tm_tb.TabIndex = 29;
             // 
             // sandsm_tb
@@ -95,7 +95,7 @@ namespace NepslidingTools.testModel
             this.sandsm_tb.Location = new System.Drawing.Point(96, 132);
             this.sandsm_tb.Name = "sandsm_tb";
             this.sandsm_tb.PreventEnterBeep = true;
-            this.sandsm_tb.Size = new System.Drawing.Size(157, 22);
+            this.sandsm_tb.Size = new System.Drawing.Size(157, 26);
             this.sandsm_tb.TabIndex = 28;
             // 
             // cicun_tb
@@ -111,7 +111,7 @@ namespace NepslidingTools.testModel
             this.cicun_tb.Location = new System.Drawing.Point(96, 98);
             this.cicun_tb.Name = "cicun_tb";
             this.cicun_tb.PreventEnterBeep = true;
-            this.cicun_tb.Size = new System.Drawing.Size(157, 22);
+            this.cicun_tb.Size = new System.Drawing.Size(157, 26);
             this.cicun_tb.TabIndex = 27;
             // 
             // scbh_tb
@@ -127,7 +127,7 @@ namespace NepslidingTools.testModel
             this.scbh_tb.Location = new System.Drawing.Point(96, 64);
             this.scbh_tb.Name = "scbh_tb";
             this.scbh_tb.PreventEnterBeep = true;
-            this.scbh_tb.Size = new System.Drawing.Size(157, 22);
+            this.scbh_tb.Size = new System.Drawing.Size(157, 26);
             this.scbh_tb.TabIndex = 26;
             // 
             // gdno_tb
@@ -143,7 +143,7 @@ namespace NepslidingTools.testModel
             this.gdno_tb.Location = new System.Drawing.Point(96, 30);
             this.gdno_tb.Name = "gdno_tb";
             this.gdno_tb.PreventEnterBeep = true;
-            this.gdno_tb.Size = new System.Drawing.Size(157, 22);
+            this.gdno_tb.Size = new System.Drawing.Size(157, 26);
             this.gdno_tb.TabIndex = 25;
             // 
             // bomname_tb
@@ -159,7 +159,7 @@ namespace NepslidingTools.testModel
             this.bomname_tb.Location = new System.Drawing.Point(96, 204);
             this.bomname_tb.Name = "bomname_tb";
             this.bomname_tb.PreventEnterBeep = true;
-            this.bomname_tb.Size = new System.Drawing.Size(157, 22);
+            this.bomname_tb.Size = new System.Drawing.Size(157, 26);
             this.bomname_tb.TabIndex = 24;
             // 
             // send_bt
@@ -486,12 +486,12 @@ namespace NepslidingTools.testModel
             this.textbox_ljh.ForeColor = System.Drawing.Color.Black;
             this.textbox_ljh.Location = new System.Drawing.Point(93, 6);
             this.textbox_ljh.Name = "textbox_ljh";
-            this.textbox_ljh.Size = new System.Drawing.Size(257, 22);
+            this.textbox_ljh.Size = new System.Drawing.Size(257, 26);
             this.textbox_ljh.TabIndex = 35;
             // 
             // TestBZFrom
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(801, 728);
             this.Controls.Add(this.textbox_ljh);
@@ -503,6 +503,7 @@ namespace NepslidingTools.testModel
             this.Controls.Add(this.bom_no_lab);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "TestBZFrom";
             this.Text = "²âÁ¿±ê×¼";
             this.Deactivate += new System.EventHandler(this.TestBZFrom_Deactivate);

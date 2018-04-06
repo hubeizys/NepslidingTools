@@ -17,6 +17,8 @@ namespace NepslidingTools
         public static string gdvid;
         public static string txtstr;
         public static string txtbh;
+        public static float hg;
+        public static float qb;  
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

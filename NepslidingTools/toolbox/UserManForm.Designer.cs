@@ -106,13 +106,13 @@ namespace NepslidingTools.toolbox
             this.head_tlp.Controls.Add(this.username_tb, 1, 0);
             this.head_tlp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.head_tlp.ForeColor = System.Drawing.Color.Black;
-            this.head_tlp.Location = new System.Drawing.Point(3, 18);
+            this.head_tlp.Location = new System.Drawing.Point(3, 22);
             this.head_tlp.Name = "head_tlp";
             this.head_tlp.RowCount = 3;
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.head_tlp.Size = new System.Drawing.Size(653, 93);
+            this.head_tlp.Size = new System.Drawing.Size(653, 89);
             this.head_tlp.TabIndex = 0;
             // 
             // query_bt
@@ -201,7 +201,7 @@ namespace NepslidingTools.toolbox
             this.time_dtp.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.time_dtp.MonthCalendar.TodayButtonVisible = true;
             this.time_dtp.Name = "time_dtp";
-            this.time_dtp.Size = new System.Drawing.Size(200, 26);
+            this.time_dtp.Size = new System.Drawing.Size(200, 30);
             this.time_dtp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.time_dtp.TabIndex = 3;
             // 
@@ -230,7 +230,7 @@ namespace NepslidingTools.toolbox
             this.username_tb.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.username_tb.Name = "username_tb";
             this.username_tb.PreventEnterBeep = true;
-            this.username_tb.Size = new System.Drawing.Size(114, 26);
+            this.username_tb.Size = new System.Drawing.Size(114, 30);
             this.username_tb.TabIndex = 4;
             // 
             // caozuo_gb
@@ -253,9 +253,9 @@ namespace NepslidingTools.toolbox
             this.flowLayoutPanel1.Controls.Add(this.info_bt);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.ForeColor = System.Drawing.Color.Black;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 18);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 22);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(653, 33);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(653, 29);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // add_bt
@@ -380,7 +380,7 @@ namespace NepslidingTools.toolbox
             // 
             // UserManForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(665, 652);
             this.Controls.Add(this.main_tlp);
