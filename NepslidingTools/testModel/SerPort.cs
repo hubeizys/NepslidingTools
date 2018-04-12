@@ -27,18 +27,26 @@ namespace NepslidingTools.testModel
             sp1.RtsEnable = true;
             //设置数据读取超时为1秒
             sp1.ReadTimeout = 10000;
-            sp1.PortName = "COM3";
+            //sp1.PortName = "COM3";
+            sp1.PortName = Program.DK;
             if (sp1.IsOpen == true)//如果打开状态，则先关闭一下
             {
                 sp1.Close();
             }
-
-            sp1.Open();     //打开串口
-            if (!sp1.IsOpen) //如果没打开
+            try
             {
-                MessageBox.Show("串口没有打开！", "Error");
-                return;
+                sp1.Open();     //打开串口
+                if (!sp1.IsOpen) //如果没打开
+                {
+                    MessageBox.Show("串口没有打开！", "Error");
+                    return;
+                }
             }
+            catch(Exception err)
+            {
+                MessageBox.Show(err.Message+ "   " + "请检查端口正常后再接入数据");
+            }
+
         }
 
 

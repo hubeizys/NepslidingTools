@@ -141,7 +141,7 @@ namespace NepslidingTools.toolbox
             this.textBoxX_autolj.Location = new System.Drawing.Point(9, 39);
             this.textBoxX_autolj.Name = "textBoxX_autolj";
             this.textBoxX_autolj.PreventEnterBeep = true;
-            this.textBoxX_autolj.Size = new System.Drawing.Size(269, 26);
+            this.textBoxX_autolj.Size = new System.Drawing.Size(269, 22);
             this.textBoxX_autolj.TabIndex = 6;
             this.textBoxX_autolj.WatermarkText = "输入零件号或者名称或者条码都可以查询";
             // 
@@ -457,7 +457,7 @@ namespace NepslidingTools.toolbox
             // 
             // BomFrom
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(747, 608);
             this.Controls.Add(this.main_tlp);

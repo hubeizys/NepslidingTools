@@ -6,11 +6,11 @@ using Maticsoft.DBUtility;//Please add references
 namespace Maticsoft.DAL
 {
 	/// <summary>
-	/// 数据访问类:test
+	/// 数据访问类:port
 	/// </summary>
-	public partial class test
+	public partial class port
 	{
-		public test()
+		public port()
 		{}
 		#region  BasicMethod
 
@@ -19,7 +19,7 @@ namespace Maticsoft.DAL
 		/// </summary>
 		public int GetMaxId()
 		{
-		return DbHelperMySQL.GetMaxID("id", "test"); 
+		return DbHelperMySQL.GetMaxID("id", "port"); 
 		}
 
 		/// <summary>
@@ -28,11 +28,10 @@ namespace Maticsoft.DAL
 		public bool Exists(int id)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) from test");
-			strSql.Append(" where id=@id");
+			strSql.Append("select count(1) from port");
+			strSql.Append(" where id=@id ");
 			MySqlParameter[] parameters = {
-					new MySqlParameter("@id", MySqlDbType.Int32)
-			};
+					new MySqlParameter("@id", MySqlDbType.Int32,255)			};
 			parameters[0].Value = id;
 
 			return DbHelperMySQL.Exists(strSql.ToString(),parameters);
@@ -42,24 +41,18 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 增加一条数据
 		/// </summary>
-		public bool Add(Maticsoft.Model.test model)
+		public bool Add(Maticsoft.Model.port model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("insert into test(");
-			strSql.Append("PN,measureb,time,step1,OKorNG)");
+			strSql.Append("insert into port(");
+			strSql.Append("id,ports)");
 			strSql.Append(" values (");
-			strSql.Append("@PN,@measureb,@time,@step1,@OKorNG)");
+			strSql.Append("@id,@ports)");
 			MySqlParameter[] parameters = {
-					new MySqlParameter("@PN", MySqlDbType.VarChar,64),
-					new MySqlParameter("@measureb", MySqlDbType.VarChar,64),
-					new MySqlParameter("@time", MySqlDbType.DateTime),
-					new MySqlParameter("@step1", MySqlDbType.VarChar,64),
-					new MySqlParameter("@OKorNG", MySqlDbType.VarChar,64)};
-			parameters[0].Value = model.PN;
-			parameters[1].Value = model.measureb;
-			parameters[2].Value = model.time;
-			parameters[3].Value = model.step1;
-			parameters[4].Value = model.OKorNG;
+					new MySqlParameter("@id", MySqlDbType.Int32,255),
+					new MySqlParameter("@ports", MySqlDbType.VarChar,255)};
+			parameters[0].Value = model.id;
+			parameters[1].Value = model.ports;
 
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -74,29 +67,17 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 更新一条数据
 		/// </summary>
-		public bool Update(Maticsoft.Model.test model)
+		public bool Update(Maticsoft.Model.port model)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("update test set ");
-			strSql.Append("PN=@PN,");
-			strSql.Append("measureb=@measureb,");
-			strSql.Append("time=@time,");
-			strSql.Append("step1=@step1,");
-			strSql.Append("OKorNG=@OKorNG");
-			strSql.Append(" where id=@id");
+			strSql.Append("update port set ");
+			strSql.Append("ports=@ports");
+			strSql.Append(" where id=@id ");
 			MySqlParameter[] parameters = {
-					new MySqlParameter("@PN", MySqlDbType.VarChar,64),
-					new MySqlParameter("@measureb", MySqlDbType.VarChar,64),
-					new MySqlParameter("@time", MySqlDbType.DateTime),
-					new MySqlParameter("@step1", MySqlDbType.VarChar,64),
-					new MySqlParameter("@OKorNG", MySqlDbType.VarChar,64),
-					new MySqlParameter("@id", MySqlDbType.Int32,64)};
-			parameters[0].Value = model.PN;
-			parameters[1].Value = model.measureb;
-			parameters[2].Value = model.time;
-			parameters[3].Value = model.step1;
-			parameters[4].Value = model.OKorNG;
-			parameters[5].Value = model.id;
+					new MySqlParameter("@ports", MySqlDbType.VarChar,255),
+					new MySqlParameter("@id", MySqlDbType.Int32,255)};
+			parameters[0].Value = model.ports;
+			parameters[1].Value = model.id;
 
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString(),parameters);
 			if (rows > 0)
@@ -116,11 +97,10 @@ namespace Maticsoft.DAL
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from test ");
-			strSql.Append(" where id=@id");
+			strSql.Append("delete from port ");
+			strSql.Append(" where id=@id ");
 			MySqlParameter[] parameters = {
-					new MySqlParameter("@id", MySqlDbType.Int32)
-			};
+					new MySqlParameter("@id", MySqlDbType.Int32,255)			};
 			parameters[0].Value = id;
 
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString(),parameters);
@@ -139,7 +119,7 @@ namespace Maticsoft.DAL
 		public bool DeleteList(string idlist )
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("delete from test ");
+			strSql.Append("delete from port ");
 			strSql.Append(" where id in ("+idlist + ")  ");
 			int rows=DbHelperMySQL.ExecuteSql(strSql.ToString());
 			if (rows > 0)
@@ -156,18 +136,17 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public Maticsoft.Model.test GetModel(int id)
+		public Maticsoft.Model.port GetModel(int id)
 		{
 			
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select id,PN,measureb,time,step1,OKorNG from test ");
-			strSql.Append(" where id=@id");
+			strSql.Append("select id,ports from port ");
+			strSql.Append(" where id=@id ");
 			MySqlParameter[] parameters = {
-					new MySqlParameter("@id", MySqlDbType.Int32)
-			};
+					new MySqlParameter("@id", MySqlDbType.Int32,255)			};
 			parameters[0].Value = id;
 
-			Maticsoft.Model.test model=new Maticsoft.Model.test();
+			Maticsoft.Model.port model=new Maticsoft.Model.port();
 			DataSet ds=DbHelperMySQL.Query(strSql.ToString(),parameters);
 			if(ds.Tables[0].Rows.Count>0)
 			{
@@ -183,34 +162,18 @@ namespace Maticsoft.DAL
 		/// <summary>
 		/// 得到一个对象实体
 		/// </summary>
-		public Maticsoft.Model.test DataRowToModel(DataRow row)
+		public Maticsoft.Model.port DataRowToModel(DataRow row)
 		{
-			Maticsoft.Model.test model=new Maticsoft.Model.test();
+			Maticsoft.Model.port model=new Maticsoft.Model.port();
 			if (row != null)
 			{
 				if(row["id"]!=null && row["id"].ToString()!="")
 				{
 					model.id=int.Parse(row["id"].ToString());
 				}
-				if(row["PN"]!=null)
+				if(row["ports"]!=null)
 				{
-					model.PN=row["PN"].ToString();
-				}
-				if(row["measureb"]!=null)
-				{
-					model.measureb=row["measureb"].ToString();
-				}
-				if(row["time"]!=null && row["time"].ToString()!="")
-				{
-					model.time=DateTime.Parse(row["time"].ToString());
-				}
-				if(row["step1"]!=null)
-				{
-					model.step1=row["step1"].ToString();
-				}
-				if(row["OKorNG"]!=null)
-				{
-					model.OKorNG=row["OKorNG"].ToString();
+					model.ports=row["ports"].ToString();
 				}
 			}
 			return model;
@@ -222,8 +185,8 @@ namespace Maticsoft.DAL
 		public DataSet GetList(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select id,PN,measureb,time,step1,OKorNG ");
-			strSql.Append(" FROM test ");
+			strSql.Append("select id,ports ");
+			strSql.Append(" FROM port ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -237,7 +200,7 @@ namespace Maticsoft.DAL
 		public int GetRecordCount(string strWhere)
 		{
 			StringBuilder strSql=new StringBuilder();
-			strSql.Append("select count(1) FROM test ");
+			strSql.Append("select count(1) FROM port ");
 			if(strWhere.Trim()!="")
 			{
 				strSql.Append(" where "+strWhere);
@@ -268,7 +231,7 @@ namespace Maticsoft.DAL
 			{
 				strSql.Append("order by T.id desc");
 			}
-			strSql.Append(")AS Row, T.*  from test T ");
+			strSql.Append(")AS Row, T.*  from port T ");
 			if (!string.IsNullOrEmpty(strWhere.Trim()))
 			{
 				strSql.Append(" WHERE " + strWhere);
@@ -293,7 +256,7 @@ namespace Maticsoft.DAL
 					new MySqlParameter("@OrderType", MySqlDbType.Bit),
 					new MySqlParameter("@strWhere", MySqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "test";
+			parameters[0].Value = "port";
 			parameters[1].Value = "id";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;

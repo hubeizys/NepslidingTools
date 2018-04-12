@@ -136,15 +136,15 @@ namespace NepslidingTools.testModel
             this.tabPane1.Controls.Add(this.tabNavigationPage3);
             this.tabPane1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabPane1.ForeColor = System.Drawing.Color.Black;
-            this.tabPane1.Location = new System.Drawing.Point(3, 22);
+            this.tabPane1.Location = new System.Drawing.Point(3, 18);
             this.tabPane1.Name = "tabPane1";
             this.tabPane1.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
             this.tabNavigationPage3});
-            this.tabPane1.RegularSize = new System.Drawing.Size(480, 119);
+            this.tabPane1.RegularSize = new System.Drawing.Size(480, 123);
             this.tabPane1.RibbonAndBarsMergeStyle = DevExpress.XtraBars.Docking2010.Views.RibbonAndBarsMergeStyle.Always;
             this.tabPane1.SelectedPage = this.tabNavigationPage3;
             this.tabPane1.SelectedPageIndex = 0;
-            this.tabPane1.Size = new System.Drawing.Size(480, 119);
+            this.tabPane1.Size = new System.Drawing.Size(480, 123);
             this.tabPane1.TabIndex = 0;
             this.tabPane1.Text = "tabPane1";
             this.tabPane1.Click += new System.EventHandler(this.tabPane1_Click);
@@ -158,7 +158,7 @@ namespace NepslidingTools.testModel
             this.tabNavigationPage3.Caption = "最近测量的零件";
             this.tabNavigationPage3.Controls.Add(this.last_flp);
             this.tabNavigationPage3.Name = "tabNavigationPage3";
-            this.tabNavigationPage3.Size = new System.Drawing.Size(456, 69);
+            this.tabNavigationPage3.Size = new System.Drawing.Size(460, 83);
             // 
             // last_flp
             // 
@@ -171,7 +171,7 @@ namespace NepslidingTools.testModel
             this.last_flp.ForeColor = System.Drawing.Color.Black;
             this.last_flp.Location = new System.Drawing.Point(0, 0);
             this.last_flp.Name = "last_flp";
-            this.last_flp.Size = new System.Drawing.Size(456, 69);
+            this.last_flp.Size = new System.Drawing.Size(460, 83);
             this.last_flp.TabIndex = 0;
             // 
             // buttonX1
@@ -285,7 +285,7 @@ namespace NepslidingTools.testModel
             this.textBoxX1.Location = new System.Drawing.Point(13, 33);
             this.textBoxX1.Name = "textBoxX1";
             this.textBoxX1.PreventEnterBeep = true;
-            this.textBoxX1.Size = new System.Drawing.Size(224, 26);
+            this.textBoxX1.Size = new System.Drawing.Size(224, 22);
             this.textBoxX1.TabIndex = 9;
             this.textBoxX1.WatermarkText = "扫描或者手动录入编号";
             // 
@@ -295,7 +295,7 @@ namespace NepslidingTools.testModel
             // 
             // DevSt
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(580, 393);
             this.Controls.Add(this.main_tlp);

@@ -39,19 +39,20 @@ namespace NepslidingTools
             {
                 zh = ds.Tables[0].Rows[i]["user"].ToString();
                 mm = ds.Tables[0].Rows[i]["password"].ToString();
-            }
+           
 
                 if (txtzh.Text == zh && txtmm.Text == mm)
                 {
                     MainFrom mf = new MainFrom();
                     mf.Show();
+                    break;
                 }
                 else
                 {
                     MessageBox.Show("密码或账号不正确");
                     return;
                 }
-            
+            }
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -64,17 +65,19 @@ namespace NepslidingTools
             {
                 zh = ds.Tables[0].Rows[i]["user"].ToString();
                 mm = ds.Tables[0].Rows[i]["password"].ToString();
-            }
+            
 
             if (txtzh.Text == zh && txtmm.Text == mm)
             {
                 MainFrom mf = new MainFrom();
                 mf.Show();
+                    break;
             }
             else
             {
                 MessageBox.Show("密码或账号不正确");
                 return;
+            }
             }
             //MainFrom mf = new MainFrom();
             //mf.Show();

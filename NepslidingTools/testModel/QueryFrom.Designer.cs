@@ -131,12 +131,12 @@ namespace NepslidingTools.testModel
             this.head_tpl.Controls.Add(this.button3, 6, 1);
             this.head_tpl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.head_tpl.ForeColor = System.Drawing.Color.Black;
-            this.head_tpl.Location = new System.Drawing.Point(3, 22);
+            this.head_tpl.Location = new System.Drawing.Point(3, 18);
             this.head_tpl.Name = "head_tpl";
             this.head_tpl.RowCount = 2;
             this.head_tpl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.head_tpl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.head_tpl.Size = new System.Drawing.Size(895, 69);
+            this.head_tpl.Size = new System.Drawing.Size(895, 73);
             this.head_tpl.TabIndex = 3;
             // 
             // textBox1
@@ -153,7 +153,7 @@ namespace NepslidingTools.testModel
             this.textBox1.Location = new System.Drawing.Point(343, 50);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(158, 26);
+            this.textBox1.Size = new System.Drawing.Size(158, 22);
             this.textBox1.TabIndex = 14;
             // 
             // label5
@@ -163,7 +163,7 @@ namespace NepslidingTools.testModel
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(213, 40);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(124, 29);
+            this.label5.Size = new System.Drawing.Size(124, 33);
             this.label5.TabIndex = 13;
             this.label5.Text = "工作站：";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -175,7 +175,7 @@ namespace NepslidingTools.testModel
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(3, 40);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(84, 29);
+            this.label4.Size = new System.Drawing.Size(84, 33);
             this.label4.TabIndex = 9;
             this.label4.Text = "结果：";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -189,7 +189,7 @@ namespace NepslidingTools.testModel
             this.dtp.ForeColor = System.Drawing.Color.Black;
             this.dtp.Location = new System.Drawing.Point(537, 3);
             this.dtp.Name = "dtp";
-            this.dtp.Size = new System.Drawing.Size(158, 37);
+            this.dtp.Size = new System.Drawing.Size(158, 31);
             this.dtp.TabIndex = 6;
             this.dtp.Value = new System.DateTime(2018, 4, 4, 15, 39, 0, 0);
             // 
@@ -237,7 +237,7 @@ namespace NepslidingTools.testModel
             this.timeselect_dtp.ForeColor = System.Drawing.Color.Black;
             this.timeselect_dtp.Location = new System.Drawing.Point(343, 3);
             this.timeselect_dtp.Name = "timeselect_dtp";
-            this.timeselect_dtp.Size = new System.Drawing.Size(158, 37);
+            this.timeselect_dtp.Size = new System.Drawing.Size(158, 31);
             this.timeselect_dtp.TabIndex = 3;
             // 
             // query_bt
@@ -286,7 +286,7 @@ namespace NepslidingTools.testModel
             this.textBox_ljhao.Location = new System.Drawing.Point(93, 10);
             this.textBox_ljhao.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.textBox_ljhao.Name = "textBox_ljhao";
-            this.textBox_ljhao.Size = new System.Drawing.Size(114, 26);
+            this.textBox_ljhao.Size = new System.Drawing.Size(114, 22);
             this.textBox_ljhao.TabIndex = 12;
             // 
             // button3
@@ -516,7 +516,7 @@ namespace NepslidingTools.testModel
             // 
             // QueryFrom
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(909, 732);
             this.Controls.Add(this.tlp_main);
