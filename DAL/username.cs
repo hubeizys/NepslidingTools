@@ -219,6 +219,7 @@ namespace Maticsoft.DAL
 			{
 				strSql.Append(" where "+strWhere);
 			}
+            Console.WriteLine(strSql.ToString());
 			return DbHelperMySQL.Query(strSql.ToString());
 		}
 

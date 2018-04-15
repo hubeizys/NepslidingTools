@@ -3,3 +3,9 @@ C:\Users\Administrator\NepslidingTools\Model\bin\Debug\Maticsoft.Model.pdb
 C:\Users\Administrator\NepslidingTools\Model\obj\Debug\Maticsoft.Model.dll
 C:\Users\Administrator\NepslidingTools\Model\obj\Debug\Maticsoft.Model.pdb
 C:\Users\Administrator\NepslidingTools\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+D:\360Downloads\NepslidingTools\NepslidingTools\Model\bin\Debug\Maticsoft.Model.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Model\bin\Debug\Maticsoft.Model.pdb
+D:\360Downloads\NepslidingTools\NepslidingTools\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+D:\360Downloads\NepslidingTools\NepslidingTools\Model\obj\Debug\Maticsoft.Model.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Model\obj\Debug\Maticsoft.Model.pdb
+D:\360Downloads\NepslidingTools\NepslidingTools\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

@@ -1,2 +1,7 @@
+**/bin/
+**/obj/
 NepslidingTools/bin/
 NepslidingTools/obj/
+/packages/Microsoft.Office.Interop.Excel.15.0.4795.1000
+*.pdb
+/.vs/NepslidingTools/v15

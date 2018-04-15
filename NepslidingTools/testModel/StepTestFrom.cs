@@ -39,123 +39,131 @@ namespace NepslidingTools.testModel
         }
 
         private void StepTestFrom_Load(object sender, EventArgs e)
-        {            
-            lble.Text = Program.txtbh;
-            DataTable dtb = new DataTable();
-            #region 构建datatable 表
-            Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            string st = string.Format("PN = '{0}'", lble.Text);
-            DataSet ds1 = mes.GetList(st);
-            dtb.Columns.Add("测试编号");
-            dtb.Columns.Add("测试时间");
-           
-            for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
+        {
+            MessageBox.Show("界面开始了");
+            try
             {
-                string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-                comboBox1.Text = sg;                                
-                dtb.Columns.Add( sg.ToString());                
-                //dgv1.DataSource = ds.Tables[0];                
-            }
-            dtb.Columns.Add("测试结果");
-            #endregion
-            #region 填充数据
-            Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-            string TS = string.Format("PN = '{0}'", lble.Text);
-            DataSet dst = tst.GetList(TS);
-            DataTable test_datatable = dst.Tables[0];
-            int test_count = test_datatable.Rows.Count;
-            for(int start_test =0;start_test < test_count ; start_test ++)
-            {
-                string bh= test_datatable.Rows[start_test]["measureb"].ToString();
-                string sj= test_datatable.Rows[start_test]["time"].ToString();
-                string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
-                //string stp1 = dst.Tables[0].Rows[i][4].ToString();
-                string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                int sp_num = 0;                
-                DataRow dr = dtb.NewRow();
-                dr["测试编号"]= bh;
-                dr["测试时间"]= sj;
-                dr["测试结果"]= test_datatable.Rows[start_test]["OKorNG"].ToString();
-                foreach (string j in sp)
+                if (StepTestFrom.theApplication == null)
                 {
-                    sp_num++;
-                    string col_name = string.Format("步骤{0}", sp_num);
-                    dr[col_name] = j;                 
-                }  
-                dtb.Rows.Add(dr);        
-            }
-            #endregion   
-            dgv1.DataSource =dtb;
+                    StepTestFrom.theApplication = new AnyCAD.Platform.Application();
+                    StepTestFrom.theApplication.Initialize();
+                }
+                Size size = panel3d.Size;
+                // Create the 3d View
+                theView = theApplication.CreateView(panel3d.Handle.ToInt32(), size.Width, size.Height);
+
+                theView.RequestDraw();
+                Console.WriteLine(theView.ToString());
+
+                lble.Text = Program.txtbh;
+                DataTable dtb = new DataTable();
+                #region 构建datatable 表
+                Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
+                string st = string.Format("PN = '{0}'", lble.Text);
+                DataSet ds1 = mes.GetList(st);
+                dtb.Columns.Add("测试编号");
+                dtb.Columns.Add("测试时间");
+           
+                for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
+                {
+                    string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
+                    comboBox1.Text = sg;                                
+                    dtb.Columns.Add( sg.ToString());                
+                    //dgv1.DataSource = ds.Tables[0];                
+                }
+                dtb.Columns.Add("测试结果");
+                #endregion
+                #region 填充数据
+                Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
+                string TS = string.Format("PN = '{0}'", lble.Text);
+                DataSet dst = tst.GetList(TS);
+                DataTable test_datatable = dst.Tables[0];
+                int test_count = test_datatable.Rows.Count;
+                for(int start_test =0;start_test < test_count ; start_test ++)
+                {
+                    string bh= test_datatable.Rows[start_test]["measureb"].ToString();
+                    string sj= test_datatable.Rows[start_test]["time"].ToString();
+                    string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
+                    //string stp1 = dst.Tables[0].Rows[i][4].ToString();
+                    string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
+                    int sp_num = 0;                
+                    DataRow dr = dtb.NewRow();
+                    dr["测试编号"]= bh;
+                    dr["测试时间"]= sj;
+                    dr["测试结果"]= test_datatable.Rows[start_test]["OKorNG"].ToString();
+                    foreach (string j in sp)
+                    {
+                        sp_num++;
+                        string col_name = string.Format("步骤{0}", sp_num);
+                        dr[col_name] = j;                 
+                    }  
+                    dtb.Rows.Add(dr);        
+                }
+                #endregion   
+                dgv1.DataSource =dtb;
             
-            //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
-            //string aa = string.Format("PN = '{0}'", lble.Text);
-            //DataSet ds = usec.GetList(aa);
-            //string stp1 = ds.Tables[0].Rows[1][4].ToString();
-            //string[] sp = stp1.Split(new char[] { '/' });//获取数据集合
-            //foreach (string j in sp) ;
+                //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
+                //string aa = string.Format("PN = '{0}'", lble.Text);
+                //DataSet ds = usec.GetList(aa);
+                //string stp1 = ds.Tables[0].Rows[1][4].ToString();
+                //string[] sp = stp1.Split(new char[] { '/' });//获取数据集合
+                //foreach (string j in sp) ;
            
 
-            //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
-            //string aa = string.Format("PN = '{0}'", lble.Text);
-            //DataSet ds = usec.GetList(aa);
-            ////DataSet ds = usec.GetAllList();
-            //dgv1.DataSource = ds.Tables[0];
+                //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
+                //string aa = string.Format("PN = '{0}'", lble.Text);
+                //DataSet ds = usec.GetList(aa);
+                ////DataSet ds = usec.GetAllList();
+                //dgv1.DataSource = ds.Tables[0];
 
-            //if (comboBox1.Text=="第一步") {
-            Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-            string st1 = string.Format("PN = '{0}'", lble.Text);
-            DataSet ds11 = mes1.GetList(st1);
-            //DataTable dt = new DataTable();
-            //ds1.Tables.Add(dt);
+                //if (comboBox1.Text=="第一步") {
+                Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
+                string st1 = string.Format("PN = '{0}'", lble.Text);
+                DataSet ds11 = mes1.GetList(st1);
+                //DataTable dt = new DataTable();
+                //ds1.Tables.Add(dt);
             
-            for (int i=0; i<ds11.Tables[0].Rows.Count;i++)
-            {
-                txtll.Text = ds11.Tables[0].Rows[i][4].ToString();
-                comboBox1.Items.Add("步骤"+ds11.Tables[0].Rows[i]["step"].ToString());
-            }
-              
-           
-            // }
+                for (int i=0; i<ds11.Tables[0].Rows.Count;i++)
+                {
+                    txtll.Text = ds11.Tables[0].Rows[i][4].ToString();
+                    comboBox1.Items.Add("步骤"+ds11.Tables[0].Rows[i]["step"].ToString());
+                }
+                // }
 
 
-            SerPort sp_obj = new SerPort();
-             sp_obj.init_port();
-            sp_obj.Processfunc = jiangyaozhixin;
+                SerPort sp_obj = new SerPort();
+                 sp_obj.init_port();
+                sp_obj.Processfunc = jiangyaozhixin;
                       
-            global.CurActive = "steptest";
-            //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
-            //this.Size = ScreenArea.Size;
-            //Location = (Point)new Size(0, 0);
-            //this.TopMost = true;
-            //this.Activate();
-            //DataTable dt = new DataTable();//创建表
-            //dt.Columns.Add("nearNo", typeof(string));//添加列
-            //dt.Columns.Add("TestTime", typeof(DateTime));
-            //dt.Columns.Add("OkOrNg", typeof(String));
-            //dt.Columns.Add("step1", typeof(String));
-            //dt.Columns.Add("step2", typeof(String));
-            //dt.Columns.Add("step3", typeof(String));
-            //dt.Columns.Add("step4", typeof(String));
-            //dt.Columns.Add("step5", typeof(String));
-            //dt.Rows.Add(new object[] { "2017113212200101", DateTime.Now, "OK", "0.1", "0", "1", "0.12", "-0.1" });//添加行
-            //dt.Rows.Add(new object[] { "2017113212200102", DateTime.Now, "NG", "-0.2", "0", "0.1", "0", "0" });
-            //dt.Rows.Add(new object[] { "2017113212200103", DateTime.Now, "OK", "0.1", "-0.1", "0.2", "0", "0.1" });
-            //this.dgv1.DataSource = dt;
-            if (StepTestFrom.theApplication == null)
-            {
-                StepTestFrom.theApplication = new AnyCAD.Platform.Application();
-                StepTestFrom.theApplication.Initialize();
+                global.CurActive = "steptest";
+                //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
+                //this.Size = ScreenArea.Size;
+                //Location = (Point)new Size(0, 0);
+                //this.TopMost = true;
+                //this.Activate();
+                //DataTable dt = new DataTable();//创建表
+                //dt.Columns.Add("nearNo", typeof(string));//添加列
+                //dt.Columns.Add("TestTime", typeof(DateTime));
+                //dt.Columns.Add("OkOrNg", typeof(String));
+                //dt.Columns.Add("step1", typeof(String));
+                //dt.Columns.Add("step2", typeof(String));
+                //dt.Columns.Add("step3", typeof(String));
+                //dt.Columns.Add("step4", typeof(String));
+                //dt.Columns.Add("step5", typeof(String));
+                //dt.Rows.Add(new object[] { "2017113212200101", DateTime.Now, "OK", "0.1", "0", "1", "0.12", "-0.1" });//添加行
+                //dt.Rows.Add(new object[] { "2017113212200102", DateTime.Now, "NG", "-0.2", "0", "0.1", "0", "0" });
+                //dt.Rows.Add(new object[] { "2017113212200103", DateTime.Now, "OK", "0.1", "-0.1", "0.2", "0", "0.1" });
+                //this.dgv1.DataSource = dt;
+
+
             }
-
-            Size size = panel3d.Size;
-
-            // Create the 3d View
-            theView = theApplication.CreateView(panel3d.Handle.ToInt32(), size.Width, size.Height);
-
-            theView.RequestDraw();
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
 
             this.timer1.Enabled = true;
-            this.test();
+            //this.test();
         }
 
         private SceneNode ShowTopoShape(TopoShape topoShape, int id)
@@ -230,6 +238,7 @@ namespace NepslidingTools.testModel
 
         private void panel3d_MouseMove(object sender, MouseEventArgs e)
         {
+            MessageBox.Show(theView.ToString());
             ViewUtility.OnMouseMoveEvent(theView, e);
         }
 
@@ -615,6 +624,7 @@ namespace NepslidingTools.testModel
                 {
                     textcl.Text = "";
                     comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
+                    Maticsoft.BLL.measures aa = new Maticsoft.BLL.measures();
                     Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
                     string st1 = string.Format("PN = '{0}' and  step='{1}'",lble.Text, comboBox1.Text);
                     DataSet ds11 = mes1.GetList(st1);
@@ -625,6 +635,11 @@ namespace NepslidingTools.testModel
                     }
                 }
             }
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

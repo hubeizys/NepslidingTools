@@ -147,7 +147,7 @@ namespace NepslidingTools.toolbox
             //    filepath = opf.FileName;
             //}
             DataSet ds = new DataSet();
-            DataTable dt = null;
+            System.Data.DataTable dt = null;
             OpenFileDialog sflg = new OpenFileDialog();
             sflg.Filter = "Excel(*.xls)|*.xls|Excel(*.xlsx)|*.xlsx";
             if (sflg.ShowDialog() == System.Windows.Forms.DialogResult.Cancel)
@@ -170,7 +170,7 @@ namespace NepslidingTools.toolbox
                 int lastCellNum = row.LastCellNum;
                 if (firstCellNum == lastCellNum) continue;
 
-                dt = new DataTable(sheet.SheetName);
+                dt = new System.Data.DataTable(sheet.SheetName);
                 dt.Columns.Add("PN", typeof(string));
                 //MessageBox.Show(dt.Columns["bushe_xianshu"].DataType.ToString());
                 //dt.Columns.Add("", typeof(int));

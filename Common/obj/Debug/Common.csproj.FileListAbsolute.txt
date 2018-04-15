@@ -7,3 +7,14 @@ C:\Users\Administrator\NepslidingTools\Common\bin\Debug\OWC10Chart.dll
 C:\Users\Administrator\NepslidingTools\Common\obj\Debug\Maticsoft.Common.dll
 C:\Users\Administrator\NepslidingTools\Common\obj\Debug\Maticsoft.Common.pdb
 C:\Users\Administrator\NepslidingTools\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\Maticsoft.Common.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\Maticsoft.Common.pdb
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\COM.Excel.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\Excel.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\OpenSmtp.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\OWC10Chart.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Common.csproj.CopyComplete
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Maticsoft.Common.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Maticsoft.Common.pdb
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
