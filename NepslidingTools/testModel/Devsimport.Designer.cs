@@ -29,10 +29,12 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem7 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem8 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem9 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.importdev_st = new DevExpress.XtraWizard.WizardControl();
-            this.button1 = new System.Windows.Forms.Button();
             this.selectdev_wiz = new DevExpress.XtraWizard.WelcomeWizardPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radioGroup1 = new DevExpress.XtraEditors.RadioGroup();
@@ -43,7 +45,6 @@ namespace NepslidingTools.testModel
             this.textBoxX2 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.wizardPage2 = new DevExpress.XtraWizard.WizardPage();
             this.textBoxX1 = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.button2 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.importdev_st)).BeginInit();
             this.importdev_st.SuspendLayout();
@@ -73,8 +74,6 @@ namespace NepslidingTools.testModel
             // 
             // importdev_st
             // 
-            this.importdev_st.Controls.Add(this.button2);
-            this.importdev_st.Controls.Add(this.button1);
             this.importdev_st.Controls.Add(this.selectdev_wiz);
             this.importdev_st.Controls.Add(this.wizardPage1);
             this.importdev_st.Controls.Add(this.completionWizardPage1);
@@ -94,20 +93,10 @@ namespace NepslidingTools.testModel
             this.importdev_st.FinishClick += new System.ComponentModel.CancelEventHandler(this.importdev_st_FinishClick);
             this.importdev_st.NextClick += new DevExpress.XtraWizard.WizardCommandButtonClickEventHandler(this.importdev_st_NextClick);
             // 
-            // button1
-            // 
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(361, 358);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // selectdev_wiz
             // 
             this.selectdev_wiz.Controls.Add(this.groupBox2);
+            this.selectdev_wiz.Enabled = true;
             this.selectdev_wiz.Name = "selectdev_wiz";
             this.selectdev_wiz.Size = new System.Drawing.Size(565, 228);
             this.selectdev_wiz.Text = "选择硬件类型";
@@ -123,26 +112,37 @@ namespace NepslidingTools.testModel
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "选择类型";
+            this.groupBox2.CursorChanged += new System.EventHandler(this.groupBox2_CursorChanged);
             // 
             // radioGroup1
             // 
             this.radioGroup1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.radioGroup1.Location = new System.Drawing.Point(3, 18);
             this.radioGroup1.Name = "radioGroup1";
+            // 
+            // 
+            // 
             this.radioGroup1.Properties.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
+            radioGroupItem7.Description = "扫描枪";
+            radioGroupItem7.Value = null;
+            radioGroupItem8.Description = "热敏打印机";
+            radioGroupItem8.Value = null;
+            radioGroupItem9.Description = "卡尺";
+            radioGroupItem9.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "扫描枪"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "热敏打印机"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "卡尺")});
+            radioGroupItem7,
+            radioGroupItem8,
+            radioGroupItem9});
             this.radioGroup1.Size = new System.Drawing.Size(559, 207);
             this.radioGroup1.TabIndex = 0;
             // 
             // wizardPage1
             // 
             this.wizardPage1.Controls.Add(this.groupBox1);
+            this.wizardPage1.Enabled = true;
             this.wizardPage1.Name = "wizardPage1";
             this.wizardPage1.Size = new System.Drawing.Size(565, 228);
             this.wizardPage1.Text = "请选择设备";
@@ -191,6 +191,7 @@ namespace NepslidingTools.testModel
             // completionWizardPage1
             // 
             this.completionWizardPage1.Controls.Add(this.textBoxX2);
+            this.completionWizardPage1.Enabled = true;
             this.completionWizardPage1.Name = "completionWizardPage1";
             this.completionWizardPage1.Size = new System.Drawing.Size(565, 228);
             this.completionWizardPage1.Text = "测试成功了！请命名";
@@ -214,6 +215,7 @@ namespace NepslidingTools.testModel
             // wizardPage2
             // 
             this.wizardPage2.Controls.Add(this.textBoxX1);
+            this.wizardPage2.Enabled = true;
             this.wizardPage2.Name = "wizardPage2";
             this.wizardPage2.Size = new System.Drawing.Size(565, 228);
             this.wizardPage2.Text = "等待com的测试数据";
@@ -234,16 +236,6 @@ namespace NepslidingTools.testModel
             this.textBoxX1.Size = new System.Drawing.Size(308, 22);
             this.textBoxX1.TabIndex = 0;
             this.textBoxX1.Text = "00000011";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(309, 371);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 15;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Devsimport
             // 
@@ -285,7 +277,5 @@ namespace NepslidingTools.testModel
         private DevExpress.XtraWizard.WizardPage wizardPage2;
         private DevComponents.DotNetBar.Controls.TextBoxX textBoxX1;
         private DevComponents.DotNetBar.Controls.TextBoxX textBoxX2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
     }
 }

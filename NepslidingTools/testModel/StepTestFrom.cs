@@ -13,6 +13,9 @@ namespace NepslidingTools.testModel
 {
     public partial class StepTestFrom : DevComponents.DotNetBar.Metro.MetroForm
     {
+
+        private  SerPort sp_obj = new SerPort();
+
         // The global application object
         public static AnyCAD.Platform.Application theApplication;
         string name = "steptest";
@@ -131,8 +134,8 @@ namespace NepslidingTools.testModel
                 // }
 
 
-                SerPort sp_obj = new SerPort();
-                 sp_obj.init_port();
+                sp_obj.CheckPort();
+                sp_obj.init_port();
                 sp_obj.Processfunc = jiangyaozhixin;
                       
                 global.CurActive = "steptest";

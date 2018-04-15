@@ -27,8 +27,8 @@ namespace NepslidingTools.testModel
             sp1.RtsEnable = true;
             //设置数据读取超时为1秒
             sp1.ReadTimeout = 10000;
-            //sp1.PortName = "COM3";
-            sp1.PortName = Program.DK;
+            sp1.PortName = "COM3";
+            //sp1.PortName = Program.DK;
             if (sp1.IsOpen == true)//如果打开状态，则先关闭一下
             {
                 sp1.Close();
@@ -55,7 +55,7 @@ namespace NepslidingTools.testModel
         {
             //检查是否含有串口
             string[] str = SerialPort.GetPortNames();
-            if (str == null)
+            if (str.Length <= 0)
             {
                 MessageBox.Show("本机没有接入卡尺！", "Error");
                 return;
