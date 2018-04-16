@@ -139,7 +139,7 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Size = new System.Drawing.Size(559, 207);
             this.radioGroup1.TabIndex = 0;
             // 
-            // wizardPage1
+            // groupBox1
             // 
             this.wizardPage1.Controls.Add(this.groupBox1);
             this.wizardPage1.Enabled = true;

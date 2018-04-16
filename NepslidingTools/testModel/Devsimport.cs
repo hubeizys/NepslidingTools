@@ -87,22 +87,45 @@ namespace NepslidingTools.testModel
                 // 吧类型定下来
                 if (this.radioGroup1.SelectedIndex == 0)
                 {
-                    // 尺子
-
+                    // 扫描枪
+                    importdev_st.SelectedPageIndex = 0;
+                    e.Handled = true;
+                    return;
                 }
                 else if (this.radioGroup1.SelectedIndex == 1)
                 {
                     // 热敏打印机
+            
+                    importdev_st.SelectedPageIndex = 1;
+                    e.Handled = true;
+                    return;
                 }
                 else if (this.radioGroup1.SelectedIndex == 2)
                 {
+                    // 卡尺
+                    MessageBox.Show("正在加载硬件------- 卡尺");
+                    listBox1.Items.Clear();
+                    foreach (string port in SerPort.CurPorts())
+                    {
+                        listBox1.Items.Add(port);
+                    }
 
+                    // 如果没有发现 控件列表就 继续这一步
+                    if (SerPort.CurPorts().Length <= 0)
+                    {
+                        //this.importdev_st.SelectedPageIndex = 0;
+                        MessageBox.Show("没有发现硬件");
+                        e.Handled = true;
+                        return;
+                    }
                 }
+
             }
 
             if ("请选择设备" == e.Page.Text)
             {
-                
+                //MessageBox.Show(SerPort.CurPorts();
+                MessageBox.Show(listBox1.SelectedValue + "  " + listBox1.SelectedItem);
             }
 
             if ("等待com的测试数据" == e.Page.Text)

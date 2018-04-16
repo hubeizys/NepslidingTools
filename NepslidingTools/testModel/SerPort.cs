@@ -49,6 +49,12 @@ namespace NepslidingTools.testModel
 
         }
 
+        static public string[] CurPorts()
+        {
+            return SerialPort.GetPortNames();
+        }
+
+
 
         #region 内部子函数
         public void CheckPort()
