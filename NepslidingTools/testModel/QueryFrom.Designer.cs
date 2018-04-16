@@ -28,6 +28,10 @@ namespace NepslidingTools.testModel
         /// </summary>
         private void InitializeComponent()
         {
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem1 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.Utils.KeyShortcut keyShortcut1 = new DevExpress.Utils.KeyShortcut();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             this.tlp_main = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -159,7 +163,7 @@ namespace NepslidingTools.testModel
             // label5
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ Light", 12.25F);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.Location = new System.Drawing.Point(213, 40);
             this.label5.Name = "label5";
@@ -171,7 +175,7 @@ namespace NepslidingTools.testModel
             // label4
             // 
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ Light", 12.25F);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(3, 40);
             this.label4.Name = "label4";
@@ -196,7 +200,7 @@ namespace NepslidingTools.testModel
             // label3
             // 
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ Light", 12.25F);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label3.ForeColor = System.Drawing.Color.Black;
             this.label3.Location = new System.Drawing.Point(507, 0);
             this.label3.Name = "label3";
@@ -208,7 +212,7 @@ namespace NepslidingTools.testModel
             // label2
             // 
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ Light", 12.25F);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label2.ForeColor = System.Drawing.Color.Black;
             this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
@@ -220,7 +224,7 @@ namespace NepslidingTools.testModel
             // label1
             // 
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ Light", 12.25F);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.25F);
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(213, 0);
             this.label1.Name = "label1";
@@ -256,14 +260,23 @@ namespace NepslidingTools.testModel
             // 
             this.radioGroup1.Location = new System.Drawing.Point(93, 43);
             this.radioGroup1.Name = "radioGroup1";
+            // 
+            // 
+            // 
             this.radioGroup1.Properties.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
+            radioGroupItem1.Description = "OK";
+            radioGroupItem1.Value = null;
+            radioGroupItem2.Description = "NG";
+            radioGroupItem2.Value = null;
+            radioGroupItem3.Description = "All";
+            radioGroupItem3.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "OK"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "NG"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "All")});
+            radioGroupItem1,
+            radioGroupItem2,
+            radioGroupItem3});
             this.radioGroup1.Size = new System.Drawing.Size(114, 23);
             this.radioGroup1.TabIndex = 8;
             // 
@@ -359,6 +372,9 @@ namespace NepslidingTools.testModel
             this.button1.UseVisualStyleBackColor = true;
             // 
             // query_gc
+            // 
+            // 
+            // 
             // 
             this.query_gc.EmbeddedNavigator.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.query_gc.EmbeddedNavigator.Appearance.ForeColor = System.Drawing.Color.Black;
@@ -482,7 +498,7 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1.AutoHeight = false;
             this.repositoryItemButtonEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut1, serializableAppearanceObject1, "", null, null, true)});
             this.repositoryItemButtonEdit1.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;

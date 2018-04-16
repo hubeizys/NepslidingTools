@@ -136,6 +136,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="baseconfig.cs" />
     <Compile Include="cccc\cg.cs" />
     <Compile Include="cccc\cpinxinxi.cs" />
     <Compile Include="cccc\danweixinxi.cs" />

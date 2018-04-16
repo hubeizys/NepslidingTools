@@ -10,9 +10,18 @@ using System.IO.Ports;
 
 namespace NepslidingTools.testModel
 {
+    class a
+    {
+
+    }
+
     public partial class Devsimport : DevComponents.DotNetBar.Metro.MetroForm
     {
+        private SerPort sp_obj = new SerPort();
         private string device_type = "ruler";
+
+        // 当前测试串口名
+        private string cur_work_portname = "";
         public Devsimport()
         {
             InitializeComponent();
@@ -65,7 +74,7 @@ namespace NepslidingTools.testModel
                 listBox1.Items.Clear();
 
                 for (int i = 0; i < ArryPort.Length; i++)
-
+                
                     listBox1.Items.Add(ArryPort[i]);
 
                 listBox1.Text = ArryPort.ToString();
@@ -88,7 +97,7 @@ namespace NepslidingTools.testModel
                 if (this.radioGroup1.SelectedIndex == 0)
                 {
                     // 扫描枪
-                    importdev_st.SelectedPageIndex = 0;
+                    importdev_st.SelectedPageIndex = 2;
                     e.Handled = true;
                     return;
                 }
@@ -96,7 +105,7 @@ namespace NepslidingTools.testModel
                 {
                     // 热敏打印机
             
-                    importdev_st.SelectedPageIndex = 1;
+                    importdev_st.SelectedPageIndex = 2;
                     e.Handled = true;
                     return;
                 }
@@ -119,18 +128,29 @@ namespace NepslidingTools.testModel
                         return;
                     }
                 }
+            }
 
+            void doing_test(string a)
+            {
+                //MessageBox.Show(" test data : " + a);
+                textBoxX1.Invoke(new Action(()=> {
+                    this.textBoxX1.Text = a;
+                }));
             }
 
             if ("请选择设备" == e.Page.Text)
             {
-                //MessageBox.Show(SerPort.CurPorts();
-                MessageBox.Show(listBox1.SelectedValue + "  " + listBox1.SelectedItem);
+                // 串口设置
+                MessageBox.Show("SelectedValue + : " + listBox1.SelectedValue + "  item " + listBox1.SelectedItem);
+                sp_obj.CheckPort();
+                cur_work_portname = listBox1.SelectedItem.ToString();
+                sp_obj.init_port(cur_work_portname);
+                sp_obj.Processfunc = doing_test;
             }
 
             if ("等待com的测试数据" == e.Page.Text)
             {
-
+                
             }
         }
 

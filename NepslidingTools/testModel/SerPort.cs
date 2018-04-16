@@ -14,7 +14,7 @@ namespace NepslidingTools.testModel
        // HDDelegate pd = new HDDelegate(new Test().Process);
         SerialPort sp1 = new SerialPort();
         public RecvProcessFunc Processfunc;
-        public void init_port()
+        public void init_port(string port_name)
         {
             // 
             sp1.BaudRate = 4800;
@@ -27,7 +27,7 @@ namespace NepslidingTools.testModel
             sp1.RtsEnable = true;
             //设置数据读取超时为1秒
             sp1.ReadTimeout = 10000;
-            sp1.PortName = "COM3";
+            sp1.PortName = port_name;
             //sp1.PortName = Program.DK;
             if (sp1.IsOpen == true)//如果打开状态，则先关闭一下
             {

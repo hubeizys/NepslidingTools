@@ -135,7 +135,7 @@ namespace NepslidingTools.testModel
 
 
                 sp_obj.CheckPort();
-                sp_obj.init_port();
+                sp_obj.init_port("COM3");
                 sp_obj.Processfunc = jiangyaozhixin;
                       
                 global.CurActive = "steptest";

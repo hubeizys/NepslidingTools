@@ -6,25 +6,29 @@ using Maticsoft.DBUtility;//Please add references
 namespace Maticsoft.DAL
 {
     /// <summary>
-    /// 数据访问类:port
+    /// 数据访问类:baseconfig
     /// </summary>
-    public partial class port
+    public partial class baseconfig
     {
-        public port()
+        public baseconfig()
         { }
         #region  BasicMethod
 
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string mac)
+        public bool Exists(string version, DateTime expTime, string companyName)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) from port");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append("select count(1) from baseconfig");
+            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)          };
-            parameters[0].Value = mac;
+                    new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@expTime", MySqlDbType.DateTime),
+                    new MySqlParameter("@companyName", MySqlDbType.VarChar,255)         };
+            parameters[0].Value = version;
+            parameters[1].Value = expTime;
+            parameters[2].Value = companyName;
 
             return DbHelperMySQL.Exists(strSql.ToString(), parameters);
         }
@@ -33,22 +37,20 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public bool Add(Maticsoft.Model.port model)
+        public bool Add(Maticsoft.Model.baseconfig model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into port(");
-            strSql.Append("mac,workid,manufacturer,portname)");
+            strSql.Append("insert into baseconfig(");
+            strSql.Append(" version,expTime,companyName)");
             strSql.Append(" values (");
-            strSql.Append("@mac,@workid,@manufacturer,@portname)");
+            strSql.Append("@ version,@expTime,@companyName)");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@workid", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@manufacturer", MySqlDbType.VarChar,255),
-                    new MySqlParameter("@portname", MySqlDbType.VarChar,64)};
-            parameters[0].Value = model.mac;
-            parameters[1].Value = model.workid;
-            parameters[2].Value = model.manufacturer;
-            parameters[3].Value = model.portname;
+                    new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@expTime", MySqlDbType.DateTime),
+                    new MySqlParameter("@companyName", MySqlDbType.VarChar,255)};
+            parameters[0].Value = model.version;
+            parameters[1].Value = model.expTime;
+            parameters[2].Value = model.companyName;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -63,23 +65,21 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(Maticsoft.Model.port model)
+        public bool Update(Maticsoft.Model.baseconfig model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update port set ");
-            strSql.Append("workid=@workid,");
-            strSql.Append("manufacturer=@manufacturer,");
-            strSql.Append("portname=@portname");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append("update baseconfig set ");
+            strSql.Append(" version=@ version,");
+            strSql.Append("expTime=@expTime,");
+            strSql.Append("companyName=@companyName");
+            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@workid", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@manufacturer", MySqlDbType.VarChar,255),
-                    new MySqlParameter("@portname", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)};
-            parameters[0].Value = model.workid;
-            parameters[1].Value = model.manufacturer;
-            parameters[2].Value = model.portname;
-            parameters[3].Value = model.mac;
+                    new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@expTime", MySqlDbType.DateTime),
+                    new MySqlParameter("@companyName", MySqlDbType.VarChar,255)};
+            parameters[0].Value = model.version;
+            parameters[1].Value = model.expTime;
+            parameters[2].Value = model.companyName;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -95,35 +95,21 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(string mac)
+        public bool Delete(string version, DateTime expTime, string companyName)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from port ");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append("delete from baseconfig ");
+            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)          };
-            parameters[0].Value = mac;
+                    new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@expTime", MySqlDbType.DateTime),
+                    new MySqlParameter("@companyName", MySqlDbType.VarChar,255)         };
+            parameters[0].Value = version;
+            parameters[1].Value = expTime;
+            parameters[2].Value = companyName;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
-            if (rows > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        /// <summary>
-        /// 批量删除数据
-        /// </summary>
-        public bool DeleteList(string maclist)
-        {
-            StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from port ");
-            strSql.Append(" where mac in (" + maclist + ")  ");
-            int rows = DbHelperMySQL.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
                 return true;
@@ -138,17 +124,21 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.port GetModel(string mac)
+        public Maticsoft.Model.baseconfig GetModel(string version, DateTime expTime, string companyName)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select mac,workid,manufacturer,portname from port ");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append("select  version,expTime,companyName from baseconfig ");
+            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)          };
-            parameters[0].Value = mac;
+                    new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@expTime", MySqlDbType.DateTime),
+                    new MySqlParameter("@companyName", MySqlDbType.VarChar,255)         };
+            parameters[0].Value = version;
+            parameters[1].Value = expTime;
+            parameters[2].Value = companyName;
 
-            Maticsoft.Model.port model = new Maticsoft.Model.port();
+            Maticsoft.Model.baseconfig model = new Maticsoft.Model.baseconfig();
             DataSet ds = DbHelperMySQL.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -164,26 +154,22 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.port DataRowToModel(DataRow row)
+        public Maticsoft.Model.baseconfig DataRowToModel(DataRow row)
         {
-            Maticsoft.Model.port model = new Maticsoft.Model.port();
+            Maticsoft.Model.baseconfig model = new Maticsoft.Model.baseconfig();
             if (row != null)
             {
-                if (row["mac"] != null)
+                if (row[" version"] != null)
                 {
-                    model.mac = row["mac"].ToString();
+                    model.version = row[" version"].ToString();
                 }
-                if (row["workid"] != null)
+                if (row["expTime"] != null && row["expTime"].ToString() != "")
                 {
-                    model.workid = row["workid"].ToString();
+                    model.expTime = DateTime.Parse(row["expTime"].ToString());
                 }
-                if (row["manufacturer"] != null)
+                if (row["companyName"] != null)
                 {
-                    model.manufacturer = row["manufacturer"].ToString();
-                }
-                if (row["portname"] != null)
-                {
-                    model.portname = row["portname"].ToString();
+                    model.companyName = row["companyName"].ToString();
                 }
             }
             return model;
@@ -195,8 +181,8 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select mac,workid,manufacturer,portname ");
-            strSql.Append(" FROM port ");
+            strSql.Append("select  version,expTime,companyName ");
+            strSql.Append(" FROM baseconfig ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -210,7 +196,7 @@ namespace Maticsoft.DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM port ");
+            strSql.Append("select count(1) FROM baseconfig ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -239,9 +225,9 @@ namespace Maticsoft.DAL
             }
             else
             {
-                strSql.Append("order by T.mac desc");
+                strSql.Append("order by T.companyName desc");
             }
-            strSql.Append(")AS Row, T.*  from port T ");
+            strSql.Append(")AS Row, T.*  from baseconfig T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -266,8 +252,8 @@ namespace Maticsoft.DAL
 					new MySqlParameter("@OrderType", MySqlDbType.Bit),
 					new MySqlParameter("@strWhere", MySqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "port";
-			parameters[1].Value = "mac";
+			parameters[0].Value = "baseconfig";
+			parameters[1].Value = "companyName";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;
