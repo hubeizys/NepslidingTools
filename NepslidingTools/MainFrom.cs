@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -82,9 +83,64 @@ namespace NepslidingTools
 
         private void MainFrom_Load(object sender, EventArgs e)
         {
+
+            Maticsoft.BLL.baseconfig config_bll = new Maticsoft.BLL.baseconfig();
+            int count = config_bll.GetRecordCount("");
+            if (count <= 0)
+            {
+                MessageBox.Show("未激活");
+                baseconfig bc_xin = new baseconfig
+                {   
+                    companyName = "test",
+                    expTime = DateTime.Now.AddDays(7),
+                    version = "0.1",
+
+                };
+                if (config_bll.Add(bc_xin))
+                {
+                    MessageBox.Show("试用版激活成功");
+                }
+                else
+                {
+                    MessageBox.Show("激活失败");
+                    System.Environment.Exit(0);
+                }
+                return;
+            }
+            else if (count == 1)
+            {
+                //MessageBox.Show("");
+                List<baseconfig> bc_list = config_bll.GetModelList("");
+                //MessageBox.Show("exptime ====== datetime " +  bc_list[0].expTime.ToString() +  DateTime.Now.ToString());
+                if (bc_list[0].expTime > DateTime.Now)
+                {
+                    MessageBox.Show("使用期限" + bc_list[0].expTime);
+                    string boardid  = GetSystemInfo.GetMotherBoardID();
+                    string mac = GetSystemInfo.GetMacAddress();
+                    if (boardid == "" || mac == "")
+                    {
+                        MessageBox.Show("主板或者mac地址信息缺失");
+                        System.Environment.Exit(0);
+                    }
+                    MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+
+                    string source = boardid +  "HelloWorld" + mac;
+                    byte[] message;
+                    message = Encoding.Default.GetBytes(source);
+
+                    md5.ComputeHash(message);
+                    //Console.WriteLine(Convert.ToBase64String(md5.Hash));
+                    global.MachineID = Convert.ToBase64String(md5.Hash);
+                    //MessageBox.Show(Convert.ToBase64String(md5.Hash));
+                }
+            }
+            else {
+                MessageBox.Show("配置不正确, 请联系管理员");
+                System.Environment.Exit(0);
+                return;
+            }
             //Maticsoft.BLL.test a = new Maticsoft.BLL.test();
             //MessageBox.Show(Convert.ToString(a.GetList(" sadsa = '1 ' ")));
-
 
             //Maticsoft.Model.test aaa = new test()
             //{

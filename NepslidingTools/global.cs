@@ -11,5 +11,6 @@ namespace NepslidingTools
     class global
     {
         public static string CurActive = "main";
+        public static string MachineID = "";
     }
 }

@@ -41,11 +41,11 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into baseconfig(");
-            strSql.Append(" version,expTime,companyName)");
+            strSql.Append(" ` version`,expTime,companyName)");
             strSql.Append(" values (");
-            strSql.Append("@ version,@expTime,@companyName)");
+            strSql.Append("@version,@expTime,@companyName)");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@version", MySqlDbType.VarChar,32),
                     new MySqlParameter("@expTime", MySqlDbType.DateTime),
                     new MySqlParameter("@companyName", MySqlDbType.VarChar,255)};
             parameters[0].Value = model.version;
@@ -72,7 +72,7 @@ namespace Maticsoft.DAL
             strSql.Append(" version=@ version,");
             strSql.Append("expTime=@expTime,");
             strSql.Append("companyName=@companyName");
-            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
+            //strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ version", MySqlDbType.VarChar,32),
                     new MySqlParameter("@expTime", MySqlDbType.DateTime),
@@ -181,7 +181,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  version,expTime,companyName ");
+            strSql.Append("select  ` version`,expTime,companyName ");
             strSql.Append(" FROM baseconfig ");
             if (strWhere.Trim() != "")
             {
@@ -201,7 +201,7 @@ namespace Maticsoft.DAL
             {
                 strSql.Append(" where " + strWhere);
             }
-            object obj = DbHelperSQL.GetSingle(strSql.ToString());
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString());
             if (obj == null)
             {
                 return 0;
