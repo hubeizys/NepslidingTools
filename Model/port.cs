@@ -10,10 +10,19 @@ namespace Maticsoft.Model
         public port()
         { }
         #region Model
+        private int _id;
         private string _mac;
         private string _workid;
         private string _manufacturer;
         private string _portname;
+        /// <summary>
+        /// auto_increment
+        /// </summary>
+        public int id
+        {
+            set { _id = value; }
+            get { return _id; }
+        }
         /// <summary>
         /// 
         /// </summary>

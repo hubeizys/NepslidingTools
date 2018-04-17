@@ -29,9 +29,9 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem7 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem8 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem9 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem1 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.importdev_st = new DevExpress.XtraWizard.WizardControl();
@@ -126,20 +126,20 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
-            radioGroupItem7.Description = "É¨ÃèÇ¹";
-            radioGroupItem7.Value = null;
-            radioGroupItem8.Description = "ÈÈÃô´òÓ¡»ú";
-            radioGroupItem8.Value = null;
-            radioGroupItem9.Description = "¿¨³ß";
-            radioGroupItem9.Value = null;
+            radioGroupItem1.Description = "É¨ÃèÇ¹";
+            radioGroupItem1.Value = null;
+            radioGroupItem2.Description = "ÈÈÃô´òÓ¡»ú";
+            radioGroupItem2.Value = null;
+            radioGroupItem3.Description = "¿¨³ß";
+            radioGroupItem3.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            radioGroupItem7,
-            radioGroupItem8,
-            radioGroupItem9});
+            radioGroupItem1,
+            radioGroupItem2,
+            radioGroupItem3});
             this.radioGroup1.Size = new System.Drawing.Size(559, 207);
             this.radioGroup1.TabIndex = 0;
             // 
-            // groupBox1
+            // wizardPage1
             // 
             this.wizardPage1.Controls.Add(this.groupBox1);
             this.wizardPage1.Enabled = true;
@@ -194,7 +194,7 @@ namespace NepslidingTools.testModel
             this.completionWizardPage1.Enabled = true;
             this.completionWizardPage1.Name = "completionWizardPage1";
             this.completionWizardPage1.Size = new System.Drawing.Size(565, 228);
-            this.completionWizardPage1.Text = "²âÊÔ³É¹¦ÁË£¡ÇëÃüÃû";
+            this.completionWizardPage1.Text = "²âÊÔ³É¹¦ÁË£¡Îª¹¤¾ßÃüÃûêÇ³Æ";
             // 
             // textBoxX2
             // 

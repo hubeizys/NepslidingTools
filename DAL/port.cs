@@ -13,18 +13,18 @@ namespace Maticsoft.DAL
         public port()
         { }
         #region  BasicMethod
-
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string mac)
+        public bool Exists(int id)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select count(1) from port");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)          };
-            parameters[0].Value = mac;
+                    new MySqlParameter("@id", MySqlDbType.Int32)
+            };
+            parameters[0].Value = id;
 
             return DbHelperMySQL.Exists(strSql.ToString(), parameters);
         }
@@ -67,19 +67,22 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update port set ");
+            strSql.Append("mac=@mac,");
             strSql.Append("workid=@workid,");
             strSql.Append("manufacturer=@manufacturer,");
             strSql.Append("portname=@portname");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
+                    new MySqlParameter("@mac", MySqlDbType.VarChar,64),
                     new MySqlParameter("@workid", MySqlDbType.VarChar,64),
                     new MySqlParameter("@manufacturer", MySqlDbType.VarChar,255),
                     new MySqlParameter("@portname", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)};
-            parameters[0].Value = model.workid;
-            parameters[1].Value = model.manufacturer;
-            parameters[2].Value = model.portname;
-            parameters[3].Value = model.mac;
+                    new MySqlParameter("@id", MySqlDbType.Int32,11)};
+            parameters[0].Value = model.mac;
+            parameters[1].Value = model.workid;
+            parameters[2].Value = model.manufacturer;
+            parameters[3].Value = model.portname;
+            parameters[4].Value = model.id;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -95,15 +98,16 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(string mac)
+        public bool Delete(int id)
         {
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("delete from port ");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)          };
-            parameters[0].Value = mac;
+                    new MySqlParameter("@id", MySqlDbType.Int32)
+            };
+            parameters[0].Value = id;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -118,11 +122,11 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string maclist)
+        public bool DeleteList(string idlist)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("delete from port ");
-            strSql.Append(" where mac in (" + maclist + ")  ");
+            strSql.Append(" where id in (" + idlist + ")  ");
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -138,15 +142,16 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.port GetModel(string mac)
+        public Maticsoft.Model.port GetModel(int id)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select mac,workid,manufacturer,portname from port ");
-            strSql.Append(" where mac=@mac ");
+            strSql.Append("select id,mac,workid,manufacturer,portname from port ");
+            strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@mac", MySqlDbType.VarChar,64)          };
-            parameters[0].Value = mac;
+                    new MySqlParameter("@id", MySqlDbType.Int32)
+            };
+            parameters[0].Value = id;
 
             Maticsoft.Model.port model = new Maticsoft.Model.port();
             DataSet ds = DbHelperMySQL.Query(strSql.ToString(), parameters);
@@ -169,6 +174,10 @@ namespace Maticsoft.DAL
             Maticsoft.Model.port model = new Maticsoft.Model.port();
             if (row != null)
             {
+                if (row["id"] != null && row["id"].ToString() != "")
+                {
+                    model.id = int.Parse(row["id"].ToString());
+                }
                 if (row["mac"] != null)
                 {
                     model.mac = row["mac"].ToString();
@@ -195,7 +204,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select mac,workid,manufacturer,portname ");
+            strSql.Append("select id,mac,workid,manufacturer,portname ");
             strSql.Append(" FROM port ");
             if (strWhere.Trim() != "")
             {
@@ -239,7 +248,7 @@ namespace Maticsoft.DAL
             }
             else
             {
-                strSql.Append("order by T.mac desc");
+                strSql.Append("order by T.id desc");
             }
             strSql.Append(")AS Row, T.*  from port T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
@@ -267,7 +276,7 @@ namespace Maticsoft.DAL
 					new MySqlParameter("@strWhere", MySqlDbType.VarChar,1000),
 					};
 			parameters[0].Value = "port";
-			parameters[1].Value = "mac";
+			parameters[1].Value = "id";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;

@@ -10,10 +10,6 @@ using System.IO.Ports;
 
 namespace NepslidingTools.testModel
 {
-    class a
-    {
-
-    }
 
     public partial class Devsimport : DevComponents.DotNetBar.Metro.MetroForm
     {
@@ -29,7 +25,45 @@ namespace NepslidingTools.testModel
 
         private void importdev_st_FinishClick(object sender, CancelEventArgs e)
         {
-            MessageBox.Show("恭喜您设定完毕");
+            // MessageBox.Show("恭喜您设定完毕");
+            //MessageBox.Show(string.Format("您的机器id是 {0}", global.MachineID));
+            //MessageBox.Show(string.Format("您的设备昵称是 {0}", textBoxX2.Text));
+
+            string gz_name = textBoxX2.Text;
+            MessageBox.Show(string.Format("当前选择的串口是 == {0} == ",cur_work_portname));
+
+            Maticsoft.BLL.port tempport_bll = new Maticsoft.BLL.port();
+
+            string cur_macnum = global.MachineID;
+            List<Maticsoft.Model.port> port_objs = tempport_bll.GetModelList(string.Format(" mac = '{0}' and portname= '{1}' ", cur_macnum, cur_work_portname));
+
+
+            // 先找是不是有
+            if (port_objs.Count >0 )
+            {
+                // 如果存在的话 就先提醒一下。 用户点确认之后 覆盖以前的com
+                DialogResult ret = MessageBox.Show("发现已经存在com的记录","是否使用这个名字" , MessageBoxButtons.OKCancel);
+                if (ret == DialogResult.OK)
+                {
+                    // 覆盖掉
+                    Maticsoft.Model.port temp_port = port_objs[0];
+                    temp_port.manufacturer = gz_name;
+                    tempport_bll.Update(temp_port);
+                    MessageBox.Show("以更新,工具已经可以使用");
+                }
+            }
+            else
+            {
+                // 不存在就直接添加
+                Maticsoft.Model.port tmp_portobj = new Maticsoft.Model.port()
+                {
+                    mac = cur_macnum,
+                    manufacturer = gz_name,
+                    portname = cur_work_portname,
+                    workid = cur_macnum + "号工作站"
+                };
+                tempport_bll.Add(tmp_portobj);
+            }
             this.Close();
         }
 
@@ -158,5 +192,9 @@ namespace NepslidingTools.testModel
         {
             MessageBox.Show("ppppp");
         }
+    }
+    class a
+    {
+
     }
 }

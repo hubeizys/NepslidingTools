@@ -17,9 +17,9 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string mac)
+        public bool Exists(int id)
         {
-            return dal.Exists(mac);
+            return dal.Exists(id);
         }
 
         /// <summary>
@@ -41,41 +41,41 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(string mac)
+        public bool Delete(int id)
         {
 
-            return dal.Delete(mac);
+            return dal.Delete(id);
         }
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool DeleteList(string maclist)
+        public bool DeleteList(string idlist)
         {
-            return dal.DeleteList(maclist);
+            return dal.DeleteList(idlist);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.port GetModel(string mac)
+        public Maticsoft.Model.port GetModel(int id)
         {
 
-            return dal.GetModel(mac);
+            return dal.GetModel(id);
         }
 
         /// <summary>
         /// 得到一个对象实体，从缓存中
         /// </summary>
-        public Maticsoft.Model.port GetModelByCache(string mac)
+        public Maticsoft.Model.port GetModelByCache(int id)
         {
 
-            string CacheKey = "portModel-" + mac;
+            string CacheKey = "portModel-" + id;
             object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
             if (objModel == null)
             {
                 try
                 {
-                    objModel = dal.GetModel(mac);
+                    objModel = dal.GetModel(id);
                     if (objModel != null)
                     {
                         int ModelCache = Maticsoft.Common.ConfigHelper.GetConfigInt("ModelCache");
