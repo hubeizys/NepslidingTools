@@ -15,7 +15,7 @@ namespace NepslidingTools.testModel
     {
 
         private SerPort sp_obj = new SerPort();
-
+        List<Maticsoft.Model.port> ports_list;
         // The global application object
         public static AnyCAD.Platform.Application theApplication;
         string name = "steptest";
@@ -43,7 +43,24 @@ namespace NepslidingTools.testModel
 
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("界面开始了");
+            // MessageBox.Show("界面开始了");
+            txtkw.Text = global.MachineID;
+            // 获得先得串口列表
+            #region 串口列表 ports_list
+            string local_id = global.MachineID;
+            Maticsoft.BLL.port ports_man = new Maticsoft.BLL.port();
+            ports_list =  ports_man.GetModelList(string.Format("  mac = '{0}'", local_id));
+            MessageBox.Show(ports_list.Count.ToString());
+            #endregion
+
+            // 对当前串口的展示， 以及默认的串口
+            lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+            foreach (Maticsoft.Model.port tmp_port in ports_list)
+            {
+                this.cbb_canselect.Items.Add(tmp_port.manufacturer);
+                
+            }
+            
             try
             {
                 if (StepTestFrom.theApplication == null)
@@ -644,6 +661,26 @@ namespace NepslidingTools.testModel
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbb_canselect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Console.WriteLine(cbb_canselect.SelectedValue.ToString() + " == " + cbb_canselect.SelectedText + " 11 " + cbb_canselect.SelectedItem.ToString());
+            MessageBox.Show(ports_list[cbb_canselect.SelectedIndex].manufacturer);
+        }
+
+        private void timer_portst_Tick(object sender, EventArgs e)
+        {
+            this.lab_st.Invoke(new Action(() => {
+                bool tmp_conn_st = this.sp_obj.port_st();
+                this.lab_st.Text = tmp_conn_st ? "连接" : "未连接";
+                if (!tmp_conn_st)
+                {
+                    sp_obj.init_port("COM3");
+                    sp_obj.Processfunc = jiangyaozhixin;
+                }
+
+            }));
         }
     }
 }

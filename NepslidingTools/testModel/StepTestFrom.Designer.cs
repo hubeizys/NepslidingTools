@@ -31,9 +31,9 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
-            Series series1 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram3 = new DevExpress.XtraCharts.XYDiagram();
+            Series series3 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView3 = new DevExpress.XtraCharts.LineSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -67,6 +67,10 @@ namespace NepslidingTools.testModel
             this.toptime = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lab_canselect = new System.Windows.Forms.Label();
+            this.cbb_canselect = new System.Windows.Forms.ComboBox();
+            this.lab_defportname = new System.Windows.Forms.Label();
+            this.lab_defport = new System.Windows.Forms.Label();
             this.lble = new System.Windows.Forms.Label();
             this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -74,6 +78,9 @@ namespace NepslidingTools.testModel
             this.txtll = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.lab_st = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.timer_portst = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
@@ -92,7 +99,7 @@ namespace NepslidingTools.testModel
             // 
             this.lj_lab.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.lj_lab.ForeColor = System.Drawing.Color.Black;
-            this.lj_lab.Location = new System.Drawing.Point(28, 40);
+            this.lj_lab.Location = new System.Drawing.Point(28, 86);
             this.lj_lab.Name = "lj_lab";
             this.lj_lab.Size = new System.Drawing.Size(37, 23);
             this.lj_lab.TabIndex = 0;
@@ -103,7 +110,7 @@ namespace NepslidingTools.testModel
             this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.comboBox1.ForeColor = System.Drawing.Color.Black;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(28, 69);
+            this.comboBox1.Location = new System.Drawing.Point(28, 115);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 1;
@@ -115,7 +122,7 @@ namespace NepslidingTools.testModel
             this.panel3d.ForeColor = System.Drawing.Color.Black;
             this.panel3d.Location = new System.Drawing.Point(340, 3);
             this.panel3d.Name = "panel3d";
-            this.panel3d.Size = new System.Drawing.Size(339, 242);
+            this.panel3d.Size = new System.Drawing.Size(339, 239);
             this.panel3d.TabIndex = 2;
             this.panel3d.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3d_Paint);
             this.panel3d.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3d_MouseDown);
@@ -138,7 +145,7 @@ namespace NepslidingTools.testModel
             this.panel2.Location = new System.Drawing.Point(685, 3);
             this.panel2.Name = "panel2";
             this.tableLayoutPanel1.SetRowSpan(this.panel2, 2);
-            this.panel2.Size = new System.Drawing.Size(438, 282);
+            this.panel2.Size = new System.Drawing.Size(438, 279);
             this.panel2.TabIndex = 3;
             // 
             // txtkw
@@ -147,14 +154,14 @@ namespace NepslidingTools.testModel
             this.txtkw.ForeColor = System.Drawing.Color.Black;
             this.txtkw.Location = new System.Drawing.Point(59, 221);
             this.txtkw.Name = "txtkw";
-            this.txtkw.Size = new System.Drawing.Size(100, 22);
+            this.txtkw.Size = new System.Drawing.Size(163, 22);
             this.txtkw.TabIndex = 8;
             // 
             // textcl
             // 
             this.textcl.BackColor = System.Drawing.Color.White;
             this.textcl.ForeColor = System.Drawing.Color.Black;
-            this.textcl.Location = new System.Drawing.Point(241, 223);
+            this.textcl.Location = new System.Drawing.Point(295, 223);
             this.textcl.Name = "textcl";
             this.textcl.Size = new System.Drawing.Size(100, 22);
             this.textcl.TabIndex = 7;
@@ -165,7 +172,7 @@ namespace NepslidingTools.testModel
             this.combjg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.combjg.ForeColor = System.Drawing.Color.Black;
             this.combjg.FormattingEnabled = true;
-            this.combjg.Location = new System.Drawing.Point(241, 190);
+            this.combjg.Location = new System.Drawing.Point(295, 190);
             this.combjg.Name = "combjg";
             this.combjg.Size = new System.Drawing.Size(121, 21);
             this.combjg.TabIndex = 6;
@@ -188,7 +195,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX4.ForeColor = System.Drawing.Color.Black;
-            this.labelX4.Location = new System.Drawing.Point(175, 192);
+            this.labelX4.Location = new System.Drawing.Point(230, 192);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(70, 23);
             this.labelX4.TabIndex = 4;
@@ -214,7 +221,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX2.ForeColor = System.Drawing.Color.Black;
-            this.labelX2.Location = new System.Drawing.Point(175, 221);
+            this.labelX2.Location = new System.Drawing.Point(230, 221);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(70, 23);
             this.labelX2.TabIndex = 2;
@@ -231,7 +238,7 @@ namespace NepslidingTools.testModel
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(60, 23);
             this.labelX1.TabIndex = 1;
-            this.labelX1.Text = "所在库位: ";
+            this.labelX1.Text = "所在工位: ";
             // 
             // pictureBox1
             // 
@@ -239,7 +246,7 @@ namespace NepslidingTools.testModel
             this.pictureBox1.Image = global::NepslidingTools.Properties.Resources._4318727ea8c1806a17c555929d2dea8e;
             this.pictureBox1.Location = new System.Drawing.Point(3, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(313, 186);
+            this.pictureBox1.Size = new System.Drawing.Size(435, 186);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -261,11 +268,11 @@ namespace NepslidingTools.testModel
             this.OkOrNg});
             this.tableLayoutPanel1.SetColumnSpan(this.dgv1, 3);
             this.dgv1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv1.Location = new System.Drawing.Point(3, 453);
+            this.dgv1.Location = new System.Drawing.Point(3, 448);
             this.dgv1.Name = "dgv1";
             this.dgv1.ReadOnly = true;
             this.dgv1.RowTemplate.Height = 23;
-            this.dgv1.Size = new System.Drawing.Size(1120, 294);
+            this.dgv1.Size = new System.Drawing.Size(1120, 291);
             this.dgv1.TabIndex = 4;
             this.dgv1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellEndEdit);
             // 
@@ -356,7 +363,7 @@ namespace NepslidingTools.testModel
             this.groupBox1.Controls.Add(this.buttonX4);
             this.groupBox1.Controls.Add(this.buttonX3);
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
-            this.groupBox1.Location = new System.Drawing.Point(28, 122);
+            this.groupBox1.Location = new System.Drawing.Point(28, 146);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(194, 122);
             this.groupBox1.TabIndex = 5;
@@ -442,12 +449,18 @@ namespace NepslidingTools.testModel
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.91105F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.18329F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1126, 750);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1126, 742);
             this.tableLayoutPanel1.TabIndex = 6;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.lab_st);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.lab_canselect);
+            this.panel1.Controls.Add(this.cbb_canselect);
+            this.panel1.Controls.Add(this.lab_defportname);
+            this.panel1.Controls.Add(this.lab_defport);
             this.panel1.Controls.Add(this.lble);
             this.panel1.Controls.Add(this.lj_lab);
             this.panel1.Controls.Add(this.comboBox1);
@@ -457,13 +470,54 @@ namespace NepslidingTools.testModel
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.tableLayoutPanel1.SetRowSpan(this.panel1, 2);
-            this.panel1.Size = new System.Drawing.Size(331, 282);
+            this.panel1.Size = new System.Drawing.Size(331, 279);
             this.panel1.TabIndex = 7;
+            // 
+            // lab_canselect
+            // 
+            this.lab_canselect.AutoSize = true;
+            this.lab_canselect.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lab_canselect.Location = new System.Drawing.Point(27, 56);
+            this.lab_canselect.Name = "lab_canselect";
+            this.lab_canselect.Size = new System.Drawing.Size(55, 13);
+            this.lab_canselect.TabIndex = 10;
+            this.lab_canselect.Text = "可选工具";
+            // 
+            // cbb_canselect
+            // 
+            this.cbb_canselect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbb_canselect.FormattingEnabled = true;
+            this.cbb_canselect.Location = new System.Drawing.Point(120, 53);
+            this.cbb_canselect.Name = "cbb_canselect";
+            this.cbb_canselect.Size = new System.Drawing.Size(121, 21);
+            this.cbb_canselect.TabIndex = 9;
+            this.cbb_canselect.SelectedIndexChanged += new System.EventHandler(this.cbb_canselect_SelectedIndexChanged);
+            // 
+            // lab_defportname
+            // 
+            this.lab_defportname.AutoSize = true;
+            this.lab_defportname.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.lab_defportname.ForeColor = System.Drawing.Color.OrangeRed;
+            this.lab_defportname.Location = new System.Drawing.Point(122, 13);
+            this.lab_defportname.Name = "lab_defportname";
+            this.lab_defportname.Size = new System.Drawing.Size(57, 13);
+            this.lab_defportname.TabIndex = 8;
+            this.lab_defportname.Text = "portname";
+            // 
+            // lab_defport
+            // 
+            this.lab_defport.AutoSize = true;
+            this.lab_defport.ForeColor = System.Drawing.Color.ForestGreen;
+            this.lab_defport.Location = new System.Drawing.Point(27, 13);
+            this.lab_defport.Name = "lab_defport";
+            this.lab_defport.Size = new System.Drawing.Size(79, 13);
+            this.lab_defport.TabIndex = 7;
+            this.lab_defport.Text = "默认使用工具";
             // 
             // lble
             // 
             this.lble.AutoSize = true;
-            this.lble.Location = new System.Drawing.Point(65, 45);
+            this.lble.Location = new System.Drawing.Point(65, 91);
             this.lble.Name = "lble";
             this.lble.Size = new System.Drawing.Size(0, 13);
             this.lble.TabIndex = 6;
@@ -471,17 +525,17 @@ namespace NepslidingTools.testModel
             // chartControl1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.chartControl1, 3);
-            xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram1;
+            xyDiagram3.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram3.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram3;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.chartControl1.Location = new System.Drawing.Point(3, 291);
+            this.chartControl1.Location = new System.Drawing.Point(3, 288);
             this.chartControl1.Name = "chartControl1";
-            series1.Name = "测量结果波动";
-            series1.View = lineSeriesView1;
+            series3.Name = "测量结果波动";
+            series3.View = lineSeriesView3;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series1};
-            this.chartControl1.Size = new System.Drawing.Size(1120, 156);
+        series3};
+            this.chartControl1.Size = new System.Drawing.Size(1120, 154);
             this.chartControl1.TabIndex = 8;
             // 
             // panel3
@@ -492,7 +546,7 @@ namespace NepslidingTools.testModel
             this.panel3.Controls.Add(this.label1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.ForeColor = System.Drawing.Color.Black;
-            this.panel3.Location = new System.Drawing.Point(340, 251);
+            this.panel3.Location = new System.Drawing.Point(340, 248);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(339, 34);
             this.panel3.TabIndex = 9;
@@ -537,11 +591,38 @@ namespace NepslidingTools.testModel
             this.label1.TabIndex = 0;
             this.label1.Text = "理论值： ";
             // 
+            // lab_st
+            // 
+            this.lab_st.AutoSize = true;
+            this.lab_st.BackColor = System.Drawing.Color.DarkTurquoise;
+            this.lab_st.ForeColor = System.Drawing.Color.OrangeRed;
+            this.lab_st.Location = new System.Drawing.Point(122, 34);
+            this.lab_st.Name = "lab_st";
+            this.lab_st.Size = new System.Drawing.Size(43, 13);
+            this.lab_st.TabIndex = 12;
+            this.lab_st.Text = "未连接";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.ForestGreen;
+            this.label4.Location = new System.Drawing.Point(27, 34);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(55, 13);
+            this.label4.TabIndex = 11;
+            this.label4.Text = "工具状态";
+            // 
+            // timer_portst
+            // 
+            this.timer_portst.Enabled = true;
+            this.timer_portst.Interval = 3000;
+            this.timer_portst.Tick += new System.EventHandler(this.timer_portst_Tick);
+            // 
             // StepTestFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1126, 750);
+            this.ClientSize = new System.Drawing.Size(1126, 742);
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -610,5 +691,12 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.DataGridViewTextBoxColumn step4;
         private System.Windows.Forms.DataGridViewTextBoxColumn step5;
         private System.Windows.Forms.DataGridViewTextBoxColumn OkOrNg;
+        private System.Windows.Forms.Label lab_defport;
+        private System.Windows.Forms.Label lab_defportname;
+        private System.Windows.Forms.ComboBox cbb_canselect;
+        private System.Windows.Forms.Label lab_canselect;
+        private System.Windows.Forms.Label lab_st;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Timer timer_portst;
     }
 }

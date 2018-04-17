@@ -16,25 +16,26 @@ namespace NepslidingTools.testModel
         public RecvProcessFunc Processfunc;
         public void init_port(string port_name)
         {
-            // 
-            sp1.BaudRate = 4800;
-            sp1.DataBits = 7;
-            sp1.StopBits = StopBits.Two;
-            sp1.Parity = Parity.Even;
-            sp1.DataReceived += new SerialDataReceivedEventHandler(sp1_DataReceived);
-            //准备就绪              
-            sp1.DtrEnable = true;
-            sp1.RtsEnable = true;
-            //设置数据读取超时为1秒
-            sp1.ReadTimeout = 10000;
-            sp1.PortName = port_name;
-            //sp1.PortName = Program.DK;
+
             if (sp1.IsOpen == true)//如果打开状态，则先关闭一下
             {
                 sp1.Close();
             }
             try
             {
+                // 
+                sp1.BaudRate = 4800;
+                sp1.DataBits = 7;
+                sp1.StopBits = StopBits.Two;
+                sp1.Parity = Parity.Even;
+                sp1.DataReceived += new SerialDataReceivedEventHandler(sp1_DataReceived);
+                //准备就绪              
+                sp1.DtrEnable = true;
+                sp1.RtsEnable = true;
+                //设置数据读取超时为1秒
+                sp1.ReadTimeout = 10000;
+                sp1.PortName = port_name;
+                //sp1.PortName = Program.DK;
                 sp1.Open();     //打开串口
                 if (!sp1.IsOpen) //如果没打开
                 {
@@ -54,7 +55,10 @@ namespace NepslidingTools.testModel
             return SerialPort.GetPortNames();
         }
 
-
+        public bool port_st()
+        {
+            return this.sp1.IsOpen;
+        }
 
         #region 内部子函数
         public void CheckPort()
