@@ -14,7 +14,7 @@ namespace NepslidingTools.testModel
     public partial class StepTestFrom : DevComponents.DotNetBar.Metro.MetroForm
     {
 
-        private  SerPort sp_obj = new SerPort();
+        private SerPort sp_obj = new SerPort();
 
         // The global application object
         public static AnyCAD.Platform.Application theApplication;
@@ -36,8 +36,8 @@ namespace NepslidingTools.testModel
             {
                 textcl.Text = a;
             }));
-          
-           
+
+
             //Console.WriteLine("我将要执行aaa计划");
         }
 
@@ -66,12 +66,12 @@ namespace NepslidingTools.testModel
                 DataSet ds1 = mes.GetList(st);
                 dtb.Columns.Add("测试编号");
                 dtb.Columns.Add("测试时间");
-           
+
                 for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
                 {
                     string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-                    comboBox1.Text = sg;                                
-                    dtb.Columns.Add( sg.ToString());                
+                    comboBox1.Text = sg;
+                    dtb.Columns.Add(sg.ToString());
                     //dgv1.DataSource = ds.Tables[0];                
                 }
                 dtb.Columns.Add("测试结果");
@@ -82,36 +82,36 @@ namespace NepslidingTools.testModel
                 DataSet dst = tst.GetList(TS);
                 DataTable test_datatable = dst.Tables[0];
                 int test_count = test_datatable.Rows.Count;
-                for(int start_test =0;start_test < test_count ; start_test ++)
+                for (int start_test = 0; start_test < test_count; start_test++)
                 {
-                    string bh= test_datatable.Rows[start_test]["measureb"].ToString();
-                    string sj= test_datatable.Rows[start_test]["time"].ToString();
+                    string bh = test_datatable.Rows[start_test]["measureb"].ToString();
+                    string sj = test_datatable.Rows[start_test]["time"].ToString();
                     string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
                     //string stp1 = dst.Tables[0].Rows[i][4].ToString();
                     string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                    int sp_num = 0;                
+                    int sp_num = 0;
                     DataRow dr = dtb.NewRow();
-                    dr["测试编号"]= bh;
-                    dr["测试时间"]= sj;
-                    dr["测试结果"]= test_datatable.Rows[start_test]["OKorNG"].ToString();
+                    dr["测试编号"] = bh;
+                    dr["测试时间"] = sj;
+                    dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
                     foreach (string j in sp)
                     {
                         sp_num++;
                         string col_name = string.Format("步骤{0}", sp_num);
-                        dr[col_name] = j;                 
-                    }  
-                    dtb.Rows.Add(dr);        
+                        dr[col_name] = j;
+                    }
+                    dtb.Rows.Add(dr);
                 }
                 #endregion   
-                dgv1.DataSource =dtb;
-            
+                dgv1.DataSource = dtb;
+
                 //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
                 //string aa = string.Format("PN = '{0}'", lble.Text);
                 //DataSet ds = usec.GetList(aa);
                 //string stp1 = ds.Tables[0].Rows[1][4].ToString();
                 //string[] sp = stp1.Split(new char[] { '/' });//获取数据集合
                 //foreach (string j in sp) ;
-           
+
 
                 //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
                 //string aa = string.Format("PN = '{0}'", lble.Text);
@@ -125,11 +125,11 @@ namespace NepslidingTools.testModel
                 DataSet ds11 = mes1.GetList(st1);
                 //DataTable dt = new DataTable();
                 //ds1.Tables.Add(dt);
-            
-                for (int i=0; i<ds11.Tables[0].Rows.Count;i++)
+
+                for (int i = 0; i < ds11.Tables[0].Rows.Count; i++)
                 {
                     txtll.Text = ds11.Tables[0].Rows[i][4].ToString();
-                    comboBox1.Items.Add("步骤"+ds11.Tables[0].Rows[i]["step"].ToString());
+                    comboBox1.Items.Add("步骤" + ds11.Tables[0].Rows[i]["step"].ToString());
                 }
                 // }
 
@@ -137,7 +137,7 @@ namespace NepslidingTools.testModel
                 sp_obj.CheckPort();
                 sp_obj.init_port("COM3");
                 sp_obj.Processfunc = jiangyaozhixin;
-                      
+
                 global.CurActive = "steptest";
                 //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
                 //this.Size = ScreenArea.Size;
@@ -252,7 +252,7 @@ namespace NepslidingTools.testModel
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-           
+
             theView.RequestDraw();
             theView.Redraw();
         }
@@ -361,144 +361,144 @@ namespace NepslidingTools.testModel
                     string col_name = string.Format("步骤{0}", a + 1);
                     dd += dt.Rows[last_row1][col_name];
                     Maticsoft.BLL.measures mesq = new Maticsoft.BLL.measures();
-                        string ste = string.Format("PN = '{0}'", lble.Text);
-                        DataSet dsf = mesq.GetList(ste);
+                    string ste = string.Format("PN = '{0}'", lble.Text);
+                    DataSet dsf = mesq.GetList(ste);
                     //for (int i = 0; i < dsf.Tables[0].Rows.Count; i++)
                     //{
-                        string sg = "步骤" + dsf.Tables[0].Rows[a]["step"].ToString();// comboBox1.Items.Add()
+                    string sg = "步骤" + dsf.Tables[0].Rows[a]["step"].ToString();// comboBox1.Items.Add()
 
-                        comboBox1.Text = sg;               
-                                Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                                string st1 = string.Format("PN = '{0}'", lble.Text);
-                                DataSet ds11 = mes1.GetList(st1);
-                        //for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
-                        //{
-                        
-                        txtll.Text = ds11.Tables[0].Rows[a][4].ToString();
-                        
-                        cz = Convert.ToDouble(txtll.Text) - Convert.ToDouble(txtgc.Text);
-                                    hz = Convert.ToDouble(txtll.Text) +Convert.ToDouble(txtgc.Text);
-                                   
-                                    string tt = "";
-                                    if (Convert.ToDouble(dd) >= cz && Convert.ToDouble(dd) <= hz)
-                                    {
-                                        //need_change_rows["测试结果"] = "Ok";
-                                        tt = "Ok";
-                                        
-                        }
-                                    else
-                                    {
-                                        tt = "Ng";
-                                      
-                            //need_change_rows["测试结果"] = "NG";
-                        }
-                                    if (tt != "Ok")
-                                    {
-                                        need_change_rows["测试结果"] = "NG";
-                                        break;
-                                    }
-                                    else
-                                    {
-                                        need_change_rows["测试结果"] = "Ok";                                    
-                        }
-                              //  }
-                  
-                }
+                    comboBox1.Text = sg;
+                    Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
+                    string st1 = string.Format("PN = '{0}'", lble.Text);
+                    DataSet ds11 = mes1.GetList(st1);
+                    //for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
+                    //{
+
+                    txtll.Text = ds11.Tables[0].Rows[a][4].ToString();
+
+                    cz = Convert.ToDouble(txtll.Text) - Convert.ToDouble(txtgc.Text);
+                    hz = Convert.ToDouble(txtll.Text) + Convert.ToDouble(txtgc.Text);
+
+                    string tt = "";
+                    if (Convert.ToDouble(dd) >= cz && Convert.ToDouble(dd) <= hz)
+                    {
+                        //need_change_rows["测试结果"] = "Ok";
+                        tt = "Ok";
+
+                    }
+                    else
+                    {
+                        tt = "Ng";
+
+                        //need_change_rows["测试结果"] = "NG";
+                    }
+                    if (tt != "Ok")
+                    {
+                        need_change_rows["测试结果"] = "NG";
+                        break;
+                    }
+                    else
+                    {
+                        need_change_rows["测试结果"] = "Ok";
+                    }
+                    //  }
+
                 }
             }
-        
+        }
 
 
 
 
 
-            //if (dt.Columns[dt.Columns.Count-2].ToString() != "")
-            //if (comboBox1.Text == "步骤1")
-            //{
-            //    for (int i=0;i<dgv1.Rows.Count ;i++) {
-            //        //dt.Columns.Add();
-            //        need_change_rows[comboBox1.Text] = textcl.Text;
-            //        dgv1.Rows[i].Cells["测试时间"].Value = DateTime.Now.ToString();
-            //        //need_change_rows["TestTime"] = DateTime.Now.ToString();
-            //        // need_change_rows["step1"] = textcl.Text;
-            //       // Random rd = new Random();
-            //        string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            //        //int num2 = rd.Next(Convert.ToInt32( num));
-            //        string dnum = num.ToString();
-            //        dgv1.Rows[i].Cells["测试编号"].Value = dnum;
-            //        // need_change_rows["nearNo"] = dnum;
-            //    }
-            //    }
 
-            //    if (comboBox1.Text == "步骤2")
-            //    {
+        //if (dt.Columns[dt.Columns.Count-2].ToString() != "")
+        //if (comboBox1.Text == "步骤1")
+        //{
+        //    for (int i=0;i<dgv1.Rows.Count ;i++) {
+        //        //dt.Columns.Add();
+        //        need_change_rows[comboBox1.Text] = textcl.Text;
+        //        dgv1.Rows[i].Cells["测试时间"].Value = DateTime.Now.ToString();
+        //        //need_change_rows["TestTime"] = DateTime.Now.ToString();
+        //        // need_change_rows["step1"] = textcl.Text;
+        //       // Random rd = new Random();
+        //        string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        //        //int num2 = rd.Next(Convert.ToInt32( num));
+        //        string dnum = num.ToString();
+        //        dgv1.Rows[i].Cells["测试编号"].Value = dnum;
+        //        // need_change_rows["nearNo"] = dnum;
+        //    }
+        //    }
 
-            //        need_change_rows[comboBox1.Text] = textcl.Text;
+        //    if (comboBox1.Text == "步骤2")
+        //    {
 
-            //        //need_change_rows["step2"] = textcl.Text;
+        //        need_change_rows[comboBox1.Text] = textcl.Text;
 
-            //        //DataTable dt1 = dgv1.DataSource as DataTable;
-            //        //DataRow dr1 = dt1.NewRow();
+        //        //need_change_rows["step2"] = textcl.Text;
 
-            //        //dr1["step2"] = textcl.Text;
-            //        //dt1.Rows.Add(dr1);
+        //        //DataTable dt1 = dgv1.DataSource as DataTable;
+        //        //DataRow dr1 = dt1.NewRow();
 
-            //        //DataTable dt = dgv1.DataSource as DataTable;
-            //        //string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            //        //int num2 = rd.Next(0000,9999);
-            //        //string dnum = num.ToString();
-            //        // dgv1.Rows[i].Cells["nearNo"].Value = dnum;
-            //        //dt.Rows.Add(1, dnum, DateTime.Now.ToString(), "", textcl.Text);
+        //        //dr1["step2"] = textcl.Text;
+        //        //dt1.Rows.Add(dr1);
 
-            //    }
-            //    if (comboBox1.Text == "步骤3")
-            //    {
+        //        //DataTable dt = dgv1.DataSource as DataTable;
+        //        //string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        //        //int num2 = rd.Next(0000,9999);
+        //        //string dnum = num.ToString();
+        //        // dgv1.Rows[i].Cells["nearNo"].Value = dnum;
+        //        //dt.Rows.Add(1, dnum, DateTime.Now.ToString(), "", textcl.Text);
 
-            //        need_change_rows[comboBox1.Text] = textcl.Text;
-            //        //need_change_rows["step3"] = textcl.Text;
+        //    }
+        //    if (comboBox1.Text == "步骤3")
+        //    {
 
-            //    }
-            //    if (comboBox1.Text == "步骤4")
-            //    {
+        //        need_change_rows[comboBox1.Text] = textcl.Text;
+        //        //need_change_rows["step3"] = textcl.Text;
 
-            //        need_change_rows[comboBox1.Text] = textcl.Text;
-            //        //need_change_rows["step4"] = textcl.Text;
+        //    }
+        //    if (comboBox1.Text == "步骤4")
+        //    {
 
-            //    }
-            //    if (comboBox1.Text == "步骤5")
-            //    {
+        //        need_change_rows[comboBox1.Text] = textcl.Text;
+        //        //need_change_rows["step4"] = textcl.Text;
 
-            //        need_change_rows[comboBox1.Text] = textcl.Text;
-            //        //need_change_rows["step5"] = textcl.Text;
-            //        double stp1 = Convert.ToDouble(need_change_rows[10]);
-            //        double stp2 = Convert.ToDouble(need_change_rows[11]);
-            //        double stp3 = Convert.ToDouble(need_change_rows[12]);
-            //        double stp4 = Convert.ToDouble(need_change_rows[13]);
-            //        double stp5 = Convert.ToDouble(need_change_rows[14]);
-            //        if (stp1 >= cz && stp1 <= hz && stp2 >= cz && stp2 <= hz && stp3 >= cz && stp3 <= hz && stp4 >= cz && stp4 <= hz && stp5 >= cz && stp5 <= hz)
-            //        {
-            //            need_change_rows["OkOrNg"] = "Ok";
-            //        }
-            //        else
-            //        {
-            //            need_change_rows["OkOrNg"] = "Ng";
-            //        }
-            //        //DataTable dt = dgv1.DataSource as DataTable;
-            //        //dt.Rows.Add(1, "", "", "", "", "", "", textcl.Text);
+        //    }
+        //    if (comboBox1.Text == "步骤5")
+        //    {
 
-            //    }
-            //Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            //string st = string.Format("PN = '{0}'", lble.Text);
-            //DataSet ds1 = mes.GetList(st);
-            //for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
-            //{
-            //    comboBox1.Items.Add(ds1.Tables[0].Rows[i]["step"].ToString());
-            //}
+        //        need_change_rows[comboBox1.Text] = textcl.Text;
+        //        //need_change_rows["step5"] = textcl.Text;
+        //        double stp1 = Convert.ToDouble(need_change_rows[10]);
+        //        double stp2 = Convert.ToDouble(need_change_rows[11]);
+        //        double stp3 = Convert.ToDouble(need_change_rows[12]);
+        //        double stp4 = Convert.ToDouble(need_change_rows[13]);
+        //        double stp5 = Convert.ToDouble(need_change_rows[14]);
+        //        if (stp1 >= cz && stp1 <= hz && stp2 >= cz && stp2 <= hz && stp3 >= cz && stp3 <= hz && stp4 >= cz && stp4 <= hz && stp5 >= cz && stp5 <= hz)
+        //        {
+        //            need_change_rows["OkOrNg"] = "Ok";
+        //        }
+        //        else
+        //        {
+        //            need_change_rows["OkOrNg"] = "Ng";
+        //        }
+        //        //DataTable dt = dgv1.DataSource as DataTable;
+        //        //dt.Rows.Add(1, "", "", "", "", "", "", textcl.Text);
 
-            //    if (comboBox1.Text!=sg)
-            //{
-            //    dt.Columns.Add(comboBox1.Text);
-            //}      
+        //    }
+        //Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
+        //string st = string.Format("PN = '{0}'", lble.Text);
+        //DataSet ds1 = mes.GetList(st);
+        //for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
+        //{
+        //    comboBox1.Items.Add(ds1.Tables[0].Rows[i]["step"].ToString());
+        //}
+
+        //    if (comboBox1.Text!=sg)
+        //{
+        //    dt.Columns.Add(comboBox1.Text);
+        //}      
         private void buttonX4_Click(object sender, EventArgs e)
         {
             this.comboBox1.Text = "步骤1";
@@ -512,37 +512,37 @@ namespace NepslidingTools.testModel
             DataTable dt = dgv1.DataSource as DataTable;
             int col_count = dt.Columns.Count - 3;
 
-            for (int i =0;i<col_count ;i ++)
+            for (int i = 0; i < col_count; i++)
             {
-                string col_name = string.Format("步骤{0}", i+1);
+                string col_name = string.Format("步骤{0}", i + 1);
                 //join_point += dgv1.Rows[last_row].Cells[col_name].Value.ToString();
                 join_point += dt.Rows[last_row][col_name].ToString();
-                if(i == col_count -1 )
+                if (i == col_count - 1)
                 { break; }
                 join_point += "/";
             }
             string bh = dgv1.Rows[last_row].Cells["测试编号"].Value.ToString();
             string sj = dgv1.Rows[last_row].Cells["测试时间"].Value.ToString();
             string JG = dgv1.Rows[last_row].Cells["测试结果"].Value.ToString();
-           // MessageBox.Show(join_point);  
-                //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
-                string ljh = lble.Text;
-                Maticsoft.BLL.test use = new Maticsoft.BLL.test();
-                Maticsoft.Model.test us = new test()
-                {
-                    measureb = bh,
-                    time = Convert.ToDateTime(sj),
-                    step1 = join_point,
-                    //step2 = bz2,
-                    //step3 = bz3,
-                    //step4 = bz4,
-                    //step5 = bz5,
-                    OKorNG = JG,
-                    PN = ljh,
-                };
-                use.Add(us);
-                
-                MessageBox.Show("记录以保存");
+            // MessageBox.Show(join_point);  
+            //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
+            string ljh = lble.Text;
+            Maticsoft.BLL.test use = new Maticsoft.BLL.test();
+            Maticsoft.Model.test us = new test()
+            {
+                measureb = bh,
+                time = Convert.ToDateTime(sj),
+                step1 = join_point,
+                //step2 = bz2,
+                //step3 = bz3,
+                //step4 = bz4,
+                //step5 = bz5,
+                OKorNG = JG,
+                PN = ljh,
+            };
+            use.Add(us);
+
+            MessageBox.Show("记录以保存");
             DataTable dtb = new DataTable();
             #region 构建datatable 表
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
@@ -582,7 +582,7 @@ namespace NepslidingTools.testModel
                 {
                     sp_num++;
                     string col_name = string.Format("步骤{0}", sp_num);
-                    dr[col_name] = j;                  
+                    dr[col_name] = j;
                 }
                 dtb.Rows.Add(dr);
             }
@@ -601,10 +601,11 @@ namespace NepslidingTools.testModel
             //DataTable dt = new DataTable();
             //dgv1.DataSource = dt;
             int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
-            for (int i=0;i<dgv1.ColumnCount ;i++) {
+            for (int i = 0; i < dgv1.ColumnCount; i++)
+            {
                 dgv1.Rows[last_row1].Cells[i].Value = "";
             }
-                //((DataTable)dgv1.DataSource).Rows[last_row1].Delete();
+            //((DataTable)dgv1.DataSource).Rows[last_row1].Delete();
             //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
             //string aa = string.Format("PN = '{0}''", lble.Text);
             //DataSet ds = usec.GetList(aa);
@@ -622,19 +623,19 @@ namespace NepslidingTools.testModel
             for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
             {
                 string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-                
+
                 if (comboBox1.Text == sg)
                 {
                     textcl.Text = "";
                     comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
                     Maticsoft.BLL.measures aa = new Maticsoft.BLL.measures();
                     Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                    string st1 = string.Format("PN = '{0}' and  step='{1}'",lble.Text, comboBox1.Text);
+                    string st1 = string.Format("PN = '{0}' and  step='{1}'", lble.Text, comboBox1.Text);
                     DataSet ds11 = mes1.GetList(st1);
                     for (int j = 0; j < ds11.Tables[0].Rows.Count; j++)
                     {
                         txtll.Text = ds11.Tables[0].Rows[j][4].ToString();
-                        
+
                     }
                 }
             }
