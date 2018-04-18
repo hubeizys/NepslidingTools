@@ -28,11 +28,11 @@ namespace NepslidingTools.testModel
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem1 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.Utils.KeyShortcut keyShortcut1 = new DevExpress.Utils.KeyShortcut();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem4 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem5 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem6 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.Utils.KeyShortcut keyShortcut2 = new DevExpress.Utils.KeyShortcut();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             this.tlp_main = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.head_tpl = new System.Windows.Forms.TableLayoutPanel();
@@ -267,16 +267,16 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
-            radioGroupItem1.Description = "OK";
-            radioGroupItem1.Value = null;
-            radioGroupItem2.Description = "NG";
-            radioGroupItem2.Value = null;
-            radioGroupItem3.Description = "All";
-            radioGroupItem3.Value = null;
+            radioGroupItem4.Description = "OK";
+            radioGroupItem4.Value = null;
+            radioGroupItem5.Description = "NG";
+            radioGroupItem5.Value = null;
+            radioGroupItem6.Description = "All";
+            radioGroupItem6.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            radioGroupItem1,
-            radioGroupItem2,
-            radioGroupItem3});
+            radioGroupItem4,
+            radioGroupItem5,
+            radioGroupItem6});
             this.radioGroup1.Size = new System.Drawing.Size(114, 23);
             this.radioGroup1.TabIndex = 8;
             // 
@@ -498,7 +498,7 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1.AutoHeight = false;
             this.repositoryItemButtonEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut1, serializableAppearanceObject1, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut2, serializableAppearanceObject2, "", null, null, true)});
             this.repositoryItemButtonEdit1.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;

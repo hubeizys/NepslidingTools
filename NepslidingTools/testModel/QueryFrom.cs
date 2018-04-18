@@ -22,10 +22,12 @@ namespace NepslidingTools.testModel
         {
             Console.WriteLine("test");
         }
+
+        #region 把数据表格的东西放进excel之中
         //DataGridView dgv
         public void DataGridViewToExcel()
         {
-      
+
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Execl files (*.xls)|*.xls";
             dlg.FilterIndex = 0;
@@ -83,6 +85,8 @@ namespace NepslidingTools.testModel
                 }
             }
         }
+        #endregion
+
 
         private void QueryFrom_Load(object sender, EventArgs e)
         {
@@ -115,7 +119,7 @@ namespace NepslidingTools.testModel
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
             Program.txtbh = textBox_ljhao.Text;
-             StepTestFrom stf = new StepTestFrom();
+            StepTestFrom stf = new StepTestFrom();
             stf.Show();
         }
 
@@ -197,12 +201,12 @@ namespace NepslidingTools.testModel
             string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
             DataSet ds1 = mes.GetList(st);
             dtb.Columns.Add("零件号");
-            dtb.Columns.Add("测量编号");                      
+            dtb.Columns.Add("测量编号");
             dtb.Columns.Add("测量时间");
             for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
             {
                 string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-               // comboBox1.Text = sg;
+                                                                            // comboBox1.Text = sg;
                 dtb.Columns.Add(sg.ToString());
                 //dgv1.DataSource = ds.Tables[0];                
             }
@@ -210,65 +214,67 @@ namespace NepslidingTools.testModel
 
             #endregion
             #region 填充数据
-            if(radioGroup1.SelectedIndex==0) {
-               
-            Maticsoft.BLL.test tst = new Maticsoft.BLL.test();           
-            DateTime sj =Convert.ToDateTime( dtp.Text);
-            DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);           
-             string TS = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}' and OKorNG='{3}'", textBox_ljhao.Text,sj1,sj,"OK");
-            DataSet dst = tst.GetList(TS);
-            DataTable test_datatable = dst.Tables[0];
-            int test_count = test_datatable.Rows.Count;
-            for (int start_test = 0; start_test < test_count; start_test++)
-            {                
-                string stp1 = test_datatable.Rows[start_test]["step1"].ToString();                
-                string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                int sp_num = 0;
-                DataRow dr = dtb.NewRow();
-                string aa = test_datatable.Rows[start_test]["measureb"].ToString();
-                dr["测量编号"] = aa;
-                dr["测量时间"] = test_datatable.Rows[start_test]["time"].ToString();
-                dr["测量结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
-                dr["零件号"] = test_datatable.Rows[start_test]["PN"].ToString();
-                foreach (string j in sp)
-                {
-                    string tt = "";
-                    sp_num++;
-                    string col_name = string.Format("步骤{0}", sp_num);
-                    Maticsoft.BLL.measures ms = new Maticsoft.BLL.measures();
-                    string pr = string.Format("PN = '{0}'", textBox_ljhao.Text);
-                    DataSet std = mes.GetList(pr);
-                    
-                    for (int i = 0; i < std.Tables[0].Rows.Count; i++)
-                {
-                    
-                        string sg = "步骤" + std.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
+            if (radioGroup1.SelectedIndex == 0)
+            {
 
-                        if (col_name == sg)
+                Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
+                DateTime sj = Convert.ToDateTime(dtp.Text);
+                DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);
+                string TS = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}' and OKorNG='{3}'", textBox_ljhao.Text, sj1, sj, "OK");
+                DataSet dst = tst.GetList(TS);
+                DataTable test_datatable = dst.Tables[0];
+                int test_count = test_datatable.Rows.Count;
+                for (int start_test = 0; start_test < test_count; start_test++)
+                {
+                    string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
+                    string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
+                    int sp_num = 0;
+                    DataRow dr = dtb.NewRow();
+                    string aa = test_datatable.Rows[start_test]["measureb"].ToString();
+                    dr["测量编号"] = aa;
+                    dr["测量时间"] = test_datatable.Rows[start_test]["time"].ToString();
+                    dr["测量结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
+                    dr["零件号"] = test_datatable.Rows[start_test]["PN"].ToString();
+                    foreach (string j in sp)
+                    {
+                        string tt = "";
+                        sp_num++;
+                        string col_name = string.Format("步骤{0}", sp_num);
+                        Maticsoft.BLL.measures ms = new Maticsoft.BLL.measures();
+                        string pr = string.Format("PN = '{0}'", textBox_ljhao.Text);
+                        DataSet std = mes.GetList(pr);
+
+                        for (int i = 0; i < std.Tables[0].Rows.Count; i++)
                         {
-                           
-                           // comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
-                            Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                            string st1 = string.Format("PN = '{0}' ", textBox_ljhao.Text);
-                            DataSet ds11 = mes1.GetList(st1);
-                            for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
+
+                            string sg = "步骤" + std.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
+
+                            if (col_name == sg)
                             {
-                                tt   = ds11.Tables[0].Rows[b][4].ToString();
-                               double rr = Convert.ToDouble(j);
-                                double yy = Convert.ToDouble(tt);
-                                dr[col_name] ="偏差"+ (rr - yy)+"mm";//Convert.ToDouble(j) - Convert.ToDouble(tt);
-                                string vv = dr[col_name].ToString();
-                            break;
-                           }
+
+                                // comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
+                                Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
+                                string st1 = string.Format("PN = '{0}' ", textBox_ljhao.Text);
+                                DataSet ds11 = mes1.GetList(st1);
+                                for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
+                                {
+                                    tt = ds11.Tables[0].Rows[b][4].ToString();
+                                    double rr = Convert.ToDouble(j);
+                                    double yy = Convert.ToDouble(tt);
+                                    dr[col_name] = "偏差" + (rr - yy) + "mm";//Convert.ToDouble(j) - Convert.ToDouble(tt);
+                                    string vv = dr[col_name].ToString();
+                                    break;
+                                }
+                            }
                         }
+
                     }
-                   
+
+                    dtb.Rows.Add(dr);
                 }
-              
-                dtb.Rows.Add(dr);
-               }
             }
-            if (radioGroup1.SelectedIndex==1) {
+            if (radioGroup1.SelectedIndex == 1)
+            {
                 Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
                 DateTime sj = Convert.ToDateTime(dtp.Text);
                 DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);
@@ -325,14 +331,15 @@ namespace NepslidingTools.testModel
                     dtb.Rows.Add(dr);
                 }
             }
-            if (radioGroup1.SelectedIndex==2) {
+            if (radioGroup1.SelectedIndex == 2)
+            {
                 Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
                 DateTime sj = Convert.ToDateTime(dtp.Text);
                 DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);
                 string TS = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}'", textBox_ljhao.Text, sj1, sj);
                 string TS1 = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}' and OKorNG='{3}'", textBox_ljhao.Text, sj1, sj, "OK");
                 DataSet dst1 = tst.GetList(TS1);
-                DataTable test_datatable1 = dst1.Tables[0];                
+                DataTable test_datatable1 = dst1.Tables[0];
                 int test_count1 = test_datatable1.Rows.Count;
                 Program.hg = test_count1;
                 DataSet dst = tst.GetList(TS);
@@ -418,7 +425,7 @@ namespace NepslidingTools.testModel
 
         private void dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            
+
         }
     }
 }
