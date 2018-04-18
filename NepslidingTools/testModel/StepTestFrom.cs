@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using AnyCAD.Platform;
 using Maticsoft.Model;
+using System.Threading;
 
 namespace NepslidingTools.testModel
 {
@@ -50,7 +51,7 @@ namespace NepslidingTools.testModel
             #region 串口列表 ports_list
             string local_id = global.MachineID;
             Maticsoft.BLL.port ports_man = new Maticsoft.BLL.port();
-            ports_list =  ports_man.GetModelList(string.Format("  mac = '{0}'", local_id));
+            ports_list = ports_man.GetModelList(string.Format("  mac = '{0}'", local_id));
             //MessageBox.Show(ports_list.Count.ToString());
             #endregion
 
@@ -59,7 +60,7 @@ namespace NepslidingTools.testModel
             foreach (Maticsoft.Model.port tmp_port in ports_list)
             {
                 this.cbb_canselect.Items.Add(tmp_port.manufacturer);
-                
+
             }
             #endregion
 
@@ -203,6 +204,53 @@ namespace NepslidingTools.testModel
             //this.InitTestData();
             this.timer1.Enabled = true;
             //this.test();
+            create_serpoint();
+        }
+
+        private void create_serpoint()
+        {
+            // 创建折线图线程
+            Thread T = new Thread(() =>
+            {
+                Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
+                List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList(string.Format(" PN = '{0}'  ORDER BY test.time desc LIMIT 100", lble.Text));
+                // MessageBox.Show(test_lists.Count.ToString());
+                // 分割结果。 并且放在折线图上面
+                int cur_index = 0;
+                // 1 获得当前是第几部
+                comboBox1.Invoke(new Action(()=> {
+                    cur_index = int.Parse(comboBox1.SelectedItem.ToString().Replace("步骤", ""));
+                }));
+
+
+                // 2 循环获得 最近的个数
+                int n = 1;
+                this.chartControl1.BeginInvoke(new Action(() => {
+                    this.chartControl1.Series[0].Points.Clear();
+                }));
+                foreach (Maticsoft.Model.test test_obj in test_lists)
+                {
+                    string test_result = test_obj.step1;
+
+                    string[] results =  test_result.Split('/');
+                    // 容灾处理， 如果大于数组。就等于数组的最后一位
+                    if (cur_index > results.Length)
+                    {
+                        cur_index = results.Length;
+                    }
+                    if (results.Length <= 0)
+                    {
+                        break;
+                    }
+                    Console.WriteLine(results[cur_index-1]);
+                    this.chartControl1.Invoke(new Action(() => {
+                        
+                        this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n ++ , results[cur_index - 1]));
+                    })); 
+                }
+
+            });
+            T.Start();
         }
 
         private SceneNode ShowTopoShape(TopoShape topoShape, int id)
@@ -399,10 +447,10 @@ namespace NepslidingTools.testModel
             }
             #endregion
 
-           
+
             #region 判断是不是可以 ok 或者ng了 
             int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
-            
+
             int CL = dt.Columns.Count;
             string fz = dt.Rows[last_row1][CL - 2].ToString();
             if (fz != "")
@@ -705,6 +753,7 @@ namespace NepslidingTools.testModel
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             this.InitTestData();
+            create_serpoint();
             /*
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
             string st = string.Format("PN = '{0}'", lble.Text);
@@ -744,7 +793,8 @@ namespace NepslidingTools.testModel
 
         private void timer_portst_Tick(object sender, EventArgs e)
         {
-            this.lab_st.Invoke(new Action(() => {
+            this.lab_st.Invoke(new Action(() =>
+            {
                 bool tmp_conn_st = this.sp_obj.port_st();
                 this.lab_st.Text = tmp_conn_st ? "连接" : "未连接";
                 if (!tmp_conn_st)

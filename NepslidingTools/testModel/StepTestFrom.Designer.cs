@@ -31,9 +31,9 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
-            Series series1 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram5 = new DevExpress.XtraCharts.XYDiagram();
+            Series series5 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView5 = new DevExpress.XtraCharts.LineSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -154,7 +154,7 @@ namespace NepslidingTools.testModel
             // 
             this.txtkw.BackColor = System.Drawing.Color.White;
             this.txtkw.ForeColor = System.Drawing.Color.Black;
-            this.txtkw.Location = new System.Drawing.Point(59, 221);
+            this.txtkw.Location = new System.Drawing.Point(66, 236);
             this.txtkw.Name = "txtkw";
             this.txtkw.Size = new System.Drawing.Size(163, 22);
             this.txtkw.TabIndex = 8;
@@ -163,7 +163,7 @@ namespace NepslidingTools.testModel
             // 
             this.textcl.BackColor = System.Drawing.Color.White;
             this.textcl.ForeColor = System.Drawing.Color.Black;
-            this.textcl.Location = new System.Drawing.Point(295, 223);
+            this.textcl.Location = new System.Drawing.Point(302, 238);
             this.textcl.Name = "textcl";
             this.textcl.Size = new System.Drawing.Size(100, 22);
             this.textcl.TabIndex = 7;
@@ -174,7 +174,7 @@ namespace NepslidingTools.testModel
             this.combjg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.combjg.ForeColor = System.Drawing.Color.Black;
             this.combjg.FormattingEnabled = true;
-            this.combjg.Location = new System.Drawing.Point(295, 190);
+            this.combjg.Location = new System.Drawing.Point(168, 198);
             this.combjg.Name = "combjg";
             this.combjg.Size = new System.Drawing.Size(121, 21);
             this.combjg.TabIndex = 6;
@@ -182,7 +182,7 @@ namespace NepslidingTools.testModel
             // button1
             // 
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(241, 259);
+            this.button1.Location = new System.Drawing.Point(327, 196);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -197,7 +197,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX4.ForeColor = System.Drawing.Color.Black;
-            this.labelX4.Location = new System.Drawing.Point(230, 192);
+            this.labelX4.Location = new System.Drawing.Point(103, 200);
             this.labelX4.Name = "labelX4";
             this.labelX4.Size = new System.Drawing.Size(70, 23);
             this.labelX4.TabIndex = 4;
@@ -210,7 +210,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX3.ForeColor = System.Drawing.Color.Black;
-            this.labelX3.Location = new System.Drawing.Point(3, 192);
+            this.labelX3.Location = new System.Drawing.Point(11, 200);
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(103, 23);
             this.labelX3.TabIndex = 3;
@@ -223,7 +223,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX2.ForeColor = System.Drawing.Color.Black;
-            this.labelX2.Location = new System.Drawing.Point(230, 221);
+            this.labelX2.Location = new System.Drawing.Point(237, 236);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(70, 23);
             this.labelX2.TabIndex = 2;
@@ -236,7 +236,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.ForeColor = System.Drawing.Color.Black;
-            this.labelX1.Location = new System.Drawing.Point(3, 221);
+            this.labelX1.Location = new System.Drawing.Point(10, 236);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(60, 23);
             this.labelX1.TabIndex = 1;
@@ -548,16 +548,16 @@ namespace NepslidingTools.testModel
             // chartControl1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.chartControl1, 3);
-            xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram1;
+            xyDiagram5.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram5.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram5;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartControl1.Location = new System.Drawing.Point(3, 288);
             this.chartControl1.Name = "chartControl1";
-            series1.Name = "测量结果波动";
-            series1.View = lineSeriesView1;
+            series5.Name = "测量结果波动";
+            series5.View = lineSeriesView5;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series1};
+        series5};
             this.chartControl1.Size = new System.Drawing.Size(1120, 154);
             this.chartControl1.TabIndex = 8;
             // 

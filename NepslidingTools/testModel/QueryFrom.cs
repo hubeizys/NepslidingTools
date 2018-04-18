@@ -88,6 +88,7 @@ namespace NepslidingTools.testModel
         {
             textBox_ljhao.Text = Program.gdvid;
             global.CurActive = "QueryFrom";
+            #region ------------------------------
             //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
             //this.Size = ScreenArea.Size;
 
@@ -108,6 +109,7 @@ namespace NepslidingTools.testModel
             //dt.Rows.Add(new object[] { 10003, 3011111, "¹¤Î»1", DateTime.Now, "Æ«²î1mm", "Æ«²î1mm", "ÎÞÆ«²î", "OK"});
             //dt.Rows.Add(new object[] { 10004, 3421112 , "¹¤Î»2", DateTime.Now, "Æ«²î1mm", "Æ«²î1mm", "Æ«²î-134mm", "NG"});
             //query_gc.DataSource = dt;
+            #endregion
         }
 
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
@@ -119,6 +121,7 @@ namespace NepslidingTools.testModel
 
         private void buttonX1_Click(object sender, EventArgs e)
         {
+            #region ----------------------------------
             //SaveFileDialog dlg = new SaveFileDialog();
             //dlg.Filter = "Execl files (*.xls)|*.xls";
             //dlg.FilterIndex = 0;
@@ -175,6 +178,7 @@ namespace NepslidingTools.testModel
             //        myStream.Close();
             //    }
             //}
+            #endregion
             daochu dc = new daochu();
             dc.resa = this;
             dc.ShowDialog();
