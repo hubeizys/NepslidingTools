@@ -10,8 +10,8 @@ namespace NepslidingTools.testModel
 {
     class SerPort
     {
-       // public delegate string HDDelegate(string sz);
-       // HDDelegate pd = new HDDelegate(new Test().Process);
+        // public delegate string HDDelegate(string sz);
+        // HDDelegate pd = new HDDelegate(new Test().Process);
         SerialPort sp1 = new SerialPort();
         public RecvProcessFunc Processfunc;
         public void init_port(string port_name)
@@ -43,9 +43,10 @@ namespace NepslidingTools.testModel
                     return;
                 }
             }
-            catch(Exception err)
+            catch (Exception err)
             {
-                MessageBox.Show(err.Message+ "   " + "请检查端口正常后再接入数据");
+                //  MessageBox.Show(err.Message+ "   " + "请检查端口正常后再接入数据");
+                Console.WriteLine(err.Message + "   " + "请检查端口正常后再接入数据");
             }
 
         }
@@ -80,50 +81,51 @@ namespace NepslidingTools.testModel
                 Thread.Sleep(500);
                 byte[] byteRead = new byte[sp1.BytesToRead];    //BytesToRead:sp1接收的字符个数
 
-                    try
+                try
+                {
+                    Byte[] receivedData = new Byte[sp1.BytesToRead];        //创建接收字节数组
+                    sp1.Read(receivedData, 0, receivedData.Length);         //读取数据
+                                                                            //string text = sp1.Read();   //Encoding.ASCII.GetString(receivedData);
+                    sp1.DiscardInBuffer();                                  //清空SerialPort控件的Buffer
+                                                                            //这是用以显示字符串
+                                                                            //    string strRcv = null;
+                                                                            //    for (int i = 0; i < receivedData.Length; i++ )
+                                                                            //    {
+                                                                            //        strRcv += ((char)Convert.ToInt32(receivedData[i])) ;
+                                                                            //    }
+                                                                            //    txtReceive.Text += strRcv + "\r\n";             //显示信息
+                                                                            //}
+                    string strRcv = null;
+                    //int decNum = 0;//存储十进制
+                    for (int i = 0; i < receivedData.Length; i++) //窗体显示
                     {
-                        Byte[] receivedData = new Byte[sp1.BytesToRead];        //创建接收字节数组
-                        sp1.Read(receivedData, 0, receivedData.Length);         //读取数据
-                        //string text = sp1.Read();   //Encoding.ASCII.GetString(receivedData);
-                        sp1.DiscardInBuffer();                                  //清空SerialPort控件的Buffer
-                        //这是用以显示字符串
-                        //    string strRcv = null;
-                        //    for (int i = 0; i < receivedData.Length; i++ )
-                        //    {
-                        //        strRcv += ((char)Convert.ToInt32(receivedData[i])) ;
-                        //    }
-                        //    txtReceive.Text += strRcv + "\r\n";             //显示信息
-                        //}
-                        string strRcv = null;
-                        //int decNum = 0;//存储十进制
-                        for (int i = 0; i < receivedData.Length; i++) //窗体显示
-                        {
 
-                            strRcv += receivedData[i].ToString("X2");  //16进制显示
-                        
-                    }         
+                        strRcv += receivedData[i].ToString("X2");  //16进制显示
+
+                    }
                     Console.WriteLine(string.Format("接收到的数据为 {0}", strRcv));
-                   
+
                     string ss = strRcv;
                     String strnew = ss.Substring(0, 2);
-                    int str1 =Convert.ToInt32( ss.Substring(2,2));
-                    int str2 =Convert.ToInt32( ss.Substring(4,2));
-                    int str3 =Convert.ToInt32( ss.Substring(6,2));
-                    string str4 = ss.Substring(8,2);
-                    int str5 =Convert.ToInt32( ss.Substring(10,2));
-                    int str6 =Convert.ToInt32( ss.Substring(12,2));
-                    string  str7 = ss.Substring(14,2);
-                    if (str4== ss.Substring(8, 2)) {
+                    int str1 = Convert.ToInt32(ss.Substring(2, 2));
+                    int str2 = Convert.ToInt32(ss.Substring(4, 2));
+                    int str3 = Convert.ToInt32(ss.Substring(6, 2));
+                    string str4 = ss.Substring(8, 2);
+                    int str5 = Convert.ToInt32(ss.Substring(10, 2));
+                    int str6 = Convert.ToInt32(ss.Substring(12, 2));
+                    string str7 = ss.Substring(14, 2);
+                    if (str4 == ss.Substring(8, 2))
+                    {
                         str4 = ".";
-                        string sz = (str1 - 30).ToString() + (str2 - 30).ToString() + (str3 - 30).ToString()+str4 + (str5 - 30).ToString() + (str6 - 30).ToString();
-                        if (Convert.ToInt32( sz.Substring(0,1))==0)
+                        string sz = (str1 - 30).ToString() + (str2 - 30).ToString() + (str3 - 30).ToString() + str4 + (str5 - 30).ToString() + (str6 - 30).ToString();
+                        if (Convert.ToInt32(sz.Substring(0, 1)) == 0)
                         {
-                            sz= (str2 - 30).ToString() + (str3 - 30).ToString() + str4 + (str5 - 30).ToString() + (str6 - 30).ToString();
+                            sz = (str2 - 30).ToString() + (str3 - 30).ToString() + str4 + (str5 - 30).ToString() + (str6 - 30).ToString();
                         }
                         Processfunc(sz);
                         //Program.txtstr = sz;
                     }
-                    
+
                     //string sz1 = (str2 - 30).ToString();
                     //string sz2 = (str3 - 30).ToString();
 
@@ -134,14 +136,14 @@ namespace NepslidingTools.testModel
                     //string sdsdf = strnew;
                     //txtReceive.Text += strRcv + "\r\n";
                 }
-                    catch (System.Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "出错提示");
-                        //txtSend.Text = "";
-                    }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "出错提示");
+                    //txtSend.Text = "";
                 }
-    }
-      
+            }
+        }
+
 
     }
 }

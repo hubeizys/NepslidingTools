@@ -313,8 +313,13 @@ namespace NepslidingTools.testModel
             {
                 return;
             }
+
+            #region 判断当前的测试， 是不是合理的
+            // 理论值
             double LL = Convert.ToDouble(txtll.Text);
+            // 公差值
             double GC = Convert.ToDouble(txtgc.Text);
+            // 测量值
             double BZ = Convert.ToDouble(textcl.Text);
 
             double cz = LL - GC;
@@ -327,6 +332,9 @@ namespace NepslidingTools.testModel
             {
                 combjg.Text = "Ng";
             }
+            #endregion
+
+            #region 根据最后一列判断 获得最后一列 ，如果没有列就添加一列
             DataTable dt = dgv1.DataSource as DataTable;
             DataRow need_change_rows = null;
 
@@ -346,6 +354,9 @@ namespace NepslidingTools.testModel
                 need_change_rows = dt.NewRow();
                 dt.Rows.Add(need_change_rows);
             }
+            #endregion
+
+            #region 依次在新行中 给每个测试结果赋值
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
             string st = string.Format("PN = '{0}'", lble.Text);
             DataSet ds1 = mes.GetList(st);
@@ -366,7 +377,10 @@ namespace NepslidingTools.testModel
                     }
                 }
             }
+            #endregion
+
             int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
+            
             int CL = dt.Columns.Count;
             string fz = dt.Rows[last_row1][CL - 2].ToString();
             if (fz != "")
@@ -399,16 +413,18 @@ namespace NepslidingTools.testModel
                     string tt = "";
                     if (Convert.ToDouble(dd) >= cz && Convert.ToDouble(dd) <= hz)
                     {
-                        //need_change_rows["测试结果"] = "Ok";
+                        
                         tt = "Ok";
-
+                        need_change_rows["测试结果"] = "Ok";
                     }
                     else
                     {
                         tt = "Ng";
-
-                        //need_change_rows["测试结果"] = "NG";
+                        need_change_rows["测试结果"] = "NG";
+                        break;
+                        
                     }
+                    /*
                     if (tt != "Ok")
                     {
                         need_change_rows["测试结果"] = "NG";
@@ -417,7 +433,7 @@ namespace NepslidingTools.testModel
                     else
                     {
                         need_change_rows["测试结果"] = "Ok";
-                    }
+                    }*/
                     //  }
 
                 }
