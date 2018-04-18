@@ -95,8 +95,8 @@ namespace NepslidingTools
 
         private void dev_mti_Click(object sender, EventArgs e)
         {
-            Devices dvs = new Devices();
-            dvs.ShowDialog();
+            //Devices dvs = new Devices();
+            //dvs.ShowDialog();
         }
 
         private void timer1_Tick(object sender, EventArgs e)

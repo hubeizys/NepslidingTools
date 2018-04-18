@@ -324,12 +324,6 @@
     <Compile Include="testModel\daochu.Designer.cs">
       <DependentUpon>daochu.cs</DependentUpon>
     </Compile>
-    <Compile Include="testModel\Devices.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="testModel\Devices.Designer.cs">
-      <DependentUpon>Devices.cs</DependentUpon>
-    </Compile>
     <Compile Include="testModel\Devsimport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -452,9 +446,6 @@
     </Compile>
     <EmbeddedResource Include="testModel\daochu.resx">
       <DependentUpon>daochu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="testModel\Devices.resx">
-      <DependentUpon>Devices.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="testModel\Devsimport.resx">
       <DependentUpon>Devsimport.cs</DependentUpon>

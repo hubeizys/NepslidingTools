@@ -195,11 +195,20 @@ namespace NepslidingTools.testModel
 
         private void query_bt_Click(object sender, EventArgs e)
         {
+            #region 预备查询表字段
+
+            #endregion
+
+            #region 甄别查询条件
+            #endregion
+
+
             DataTable dtb = new DataTable();
             #region 构建datatable 表
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
             string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
             DataSet ds1 = mes.GetList(st);
+            #region 添加
             dtb.Columns.Add("零件号");
             dtb.Columns.Add("测量编号");
             dtb.Columns.Add("测量时间");
@@ -216,7 +225,6 @@ namespace NepslidingTools.testModel
             #region 填充数据
             if (radioGroup1.SelectedIndex == 0)
             {
-
                 Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
                 DateTime sj = Convert.ToDateTime(dtp.Text);
                 DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);
@@ -251,7 +259,6 @@ namespace NepslidingTools.testModel
 
                             if (col_name == sg)
                             {
-
                                 // comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
                                 Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
                                 string st1 = string.Format("PN = '{0}' ", textBox_ljhao.Text);
@@ -396,6 +403,7 @@ namespace NepslidingTools.testModel
                 }
             }
             #endregion
+            #endregion
             // query_gc.DataSource = dtb;
             dgv.DataSource = dtb;
         }
@@ -415,7 +423,7 @@ namespace NepslidingTools.testModel
             global.CurActive = "main";
             this.Dispose();
         }
-
+        
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             Program.txtbh = textBox_ljhao.Text;
