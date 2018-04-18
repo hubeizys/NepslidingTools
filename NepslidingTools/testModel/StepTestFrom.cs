@@ -45,12 +45,13 @@ namespace NepslidingTools.testModel
         {
             // MessageBox.Show("界面开始了");
             txtkw.Text = global.MachineID;
+            #region 串口展示
             // 获得先得串口列表
             #region 串口列表 ports_list
             string local_id = global.MachineID;
             Maticsoft.BLL.port ports_man = new Maticsoft.BLL.port();
             ports_list =  ports_man.GetModelList(string.Format("  mac = '{0}'", local_id));
-            MessageBox.Show(ports_list.Count.ToString());
+            //MessageBox.Show(ports_list.Count.ToString());
             #endregion
 
             // 对当前串口的展示， 以及默认的串口
@@ -60,9 +61,11 @@ namespace NepslidingTools.testModel
                 this.cbb_canselect.Items.Add(tmp_port.manufacturer);
                 
             }
-            
+            #endregion
+
             try
             {
+                #region andcad 初始化
                 if (StepTestFrom.theApplication == null)
                 {
                     StepTestFrom.theApplication = new AnyCAD.Platform.Application();
@@ -73,7 +76,10 @@ namespace NepslidingTools.testModel
                 theView = theApplication.CreateView(panel3d.Handle.ToInt32(), size.Width, size.Height);
 
                 theView.RequestDraw();
-                Console.WriteLine(theView.ToString());
+
+                #endregion
+
+                #region 构建dgv 数据结构 以及填充数据
 
                 lble.Text = Program.txtbh;
                 DataTable dtb = new DataTable();
@@ -121,7 +127,9 @@ namespace NepslidingTools.testModel
                 }
                 #endregion   
                 dgv1.DataSource = dtb;
+                #endregion
 
+                #region -----------------------
                 //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
                 //string aa = string.Format("PN = '{0}'", lble.Text);
                 //DataSet ds = usec.GetList(aa);
@@ -137,6 +145,9 @@ namespace NepslidingTools.testModel
                 //dgv1.DataSource = ds.Tables[0];
 
                 //if (comboBox1.Text=="第一步") {
+                #endregion
+
+                #region 初始化当前步骤信息
                 Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
                 string st1 = string.Format("PN = '{0}'", lble.Text);
                 DataSet ds11 = mes1.GetList(st1);
@@ -148,14 +159,20 @@ namespace NepslidingTools.testModel
                     txtll.Text = ds11.Tables[0].Rows[i][4].ToString();
                     comboBox1.Items.Add("步骤" + ds11.Tables[0].Rows[i]["step"].ToString());
                 }
+                this.comboBox1.SelectedIndex = 0;
+                #endregion
                 // }
 
+                #region 初始化串口信息
 
                 sp_obj.CheckPort();
                 sp_obj.init_port("COM3");
                 sp_obj.Processfunc = jiangyaozhixin;
 
                 global.CurActive = "steptest";
+                #endregion
+
+                #region  ------------------
                 //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
                 //this.Size = ScreenArea.Size;
                 //Location = (Point)new Size(0, 0);
@@ -174,7 +191,7 @@ namespace NepslidingTools.testModel
                 //dt.Rows.Add(new object[] { "2017113212200102", DateTime.Now, "NG", "-0.2", "0", "0.1", "0", "0" });
                 //dt.Rows.Add(new object[] { "2017113212200103", DateTime.Now, "OK", "0.1", "-0.1", "0.2", "0", "0.1" });
                 //this.dgv1.DataSource = dt;
-
+                #endregion
 
             }
             catch (Exception err)
@@ -182,6 +199,8 @@ namespace NepslidingTools.testModel
                 MessageBox.Show(err.Message);
             }
 
+
+            //this.InitTestData();
             this.timer1.Enabled = true;
             //this.test();
         }
@@ -356,10 +375,11 @@ namespace NepslidingTools.testModel
             }
             #endregion
 
-            #region 依次在新行中 给每个测试结果赋值
+
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
             string st = string.Format("PN = '{0}'", lble.Text);
             DataSet ds1 = mes.GetList(st);
+            #region 依次在新行中 给每个测试结果赋值
             for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
             {
                 string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
@@ -379,6 +399,8 @@ namespace NepslidingTools.testModel
             }
             #endregion
 
+           
+            #region 判断是不是可以 ok 或者ng了 
             int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
             
             int CL = dt.Columns.Count;
@@ -390,7 +412,15 @@ namespace NepslidingTools.testModel
                 {
                     string dd = "";
                     string col_name = string.Format("步骤{0}", a + 1);
-                    dd += dt.Rows[last_row1][col_name];
+                    dd = dt.Rows[last_row1][col_name].ToString();
+
+                    if (dd == "")
+                    {
+                        break;
+                    }
+                    #region ---------------------
+                    // 获得步骤信息
+                    /*
                     Maticsoft.BLL.measures mesq = new Maticsoft.BLL.measures();
                     string ste = string.Format("PN = '{0}'", lble.Text);
                     DataSet dsf = mesq.GetList(ste);
@@ -399,31 +429,33 @@ namespace NepslidingTools.testModel
                     string sg = "步骤" + dsf.Tables[0].Rows[a]["step"].ToString();// comboBox1.Items.Add()
 
                     comboBox1.Text = sg;
-                    Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                    string st1 = string.Format("PN = '{0}'", lble.Text);
-                    DataSet ds11 = mes1.GetList(st1);
-                    //for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
-                    //{
+                    */
 
-                    txtll.Text = ds11.Tables[0].Rows[a][4].ToString();
 
-                    cz = Convert.ToDouble(txtll.Text) - Convert.ToDouble(txtgc.Text);
-                    hz = Convert.ToDouble(txtll.Text) + Convert.ToDouble(txtgc.Text);
+                    //Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
+                    // string st1 = string.Format("PN = '{0}'", lble.Text);
+                    // DataSet ds11 = mes1.GetList(st1);
+                    #endregion
+
+
+                    txtll.Text = ds1.Tables[0].Rows[a][4].ToString();
+                    string shang_gc = ds1.Tables[0].Rows[a][5].ToString();
+                    string xia_gc = ds1.Tables[0].Rows[a][6].ToString();
+
+                    cz = Convert.ToDouble(txtll.Text) - Convert.ToDouble(xia_gc);
+                    hz = Convert.ToDouble(txtll.Text) + Convert.ToDouble(shang_gc);
 
                     string tt = "";
                     if (Convert.ToDouble(dd) >= cz && Convert.ToDouble(dd) <= hz)
                     {
-                        
-                        tt = "Ok";
                         need_change_rows["测试结果"] = "Ok";
                     }
                     else
                     {
-                        tt = "Ng";
                         need_change_rows["测试结果"] = "NG";
                         break;
-                        
                     }
+                    #region ------------
                     /*
                     if (tt != "Ok")
                     {
@@ -435,9 +467,11 @@ namespace NepslidingTools.testModel
                         need_change_rows["测试结果"] = "Ok";
                     }*/
                     //  }
+                    #endregion
 
                 }
             }
+            #endregion
         }
 
 
@@ -648,8 +682,30 @@ namespace NepslidingTools.testModel
 
         }
 
+        private void InitTestData()
+        {
+            string cur_item = comboBox1.Items[comboBox1.SelectedIndex].ToString();
+            Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
+            // 处理一下步骤问题
+            string com_step = comboBox1.Text.Replace("步骤", "");
+            string st1 = string.Format("PN = '{0}' and  step='{1}'", lble.Text, com_step);
+            List<Maticsoft.Model.measures> ms_modes = mes1.GetModelList(st1);
+            if (ms_modes.Count == 1)
+            {
+                txtll.Text = ms_modes[0].standardv;
+                txtgc.Text = ms_modes[0].up;
+                txtbox_gcxia.Text = ms_modes[0].down;
+            }
+            else
+            {
+                MessageBox.Show("测量标准没有录入。 或者录入不正常");
+            }
+        }
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            this.InitTestData();
+            /*
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
             string st = string.Format("PN = '{0}'", lble.Text);
             DataSet ds1 = mes.GetList(st);
@@ -661,7 +717,7 @@ namespace NepslidingTools.testModel
                 {
                     textcl.Text = "";
                     comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
-                    Maticsoft.BLL.measures aa = new Maticsoft.BLL.measures();
+                    // Maticsoft.BLL.measures aa = new Maticsoft.BLL.measures();
                     Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
                     string st1 = string.Format("PN = '{0}' and  step='{1}'", lble.Text, comboBox1.Text);
                     DataSet ds11 = mes1.GetList(st1);
@@ -671,7 +727,8 @@ namespace NepslidingTools.testModel
 
                     }
                 }
-            }
+                
+            }*/
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)

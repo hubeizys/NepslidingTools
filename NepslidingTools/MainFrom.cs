@@ -90,7 +90,7 @@ namespace NepslidingTools
             {
                 MessageBox.Show("未激活");
                 baseconfig bc_xin = new baseconfig
-                {   
+                {
                     companyName = "test",
                     expTime = DateTime.Now.AddDays(7),
                     version = "0.1",
@@ -115,7 +115,7 @@ namespace NepslidingTools
                 if (bc_list[0].expTime > DateTime.Now)
                 {
                     MessageBox.Show("使用期限" + bc_list[0].expTime);
-                    string boardid  = GetSystemInfo.GetMotherBoardID();
+                    string boardid = GetSystemInfo.GetMotherBoardID();
                     string mac = GetSystemInfo.GetMacAddress();
                     if (boardid == "" || mac == "")
                     {
@@ -124,7 +124,7 @@ namespace NepslidingTools
                     }
                     MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
 
-                    string source = boardid +  "HelloWorld" + mac;
+                    string source = boardid + "HelloWorld" + mac;
                     byte[] message;
                     message = Encoding.Default.GetBytes(source);
 
@@ -134,7 +134,8 @@ namespace NepslidingTools
                     //MessageBox.Show(Convert.ToBase64String(md5.Hash));
                 }
             }
-            else {
+            else
+            {
                 MessageBox.Show("配置不正确, 请联系管理员");
                 System.Environment.Exit(0);
                 return;
