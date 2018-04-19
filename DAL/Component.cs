@@ -6,25 +6,33 @@ using Maticsoft.DBUtility;//Please add references
 namespace Maticsoft.DAL
 {
     /// <summary>
-    /// 数据访问类:parts
+    /// 数据访问类:component
     /// </summary>
-    public partial class parts
+    public partial class component
     {
-        public parts()
+        public component()
         { }
         #region  BasicMethod
+
+        /// <summary>
+        /// 得到最大ID
+        /// </summary>
+        public int GetMaxId()
+        {
+            return DbHelperMySQL.GetMaxID("componentId", "component");
+        }
+
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(int id)
+        public bool Exists(int componentId)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) from parts");
-            strSql.Append(" where id=@id");
+            strSql.Append("select count(1) from component");
+            strSql.Append(" where componentId=@componentId ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@id", MySqlDbType.Int32)
-            };
-            parameters[0].Value = id;
+                    new MySqlParameter("@componentId", MySqlDbType.Int32,11)            };
+            parameters[0].Value = componentId;
 
             return DbHelperMySQL.Exists(strSql.ToString(), parameters);
         }
@@ -33,30 +41,20 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public bool Add(Maticsoft.Model.parts model)
+        public bool Add(Maticsoft.Model.component model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into parts(");
-            strSql.Append("PN,name,jobnum,ARef,size,sm,Barcode,componentId)");
+            strSql.Append("insert into component(");
+            strSql.Append("componentId,name,remark)");
             strSql.Append(" values (");
-            strSql.Append("@PN,@name,@jobnum,@ARef,@size,@sm,@Barcode,@componentId)");
+            strSql.Append("@componentId,@name,@remark)");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@PN", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@name", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@jobnum", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@ARef", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@size", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@sm", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@Barcode", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@componentId", MySqlDbType.Int32,11)};
-            parameters[0].Value = model.PN;
+                    new MySqlParameter("@componentId", MySqlDbType.Int32,11),
+                    new MySqlParameter("@name", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@remark", MySqlDbType.VarChar,32)};
+            parameters[0].Value = model.componentId;
             parameters[1].Value = model.name;
-            parameters[2].Value = model.jobnum;
-            parameters[3].Value = model.ARef;
-            parameters[4].Value = model.size;
-            parameters[5].Value = model.sm;
-            parameters[6].Value = model.Barcode;
-            parameters[7].Value = model.componentId;
+            parameters[2].Value = model.remark;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -71,38 +69,20 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(Maticsoft.Model.parts model)
+        public bool Update(Maticsoft.Model.component model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update parts set ");
-            strSql.Append("PN=@PN,");
+            strSql.Append("update component set ");
             strSql.Append("name=@name,");
-            strSql.Append("jobnum=@jobnum,");
-            strSql.Append("ARef=@ARef,");
-            strSql.Append("size=@size,");
-            strSql.Append("sm=@sm,");
-            strSql.Append("Barcode=@Barcode,");
-            strSql.Append("componentId=@componentId");
-            strSql.Append(" where id=@id");
+            strSql.Append("remark=@remark");
+            strSql.Append(" where componentId=@componentId ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@PN", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@name", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@jobnum", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@ARef", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@size", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@sm", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@Barcode", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@componentId", MySqlDbType.Int32,11),
-                    new MySqlParameter("@id", MySqlDbType.Int32,64)};
-            parameters[0].Value = model.PN;
-            parameters[1].Value = model.name;
-            parameters[2].Value = model.jobnum;
-            parameters[3].Value = model.ARef;
-            parameters[4].Value = model.size;
-            parameters[5].Value = model.sm;
-            parameters[6].Value = model.Barcode;
-            parameters[7].Value = model.componentId;
-            parameters[8].Value = model.id;
+                    new MySqlParameter("@name", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@remark", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@componentId", MySqlDbType.Int32,11)};
+            parameters[0].Value = model.name;
+            parameters[1].Value = model.remark;
+            parameters[2].Value = model.componentId;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -118,16 +98,15 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int id)
+        public bool Delete(int componentId)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from parts ");
-            strSql.Append(" where id=@id");
+            strSql.Append("delete from component ");
+            strSql.Append(" where componentId=@componentId ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@id", MySqlDbType.Int32)
-            };
-            parameters[0].Value = id;
+                    new MySqlParameter("@componentId", MySqlDbType.Int32,11)            };
+            parameters[0].Value = componentId;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -142,11 +121,11 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string idlist)
+        public bool DeleteList(string componentIdlist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from parts ");
-            strSql.Append(" where id in (" + idlist + ")  ");
+            strSql.Append("delete from component ");
+            strSql.Append(" where componentId in (" + componentIdlist + ")  ");
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -162,18 +141,17 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.parts GetModel(int id)
+        public Maticsoft.Model.component GetModel(int componentId)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,PN,name,jobnum,ARef,size,sm,Barcode,componentId from parts ");
-            strSql.Append(" where id=@id");
+            strSql.Append("select componentId,name,remark from component ");
+            strSql.Append(" where componentId=@componentId ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@id", MySqlDbType.Int32)
-            };
-            parameters[0].Value = id;
+                    new MySqlParameter("@componentId", MySqlDbType.Int32,11)            };
+            parameters[0].Value = componentId;
 
-            Maticsoft.Model.parts model = new Maticsoft.Model.parts();
+            Maticsoft.Model.component model = new Maticsoft.Model.component();
             DataSet ds = DbHelperMySQL.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -189,46 +167,22 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.parts DataRowToModel(DataRow row)
+        public Maticsoft.Model.component DataRowToModel(DataRow row)
         {
-            Maticsoft.Model.parts model = new Maticsoft.Model.parts();
+            Maticsoft.Model.component model = new Maticsoft.Model.component();
             if (row != null)
             {
-                if (row["id"] != null && row["id"].ToString() != "")
+                if (row["componentId"] != null && row["componentId"].ToString() != "")
                 {
-                    model.id = int.Parse(row["id"].ToString());
-                }
-                if (row["PN"] != null)
-                {
-                    model.PN = row["PN"].ToString();
+                    model.componentId = int.Parse(row["componentId"].ToString());
                 }
                 if (row["name"] != null)
                 {
                     model.name = row["name"].ToString();
                 }
-                if (row["jobnum"] != null)
+                if (row["remark"] != null)
                 {
-                    model.jobnum = row["jobnum"].ToString();
-                }
-                if (row["ARef"] != null)
-                {
-                    model.ARef = row["ARef"].ToString();
-                }
-                if (row["size"] != null)
-                {
-                    model.size = row["size"].ToString();
-                }
-                if (row["sm"] != null)
-                {
-                    model.sm = row["sm"].ToString();
-                }
-                if (row["Barcode"] != null)
-                {
-                    model.Barcode = row["Barcode"].ToString();
-                }
-                if (row["componentId"] != null && row["componentId"].ToString() != "")
-                {
-                    model.componentId = int.Parse(row["componentId"].ToString());
+                    model.remark = row["remark"].ToString();
                 }
             }
             return model;
@@ -240,8 +194,8 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,PN,name,jobnum,ARef,size,sm,Barcode,componentId ");
-            strSql.Append(" FROM parts ");
+            strSql.Append("select componentId,name,remark ");
+            strSql.Append(" FROM component ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -255,7 +209,7 @@ namespace Maticsoft.DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM parts ");
+            strSql.Append("select count(1) FROM component ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -284,9 +238,9 @@ namespace Maticsoft.DAL
             }
             else
             {
-                strSql.Append("order by T.id desc");
+                strSql.Append("order by T.componentId desc");
             }
-            strSql.Append(")AS Row, T.*  from parts T ");
+            strSql.Append(")AS Row, T.*  from component T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -311,8 +265,8 @@ namespace Maticsoft.DAL
 					new MySqlParameter("@OrderType", MySqlDbType.Bit),
 					new MySqlParameter("@strWhere", MySqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "parts";
-			parameters[1].Value = "id";
+			parameters[0].Value = "component";
+			parameters[1].Value = "componentId";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;

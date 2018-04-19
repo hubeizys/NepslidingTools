@@ -6,26 +6,35 @@ using Maticsoft.Model;
 namespace Maticsoft.BLL
 {
     /// <summary>
-    /// measures
+    /// component
     /// </summary>
-    public partial class measures
+    public partial class component
     {
-        private readonly Maticsoft.DAL.measures dal = new Maticsoft.DAL.measures();
-        public measures()
+        private readonly Maticsoft.DAL.component dal = new Maticsoft.DAL.component();
+        public component()
         { }
         #region  BasicMethod
+
+        /// <summary>
+        /// 得到最大ID
+        /// </summary>
+        public int GetMaxId()
+        {
+            return dal.GetMaxId();
+        }
+
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(int id)
+        public bool Exists(int componentId)
         {
-            return dal.Exists(id);
+            return dal.Exists(componentId);
         }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public bool Add(Maticsoft.Model.measures model)
+        public bool Add(Maticsoft.Model.component model)
         {
             return dal.Add(model);
         }
@@ -33,7 +42,7 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(Maticsoft.Model.measures model)
+        public bool Update(Maticsoft.Model.component model)
         {
             return dal.Update(model);
         }
@@ -41,41 +50,41 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int id)
+        public bool Delete(int componentId)
         {
 
-            return dal.Delete(id);
+            return dal.Delete(componentId);
         }
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool DeleteList(string idlist)
+        public bool DeleteList(string componentIdlist)
         {
-            return dal.DeleteList(idlist);
+            return dal.DeleteList(componentIdlist);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.measures GetModel(int id)
+        public Maticsoft.Model.component GetModel(int componentId)
         {
 
-            return dal.GetModel(id);
+            return dal.GetModel(componentId);
         }
 
         /// <summary>
         /// 得到一个对象实体，从缓存中
         /// </summary>
-        public Maticsoft.Model.measures GetModelByCache(int id)
+        public Maticsoft.Model.component GetModelByCache(int componentId)
         {
 
-            string CacheKey = "measuresModel-" + id;
+            string CacheKey = "componentModel-" + componentId;
             object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
             if (objModel == null)
             {
                 try
                 {
-                    objModel = dal.GetModel(id);
+                    objModel = dal.GetModel(componentId);
                     if (objModel != null)
                     {
                         int ModelCache = Maticsoft.Common.ConfigHelper.GetConfigInt("ModelCache");
@@ -84,7 +93,7 @@ namespace Maticsoft.BLL
                 }
                 catch { }
             }
-            return (Maticsoft.Model.measures)objModel;
+            return (Maticsoft.Model.component)objModel;
         }
 
         /// <summary>
@@ -97,7 +106,7 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<Maticsoft.Model.measures> GetModelList(string strWhere)
+        public List<Maticsoft.Model.component> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -105,13 +114,13 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<Maticsoft.Model.measures> DataTableToList(DataTable dt)
+        public List<Maticsoft.Model.component> DataTableToList(DataTable dt)
         {
-            List<Maticsoft.Model.measures> modelList = new List<Maticsoft.Model.measures>();
+            List<Maticsoft.Model.component> modelList = new List<Maticsoft.Model.component>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                Maticsoft.Model.measures model;
+                Maticsoft.Model.component model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);
