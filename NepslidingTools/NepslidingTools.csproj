@@ -406,6 +406,9 @@
     <Compile Include="toolbox\WorkPro.Designer.cs">
       <DependentUpon>WorkPro.cs</DependentUpon>
     </Compile>
+    <Compile Include="WorkForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="cut\Dev.resx">
       <DependentUpon>Dev.cs</DependentUpon>
     </EmbeddedResource>

@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace NepslidingTools.testModel
 {
-    public partial class StepTestFrom : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class StepTestFrom : WorkForm
     {
         string name = "steptest";
 
@@ -34,8 +34,7 @@ namespace NepslidingTools.testModel
         #region 窗体使用的临时变量
 
         // 零件 类型
-        int comp_type = 0;
-        string comp_name = "";
+
         #endregion
 
         public StepTestFrom()
@@ -56,35 +55,7 @@ namespace NepslidingTools.testModel
         }
 
 
-        public void dealwithcomp(object lingjianhao)
-        {
-            string lj_num = lingjianhao.ToString();
-            // 目前架构这样， 就不用联合查询了。 宁可多查询一部 
-            #region 获得零件id
-            Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
-            List<Maticsoft.Model.parts> parts_objs = parts_bll.GetModelList(string.Format(" PN = {0} ", lj_num));
-            if (parts_objs.Count == 1)
-            {
-                Maticsoft.Model.parts part_obj = parts_objs[0];
-                this.comp_type = part_obj.id;
-            }
-            else
-            {
-                MessageBox.Show("未知零件类型");
-                this.Close();
-            }
-            #endregion
-
-            #region 获得零件名字
-            Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
-            Maticsoft.Model.component comp_mode = comp_bll.GetModel(comp_type);
-            if ( comp_mode != null)
-            {
-                this.comp_name = comp_mode.name;
-            }
-            MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
-            #endregion
-        }
+      
 
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
@@ -93,17 +64,13 @@ namespace NepslidingTools.testModel
             #region 获得零件号，通过零件号获得详细信息
             // 获得零件号
             lble.Text = Program.txtbh;
-            global.AsynCall(this.dealwithcomp, lble.Text);
+            //global.AsynCall(this.dealwithcomp, lble.Text);
+            dealwithcomp(lble.Text);
             #endregion
-
-
-            // 根据零件号 获得零件类型 和名字
-            Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
-            //comp_bll.get
 
             // MessageBox.Show("界面开始了");
             txtkw.Text = global.MachineID;
-            #region 串口展示
+            #region 当前可用设备展示
             // 获得先得串口列表
             #region 串口列表 ports_list
             string local_id = global.MachineID;
@@ -123,6 +90,7 @@ namespace NepslidingTools.testModel
 
             try
             {
+                // cad 信息
                 #region andcad 初始化
                 if (StepTestFrom.theApplication == null)
                 {
@@ -139,9 +107,10 @@ namespace NepslidingTools.testModel
 
                 #region 构建dgv 数据结构 以及填充数据
                 DataTable dtb = new DataTable();
-                #region 构建datatable 表
+                #region 构建datatable 表，  添加表头
                 Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-                string st = string.Format("componentId = '{0}'", lble.Text);
+                //string st = string.Format("componentId = '{0}'", lble.Text);
+                string st = string.Format("componentId = '{0}'", this.comp_type);
                 DataSet ds1 = mes.GetList(st);
                 dtb.Columns.Add("测试编号");
                 dtb.Columns.Add("测试时间");
@@ -154,8 +123,9 @@ namespace NepslidingTools.testModel
                     //dgv1.DataSource = ds.Tables[0];                
                 }
                 dtb.Columns.Add("测试结果");
-                #endregion
-                #region 填充数据
+                #endregion  
+
+                #region 填充下面的dgv数据
                 Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
                 string TS = string.Format("PN = '{0}'", lble.Text);
                 DataSet dst = tst.GetList(TS);
@@ -205,7 +175,7 @@ namespace NepslidingTools.testModel
 
                 #region 初始化当前步骤信息
                 Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                string st1 = string.Format("componentId = '{0}'", lble.Text);
+                string st1 = string.Format("componentId = '{0}'", this.comp_type);
                 DataSet ds11 = mes1.GetList(st1);
                 //DataTable dt = new DataTable();
                 //ds1.Tables.Add(dt);
@@ -270,8 +240,6 @@ namespace NepslidingTools.testModel
             {
                 try
                 {
-
-
                     Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
                     List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList(string.Format(" PN = '{0}'  ORDER BY test.time desc LIMIT 100", lble.Text));
                     // MessageBox.Show(test_lists.Count.ToString());
@@ -492,7 +460,7 @@ namespace NepslidingTools.testModel
 
 
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            string st = string.Format("componentId = '{0}'", lble.Text);
+            string st = string.Format("componentId = '{0}'", this.comp_type);
             DataSet ds1 = mes.GetList(st);
             #region 依次在新行中 给每个测试结果赋值
             for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
@@ -728,7 +696,7 @@ namespace NepslidingTools.testModel
             DataTable dtb = new DataTable();
             #region 构建datatable 表
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            string st = string.Format("componentId = '{0}'", lble.Text);
+            string st = string.Format("componentId = '{0}'", this.comp_type);
             DataSet ds1 = mes.GetList(st);
             dtb.Columns.Add("测试编号");
             dtb.Columns.Add("测试时间");
@@ -803,7 +771,7 @@ namespace NepslidingTools.testModel
             Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
             // 处理一下步骤问题
             string com_step = comboBox1.Text.Replace("步骤", "");
-            string st1 = string.Format("componentId = '{0}' and  step='{1}'", lble.Text, com_step);
+            string st1 = string.Format("componentId = '{0}' and  step='{1}'", this.comp_type, com_step);
             List<Maticsoft.Model.measures> ms_modes = mes1.GetModelList(st1);
             if (ms_modes.Count == 1)
             {

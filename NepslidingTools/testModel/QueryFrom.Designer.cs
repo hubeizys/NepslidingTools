@@ -142,6 +142,7 @@ namespace NepslidingTools.testModel
             this.head_tpl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.head_tpl.Size = new System.Drawing.Size(895, 73);
             this.head_tpl.TabIndex = 3;
+            this.head_tpl.Paint += new System.Windows.Forms.PaintEventHandler(this.head_tpl_Paint);
             // 
             // textBox1
             // 
@@ -195,7 +196,6 @@ namespace NepslidingTools.testModel
             this.dtp.Name = "dtp";
             this.dtp.Size = new System.Drawing.Size(158, 31);
             this.dtp.TabIndex = 6;
-            this.dtp.Value = new System.DateTime(2018, 4, 4, 15, 39, 0, 0);
             // 
             // label3
             // 
@@ -301,6 +301,7 @@ namespace NepslidingTools.testModel
             this.textBox_ljhao.Name = "textBox_ljhao";
             this.textBox_ljhao.Size = new System.Drawing.Size(114, 22);
             this.textBox_ljhao.TabIndex = 12;
+            this.textBox_ljhao.TextChanged += new System.EventHandler(this.textBox_ljhao_TextChanged);
             // 
             // button3
             // 

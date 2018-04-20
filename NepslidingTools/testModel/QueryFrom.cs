@@ -10,7 +10,7 @@ using System.IO;
 
 namespace NepslidingTools.testModel
 {
-    public partial class QueryFrom : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class QueryFrom : WorkForm
     {
         string name = "QueryFrom";
         public QueryFrom()
@@ -92,6 +92,8 @@ namespace NepslidingTools.testModel
         {
             textBox_ljhao.Text = Program.gdvid;
             global.CurActive = "QueryFrom";
+
+            // this.dealwithcomp(textBox_ljhao.Text);
             #region ------------------------------
             //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
             //this.Size = ScreenArea.Size;
@@ -195,8 +197,29 @@ namespace NepslidingTools.testModel
 
         private void query_bt_Click(object sender, EventArgs e)
         {
-            #region 按照需求查出表
 
+            string where_str = " 1=1 ";
+            #region 按照需求查出表
+            // 罗列条件
+            //////////////// 零件号
+            if (textBox_ljhao != null)
+            {
+                where_str += string.Format(" or  {0}", textBox_ljhao.Text);
+            }
+            else {
+                MessageBox.Show("请输入零件号");
+                return;
+            }
+
+            // 同步处理好 零件的基础信息的事情
+            this.dealwithcomp(textBox_ljhao.Text);
+
+            //////////////// 时间
+            //////////////// ok or ng
+            //////////////// 工作站
+            //DataTable dtb = new DataTable();
+            //Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
+            //string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
             #endregion
 
             #region 预备查询表字段
@@ -436,6 +459,16 @@ namespace NepslidingTools.testModel
         }
 
         private void dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void textBox_ljhao_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void head_tpl_Paint(object sender, PaintEventArgs e)
         {
 
         }
