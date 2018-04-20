@@ -76,7 +76,7 @@ namespace NepslidingTools.testModel
                     standardv=bz,
                     up=sg,
                     down=xg,
-                    PN=pn,
+                    componentId=1,
                     CC=cun,
                 };
                 use.Update(us);
@@ -123,7 +123,7 @@ namespace NepslidingTools.testModel
                 up= sandsm_tb.Text,
                 down= tm_tb.Text,
                 CC= cicun_tb.Text,
-                PN= textbox_ljh.Text,
+                componentId= Convert.ToInt32( textbox_ljh.Text),
             };
             use.Add(us);           
             MessageBox.Show("±£´æ³É¹¦");
@@ -184,7 +184,7 @@ namespace NepslidingTools.testModel
                     up = SG,
                     down = XG,
                     CC = CI,                   
-                    PN = LJH,
+                    componentId = Convert.ToInt32( LJH),
                 };
                 use.Update(us);
            // }
