@@ -36,7 +36,7 @@ namespace NepslidingTools.testModel
             this.tlp_main = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.head_tpl = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txt_workst = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dtp = new System.Windows.Forms.DateTimePicker();
@@ -121,7 +121,7 @@ namespace NepslidingTools.testModel
             this.head_tpl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.head_tpl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 164F));
             this.head_tpl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.head_tpl.Controls.Add(this.textBox1, 3, 1);
+            this.head_tpl.Controls.Add(this.txt_workst, 3, 1);
             this.head_tpl.Controls.Add(this.label5, 2, 1);
             this.head_tpl.Controls.Add(this.label4, 0, 1);
             this.head_tpl.Controls.Add(this.dtp, 5, 0);
@@ -144,22 +144,22 @@ namespace NepslidingTools.testModel
             this.head_tpl.TabIndex = 3;
             this.head_tpl.Paint += new System.Windows.Forms.PaintEventHandler(this.head_tpl_Paint);
             // 
-            // textBox1
+            // txt_workst
             // 
-            this.textBox1.AutoCompleteCustomSource.AddRange(new string[] {
+            this.txt_workst.AutoCompleteCustomSource.AddRange(new string[] {
             "aaaaaaaa",
             "bbbbbbb",
             "cccccccc"});
-            this.textBox1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.textBox1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
-            this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.ForeColor = System.Drawing.Color.Black;
-            this.textBox1.Location = new System.Drawing.Point(343, 50);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(158, 22);
-            this.textBox1.TabIndex = 14;
+            this.txt_workst.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.txt_workst.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.txt_workst.BackColor = System.Drawing.Color.White;
+            this.txt_workst.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txt_workst.ForeColor = System.Drawing.Color.Black;
+            this.txt_workst.Location = new System.Drawing.Point(343, 50);
+            this.txt_workst.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.txt_workst.Name = "txt_workst";
+            this.txt_workst.Size = new System.Drawing.Size(158, 22);
+            this.txt_workst.TabIndex = 14;
             // 
             // label5
             // 
@@ -308,7 +308,7 @@ namespace NepslidingTools.testModel
             this.button3.ForeColor = System.Drawing.Color.Black;
             this.button3.Location = new System.Drawing.Point(701, 43);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(191, 23);
+            this.button3.Size = new System.Drawing.Size(191, 27);
             this.button3.TabIndex = 15;
             this.button3.Text = "ÍË³ö";
             this.button3.UseVisualStyleBackColor = true;
@@ -590,7 +590,7 @@ namespace NepslidingTools.testModel
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.DotNetBar.ButtonX bt_out;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txt_workst;
         private System.Windows.Forms.Button button3;
         private DevExpress.XtraGrid.Columns.GridColumn bomNo;
         private System.Windows.Forms.DataGridView dgv;

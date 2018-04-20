@@ -202,32 +202,92 @@ namespace NepslidingTools.testModel
             #region 按照需求查出表
             // 罗列条件
             //////////////// 零件号
+
+            #region 零件号基础信息
+            string lijianhao = textBox_ljhao.Text;
             if (textBox_ljhao != null)
             {
-                where_str += string.Format(" or  {0}", textBox_ljhao.Text);
+                where_str += string.Format(" and  {0} ", lijianhao);
             }
-            else {
+            else
+            {
                 MessageBox.Show("请输入零件号");
                 return;
             }
 
             // 同步处理好 零件的基础信息的事情
-            this.dealwithcomp(textBox_ljhao.Text);
-
-            //////////////// 时间
-            //////////////// ok or ng
-            //////////////// 工作站
-            //DataTable dtb = new DataTable();
-            //Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            //string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
+            this.dealwithcomp(lijianhao);
             #endregion
 
-            #region 预备查询表字段
+            //DataTable dtb = new DataTable();
+            //
+            //string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
+            DataTable mea_dt = new DataTable();
+            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+            List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}", this.comp_type));
+            mea_dt.Columns.Add("零件号");
+            mea_dt.Columns.Add("测量编号");
+            mea_dt.Columns.Add("测量时间");
+            foreach (Maticsoft.Model.measures mea_obj in mea_modes)
+            {
+                //string sg = "步骤" + mea_dt.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
+                // comboBox1.Text = sg;
+                string sg = "步骤" + mea_obj.step.ToString();
+                mea_dt.Columns.Add(sg.ToString());
+            }
+            mea_dt.Columns.Add("测量结果");
+            dgv.DataSource = mea_dt;
+
+            #region 预备 --查询-- 表字段
+            // 
+            //////////////// 时间
+            #region 时间条件
+            int cmp = timeselect_dtp.Value.CompareTo(dtp.Value);
+            if (cmp >= 0)
+            {
+                where_str += string.Format(" and {0} ", "");
+            }
+            else if (cmp < 0)
+            {
+                MessageBox.Show("时间选择不合理");
+                return;
+            }
+            #endregion
+
+            //////////////// ok or ng
+            #region 是否成功的条件
+            if (radioGroup1.SelectedIndex == 0)
+            {
+                where_str += string.Format(" and OKorNG = '{0}' ", "OK");
+            }
+            else if (radioGroup1.SelectedIndex == 1)
+            {
+                where_str += string.Format(" and OKorNG = '{0}' ", "NG");
+            }
+            else if (radioGroup1.SelectedIndex == 2)
+            {
+                where_str += string.Format(" and OKorNG = '{0}' ", "ALL");
+            }
+            #endregion
+            //////////////// 工作站
+
+            if (txt_workst.Text != "")
+            {
+                where_str += string.Format(" and {0} ", "");
+            }
+
+            #region MyRegion
+
+            #endregion
 
             #endregion
 
             #region 甄别查询条件
             #endregion
+            return;
+            #endregion
+
+
 
 
             DataTable dtb = new DataTable();
@@ -450,7 +510,7 @@ namespace NepslidingTools.testModel
             global.CurActive = "main";
             this.Dispose();
         }
-        
+
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             Program.txtbh = textBox_ljhao.Text;

@@ -144,6 +144,7 @@
     <Compile Include="parts.cs" />
     <Compile Include="test.cs" />
     <Compile Include="username.cs" />
+    <Compile Include="workstation.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

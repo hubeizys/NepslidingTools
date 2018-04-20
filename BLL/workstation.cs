@@ -6,26 +6,26 @@ using Maticsoft.Model;
 namespace Maticsoft.BLL
 {
     /// <summary>
-    /// test
+    /// workstation
     /// </summary>
-    public partial class test
+    public partial class workstation
     {
-        private readonly Maticsoft.DAL.test dal = new Maticsoft.DAL.test();
-        public test()
+        private readonly Maticsoft.DAL.workstation dal = new Maticsoft.DAL.workstation();
+        public workstation()
         { }
         #region  BasicMethod
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(int id)
+        public bool Exists(string workid)
         {
-            return dal.Exists(id);
+            return dal.Exists(workid);
         }
 
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public bool Add(Maticsoft.Model.test model)
+        public bool Add(Maticsoft.Model.workstation model)
         {
             return dal.Add(model);
         }
@@ -33,7 +33,7 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(Maticsoft.Model.test model)
+        public bool Update(Maticsoft.Model.workstation model)
         {
             return dal.Update(model);
         }
@@ -41,41 +41,41 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int id)
+        public bool Delete(string workid)
         {
 
-            return dal.Delete(id);
+            return dal.Delete(workid);
         }
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool DeleteList(string idlist)
+        public bool DeleteList(string workidlist)
         {
-            return dal.DeleteList(idlist);
+            return dal.DeleteList(workidlist);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.test GetModel(int id)
+        public Maticsoft.Model.workstation GetModel(string workid)
         {
 
-            return dal.GetModel(id);
+            return dal.GetModel(workid);
         }
 
         /// <summary>
         /// 得到一个对象实体，从缓存中
         /// </summary>
-        public Maticsoft.Model.test GetModelByCache(int id)
+        public Maticsoft.Model.workstation GetModelByCache(string workid)
         {
 
-            string CacheKey = "testModel-" + id;
+            string CacheKey = "workstationModel-" + workid;
             object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
             if (objModel == null)
             {
                 try
                 {
-                    objModel = dal.GetModel(id);
+                    objModel = dal.GetModel(workid);
                     if (objModel != null)
                     {
                         int ModelCache = Maticsoft.Common.ConfigHelper.GetConfigInt("ModelCache");
@@ -84,7 +84,7 @@ namespace Maticsoft.BLL
                 }
                 catch { }
             }
-            return (Maticsoft.Model.test)objModel;
+            return (Maticsoft.Model.workstation)objModel;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<Maticsoft.Model.test> GetModelList(string strWhere)
+        public List<Maticsoft.Model.workstation> GetModelList(string strWhere)
         {
             DataSet ds = dal.GetList(strWhere);
             return DataTableToList(ds.Tables[0]);
@@ -105,13 +105,13 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 获得数据列表
         /// </summary>
-        public List<Maticsoft.Model.test> DataTableToList(DataTable dt)
+        public List<Maticsoft.Model.workstation> DataTableToList(DataTable dt)
         {
-            List<Maticsoft.Model.test> modelList = new List<Maticsoft.Model.test>();
+            List<Maticsoft.Model.workstation> modelList = new List<Maticsoft.Model.workstation>();
             int rowsCount = dt.Rows.Count;
             if (rowsCount > 0)
             {
-                Maticsoft.Model.test model;
+                Maticsoft.Model.workstation model;
                 for (int n = 0; n < rowsCount; n++)
                 {
                     model = dal.DataRowToModel(dt.Rows[n]);
