@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace NepslidingTools.testModel
 {
@@ -207,7 +208,7 @@ namespace NepslidingTools.testModel
             string lijianhao = textBox_ljhao.Text;
             if (textBox_ljhao != null)
             {
-                where_str += string.Format(" and  {0} ", lijianhao);
+                where_str += string.Format(" and PN = '{0}' ", lijianhao);
             }
             else
             {
@@ -219,6 +220,7 @@ namespace NepslidingTools.testModel
             this.dealwithcomp(lijianhao);
             #endregion
 
+            #region 构建基本的表形状
             //DataTable dtb = new DataTable();
             //
             //string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
@@ -237,17 +239,19 @@ namespace NepslidingTools.testModel
             }
             mea_dt.Columns.Add("测量结果");
             dgv.DataSource = mea_dt;
+            #endregion
+
 
             #region 预备 --查询-- 表字段
             // 
             //////////////// 时间
             #region 时间条件
             int cmp = timeselect_dtp.Value.CompareTo(dtp.Value);
-            if (cmp >= 0)
+            if (cmp <= 0)
             {
-                where_str += string.Format(" and {0} ", "");
+                where_str += string.Format(" and  time >= '{0}'and time<='{1}' ", timeselect_dtp.Value, dtp.Value);
             }
-            else if (cmp < 0)
+            else if (cmp > 0)
             {
                 MessageBox.Show("时间选择不合理");
                 return;
@@ -269,20 +273,73 @@ namespace NepslidingTools.testModel
                 where_str += string.Format(" and OKorNG = '{0}' ", "ALL");
             }
             #endregion
-            //////////////// 工作站
 
+            //////////////// 工作站
+            #region 工作站 筛选
             if (txt_workst.Text != "")
             {
-                where_str += string.Format(" and {0} ", "");
+                where_str += string.Format(" and workid = '{0}'  ", txt_workst.Text);
             }
-
-            #region MyRegion
-
             #endregion
 
             #endregion
 
-            #region 甄别查询条件
+            // 查询出来test 数据
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
+            DataSet ds = test_bll.GetListByPage(where_str, "", 1, 100);
+            DataTable dt = ds.Tables[0];
+
+            DataTable dest_table = dgv.DataSource as DataTable;
+
+            #region 根据数据 更新表结构  ==== 惰性加入数据
+            // 放入基础信息
+            Task<string[]> parent = new Task<string[]>((aa) =>
+            {
+                DataTable local_dt = aa as DataTable;
+                int count = local_dt.Rows.Count;
+                string[] ret = new string[count];
+
+                // MessageBox.Show("一共多少行" + dt.Rows.Count.ToString());
+                for (int i = 0; i < count; i++)
+                {
+                    DataRow xin_dr = dest_table.NewRow();
+                    xin_dr["零件号"] = local_dt.Rows[i]["PN"];
+                    xin_dr["测量编号"] = local_dt.Rows[i]["measureb"];
+                    xin_dr["测量时间"] = local_dt.Rows[i]["time"];
+                    xin_dr["测量结果"] = local_dt.Rows[i]["OKorNG"];
+                    dest_table.Rows.Add(xin_dr);
+                    //xin_dr.Rows[][] = local_dt.Rows[i][0] 
+                    new Task((index) =>
+                    {
+                        int ret_i = Convert.ToInt32(index);
+                        Console.WriteLine("试试   " + index);
+                        ret[ret_i] = local_dt.Rows[ret_i]["step1"].ToString();
+                    }, i, TaskCreationOptions.AttachedToParent).Start();
+                }
+                return ret;
+            }, dt);
+            parent.ContinueWith((t) =>
+            {
+                //Array.ForEach(t.Result, (r) =>
+                //{
+                //    // MessageBox.Show("aaaa");
+                //    Console.WriteLine(string.Format("===== ============ {0}", r));
+                //    //string.Format();
+                //});
+                for (int i = 0; i< t.Result.Length ;i++)
+                {
+                    string[] sp_l = t.Result[i]; 
+                    foreach (Maticsoft.Model.measures mea_obj in mea_modes)
+                    {
+                        string sg = "步骤" + mea_obj.step.ToString();
+                        dest_table.Rows[i][sg] = 
+                    }
+                }
+            });
+
+            parent.Start();
+
             #endregion
             return;
             #endregion

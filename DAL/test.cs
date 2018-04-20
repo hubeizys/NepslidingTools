@@ -259,16 +259,16 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("SELECT * FROM ( ");
-            strSql.Append(" SELECT ROW_NUMBER() OVER (");
-            if (!string.IsNullOrEmpty(orderby.Trim()))
-            {
-                strSql.Append("order by T." + orderby);
-            }
-            else
-            {
-                strSql.Append("order by T.id desc");
-            }
-            strSql.Append(")AS Row, T.*  from test T ");
+            strSql.Append(" SELECT @row_number:=@row_number + 1 AS ROW, T.* FROM test T, (SELECT @row_number:= 0) AS aaccc ");
+            //if (!string.IsNullOrEmpty(orderby.Trim()))
+            //{
+            //    strSql.Append("order by T." + orderby);
+            //}
+            //else
+            //{
+            //    strSql.Append("order by T.id desc");
+            //}
+            //strSql.Append(")AS Row, T.*  from test T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
