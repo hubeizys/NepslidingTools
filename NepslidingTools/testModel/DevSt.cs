@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevComponents.DotNetBar;
 
@@ -61,8 +62,27 @@ namespace NepslidingTools.testModel
             this.Dispose();
         }
 
+        private void get_lingjian()
+        {
+            Task query_task = new Task(()=> {
+                Maticsoft.BLL.parts parts_list = new Maticsoft.BLL.parts();
+                List< Maticsoft.Model.parts> pa_list = parts_list.GetModelList(" 1=1 GROUP BY pn");
+                var datasou = new AutoCompleteStringCollection();
+                List<string> pn_list = pa_list.ConvertAll<string>((temp_obj) => { return temp_obj.PN; });
+                datasou.AddRange(pn_list.ToArray());
+                textBoxX1.Invoke(new Action(()=> {
+                    textBoxX1.AutoCompleteCustomSource = datasou;
+                    textBoxX1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    textBoxX1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                }));
+            });
+            query_task.Start();
+
+        }
+
         private void DevSt_Load(object sender, EventArgs e)
         {
+            this.get_lingjian();
             //where 1 = 1 GROUP BY pn LIMIT 10
             //global.CurActive = "DevSt";
             //this.TopMost = true;
