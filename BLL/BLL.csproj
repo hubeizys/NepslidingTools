@@ -131,6 +131,7 @@
     <Compile Include="cccc\xx_fapiao.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="geli\usermana.cs" />
+    <Compile Include="plus\ConfigPuls.cs" />
     <Compile Include="plus\measuresPlus.cs" />
     <Compile Include="port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

@@ -538,6 +538,9 @@
     <None Include="Resources\exit_72px_1201055_easyicon.net.ico" />
     <None Include="Resources\aaf.png" />
     <None Include="Resources\blue2.png" />
+    <Content Include="mysqldump.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
