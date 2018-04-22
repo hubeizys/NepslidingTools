@@ -382,6 +382,12 @@
     <Compile Include="toolbox\ManagerFrom.Designer.cs">
       <DependentUpon>ManagerFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="toolbox\password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="toolbox\password.Designer.cs">
+      <DependentUpon>password.cs</DependentUpon>
+    </Compile>
     <Compile Include="toolbox\SavaAllFrom.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -476,6 +482,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="toolbox\ManagerFrom.resx">
       <DependentUpon>ManagerFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="toolbox\password.resx">
+      <DependentUpon>password.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="toolbox\SavaAllFrom.resx">
       <DependentUpon>SavaAllFrom.cs</DependentUpon>

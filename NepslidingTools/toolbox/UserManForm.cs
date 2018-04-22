@@ -97,7 +97,14 @@ namespace NepslidingTools.toolbox
         
         private void edit_bt_Click(object sender, EventArgs e)
         {
-
+            DataRow drt =  manuser.GetDataRow(manuser.FocusedRowHandle);
+            MessageBox.Show(drt["password"].ToString() + "  "+ drt["ID"].ToString());
+            Maticsoft.BLL.username user = new Maticsoft.BLL.username();
+            Maticsoft.Model.username user_mode =  user.GetModel( Convert.ToInt32( drt["ID"]));
+            password pass_obj = new password();
+            pass_obj.user_mode = user_mode;
+            pass_obj.Show();
+            return;
             for (int i = 0; i < manuser.RowCount; i++)
             {
                 string ua = manuser.GetRowCellValue(i, "user").ToString();
@@ -122,7 +129,7 @@ namespace NepslidingTools.toolbox
 
         private void users_gc_Click(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

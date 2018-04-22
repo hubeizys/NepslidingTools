@@ -47,7 +47,6 @@ namespace NepslidingTools.toolbox
             this.manuser = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.num = new DevExpress.XtraGrid.Columns.GridColumn();
             this.username = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.Manager = new DevExpress.XtraGrid.Columns.GridColumn();
             this.addTime = new DevExpress.XtraGrid.Columns.GridColumn();
             this.power = new DevExpress.XtraGrid.Columns.GridColumn();
             this.main_tlp.SuspendLayout();
@@ -106,13 +105,13 @@ namespace NepslidingTools.toolbox
             this.head_tlp.Controls.Add(this.username_tb, 1, 0);
             this.head_tlp.Dock = System.Windows.Forms.DockStyle.Fill;
             this.head_tlp.ForeColor = System.Drawing.Color.Black;
-            this.head_tlp.Location = new System.Drawing.Point(3, 22);
+            this.head_tlp.Location = new System.Drawing.Point(3, 18);
             this.head_tlp.Name = "head_tlp";
             this.head_tlp.RowCount = 3;
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.head_tlp.Size = new System.Drawing.Size(653, 89);
+            this.head_tlp.Size = new System.Drawing.Size(653, 93);
             this.head_tlp.TabIndex = 0;
             // 
             // query_bt
@@ -201,7 +200,6 @@ namespace NepslidingTools.toolbox
             this.time_dtp.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.time_dtp.MonthCalendar.TodayButtonVisible = true;
             this.time_dtp.Name = "time_dtp";
-            this.time_dtp.Size = new System.Drawing.Size(200, 30);
             this.time_dtp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.time_dtp.TabIndex = 3;
             // 
@@ -230,7 +228,7 @@ namespace NepslidingTools.toolbox
             this.username_tb.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.username_tb.Name = "username_tb";
             this.username_tb.PreventEnterBeep = true;
-            this.username_tb.Size = new System.Drawing.Size(114, 30);
+            this.username_tb.Size = new System.Drawing.Size(114, 26);
             this.username_tb.TabIndex = 4;
             // 
             // caozuo_gb
@@ -253,9 +251,9 @@ namespace NepslidingTools.toolbox
             this.flowLayoutPanel1.Controls.Add(this.info_bt);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.ForeColor = System.Drawing.Color.Black;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 22);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 18);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(653, 29);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(653, 33);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // add_bt
@@ -294,7 +292,7 @@ namespace NepslidingTools.toolbox
             this.edit_bt.Size = new System.Drawing.Size(75, 23);
             this.edit_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.edit_bt.TabIndex = 2;
-            this.edit_bt.Text = "编辑";
+            this.edit_bt.Text = "修改密码";
             this.edit_bt.Click += new System.EventHandler(this.edit_bt_Click);
             // 
             // info_bt
@@ -308,10 +306,14 @@ namespace NepslidingTools.toolbox
             this.info_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.info_bt.TabIndex = 3;
             this.info_bt.Text = "查看详情";
+            this.info_bt.Visible = false;
             // 
             // users_gc
             // 
             this.users_gc.Dock = System.Windows.Forms.DockStyle.Fill;
+            // 
+            // 
+            // 
             this.users_gc.EmbeddedNavigator.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.users_gc.EmbeddedNavigator.Appearance.ForeColor = System.Drawing.Color.Black;
             this.users_gc.EmbeddedNavigator.Appearance.Options.UseBackColor = true;
@@ -333,7 +335,6 @@ namespace NepslidingTools.toolbox
             this.manuser.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.num,
             this.username,
-            this.Manager,
             this.addTime,
             this.power});
             this.manuser.GridControl = this.users_gc;
@@ -354,21 +355,13 @@ namespace NepslidingTools.toolbox
             this.username.Visible = true;
             this.username.VisibleIndex = 0;
             // 
-            // Manager
-            // 
-            this.Manager.Caption = "管理者";
-            this.Manager.FieldName = "password";
-            this.Manager.Name = "Manager";
-            this.Manager.Visible = true;
-            this.Manager.VisibleIndex = 1;
-            // 
             // addTime
             // 
             this.addTime.Caption = "添加时间";
             this.addTime.FieldName = "addtime";
             this.addTime.Name = "addTime";
             this.addTime.Visible = true;
-            this.addTime.VisibleIndex = 2;
+            this.addTime.VisibleIndex = 1;
             // 
             // power
             // 
@@ -376,11 +369,11 @@ namespace NepslidingTools.toolbox
             this.power.FieldName = "power";
             this.power.Name = "power";
             this.power.Visible = true;
-            this.power.VisibleIndex = 3;
+            this.power.VisibleIndex = 2;
             // 
             // UserManForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(665, 652);
             this.Controls.Add(this.main_tlp);
@@ -416,7 +409,7 @@ namespace NepslidingTools.toolbox
         private DevExpress.XtraGrid.GridControl users_gc;
         private DevExpress.XtraGrid.Views.Grid.GridView manuser;
         private DevExpress.XtraGrid.Columns.GridColumn username;
-        private DevExpress.XtraGrid.Columns.GridColumn Manager;
+
         private DevExpress.XtraGrid.Columns.GridColumn addTime;
         private DevExpress.XtraGrid.Columns.GridColumn power;
         private DevComponents.DotNetBar.ButtonX info_bt;

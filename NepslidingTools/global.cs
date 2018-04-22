@@ -14,6 +14,7 @@ namespace NepslidingTools
     {
         public static string CurActive = "main";
         public static string MachineID = "";
+        public static string power = "0"; 
         public static void AsynCall(ParameterizedThreadStart funca, object param)
         {
             //var ass = param;

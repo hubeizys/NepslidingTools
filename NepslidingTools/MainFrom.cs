@@ -40,30 +40,55 @@ namespace NepslidingTools
 
         private void pb_query_Click(object sender, EventArgs e)
         {
+            if (global.power != "999")
+            {
+                MessageBox.Show("权限不够");
+                return;
+            }
             QueryFrom qf = new QueryFrom();
             qf.ShowDialog();
         }
 
         private void pb_dom_Click(object sender, EventArgs e)
         {
+            if (global.power != "999")
+            {
+                MessageBox.Show("权限不够");
+                return;
+            }
             BomFrom bf = new BomFrom();
             bf.ShowDialog();
         }
 
         private void pb_users_Click(object sender, EventArgs e)
         {
+            if (global.power != "999")
+            {
+                MessageBox.Show("权限不够");
+                return;
+            }
             UserManForm umf = new UserManForm();
             umf.ShowDialog();
         }
 
         private void pb_device_Click(object sender, EventArgs e)
         {
+            if (global.power != "999")
+            {
+                MessageBox.Show("权限不够");
+                return;
+            }
             Devsimport di = new Devsimport();
             di.ShowDialog();
         }
 
         private void pb_save_Click(object sender, EventArgs e)
         {
+            if (global.power != "999")
+            {
+                MessageBox.Show("权限不够");
+                return;
+            }
             SavaAllFrom saf = new SavaAllFrom();
             saf.ShowDialog();
         }

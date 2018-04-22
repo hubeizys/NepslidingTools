@@ -40,6 +40,7 @@ namespace NepslidingTools
             DataTable dt = ds.Tables[0];
             string user_name = dt.Rows[0]["user"].ToString();
             string password = dt.Rows[0]["password"].ToString();
+            global.power = dt.Rows[0]["power"].ToString();
             //MessageBox.Show(dt.Rows.Count+ " :count   " + user_name +  " : username " + password + " :password  " + lab_name + " :lab_name  " + lab_pass_word + " :mm  ");
             if (user_name == lab_name  && password == lab_pass_word)
             {
@@ -85,6 +86,7 @@ namespace NepslidingTools
             DataTable dt = ds.Tables[0];
             string user_name = dt.Rows[0]["user"].ToString();
             string password = dt.Rows[0]["password"].ToString();
+            global.power = dt.Rows[0]["power"].ToString();
             //MessageBox.Show("  " + password + " aa  ");
 
             //MessageBox.Show(dt.Rows.Count + " :count   " + user_name + " : username " + password + " :password  " + lab_name + " :lab_name  " + lab_pass_word + " :mm  ");

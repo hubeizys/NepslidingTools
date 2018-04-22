@@ -96,8 +96,10 @@
             this.txt_q.Location = new System.Drawing.Point(102, 130);
             this.txt_q.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_q.Name = "txt_q";
+            this.txt_q.ReadOnly = true;
             this.txt_q.Size = new System.Drawing.Size(88, 22);
             this.txt_q.TabIndex = 7;
+            this.txt_q.Text = "1";
             // 
             // button1
             // 
