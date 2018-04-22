@@ -35,6 +35,7 @@ namespace NepslidingTools.toolbox
             this.remake = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.save_sql_bt = new DevComponents.DotNetBar.ButtonX();
+            this.button1 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -59,6 +60,8 @@ namespace NepslidingTools.toolbox
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -70,9 +73,11 @@ namespace NepslidingTools.toolbox
             this.dataGridView1.Location = new System.Drawing.Point(13, 113);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(13);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(433, 271);
             this.dataGridView1.TabIndex = 0;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
             // backup_name
             // 
@@ -109,6 +114,7 @@ namespace NepslidingTools.toolbox
             // 
             this.backup_tim.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.backup_tim.Name = "backup_tim";
+            this.backup_tim.ReadOnly = true;
             this.backup_tim.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // remake
@@ -118,6 +124,7 @@ namespace NepslidingTools.toolbox
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.save_sql_bt);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.ForeColor = System.Drawing.Color.Black;
@@ -136,6 +143,17 @@ namespace NepslidingTools.toolbox
             this.save_sql_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.save_sql_bt.TabIndex = 0;
             this.save_sql_bt.Text = "保存当前数据";
+            this.save_sql_bt.Click += new System.EventHandler(this.save_sql_bt_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(169, 39);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(148, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "导入选中行";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // SavaAllFrom
             // 
@@ -148,6 +166,7 @@ namespace NepslidingTools.toolbox
             this.Name = "SavaAllFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "持久化";
+            this.Load += new System.EventHandler(this.SavaAllFrom_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -164,5 +183,6 @@ namespace NepslidingTools.toolbox
         private System.Windows.Forms.DataGridViewTextBoxColumn remake;
         private System.Windows.Forms.Panel panel1;
         private DevComponents.DotNetBar.ButtonX save_sql_bt;
+        private System.Windows.Forms.Button button1;
     }
 }

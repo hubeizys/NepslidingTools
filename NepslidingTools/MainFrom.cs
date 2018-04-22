@@ -85,7 +85,7 @@ namespace NepslidingTools
         {
             
             Maticsoft.BLL.baseconfig config_bll = new Maticsoft.BLL.baseconfig();
-            config_bll.backup();
+            //config_bll.backup();
             int count = config_bll.GetRecordCount("");
             if (count <= 0)
             {
