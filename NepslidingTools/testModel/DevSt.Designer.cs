@@ -50,7 +50,6 @@ namespace NepslidingTools.testModel
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabPane1.SuspendLayout();
-            this.tabNavigationPage3.SuspendLayout();
             this.last_flp.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -157,6 +156,7 @@ namespace NepslidingTools.testModel
             this.tabNavigationPage3.Appearance.Options.UseForeColor = true;
             this.tabNavigationPage3.Caption = "最近测量的零件";
             this.tabNavigationPage3.Controls.Add(this.last_flp);
+            this.tabNavigationPage3.Enabled = true;
             this.tabNavigationPage3.Name = "tabNavigationPage3";
             this.tabNavigationPage3.Size = new System.Drawing.Size(460, 83);
             // 
@@ -314,7 +314,6 @@ namespace NepslidingTools.testModel
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.tabPane1.ResumeLayout(false);
-            this.tabNavigationPage3.ResumeLayout(false);
             this.last_flp.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);

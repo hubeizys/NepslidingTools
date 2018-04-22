@@ -31,9 +31,9 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram5 = new DevExpress.XtraCharts.XYDiagram();
-            Series series5 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView5 = new DevExpress.XtraCharts.LineSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram4 = new DevExpress.XtraCharts.XYDiagram();
+            Series series4 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView4 = new DevExpress.XtraCharts.LineSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -76,13 +76,14 @@ namespace NepslidingTools.testModel
             this.lble = new System.Windows.Forms.Label();
             this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.txtbox_gcxia = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.txtgc = new System.Windows.Forms.TextBox();
             this.txtll = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer_portst = new System.Windows.Forms.Timer(this.components);
-            this.txtbox_gcxia = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.timer_tostep = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
@@ -548,16 +549,16 @@ namespace NepslidingTools.testModel
             // chartControl1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.chartControl1, 3);
-            xyDiagram5.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram5.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram5;
+            xyDiagram4.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram4.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram4;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartControl1.Location = new System.Drawing.Point(3, 288);
             this.chartControl1.Name = "chartControl1";
-            series5.Name = "测量结果波动";
-            series5.View = lineSeriesView5;
+            series4.Name = "测量结果波动";
+            series4.View = lineSeriesView4;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series5};
+        series4};
             this.chartControl1.Size = new System.Drawing.Size(1120, 154);
             this.chartControl1.TabIndex = 8;
             // 
@@ -575,6 +576,26 @@ namespace NepslidingTools.testModel
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(339, 34);
             this.panel3.TabIndex = 9;
+            // 
+            // txtbox_gcxia
+            // 
+            this.txtbox_gcxia.BackColor = System.Drawing.Color.White;
+            this.txtbox_gcxia.ForeColor = System.Drawing.Color.Black;
+            this.txtbox_gcxia.Location = new System.Drawing.Point(263, 6);
+            this.txtbox_gcxia.Name = "txtbox_gcxia";
+            this.txtbox_gcxia.Size = new System.Drawing.Size(45, 22);
+            this.txtbox_gcxia.TabIndex = 12;
+            this.txtbox_gcxia.Text = "0.15";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(208, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(58, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "下公差： ";
             // 
             // txtgc
             // 
@@ -622,25 +643,10 @@ namespace NepslidingTools.testModel
             this.timer_portst.Interval = 3000;
             this.timer_portst.Tick += new System.EventHandler(this.timer_portst_Tick);
             // 
-            // txtbox_gcxia
+            // timer_tostep
             // 
-            this.txtbox_gcxia.BackColor = System.Drawing.Color.White;
-            this.txtbox_gcxia.ForeColor = System.Drawing.Color.Black;
-            this.txtbox_gcxia.Location = new System.Drawing.Point(263, 6);
-            this.txtbox_gcxia.Name = "txtbox_gcxia";
-            this.txtbox_gcxia.Size = new System.Drawing.Size(45, 22);
-            this.txtbox_gcxia.TabIndex = 12;
-            this.txtbox_gcxia.Text = "0.15";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(208, 11);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "下公差： ";
+            this.timer_tostep.Interval = 1000;
+            this.timer_tostep.Tick += new System.EventHandler(this.timer_tostep_Tick);
             // 
             // StepTestFrom
             // 
@@ -724,5 +730,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Timer timer_portst;
         private System.Windows.Forms.TextBox txtbox_gcxia;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Timer timer_tostep;
     }
 }

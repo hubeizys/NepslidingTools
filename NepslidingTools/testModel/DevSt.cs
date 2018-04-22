@@ -63,9 +63,29 @@ namespace NepslidingTools.testModel
 
         private void DevSt_Load(object sender, EventArgs e)
         {
+            //where 1 = 1 GROUP BY pn LIMIT 10
             //global.CurActive = "DevSt";
             //this.TopMost = true;
             //this.Activate();
+            this.last_flp.Controls.Clear();
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            List<Maticsoft.Model.test> test_lists = test_bll.GetModelList(" 1=1 GROUP BY pn LIMIT 10");
+            foreach(var test_obj in test_lists)
+            {
+                Button a = new Button();
+                a.Text = test_obj.PN;
+                a.Click += new System.EventHandler(this.button_Click);
+                this.last_flp.Controls.Add(a);
+            }
+        }
+
+
+        private void button_Click(object sender, EventArgs e)
+        {
+            // MessageBox.Show((sender as Button).Text );
+            textBoxX1.Invoke(new Action(()=> {
+                textBoxX1.Text = (sender as Button).Text;
+            }));
         }
     }
 }

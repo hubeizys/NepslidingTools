@@ -110,7 +110,7 @@ namespace NepslidingTools.testModel
                 #region 构建datatable 表，  添加表头
                 Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
                 //string st = string.Format("componentId = '{0}'", lble.Text);
-                string st = string.Format("componentId = '{0}'", this.comp_type);
+                string st = string.Format("componentId = '{0}' order by step asc", this.comp_type);
                 DataSet ds1 = mes.GetList(st);
                 dtb.Columns.Add("测试编号");
                 dtb.Columns.Add("测试时间");
@@ -175,7 +175,7 @@ namespace NepslidingTools.testModel
 
                 #region 初始化当前步骤信息
                 Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                string st1 = string.Format("componentId = '{0}'", this.comp_type);
+                string st1 = string.Format("componentId = '{0}'  order by step asc", this.comp_type);
                 DataSet ds11 = mes1.GetList(st1);
                 //DataTable dt = new DataTable();
                 //ds1.Tables.Add(dt);
@@ -435,7 +435,7 @@ namespace NepslidingTools.testModel
                 combjg.Text = "Ng";
             }
             #endregion
-
+            this.timer_tostep.Enabled = true;
             #region 根据最后一列判断 获得最后一列 ，如果没有列就添加一列
             DataTable dt = dgv1.DataSource as DataTable;
             DataRow need_change_rows = null;
@@ -529,6 +529,7 @@ namespace NepslidingTools.testModel
                     hz = Convert.ToDouble(txtll.Text) + Convert.ToDouble(shang_gc);
 
                     string tt = "";
+                    
                     if (Convert.ToDouble(dd) >= cz && Convert.ToDouble(dd) <= hz)
                     {
                         need_change_rows["测试结果"] = "Ok";
@@ -538,6 +539,8 @@ namespace NepslidingTools.testModel
                         need_change_rows["测试结果"] = "NG";
                         break;
                     }
+
+                    
                     #region ------------
                     /*
                     if (tt != "Ok")
@@ -839,6 +842,16 @@ namespace NepslidingTools.testModel
                 }
 
             }));
+        }
+
+        private void timer_tostep_Tick(object sender, EventArgs e)
+        {
+
+            if (this.comboBox1.Items.Count > this.comboBox1.SelectedIndex + 1)
+            {
+                this.comboBox1.SelectedIndex += 1;
+            }
+            this.timer_tostep.Enabled = false;
         }
     }
 }
