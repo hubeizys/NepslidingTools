@@ -14,6 +14,8 @@ namespace NepslidingTools.toolbox
 {
     public partial class SavaAllFrom : DevComponents.DotNetBar.Metro.MetroForm
     {
+
+        private int index = 0;
         public SavaAllFrom()
         {
             InitializeComponent();
@@ -136,77 +138,25 @@ namespace NepslidingTools.toolbox
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
-        }
 
-        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            string file_name = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
+            string file_name = dataGridView1.Rows[this.index].Cells[0].Value.ToString();
             string cur_dict = System.IO.Directory.GetCurrentDirectory();
             DirectoryInfo d_info = new DirectoryInfo(cur_dict + "\\backup\\" + file_name);
 
-            FileInfo file = new FileInfo(cur_dict+"\\backup\\" + file_name);  //filename是sql脚本文件路径。
+            FileInfo file = new FileInfo(cur_dict + "\\backup\\" + file_name);  //filename是sql脚本文件路径。
             string sql = file.OpenText().ReadToEnd();
             Maticsoft.BLL.baseconfig bf = new Maticsoft.BLL.baseconfig();
             bf.backup(sql);
             MessageBox.Show(sql);
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            this.index = e.RowIndex;
+
 
             return;
-            string dumptools = cur_dict + "\\tools\\mysqldump.exe";
-
-            string strInput = dumptools + string.Format(@" -h test.xtask.work -uroot  -plaozhuhenshuai GLLJ < backup\" + d_info.FullName);
-            Process p = new Process();
-            //设置要启动的应用程序
-            p.StartInfo.FileName = "cmd.exe";
-            //是否使用操作系统shell启动
-            p.StartInfo.UseShellExecute = false;
-            // 接受来自调用程序的输入信息
-            p.StartInfo.RedirectStandardInput = true;
-            //输出信息
-            p.StartInfo.RedirectStandardOutput = true;
-            // 输出错误
-            p.StartInfo.RedirectStandardError = true;
-            //不显示程序窗口
-            p.StartInfo.CreateNoWindow = false;
-            //启动程序
-            p.Start();
-
-            //向cmd窗口发送输入信息
-            //p.StandardInput.WriteLine(strInput + "&exit");
-            p.StandardInput.WriteLine(strInput + "&exit");
-            p.StandardInput.AutoFlush = true;
-
-            //获取输出信息
-            string strOuput = p.StandardError.ReadToEnd();
-            //等待程序执行完退出进程
-            p.WaitForExit();
-            p.Close();
-            
-            Console.WriteLine(strOuput);
-
-            //Console.ReadKey();
-            return;
-            //MessageBox.Show(e.RowIndex.ToString());
-
-
-            System.Diagnostics.Process exep = new System.Diagnostics.Process();
-            exep.StartInfo.FileName = dumptools;
-            exep.StartInfo.Arguments = string.Format(@" -h test.xtask.work -uroot  -plaozhuhenshuai GLLJ < backup\" + d_info.FullName);
-            exep.StartInfo.CreateNoWindow = true;
-            //exep.StartInfo.RedirectStandardInput = true;
-            //exep.StartInfo.RedirectStandardOutput = true;
-            //exep.StartInfo.RedirectStandardError = true;
-            exep.StartInfo.UseShellExecute = true;
-            exep.Start();
-            //如果调用程序路径中有空格时，cmd命令执行失败，可以用双引号括起来 ，在这里两个引号表示一个引号（转义）
-            // string str = string.Format(@"""{0}"" {1} {2}", cmdExe, cmdStr, "&exit");
-
-            // exep.StandardInput.WriteLine(str);
-            //exep.StandardInput.AutoFlush = true;
-            //string netmessage = exep.StandardError.ReadToEnd();
-
-            exep.WaitForExit();
-            //Console.WriteLine(netmessage);
+           
         }
     }
 }

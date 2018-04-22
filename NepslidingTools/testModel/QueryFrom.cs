@@ -105,7 +105,7 @@ namespace NepslidingTools.testModel
             string where_string = this.query_wherestring();
             this.totle_num = test_bll.GetRecordCount(where_string);
 
-            string parem_num = string.Format("1/{0}", this.totle_num/this.cur_page_lenb + 1 );
+            string parem_num = string.Format("1/{0}", this.totle_num / this.cur_page_lenb + 1);
             labelX1.Text = parem_num;
             #endregion
 
@@ -285,12 +285,11 @@ namespace NepslidingTools.testModel
             if (lijianhao != null && lijianhao != "")
             {
                 this.dealwithcomp(lijianhao);
-            } else
+            }
+            else
             {
                 return;
             }
-
-
 
             #region 构建基本的表形状
             //DataTable dtb = new DataTable();
@@ -317,7 +316,7 @@ namespace NepslidingTools.testModel
             // 查询出来test 数据
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
-            DataSet ds = test_bll.GetListByPage(where_string, "", cur_step + 1 , cur_step + cur_page_lenb);
+            DataSet ds = test_bll.GetListByPage(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
             DataTable dt = ds.Tables[0];
 
             DataTable dest_table = dgv.DataSource as DataTable;
@@ -343,7 +342,7 @@ namespace NepslidingTools.testModel
                     new Task((index) =>
                     {
                         int ret_i = Convert.ToInt32(index);
-                        Console.WriteLine("试试   " + index);
+                        // Console.WriteLine("试试   " + index);
                         ret[ret_i] = local_dt.Rows[ret_i]["step1"].ToString();
                     }, i, TaskCreationOptions.AttachedToParent).Start();
                 }
@@ -365,9 +364,21 @@ namespace NepslidingTools.testModel
                         int ret_col_num = 1;
                         bool col_if = int.TryParse(mea_obj.step.ToString(), out ret_col_num);
                         string sg = "步骤" + mea_obj.step.ToString();
-
+                        //mea_modes
                         if (col_if && ret_col_num < sp_l.Length + 1)
-                            dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
+                        {
+                            int stand_info = Convert.ToInt32(mea_obj.standardv);
+                            int test_info = Convert.ToInt32(sp_l[ret_col_num - 1]);
+
+                            if (stand_info == test_info)
+                            {
+                                dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
+                            }
+                            else
+                            {
+                                dest_table.Rows[i][sg] = "偏差" + (test_info - stand_info).ToString();
+                            }
+                        }
                     }
                 }
             });
@@ -620,19 +631,22 @@ namespace NepslidingTools.testModel
 
         private void AddAutoComp()
         {
-            Task<List<Maticsoft.Model.parts>> ff_task = new Task<List<Maticsoft.Model.parts>>(() => {
+            Task<List<Maticsoft.Model.parts>> ff_task = new Task<List<Maticsoft.Model.parts>>(() =>
+            {
                 List<Maticsoft.Model.parts> ret_list = new List<Maticsoft.Model.parts>();
                 Maticsoft.BLL.parts part_bll = new Maticsoft.BLL.parts();
                 ret_list = part_bll.GetModelList(" ");
                 return ret_list;
             });
-            ff_task.ContinueWith((ret_list) => {
+            ff_task.ContinueWith((ret_list) =>
+            {
                 var datasou = new AutoCompleteStringCollection();
                 List<Maticsoft.Model.parts> local_ret_list = ret_list.Result;
                 //ret_list.ConvertAll();
                 List<string> pn_list = local_ret_list.ConvertAll<string>((temp_obj) => { return temp_obj.PN; });
                 datasou.AddRange(pn_list.ToArray());
-                textBox_ljhao.BeginInvoke(new Action(() => {
+                textBox_ljhao.BeginInvoke(new Action(() =>
+                {
                     textBox_ljhao.AutoCompleteCustomSource = datasou;
                     textBox_ljhao.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                     textBox_ljhao.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -643,7 +657,7 @@ namespace NepslidingTools.testModel
 
         private void textBox_ljhao_TextChanged(object sender, EventArgs e)
         {
-            
+
             return;
             var source = new AutoCompleteStringCollection();
             source.AddRange(new string[]
@@ -678,12 +692,13 @@ namespace NepslidingTools.testModel
             if (cur_step > cur_page_lenb)
             {
                 cur_step -= cur_page_lenb;
-            }else if(cur_step < cur_page_lenb)
+            }
+            else if (cur_step < cur_page_lenb)
             {
                 cur_step = 0;
             }
 
-            int cur_page_index = cur_step / this.cur_page_lenb  + 1 ;
+            int cur_page_index = cur_step / this.cur_page_lenb + 1;
             int tot_page_index = this.totle_num / this.cur_page_lenb + 1;
             string page_info = string.Format("{1}/{1}", cur_page_index, tot_page_index);
             this.labelX1.Text = page_info;
