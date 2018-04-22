@@ -55,8 +55,6 @@ namespace NepslidingTools.testModel
             this.button1 = new System.Windows.Forms.Button();
             this.query_gc = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.dgv = new System.Windows.Forms.DataGridView();
-            this.fuche = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
             this.bomNo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TestNo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TestLoc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -67,6 +65,8 @@ namespace NepslidingTools.testModel
             this.result = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Retest = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
+            this.dgv = new System.Windows.Forms.DataGridView();
+            this.fuche = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
             this.tlp_main.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.head_tpl.SuspendLayout();
@@ -74,8 +74,8 @@ namespace NepslidingTools.testModel
             this.panelend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.query_gc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
             // tlp_main
@@ -346,7 +346,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.ForeColor = System.Drawing.Color.Black;
-            this.labelX1.Location = new System.Drawing.Point(106, 3);
+            this.labelX1.Location = new System.Drawing.Point(123, 3);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(75, 23);
             this.labelX1.TabIndex = 2;
@@ -355,12 +355,13 @@ namespace NepslidingTools.testModel
             // button2
             // 
             this.button2.ForeColor = System.Drawing.Color.Black;
-            this.button2.Location = new System.Drawing.Point(169, 3);
+            this.button2.Location = new System.Drawing.Point(202, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 1;
             this.button2.Text = "ÏÂÒ»Ò³";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -371,6 +372,7 @@ namespace NepslidingTools.testModel
             this.button1.TabIndex = 0;
             this.button1.Text = "ÉÏÒ»Ò³";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // query_gc
             // 
@@ -407,32 +409,6 @@ namespace NepslidingTools.testModel
             this.Retest});
             this.gridView1.GridControl = this.query_gc;
             this.gridView1.Name = "gridView1";
-            // 
-            // dgv
-            // 
-            this.dgv.AllowUserToAddRows = false;
-            this.dgv.AllowUserToResizeRows = false;
-            this.dgv.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.fuche});
-            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv.Location = new System.Drawing.Point(4, 105);
-            this.dgv.Name = "dgv";
-            this.dgv.RowTemplate.Height = 27;
-            this.dgv.Size = new System.Drawing.Size(901, 569);
-            this.dgv.TabIndex = 5;
-            this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
-            this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
-            // 
-            // fuche
-            // 
-            this.fuche.HeaderText = "¸´²â²Ù×÷";
-            this.fuche.Name = "fuche";
-            this.fuche.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.fuche.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.fuche.Text = "¸´²â";
-            this.fuche.UseColumnTextForButtonValue = true;
             // 
             // bomNo
             // 
@@ -530,6 +506,32 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             this.repositoryItemButtonEdit1.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repositoryItemButtonEdit1_ButtonClick);
             // 
+            // dgv
+            // 
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToResizeRows = false;
+            this.dgv.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fuche});
+            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv.Location = new System.Drawing.Point(4, 105);
+            this.dgv.Name = "dgv";
+            this.dgv.RowTemplate.Height = 27;
+            this.dgv.Size = new System.Drawing.Size(901, 569);
+            this.dgv.TabIndex = 5;
+            this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
+            this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
+            // 
+            // fuche
+            // 
+            this.fuche.HeaderText = "¸´²â²Ù×÷";
+            this.fuche.Name = "fuche";
+            this.fuche.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.fuche.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.fuche.Text = "¸´²â";
+            this.fuche.UseColumnTextForButtonValue = true;
+            // 
             // QueryFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -552,8 +554,8 @@ namespace NepslidingTools.testModel
             this.panelend.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.query_gc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
 
         }

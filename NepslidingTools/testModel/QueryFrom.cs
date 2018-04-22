@@ -8,12 +8,17 @@ using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using System.IO;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace NepslidingTools.testModel
 {
     public partial class QueryFrom : WorkForm
     {
         string name = "QueryFrom";
+        int cur_step = 0;
+        int cur_page_lenb = 20;
+        int totle_num = 0;
+
         public QueryFrom()
         {
             InitializeComponent();
@@ -94,6 +99,19 @@ namespace NepslidingTools.testModel
             textBox_ljhao.Text = Program.gdvid;
             global.CurActive = "QueryFrom";
 
+            #region 一共有多少
+            // 下一页
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            string where_string = this.query_wherestring();
+            this.totle_num = test_bll.GetRecordCount(where_string);
+
+            string parem_num = string.Format("1/{0}", this.totle_num/this.cur_page_lenb + 1 );
+            labelX1.Text = parem_num;
+            #endregion
+
+
+            // 添加 智能补全
+            this.AddAutoComp();
             // this.dealwithcomp(textBox_ljhao.Text);
             #region ------------------------------
             //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
@@ -196,9 +214,9 @@ namespace NepslidingTools.testModel
             this.Close();
         }
 
-        private void query_bt_Click(object sender, EventArgs e)
-        {
 
+        private string query_wherestring()
+        {
             string where_str = " 1=1 ";
             #region 按照需求查出表
             // 罗列条件
@@ -206,55 +224,25 @@ namespace NepslidingTools.testModel
 
             #region 零件号基础信息
             string lijianhao = textBox_ljhao.Text;
-            if (textBox_ljhao != null)
+            if (lijianhao != null && lijianhao != "")
             {
                 where_str += string.Format(" and PN = '{0}' ", lijianhao);
             }
             else
             {
                 MessageBox.Show("请输入零件号");
-                return;
+                return where_str;
             }
-
-            // 同步处理好 零件的基础信息的事情
-            this.dealwithcomp(lijianhao);
             #endregion
-
-            #region 构建基本的表形状
-            //DataTable dtb = new DataTable();
-            //
-            //string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
-            DataTable mea_dt = new DataTable();
-            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
-            List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}", this.comp_type));
-            mea_dt.Columns.Add("零件号");
-            mea_dt.Columns.Add("测量编号");
-            mea_dt.Columns.Add("测量时间");
-            foreach (Maticsoft.Model.measures mea_obj in mea_modes)
-            {
-                //string sg = "步骤" + mea_dt.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-                // comboBox1.Text = sg;
-                string sg = "步骤" + mea_obj.step.ToString();
-                mea_dt.Columns.Add(sg.ToString());
-            }
-            mea_dt.Columns.Add("测量结果");
-            dgv.DataSource = mea_dt;
-            #endregion
-
 
             #region 预备 --查询-- 表字段
             // 
             //////////////// 时间
             #region 时间条件
             int cmp = timeselect_dtp.Value.CompareTo(dtp.Value);
-            if (cmp <= 0)
+            if (cmp < 0)
             {
                 where_str += string.Format(" and  time >= '{0}'and time<='{1}' ", timeselect_dtp.Value, dtp.Value);
-            }
-            else if (cmp > 0)
-            {
-                MessageBox.Show("时间选择不合理");
-                return;
             }
             #endregion
 
@@ -270,7 +258,7 @@ namespace NepslidingTools.testModel
             }
             else if (radioGroup1.SelectedIndex == 2)
             {
-                where_str += string.Format(" and OKorNG = '{0}' ", "ALL");
+                // where_str += string.Format(" and OKorNG = '{0}' ", "ALL");
             }
             #endregion
 
@@ -282,12 +270,54 @@ namespace NepslidingTools.testModel
             }
             #endregion
 
+
+            return where_str;
+            #endregion
+        }
+
+        private void reQuery()
+        {
+
+            string where_string = this.query_wherestring();
+
+            // 同步处理好 零件的基础信息的事情
+            string lijianhao = textBox_ljhao.Text;
+            if (lijianhao != null && lijianhao != "")
+            {
+                this.dealwithcomp(lijianhao);
+            } else
+            {
+                return;
+            }
+
+
+
+            #region 构建基本的表形状
+            //DataTable dtb = new DataTable();
+            //
+            //string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
+            DataTable mea_dt = new DataTable();
+            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+            List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}", this.comp_type));
+            mea_dt.Columns.Add("零件号");
+            mea_dt.Columns.Add("测量编号");
+            mea_dt.Columns.Add("测量时间");
+            mea_modes = mea_modes.OrderBy(obj => obj.step).ToList();
+            foreach (Maticsoft.Model.measures mea_obj in mea_modes)
+            {
+                //string sg = "步骤" + mea_dt.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
+                // comboBox1.Text = sg;
+                string sg = "步骤" + mea_obj.step.ToString();
+                mea_dt.Columns.Add(sg.ToString());
+            }
+            mea_dt.Columns.Add("测量结果");
+            dgv.DataSource = mea_dt;
             #endregion
 
             // 查询出来test 数据
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
-            DataSet ds = test_bll.GetListByPage(where_str, "", 1, 100);
+            DataSet ds = test_bll.GetListByPage(where_string, "", cur_step + 1 , cur_step + cur_page_lenb);
             DataTable dt = ds.Tables[0];
 
             DataTable dest_table = dgv.DataSource as DataTable;
@@ -327,13 +357,17 @@ namespace NepslidingTools.testModel
                 //    Console.WriteLine(string.Format("===== ============ {0}", r));
                 //    //string.Format();
                 //});
-                for (int i = 0; i< t.Result.Length ;i++)
+                for (int i = 0; i < t.Result.Length; i++)
                 {
-                    string[] sp_l = t.Result[i]; 
+                    string[] sp_l = t.Result[i].Split('/');
                     foreach (Maticsoft.Model.measures mea_obj in mea_modes)
                     {
+                        int ret_col_num = 1;
+                        bool col_if = int.TryParse(mea_obj.step.ToString(), out ret_col_num);
                         string sg = "步骤" + mea_obj.step.ToString();
-                        dest_table.Rows[i][sg] = 
+
+                        if (col_if && ret_col_num < sp_l.Length + 1)
+                            dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
                     }
                 }
             });
@@ -341,11 +375,15 @@ namespace NepslidingTools.testModel
             parent.Start();
 
             #endregion
-            return;
+
             #endregion
+            return;
+        }
 
-
-
+        private void query_bt_Click(object sender, EventArgs e)
+        {
+            this.reQuery();
+            return;
 
             DataTable dtb = new DataTable();
             #region 构建datatable 表
@@ -580,14 +618,99 @@ namespace NepslidingTools.testModel
 
         }
 
+        private void AddAutoComp()
+        {
+            Task<List<Maticsoft.Model.parts>> ff_task = new Task<List<Maticsoft.Model.parts>>(() => {
+                List<Maticsoft.Model.parts> ret_list = new List<Maticsoft.Model.parts>();
+                Maticsoft.BLL.parts part_bll = new Maticsoft.BLL.parts();
+                ret_list = part_bll.GetModelList(" ");
+                return ret_list;
+            });
+            ff_task.ContinueWith((ret_list) => {
+                var datasou = new AutoCompleteStringCollection();
+                List<Maticsoft.Model.parts> local_ret_list = ret_list.Result;
+                //ret_list.ConvertAll();
+                List<string> pn_list = local_ret_list.ConvertAll<string>((temp_obj) => { return temp_obj.PN; });
+                datasou.AddRange(pn_list.ToArray());
+                textBox_ljhao.BeginInvoke(new Action(() => {
+                    textBox_ljhao.AutoCompleteCustomSource = datasou;
+                    textBox_ljhao.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    textBox_ljhao.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                }));
+            });
+            ff_task.Start();
+        }
+
         private void textBox_ljhao_TextChanged(object sender, EventArgs e)
         {
+            
+            return;
+            var source = new AutoCompleteStringCollection();
+            source.AddRange(new string[]
+                    {
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
+                    });
 
+            textBox_ljhao.AutoCompleteCustomSource = source;
+            textBox_ljhao.AutoCompleteMode = AutoCompleteMode.Suggest;
+            textBox_ljhao.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         private void head_tpl_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // 上一页
+            if (cur_step > cur_page_lenb)
+            {
+                cur_step -= cur_page_lenb;
+            }else if(cur_step < cur_page_lenb)
+            {
+                cur_step = 0;
+            }
+
+            int cur_page_index = cur_step / this.cur_page_lenb  + 1 ;
+            int tot_page_index = this.totle_num / this.cur_page_lenb + 1;
+            string page_info = string.Format("{1}/{1}", cur_page_index, tot_page_index);
+            this.labelX1.Text = page_info;
+            this.reQuery();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            if (cur_step + cur_page_lenb > this.totle_num)
+            {
+                return;
+            }
+            cur_step += cur_page_lenb;
+
+            //{
+
+            //    //if (cur_step + 2*  cur_page_lenb > cur_num)
+            //    //{
+            //    //    this.cur_page_lenb = cur_num;
+            //    //}
+            //}
+            int cur_page_index = cur_step / this.cur_page_lenb + 1;
+            int tot_page_index = this.totle_num / this.cur_page_lenb + 1;
+            string page_info = string.Format("{1}/{1}", cur_page_index, tot_page_index);
+            this.labelX1.Text = page_info;
+            this.reQuery();
         }
     }
 }
