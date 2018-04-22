@@ -29,9 +29,10 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem1 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem4 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem5 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem6 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.importdev_st = new DevExpress.XtraWizard.WizardControl();
@@ -126,16 +127,19 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
-            radioGroupItem4.Description = "…®√Ë«π";
+            radioGroupItem1.Description = "…®√Ë«π";
+            radioGroupItem1.Value = null;
+            radioGroupItem2.Description = "»»√Ù¥Ú”°ª˙";
+            radioGroupItem2.Value = null;
+            radioGroupItem3.Description = "ø®≥ﬂ";
+            radioGroupItem3.Value = null;
+            radioGroupItem4.Description = "∏ﬂ∂»≥ﬂ";
             radioGroupItem4.Value = null;
-            radioGroupItem5.Description = "»»√Ù¥Ú”°ª˙";
-            radioGroupItem5.Value = null;
-            radioGroupItem6.Description = "ø®≥ﬂ";
-            radioGroupItem6.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            radioGroupItem4,
-            radioGroupItem5,
-            radioGroupItem6});
+            radioGroupItem1,
+            radioGroupItem2,
+            radioGroupItem3,
+            radioGroupItem4});
             this.radioGroup1.Size = new System.Drawing.Size(559, 207);
             this.radioGroup1.TabIndex = 0;
             // 

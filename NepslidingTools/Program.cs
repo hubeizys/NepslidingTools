@@ -26,8 +26,8 @@ namespace NepslidingTools
         [STAThread]
         static void Main()
         {
-            try
-            {
+            //try
+            //{
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
@@ -36,11 +36,11 @@ namespace NepslidingTools
                 UserLookAndFeel.Default.SetSkinStyle("DevExpress Style");
                 //Application.Run(new Login());
                 SysHelper.RunFrmOnly<login4>();
-            }
-            catch (IndexOutOfRangeException err)
-            {
-                MessageBox.Show(err.Message);
-            }
+            //}
+            //catch (IndexOutOfRangeException err)
+            //{
+            //    MessageBox.Show(err.Message);
+            //}
         }
     }
 

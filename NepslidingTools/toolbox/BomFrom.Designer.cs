@@ -29,9 +29,11 @@ namespace NepslidingTools.toolbox
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.BreadCrumbNode breadCrumbNode1 = new DevExpress.XtraEditors.BreadCrumbNode();
+            DevExpress.Utils.KeyShortcut keyShortcut3 = new DevExpress.Utils.KeyShortcut();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.KeyShortcut keyShortcut4 = new DevExpress.Utils.KeyShortcut();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.BreadCrumbNode breadCrumbNode2 = new DevExpress.XtraEditors.BreadCrumbNode();
             this.main_tlp = new System.Windows.Forms.TableLayoutPanel();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.textBoxX_autolj = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -66,9 +68,7 @@ namespace NepslidingTools.toolbox
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.main_tlp.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
-            this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
-            this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.main_gc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
@@ -248,6 +248,9 @@ namespace NepslidingTools.toolbox
             // main_gc
             // 
             this.main_gc.Dock = System.Windows.Forms.DockStyle.Fill;
+            // 
+            // 
+            // 
             this.main_gc.EmbeddedNavigator.Appearance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.main_gc.EmbeddedNavigator.Appearance.ForeColor = System.Drawing.Color.Black;
             this.main_gc.EmbeddedNavigator.Appearance.Options.UseBackColor = true;
@@ -364,7 +367,7 @@ namespace NepslidingTools.toolbox
             // 
             this.repositoryItemButtonEdit1.AutoHeight = false;
             this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "测量标准管理", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "测量标准管理", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut3, serializableAppearanceObject3, "", null, null, true)});
             this.repositoryItemButtonEdit1.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -385,7 +388,7 @@ namespace NepslidingTools.toolbox
             // 
             this.repositoryItemButtonEdit2.AutoHeight = false;
             this.repositoryItemButtonEdit2.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "测量试图", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject2, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "测量试图", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut4, serializableAppearanceObject4, "", null, null, true)});
             this.repositoryItemButtonEdit2.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.UltraFlat;
             this.repositoryItemButtonEdit2.Name = "repositoryItemButtonEdit2";
             this.repositoryItemButtonEdit2.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -397,10 +400,10 @@ namespace NepslidingTools.toolbox
             this.repositoryItemBreadCrumbEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.repositoryItemBreadCrumbEdit1.Name = "repositoryItemBreadCrumbEdit1";
-            breadCrumbNode1.Caption = "string";
-            breadCrumbNode1.Value = "string";
+            breadCrumbNode2.Caption = "string";
+            breadCrumbNode2.Value = "string";
             this.repositoryItemBreadCrumbEdit1.Nodes.AddRange(new DevExpress.XtraEditors.BreadCrumbNode[] {
-            breadCrumbNode1});
+            breadCrumbNode2});
             // 
             // panel1
             // 
@@ -436,6 +439,7 @@ namespace NepslidingTools.toolbox
             this.button2.TabIndex = 5;
             this.button2.Text = "下一页";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -446,6 +450,7 @@ namespace NepslidingTools.toolbox
             this.button3.TabIndex = 4;
             this.button3.Text = "上一页";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // defaultLookAndFeel1
             // 
@@ -469,9 +474,7 @@ namespace NepslidingTools.toolbox
             this.Load += new System.EventHandler(this.BomFrom_Load);
             this.main_tlp.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
-            this.groupControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
-            this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.main_gc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();

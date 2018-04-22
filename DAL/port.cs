@@ -37,18 +37,20 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into port(");
-            strSql.Append("mac,workid,manufacturer,portname)");
+            strSql.Append("mac,workid,manufacturer,portname,componentId)");
             strSql.Append(" values (");
-            strSql.Append("@mac,@workid,@manufacturer,@portname)");
+            strSql.Append("@mac,@workid,@manufacturer,@portname,@componentId)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@mac", MySqlDbType.VarChar,64),
                     new MySqlParameter("@workid", MySqlDbType.VarChar,64),
                     new MySqlParameter("@manufacturer", MySqlDbType.VarChar,255),
-                    new MySqlParameter("@portname", MySqlDbType.VarChar,64)};
+                    new MySqlParameter("@portname", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@componentId", MySqlDbType.Int32,11)};
             parameters[0].Value = model.mac;
             parameters[1].Value = model.workid;
             parameters[2].Value = model.manufacturer;
             parameters[3].Value = model.portname;
+            parameters[4].Value = model.componentId;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -70,19 +72,22 @@ namespace Maticsoft.DAL
             strSql.Append("mac=@mac,");
             strSql.Append("workid=@workid,");
             strSql.Append("manufacturer=@manufacturer,");
-            strSql.Append("portname=@portname");
+            strSql.Append("portname=@portname,");
+            strSql.Append("componentId=@componentId");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@mac", MySqlDbType.VarChar,64),
                     new MySqlParameter("@workid", MySqlDbType.VarChar,64),
                     new MySqlParameter("@manufacturer", MySqlDbType.VarChar,255),
                     new MySqlParameter("@portname", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@componentId", MySqlDbType.Int32,11),
                     new MySqlParameter("@id", MySqlDbType.Int32,11)};
             parameters[0].Value = model.mac;
             parameters[1].Value = model.workid;
             parameters[2].Value = model.manufacturer;
             parameters[3].Value = model.portname;
-            parameters[4].Value = model.id;
+            parameters[4].Value = model.componentId;
+            parameters[5].Value = model.id;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -146,7 +151,7 @@ namespace Maticsoft.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,mac,workid,manufacturer,portname from port ");
+            strSql.Append("select id,mac,workid,manufacturer,portname,componentId from port ");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@id", MySqlDbType.Int32)
@@ -194,6 +199,10 @@ namespace Maticsoft.DAL
                 {
                     model.portname = row["portname"].ToString();
                 }
+                if (row["componentId"] != null && row["componentId"].ToString() != "")
+                {
+                    model.componentId = int.Parse(row["componentId"].ToString());
+                }
             }
             return model;
         }
@@ -204,7 +213,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,mac,workid,manufacturer,portname ");
+            strSql.Append("select id,mac,workid,manufacturer,portname,componentId ");
             strSql.Append(" FROM port ");
             if (strWhere.Trim() != "")
             {

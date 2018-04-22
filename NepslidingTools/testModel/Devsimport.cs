@@ -16,6 +16,8 @@ namespace NepslidingTools.testModel
         private SerPort sp_obj = new SerPort();
         private string device_type = "ruler";
 
+        int type = 1;
+
         // 当前测试串口名
         private string cur_work_portname = "";
         public Devsimport()
@@ -30,7 +32,7 @@ namespace NepslidingTools.testModel
             //MessageBox.Show(string.Format("您的设备昵称是 {0}", textBoxX2.Text));
 
             string gz_name = textBoxX2.Text;
-            MessageBox.Show(string.Format("当前选择的串口是 == {0} == ",cur_work_portname));
+            MessageBox.Show(string.Format("当前选择的串口是 == {0} == ", cur_work_portname));
 
             Maticsoft.BLL.port tempport_bll = new Maticsoft.BLL.port();
 
@@ -39,10 +41,10 @@ namespace NepslidingTools.testModel
 
 
             // 先找是不是有
-            if (port_objs.Count >0 )
+            if (port_objs.Count > 0)
             {
                 // 如果存在的话 就先提醒一下。 用户点确认之后 覆盖以前的com
-                DialogResult ret = MessageBox.Show("发现已经存在com的记录","是否使用这个名字" , MessageBoxButtons.OKCancel);
+                DialogResult ret = MessageBox.Show("发现已经存在com的记录", "是否使用这个名字", MessageBoxButtons.OKCancel);
                 if (ret == DialogResult.OK)
                 {
                     // 覆盖掉
@@ -60,6 +62,7 @@ namespace NepslidingTools.testModel
                     mac = cur_macnum,
                     manufacturer = gz_name,
                     portname = cur_work_portname,
+                    componentId = type,
                     workid = cur_macnum + "号工作站"
                 };
                 tempport_bll.Add(tmp_portobj);
@@ -69,9 +72,9 @@ namespace NepslidingTools.testModel
 
         private void Devsimport_Load(object sender, EventArgs e)
         {
-            if(radioGroup1.SelectedIndex==0)
+            if (radioGroup1.SelectedIndex == 0)
             {
-               
+
             }
             if (radioGroup1.SelectedIndex == 1)
             {
@@ -108,7 +111,7 @@ namespace NepslidingTools.testModel
                 listBox1.Items.Clear();
 
                 for (int i = 0; i < ArryPort.Length; i++)
-                
+
                     listBox1.Items.Add(ArryPort[i]);
 
                 listBox1.Text = ArryPort.ToString();
@@ -117,7 +120,7 @@ namespace NepslidingTools.testModel
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string LB =listBox1.SelectedItem.ToString();
+            string LB = listBox1.SelectedItem.ToString();
             Program.DK = LB;
         }
 
@@ -130,6 +133,7 @@ namespace NepslidingTools.testModel
                 // 吧类型定下来
                 if (this.radioGroup1.SelectedIndex == 0)
                 {
+                    this.type = 3;
                     // 扫描枪
                     importdev_st.SelectedPageIndex = 2;
                     e.Handled = true;
@@ -138,13 +142,14 @@ namespace NepslidingTools.testModel
                 else if (this.radioGroup1.SelectedIndex == 1)
                 {
                     // 热敏打印机
-            
+                    this.type = 2;
                     importdev_st.SelectedPageIndex = 2;
                     e.Handled = true;
                     return;
                 }
                 else if (this.radioGroup1.SelectedIndex == 2)
                 {
+                    this.type = 1;
                     // 卡尺
                     MessageBox.Show("正在加载硬件------- 卡尺");
                     listBox1.Items.Clear();
@@ -162,12 +167,33 @@ namespace NepslidingTools.testModel
                         return;
                     }
                 }
+                else if (this.radioGroup1.SelectedIndex == 3)
+                {                    // 卡尺
+                    MessageBox.Show("正在加载硬件------- 高度尺");
+                    this.type = 4;
+                    listBox1.Items.Clear();
+                    foreach (string port in SerPort.CurPorts())
+                    {
+                        listBox1.Items.Add(port);
+                    }
+
+                    // 如果没有发现 控件列表就 继续这一步
+                    if (SerPort.CurPorts().Length <= 0)
+                    {
+                        //this.importdev_st.SelectedPageIndex = 0;
+                        MessageBox.Show("没有发现硬件");
+                        e.Handled = true;
+                        return;
+                    }
+
+                }
             }
 
             void doing_test(string a)
             {
                 //MessageBox.Show(" test data : " + a);
-                textBoxX1.Invoke(new Action(()=> {
+                textBoxX1.Invoke(new Action(() =>
+                {
                     this.textBoxX1.Text = a;
                 }));
             }
@@ -184,7 +210,7 @@ namespace NepslidingTools.testModel
 
             if ("等待com的测试数据" == e.Page.Text)
             {
-                
+
             }
         }
 

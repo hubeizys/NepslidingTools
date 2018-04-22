@@ -17,7 +17,10 @@ namespace NepslidingTools.toolbox
 {
     public partial class BomFrom : DevComponents.DotNetBar.Metro.MetroForm
     {
-       
+        int cur_step = 0;
+        int cur_page_lenb = 20;
+        int totle_num = 0;
+
         public BomFrom()
         {
             InitializeComponent();
@@ -28,10 +31,28 @@ namespace NepslidingTools.toolbox
             MessageBox.Show(e.Button.ButtonType.ToString());
         }
 
+        private string query_wherestring()
+        {
+            string where_str = " 1=1 ";
+            string query_key = textBoxX_autolj.Text;
+            if (query_key != null && query_key != "")
+            {
+                where_str += string.Format(" and  Barcode LIKE '%{0}%' ", query_key);
+                where_str += string.Format(" or PN LIKE '%{0}%' ", query_key);
+                where_str += string.Format(" or T.`name` LIKE '%{0}%' ", query_key);
+            }
+            return where_str;
+        }
+
         private void BomFrom_Load(object sender, EventArgs e)
         {
-            Maticsoft.BLL.parts pr = new Maticsoft.BLL.parts();
-            DataSet ds = pr.GetAllList();
+            Maticsoft.BLL.parts part_bll = new Maticsoft.BLL.parts();
+            string where_string = this.query_wherestring();
+            this.totle_num = part_bll.GetRecordCount(where_string);
+            string parem_num = string.Format("1/{0}", this.totle_num / this.cur_page_lenb + 1);
+            labelX1.Text = parem_num;
+            // Maticsoft.BLL.parts pr = new Maticsoft.BLL.parts();
+            DataSet ds = part_bll.GetList(" 1=1 limit 30 ");
             main_gc.DataSource = ds.Tables[0];
             //DataTable dt = new DataTable();//创建表
             //dt.Columns.Add("ljh", typeof(String));
@@ -120,10 +141,18 @@ namespace NepslidingTools.toolbox
 
         private void query_bt_Click(object sender, EventArgs e)
         {
-            Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
-            string sr = string.Format("PN = '{0}'or name = '{1}'or Barcode = '{2}' ", textBoxX_autolj.Text, textBoxX_autolj.Text, textBoxX_autolj.Text);
-            DataSet ds = use.GetList(sr);
-            main_gc.DataSource = ds.Tables[0];
+            //Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
+            //string sr = string.Format("PN like '%{0}%'or name like '%{1}%'or Barcode like '%{2}%' ", textBoxX_autolj.Text, textBoxX_autolj.Text, textBoxX_autolj.Text);
+            //DataSet ds = use.GetList(sr);
+            //MessageBox.Show(ds.Tables[0].Rows.Count.ToString());
+            //main_gc.DataSource = ds.Tables[0];
+
+            //Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
+            //string sr = string.Format(" PN like '%{0}%'or name like '%{1}%'or Barcode like '%{2}%' ", textBoxX_autolj.Text, textBoxX_autolj.Text, textBoxX_autolj.Text);
+            //DataSet ds = use.GetListByPage(sr, "", cur_step + 1, cur_step + cur_page_lenb);
+            //MessageBox.Show(ds.Tables[0].Rows.Count.ToString());
+            //main_gc.DataSource = ds.Tables[0];
+            this.reQuery();
         }
 
         private void del_bt_Click(object sender, EventArgs e)
@@ -159,7 +188,7 @@ namespace NepslidingTools.toolbox
             int sheetCount = book.NumberOfSheets;
             for (int sheetIndex = 0; sheetIndex < sheetCount; sheetIndex++)
             {
-                string st_name = book.GetSheetName(sheetIndex);               
+                string st_name = book.GetSheetName(sheetIndex);
                 NPOI.SS.UserModel.ISheet sheet = book.GetSheetAt(sheetIndex);
                 if (sheet == null) continue;
 
@@ -180,8 +209,8 @@ namespace NepslidingTools.toolbox
                 dt.Columns.Add("size", typeof(string));
                 dt.Columns.Add("sm", typeof(string));
                 dt.Columns.Add("Barcode", typeof(string));
-                lastCellNum =7;
-                for (int i = firstCellNum; i <lastCellNum; i++)
+                lastCellNum = 7;
+                for (int i = firstCellNum; i < lastCellNum; i++)
                 {
                     dt.Columns.Add(row.GetCell(i).StringCellValue, typeof(string));
                 }
@@ -189,7 +218,7 @@ namespace NepslidingTools.toolbox
                 for (int i = 1; i <= sheet.LastRowNum; i++)
                 {
                     DataRow newRow = dt.Rows.Add();
-                    for (int j =firstCellNum; j < lastCellNum; j++)
+                    for (int j = firstCellNum; j < lastCellNum; j++)
                     {
                         newRow[j] = sheet.GetRow(i).GetCell(j).StringCellValue;
                     }
@@ -198,7 +227,7 @@ namespace NepslidingTools.toolbox
                 ds.Tables.Add(dt);
                 main_gc.DataSource = ds.Tables[0];
             }
-           
+
             for (int i = 0; i < gridView1.RowCount; i++)
             {
                 string LJH = gridView1.GetRowCellValue(i, "PN").ToString();
@@ -206,18 +235,18 @@ namespace NepslidingTools.toolbox
                 string gdh = gridView1.GetRowCellValue(i, "jobnum").ToString();
                 string BH = gridView1.GetRowCellValue(i, "ARef").ToString();
                 string cc = gridView1.GetRowCellValue(i, "size").ToString();
-                string dsm=gridView1.GetRowCellValue(i, "sm").ToString();
-                string tm= gridView1.GetRowCellValue(i, "Barcode").ToString();
+                string dsm = gridView1.GetRowCellValue(i, "sm").ToString();
+                string tm = gridView1.GetRowCellValue(i, "Barcode").ToString();
                 Maticsoft.BLL.parts use = new Maticsoft.BLL.parts();
                 Maticsoft.Model.parts us = new parts()
                 {
                     PN = LJH,
                     name = mc,
                     jobnum = gdh,
-                    ARef=BH,
-                    size=cc,
-                    sm=dsm,
-                    Barcode=tm,
+                    ARef = BH,
+                    size = cc,
+                    sm = dsm,
+                    Barcode = tm,
 
                 };
                 use.Add(us);
@@ -239,10 +268,58 @@ namespace NepslidingTools.toolbox
             {
                 //string xzh = gridView1.FocusedRowHandle.ToString();                
                 DevExpress.XtraPrinting.XlsExportOptions options = new DevExpress.XtraPrinting.XlsExportOptions();
-                main_gc.ExportToXls(saveFileDialog.FileName, options);  
+                main_gc.ExportToXls(saveFileDialog.FileName, options);
                 //gridControl1.ExportToExcelOld(saveFileDialog.FileName);
                 DevExpress.XtraEditors.XtraMessageBox.Show("导出成功！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            if (cur_step + cur_page_lenb > this.totle_num)
+            {
+                return;
+            }
+            cur_step += cur_page_lenb;
+            int cur_page_index = cur_step / this.cur_page_lenb + 1;
+            int tot_page_index = this.totle_num / this.cur_page_lenb + 1;
+            string page_info = string.Format("{1}/{1}", cur_page_index, tot_page_index);
+            this.labelX1.Text = page_info;
+            this.reQuery();
+        }
+
+        private void reQuery()
+        {
+            string where_string = this.query_wherestring();
+
+            // 查询出来test 数据
+            Maticsoft.BLL.parts part_bll = new Maticsoft.BLL.parts();
+            // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
+            DataSet ds = part_bll.GetListByPage(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
+            System.Data.DataTable dt = ds.Tables[0];
+
+            //  System.Data.DataTable dest_table = .DataSource as System.Data.DataTable;
+            main_gc.DataSource = dt;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            // 上一页
+            if (cur_step > cur_page_lenb)
+            {
+                cur_step -= cur_page_lenb;
+            }
+            else if (cur_step < cur_page_lenb)
+            {
+                cur_step = 0;
+            }
+
+            int cur_page_index = cur_step / this.cur_page_lenb + 1;
+            int tot_page_index = this.totle_num / this.cur_page_lenb + 1;
+            string page_info = string.Format("{1}/{1}", cur_page_index, tot_page_index);
+            this.labelX1.Text = page_info;
+            this.reQuery();
         }
     }
 }
