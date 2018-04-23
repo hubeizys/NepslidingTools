@@ -100,7 +100,6 @@ namespace NepslidingTools.testModel
                 Size size = panel3d.Size;
                 // Create the 3d View
                 theView = theApplication.CreateView(panel3d.Handle.ToInt32(), size.Width, size.Height);
-
                 theView.RequestDraw();
 
                 #endregion
@@ -149,7 +148,7 @@ namespace NepslidingTools.testModel
                         string col_name = string.Format("步骤{0}", sp_num);
                         dr[col_name] = j;
                     }
-                    dtb.Rows.Add(dr);
+                    dtb.Rows.InsertAt(dr, 0);
                 }
                 #endregion   
                 dgv1.DataSource = dtb;
@@ -192,7 +191,7 @@ namespace NepslidingTools.testModel
                 #region 初始化串口信息
 
                 sp_obj.CheckPort();
-                sp_obj.init_port("COM3");
+                sp_obj.init_port(ports_list[0].portname);
                 sp_obj.Processfunc = jiangyaozhixin;
 
                 global.CurActive = "steptest";
@@ -424,6 +423,7 @@ namespace NepslidingTools.testModel
             // 测量值
             double BZ = Convert.ToDouble(textcl.Text);
 
+            int test_row = 0;
             double cz = LL - GC;
             double hz = LL + GC;
             if (BZ >= cz && BZ <= hz)
@@ -454,7 +454,8 @@ namespace NepslidingTools.testModel
             if (need_change_rows == null)
             {
                 need_change_rows = dt.NewRow();
-                dt.Rows.Add(need_change_rows);
+                // dt.Rows.Add(need_change_rows);
+                dt.Rows.InsertAt(need_change_rows ,0);
             }
             #endregion
 
@@ -471,8 +472,8 @@ namespace NepslidingTools.testModel
                     int last_row = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
                     string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                     string dnum = num.ToString();
-                    dgv1.Rows[last_row].Cells["测试编号"].Value = dnum;
-                    dgv1.Rows[last_row].Cells["测试时间"].Value = DateTime.Now.ToString();
+                    dgv1.Rows[test_row].Cells["测试编号"].Value = dnum;
+                    dgv1.Rows[test_row].Cells["测试时间"].Value = DateTime.Now.ToString();
                     for (int j = 0; j < dgv1.Rows.Count; j++)
                     {
                         need_change_rows[comboBox1.Text] = textcl.Text;
@@ -484,10 +485,9 @@ namespace NepslidingTools.testModel
 
 
             #region 判断是不是可以 ok 或者ng了 
-            int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
-
+            //int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
             int CL = dt.Columns.Count;
-            string fz = dt.Rows[last_row1][CL - 2].ToString();
+            string fz = dt.Rows[test_row][CL - 2].ToString();
             if (fz != "")
             {
                 int t = dt.Columns.Count - 3;
@@ -495,7 +495,7 @@ namespace NepslidingTools.testModel
                 {
                     string dd = "";
                     string col_name = string.Format("步骤{0}", a + 1);
-                    dd = dt.Rows[last_row1][col_name].ToString();
+                    dd = dt.Rows[test_row][col_name].ToString();
 
                     if (dd == "")
                     {
@@ -660,8 +660,10 @@ namespace NepslidingTools.testModel
         private void buttonX1_Click(object sender, EventArgs e)
         {
             string join_point = "";
-            int last_row = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
+            // int last_row = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
+            int test_rowindex = 0;
             //int col_count = dgv1.Columns.Count - 3;
+            #region 添加数据
             DataTable dt = dgv1.DataSource as DataTable;
             int col_count = dt.Columns.Count - 3;
 
@@ -669,14 +671,14 @@ namespace NepslidingTools.testModel
             {
                 string col_name = string.Format("步骤{0}", i + 1);
                 //join_point += dgv1.Rows[last_row].Cells[col_name].Value.ToString();
-                join_point += dt.Rows[last_row][col_name].ToString();
+                join_point += dt.Rows[test_rowindex][col_name].ToString();
                 if (i == col_count - 1)
                 { break; }
                 join_point += "/";
             }
-            string bh = dgv1.Rows[last_row].Cells["测试编号"].Value.ToString();
-            string sj = dgv1.Rows[last_row].Cells["测试时间"].Value.ToString();
-            string JG = dgv1.Rows[last_row].Cells["测试结果"].Value.ToString();
+            string bh = dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString();
+            string sj = dgv1.Rows[test_rowindex].Cells["测试时间"].Value.ToString();
+            string JG = dgv1.Rows[test_rowindex].Cells["测试结果"].Value.ToString();
             // MessageBox.Show(join_point);  
             //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
             string ljh = lble.Text;
@@ -692,10 +694,13 @@ namespace NepslidingTools.testModel
                 //step5 = bz5,
                 OKorNG = JG,
                 PN = ljh,
+                workid = global.MachineID
             };
             use.Add(us);
 
             MessageBox.Show("记录以保存");
+            #endregion
+            return;
             DataTable dtb = new DataTable();
             #region 构建datatable 表
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
@@ -713,6 +718,7 @@ namespace NepslidingTools.testModel
             }
             dtb.Columns.Add("测试结果");
             #endregion
+            
             #region 填充数据
             Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
             string TS = string.Format("PN = '{0}'", lble.Text);
@@ -827,6 +833,19 @@ namespace NepslidingTools.testModel
         {
             //Console.WriteLine(cbb_canselect.SelectedValue.ToString() + " == " + cbb_canselect.SelectedText + " 11 " + cbb_canselect.SelectedItem.ToString());
             MessageBox.Show(ports_list[cbb_canselect.SelectedIndex].manufacturer);
+            lab_defportname.Text = ports_list[cbb_canselect.SelectedIndex].manufacturer + " - " + ports_list[cbb_canselect.SelectedIndex].portname;
+            this.lab_st.Invoke(new Action(() =>
+            {
+                bool tmp_conn_st = this.sp_obj.port_st();
+                this.lab_st.Text = tmp_conn_st ? "连接" : "未连接";
+                if (!tmp_conn_st)
+                {
+                    sp_obj.init_port(ports_list[cbb_canselect.SelectedIndex].portname);
+                    sp_obj.Processfunc = jiangyaozhixin;
+                }
+
+            }));
+
         }
 
         private void timer_portst_Tick(object sender, EventArgs e)
@@ -837,7 +856,12 @@ namespace NepslidingTools.testModel
                 this.lab_st.Text = tmp_conn_st ? "连接" : "未连接";
                 if (!tmp_conn_st)
                 {
-                    sp_obj.init_port("COM3");
+                    if (cbb_canselect.SelectedIndex < 0)
+                    {
+                        cbb_canselect.SelectedIndex = 0;
+                        return;
+                    }
+                    sp_obj.init_port(ports_list[cbb_canselect.SelectedIndex].portname);
                     sp_obj.Processfunc = jiangyaozhixin;
                 }
 

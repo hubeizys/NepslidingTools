@@ -136,7 +136,7 @@ namespace NepslidingTools.testModel
                     //string sdsdf = strnew;
                     //txtReceive.Text += strRcv + "\r\n";
                 }
-                catch (System.Exception ex)
+                catch (System.FormatException ex)
                 {
                     MessageBox.Show(ex.Message, "出错提示");
                     //txtSend.Text = "";

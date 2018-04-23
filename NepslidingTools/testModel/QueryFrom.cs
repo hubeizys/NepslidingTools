@@ -368,7 +368,8 @@ namespace NepslidingTools.testModel
                         if (col_if && ret_col_num < sp_l.Length + 1)
                         {
                             int stand_info = Convert.ToInt32(mea_obj.standardv);
-                            int test_info = Convert.ToInt32(sp_l[ret_col_num - 1]);
+                            string test_str = sp_l[ret_col_num - 1];
+                            double test_info = Convert.ToDouble(test_str);
 
                             if (stand_info == test_info)
                             {

@@ -412,6 +412,7 @@ namespace NepslidingTools.toolbox
             // 
             this.clbz.Caption = "标准管理";
             this.clbz.FieldName = "clbz";
+            this.clbz.ColumnEdit = this.repositoryItemButtonEdit1;
             this.clbz.Name = "clbz";
             this.clbz.Visible = true;
             this.clbz.VisibleIndex = 7;
@@ -421,6 +422,7 @@ namespace NepslidingTools.toolbox
             // 
             this.clsj.Caption = "测量数据管理";
             this.clsj.FieldName = "clsj";
+            this.clsj.ColumnEdit = this.repositoryItemButtonEdit2;
             this.clsj.Name = "clsj";
             this.clsj.Visible = true;
             this.clsj.VisibleIndex = 8;
