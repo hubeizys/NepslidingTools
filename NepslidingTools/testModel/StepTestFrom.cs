@@ -275,7 +275,7 @@ namespace NepslidingTools.testModel
                         this.chartControl1.Invoke(new Action(() =>
                         {
 
-                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n++, results[cur_index - 1]));
+                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n++, results[cur_index - 1]==""? "0": results[cur_index - 1]));
                         }));
                     }
                 }
@@ -654,7 +654,8 @@ namespace NepslidingTools.testModel
         //}      
         private void buttonX4_Click(object sender, EventArgs e)
         {
-            this.comboBox1.Text = "步骤1";
+            //this.comboBox1.Text = "步骤1";
+            this.comboBox1.SelectedIndex = 0;
         }
 
         private void buttonX1_Click(object sender, EventArgs e)
@@ -759,19 +760,18 @@ namespace NepslidingTools.testModel
         {
             //DataTable dt = new DataTable();
             //dgv1.DataSource = dt;
-            int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
-            for (int i = 0; i < dgv1.ColumnCount; i++)
+            //int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
+            //for (int i = 0; i < dgv1.ColumnCount; i++)
+            //{
+            //    dgv1.Rows[last_row1].Cells[i].Value = "";
+            //}
+            int test_index = 0;
+            // MessageBox.Show(dgv1.Rows[test_index].Cells["测试结果"] .Value.ToString());
+            if (dgv1.Rows.Count>=1 && (dgv1.Rows[test_index].Cells["测试结果"].Value==null || dgv1.Rows[test_index].Cells["测试结果"].Value.ToString() == ""))
             {
-                dgv1.Rows[last_row1].Cells[i].Value = "";
+                dgv1.Rows.RemoveAt(0);
+                this.comboBox1.SelectedIndex = 0; 
             }
-            //((DataTable)dgv1.DataSource).Rows[last_row1].Delete();
-            //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
-            //string aa = string.Format("PN = '{0}''", lble.Text);
-            //DataSet ds = usec.GetList(aa);
-            //// DataSet ds = usec.GetAllList();
-            //dgv1.DataSource = ds.Tables[0];
-
-
         }
 
         private void InitTestData()
@@ -856,15 +856,18 @@ namespace NepslidingTools.testModel
                 this.lab_st.Text = tmp_conn_st ? "连接" : "未连接";
                 if (!tmp_conn_st)
                 {
-                    if (cbb_canselect.SelectedIndex < 0)
+                    if (ports_list == null)
                     {
-                        cbb_canselect.SelectedIndex = 0;
                         return;
                     }
-                    sp_obj.init_port(ports_list[cbb_canselect.SelectedIndex].portname);
+                    string test_port = ports_list[0].portname;
+                    if (cbb_canselect.SelectedIndex >= 0)
+                    {
+                        test_port = ports_list[cbb_canselect.SelectedIndex].portname;
+                    }
+                    sp_obj.init_port(test_port);
                     sp_obj.Processfunc = jiangyaozhixin;
                 }
-
             }));
         }
 
