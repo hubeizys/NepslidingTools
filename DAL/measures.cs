@@ -37,9 +37,9 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into measures(");
-            strSql.Append("step,Tools,position,standardv,up,down,componentId,CC)");
+            strSql.Append("step,Tools,position,standardv,up,down,componentId,CC,devicetype)");
             strSql.Append(" values (");
-            strSql.Append("@step,@Tools,@position,@standardv,@up,@down,@componentId,@CC)");
+            strSql.Append("@step,@Tools,@position,@standardv,@up,@down,@componentId,@CC,@devicetype)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@step", MySqlDbType.Int32,64),
                     new MySqlParameter("@Tools", MySqlDbType.VarChar,64),
@@ -48,7 +48,8 @@ namespace Maticsoft.DAL
                     new MySqlParameter("@up", MySqlDbType.VarChar,64),
                     new MySqlParameter("@down", MySqlDbType.VarChar,64),
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11),
-                    new MySqlParameter("@CC", MySqlDbType.VarChar,64)};
+                    new MySqlParameter("@CC", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11)};
             parameters[0].Value = model.step;
             parameters[1].Value = model.Tools;
             parameters[2].Value = model.position;
@@ -57,6 +58,7 @@ namespace Maticsoft.DAL
             parameters[5].Value = model.down;
             parameters[6].Value = model.componentId;
             parameters[7].Value = model.CC;
+            parameters[8].Value = model.devicetype;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -82,7 +84,8 @@ namespace Maticsoft.DAL
             strSql.Append("up=@up,");
             strSql.Append("down=@down,");
             strSql.Append("componentId=@componentId,");
-            strSql.Append("CC=@CC");
+            strSql.Append("CC=@CC,");
+            strSql.Append("devicetype=@devicetype");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@step", MySqlDbType.Int32,64),
@@ -93,6 +96,7 @@ namespace Maticsoft.DAL
                     new MySqlParameter("@down", MySqlDbType.VarChar,64),
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11),
                     new MySqlParameter("@CC", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11),
                     new MySqlParameter("@id", MySqlDbType.Int32,64)};
             parameters[0].Value = model.step;
             parameters[1].Value = model.Tools;
@@ -102,7 +106,8 @@ namespace Maticsoft.DAL
             parameters[5].Value = model.down;
             parameters[6].Value = model.componentId;
             parameters[7].Value = model.CC;
-            parameters[8].Value = model.id;
+            parameters[8].Value = model.devicetype;
+            parameters[9].Value = model.id;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -166,7 +171,7 @@ namespace Maticsoft.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC from measures ");
+            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC,devicetype from measures ");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@id", MySqlDbType.Int32)
@@ -230,6 +235,10 @@ namespace Maticsoft.DAL
                 {
                     model.CC = row["CC"].ToString();
                 }
+                if (row["devicetype"] != null && row["devicetype"].ToString() != "")
+                {
+                    model.devicetype = int.Parse(row["devicetype"].ToString());
+                }
             }
             return model;
         }
@@ -240,7 +249,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC ");
+            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC,devicetype ");
             strSql.Append(" FROM measures ");
             if (strWhere.Trim() != "")
             {

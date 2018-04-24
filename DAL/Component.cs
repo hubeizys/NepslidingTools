@@ -45,16 +45,26 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into component(");
-            strSql.Append("componentId,name,remark)");
+            strSql.Append("componentId,name,remark,jobnum,ARef,size,sm,photo)");
             strSql.Append(" values (");
-            strSql.Append("@componentId,@name,@remark)");
+            strSql.Append("@componentId,@name,@remark,@jobnum,@ARef,@size,@sm,@photo)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11),
-                    new MySqlParameter("@name", MySqlDbType.VarChar,32),
-                    new MySqlParameter("@remark", MySqlDbType.VarChar,32)};
+                    new MySqlParameter("@name", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@remark", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@jobnum", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@ARef", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@size", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@sm", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@photo", MySqlDbType.VarChar,255)};
             parameters[0].Value = model.componentId;
             parameters[1].Value = model.name;
             parameters[2].Value = model.remark;
+            parameters[3].Value = model.jobnum;
+            parameters[4].Value = model.ARef;
+            parameters[5].Value = model.size;
+            parameters[6].Value = model.sm;
+            parameters[7].Value = model.photo;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -74,15 +84,30 @@ namespace Maticsoft.DAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update component set ");
             strSql.Append("name=@name,");
-            strSql.Append("remark=@remark");
+            strSql.Append("remark=@remark,");
+            strSql.Append("jobnum=@jobnum,");
+            strSql.Append("ARef=@ARef,");
+            strSql.Append("size=@size,");
+            strSql.Append("sm=@sm,");
+            strSql.Append("photo=@photo");
             strSql.Append(" where componentId=@componentId ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@name", MySqlDbType.VarChar,32),
-                    new MySqlParameter("@remark", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@name", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@remark", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@jobnum", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@ARef", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@size", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@sm", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@photo", MySqlDbType.VarChar,255),
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11)};
             parameters[0].Value = model.name;
             parameters[1].Value = model.remark;
-            parameters[2].Value = model.componentId;
+            parameters[2].Value = model.jobnum;
+            parameters[3].Value = model.ARef;
+            parameters[4].Value = model.size;
+            parameters[5].Value = model.sm;
+            parameters[6].Value = model.photo;
+            parameters[7].Value = model.componentId;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -145,7 +170,7 @@ namespace Maticsoft.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select componentId,name,remark from component ");
+            strSql.Append("select componentId,name,remark,jobnum,ARef,size,sm,photo from component ");
             strSql.Append(" where componentId=@componentId ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11)            };
@@ -184,6 +209,26 @@ namespace Maticsoft.DAL
                 {
                     model.remark = row["remark"].ToString();
                 }
+                if (row["jobnum"] != null)
+                {
+                    model.jobnum = row["jobnum"].ToString();
+                }
+                if (row["ARef"] != null)
+                {
+                    model.ARef = row["ARef"].ToString();
+                }
+                if (row["size"] != null)
+                {
+                    model.size = row["size"].ToString();
+                }
+                if (row["sm"] != null)
+                {
+                    model.sm = row["sm"].ToString();
+                }
+                if (row["photo"] != null)
+                {
+                    model.photo = row["photo"].ToString();
+                }
             }
             return model;
         }
@@ -194,7 +239,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select componentId,name,remark ");
+            strSql.Append("select componentId,name,remark,jobnum,ARef,size,sm,photo ");
             strSql.Append(" FROM component ");
             if (strWhere.Trim() != "")
             {

@@ -15,7 +15,7 @@ namespace Maticsoft.Model
         private string _workid;
         private string _manufacturer;
         private string _portname;
-        private int? _componentid;
+        private int? _devicetype;
         /// <summary>
         /// auto_increment
         /// </summary>
@@ -59,10 +59,10 @@ namespace Maticsoft.Model
         /// <summary>
         /// 
         /// </summary>
-        public int? componentId
+        public int? devicetype
         {
-            set { _componentid = value; }
-            get { return _componentid; }
+            set { _devicetype = value; }
+            get { return _devicetype; }
         }
         #endregion Model
 

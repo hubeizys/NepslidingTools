@@ -19,6 +19,7 @@ namespace Maticsoft.Model
         private string _down;
         private int? _componentid;
         private string _cc;
+        private int? _devicetype;
         /// <summary>
         /// auto_increment
         /// </summary>
@@ -90,6 +91,14 @@ namespace Maticsoft.Model
         {
             set { _cc = value; }
             get { return _cc; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public int? devicetype
+        {
+            set { _devicetype = value; }
+            get { return _devicetype; }
         }
         #endregion Model
 

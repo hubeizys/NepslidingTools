@@ -161,6 +161,7 @@
     <Compile Include="measures.cs" />
     <Compile Include="parts.cs" />
     <Compile Include="test.cs" />
+    <Compile Include="testdevice.cs" />
     <Compile Include="username.cs" />
     <Compile Include="workstation.cs" />
   </ItemGroup>

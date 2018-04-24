@@ -6,25 +6,33 @@ using Maticsoft.DBUtility;//Please add references
 namespace Maticsoft.DAL
 {
     /// <summary>
-    /// 数据访问类:parts
+    /// 数据访问类:testdevice
     /// </summary>
-    public partial class parts
+    public partial class testdevice
     {
-        public parts()
+        public testdevice()
         { }
         #region  BasicMethod
+
+        /// <summary>
+        /// 得到最大ID
+        /// </summary>
+        public int GetMaxId()
+        {
+            return DbHelperMySQL.GetMaxID("devicetype", "testdevice");
+        }
+
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(int id)
+        public bool Exists(int devicetype)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) from parts");
-            strSql.Append(" where id=@id");
+            strSql.Append("select count(1) from testdevice");
+            strSql.Append(" where devicetype=@devicetype ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@id", MySqlDbType.Int32)
-            };
-            parameters[0].Value = id;
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11)         };
+            parameters[0].Value = devicetype;
 
             return DbHelperMySQL.Exists(strSql.ToString(), parameters);
         }
@@ -33,21 +41,21 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 增加一条数据
         /// </summary>
-        public bool Add(Maticsoft.Model.parts model)
+        public bool Add(Maticsoft.Model.testdevice model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("insert into parts(");
-            strSql.Append("PN,Barcode,componentId,remark)");
+            strSql.Append("insert into testdevice(");
+            strSql.Append("devicetype,devicename,devicetest,remark)");
             strSql.Append(" values (");
-            strSql.Append("@PN,@Barcode,@componentId,@remark)");
+            strSql.Append("@devicetype,@devicename,@devicetest,@remark)");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@PN", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@Barcode", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@componentId", MySqlDbType.Int32,11),
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11),
+                    new MySqlParameter("@devicename", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@devicetest", MySqlDbType.VarChar,32),
                     new MySqlParameter("@remark", MySqlDbType.VarChar,255)};
-            parameters[0].Value = model.PN;
-            parameters[1].Value = model.Barcode;
-            parameters[2].Value = model.componentId;
+            parameters[0].Value = model.devicetype;
+            parameters[1].Value = model.devicename;
+            parameters[2].Value = model.devicetest;
             parameters[3].Value = model.remark;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
@@ -63,26 +71,23 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 更新一条数据
         /// </summary>
-        public bool Update(Maticsoft.Model.parts model)
+        public bool Update(Maticsoft.Model.testdevice model)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("update parts set ");
-            strSql.Append("PN=@PN,");
-            strSql.Append("Barcode=@Barcode,");
-            strSql.Append("componentId=@componentId,");
+            strSql.Append("update testdevice set ");
+            strSql.Append("devicename=@devicename,");
+            strSql.Append("devicetest=@devicetest,");
             strSql.Append("remark=@remark");
-            strSql.Append(" where id=@id");
+            strSql.Append(" where devicetype=@devicetype ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@PN", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@Barcode", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@componentId", MySqlDbType.Int32,11),
+                    new MySqlParameter("@devicename", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@devicetest", MySqlDbType.VarChar,32),
                     new MySqlParameter("@remark", MySqlDbType.VarChar,255),
-                    new MySqlParameter("@id", MySqlDbType.Int32,64)};
-            parameters[0].Value = model.PN;
-            parameters[1].Value = model.Barcode;
-            parameters[2].Value = model.componentId;
-            parameters[3].Value = model.remark;
-            parameters[4].Value = model.id;
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11)};
+            parameters[0].Value = model.devicename;
+            parameters[1].Value = model.devicetest;
+            parameters[2].Value = model.remark;
+            parameters[3].Value = model.devicetype;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -98,16 +103,15 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(int id)
+        public bool Delete(int devicetype)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from parts ");
-            strSql.Append(" where id=@id");
+            strSql.Append("delete from testdevice ");
+            strSql.Append(" where devicetype=@devicetype ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@id", MySqlDbType.Int32)
-            };
-            parameters[0].Value = id;
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11)         };
+            parameters[0].Value = devicetype;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -122,11 +126,11 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 批量删除数据
         /// </summary>
-        public bool DeleteList(string idlist)
+        public bool DeleteList(string devicetypelist)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("delete from parts ");
-            strSql.Append(" where id in (" + idlist + ")  ");
+            strSql.Append("delete from testdevice ");
+            strSql.Append(" where devicetype in (" + devicetypelist + ")  ");
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString());
             if (rows > 0)
             {
@@ -142,18 +146,17 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.parts GetModel(int id)
+        public Maticsoft.Model.testdevice GetModel(int devicetype)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,PN,Barcode,componentId,remark from parts ");
-            strSql.Append(" where id=@id");
+            strSql.Append("select devicetype,devicename,devicetest,remark from testdevice ");
+            strSql.Append(" where devicetype=@devicetype ");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@id", MySqlDbType.Int32)
-            };
-            parameters[0].Value = id;
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11)         };
+            parameters[0].Value = devicetype;
 
-            Maticsoft.Model.parts model = new Maticsoft.Model.parts();
+            Maticsoft.Model.testdevice model = new Maticsoft.Model.testdevice();
             DataSet ds = DbHelperMySQL.Query(strSql.ToString(), parameters);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -169,26 +172,22 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.parts DataRowToModel(DataRow row)
+        public Maticsoft.Model.testdevice DataRowToModel(DataRow row)
         {
-            Maticsoft.Model.parts model = new Maticsoft.Model.parts();
+            Maticsoft.Model.testdevice model = new Maticsoft.Model.testdevice();
             if (row != null)
             {
-                if (row["id"] != null && row["id"].ToString() != "")
+                if (row["devicetype"] != null && row["devicetype"].ToString() != "")
                 {
-                    model.id = int.Parse(row["id"].ToString());
+                    model.devicetype = int.Parse(row["devicetype"].ToString());
                 }
-                if (row["PN"] != null)
+                if (row["devicename"] != null)
                 {
-                    model.PN = row["PN"].ToString();
+                    model.devicename = row["devicename"].ToString();
                 }
-                if (row["Barcode"] != null)
+                if (row["devicetest"] != null)
                 {
-                    model.Barcode = row["Barcode"].ToString();
-                }
-                if (row["componentId"] != null && row["componentId"].ToString() != "")
-                {
-                    model.componentId = int.Parse(row["componentId"].ToString());
+                    model.devicetest = row["devicetest"].ToString();
                 }
                 if (row["remark"] != null)
                 {
@@ -204,8 +203,8 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,PN,Barcode,componentId,remark ");
-            strSql.Append(" FROM parts ");
+            strSql.Append("select devicetype,devicename,devicetest,remark ");
+            strSql.Append(" FROM testdevice ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -219,7 +218,7 @@ namespace Maticsoft.DAL
         public int GetRecordCount(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select count(1) FROM parts ");
+            strSql.Append("select count(1) FROM testdevice ");
             if (strWhere.Trim() != "")
             {
                 strSql.Append(" where " + strWhere);
@@ -248,9 +247,9 @@ namespace Maticsoft.DAL
             }
             else
             {
-                strSql.Append("order by T.id desc");
+                strSql.Append("order by T.devicetype desc");
             }
-            strSql.Append(")AS Row, T.*  from parts T ");
+            strSql.Append(")AS Row, T.*  from testdevice T ");
             if (!string.IsNullOrEmpty(strWhere.Trim()))
             {
                 strSql.Append(" WHERE " + strWhere);
@@ -275,8 +274,8 @@ namespace Maticsoft.DAL
 					new MySqlParameter("@OrderType", MySqlDbType.Bit),
 					new MySqlParameter("@strWhere", MySqlDbType.VarChar,1000),
 					};
-			parameters[0].Value = "parts";
-			parameters[1].Value = "id";
+			parameters[0].Value = "testdevice";
+			parameters[1].Value = "devicetype";
 			parameters[2].Value = PageSize;
 			parameters[3].Value = PageIndex;
 			parameters[4].Value = 0;

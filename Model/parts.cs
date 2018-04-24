@@ -12,13 +12,9 @@ namespace Maticsoft.Model
         #region Model
         private int _id;
         private string _pn;
-        private string _name;
-        private string _jobnum;
-        private string _aref;
-        private string _size;
-        private string _sm;
         private string _barcode;
         private int? _componentid;
+        private string _remark;
         /// <summary>
         /// auto_increment
         /// </summary>
@@ -38,46 +34,6 @@ namespace Maticsoft.Model
         /// <summary>
         /// 
         /// </summary>
-        public string name
-        {
-            set { _name = value; }
-            get { return _name; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string jobnum
-        {
-            set { _jobnum = value; }
-            get { return _jobnum; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ARef
-        {
-            set { _aref = value; }
-            get { return _aref; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string size
-        {
-            set { _size = value; }
-            get { return _size; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
-        public string sm
-        {
-            set { _sm = value; }
-            get { return _sm; }
-        }
-        /// <summary>
-        /// 
-        /// </summary>
         public string Barcode
         {
             set { _barcode = value; }
@@ -90,6 +46,14 @@ namespace Maticsoft.Model
         {
             set { _componentid = value; }
             get { return _componentid; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string remark
+        {
+            set { _remark = value; }
+            get { return _remark; }
         }
         #endregion Model
 

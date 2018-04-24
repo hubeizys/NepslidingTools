@@ -37,20 +37,20 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into port(");
-            strSql.Append("mac,workid,manufacturer,portname,componentId)");
+            strSql.Append("mac,workid,manufacturer,portname,devicetype)");
             strSql.Append(" values (");
-            strSql.Append("@mac,@workid,@manufacturer,@portname,@componentId)");
+            strSql.Append("@mac,@workid,@manufacturer,@portname,@devicetype)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@mac", MySqlDbType.VarChar,64),
                     new MySqlParameter("@workid", MySqlDbType.VarChar,64),
                     new MySqlParameter("@manufacturer", MySqlDbType.VarChar,255),
                     new MySqlParameter("@portname", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@componentId", MySqlDbType.Int32,11)};
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11)};
             parameters[0].Value = model.mac;
             parameters[1].Value = model.workid;
             parameters[2].Value = model.manufacturer;
             parameters[3].Value = model.portname;
-            parameters[4].Value = model.componentId;
+            parameters[4].Value = model.devicetype;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -73,20 +73,20 @@ namespace Maticsoft.DAL
             strSql.Append("workid=@workid,");
             strSql.Append("manufacturer=@manufacturer,");
             strSql.Append("portname=@portname,");
-            strSql.Append("componentId=@componentId");
+            strSql.Append("devicetype=@devicetype");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@mac", MySqlDbType.VarChar,64),
                     new MySqlParameter("@workid", MySqlDbType.VarChar,64),
                     new MySqlParameter("@manufacturer", MySqlDbType.VarChar,255),
                     new MySqlParameter("@portname", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@componentId", MySqlDbType.Int32,11),
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11),
                     new MySqlParameter("@id", MySqlDbType.Int32,11)};
             parameters[0].Value = model.mac;
             parameters[1].Value = model.workid;
             parameters[2].Value = model.manufacturer;
             parameters[3].Value = model.portname;
-            parameters[4].Value = model.componentId;
+            parameters[4].Value = model.devicetype;
             parameters[5].Value = model.id;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
@@ -151,7 +151,7 @@ namespace Maticsoft.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,mac,workid,manufacturer,portname,componentId from port ");
+            strSql.Append("select id,mac,workid,manufacturer,portname,devicetype from port ");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@id", MySqlDbType.Int32)
@@ -199,9 +199,9 @@ namespace Maticsoft.DAL
                 {
                     model.portname = row["portname"].ToString();
                 }
-                if (row["componentId"] != null && row["componentId"].ToString() != "")
+                if (row["devicetype"] != null && row["devicetype"].ToString() != "")
                 {
-                    model.componentId = int.Parse(row["componentId"].ToString());
+                    model.devicetype = int.Parse(row["devicetype"].ToString());
                 }
             }
             return model;
@@ -213,7 +213,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,mac,workid,manufacturer,portname,componentId ");
+            strSql.Append("select id,mac,workid,manufacturer,portname,devicetype ");
             strSql.Append(" FROM port ");
             if (strWhere.Trim() != "")
             {
