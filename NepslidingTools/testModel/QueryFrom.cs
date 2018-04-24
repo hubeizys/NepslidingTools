@@ -318,7 +318,7 @@ namespace NepslidingTools.testModel
             // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
             DataSet ds = test_bll.GetListByPage(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
             DataTable dt = ds.Tables[0];
-
+            this.totle_num = dt.Rows.Count;
             DataTable dest_table = dgv.DataSource as DataTable;
 
             #region 根据数据 更新表结构  ==== 惰性加入数据
@@ -694,7 +694,7 @@ namespace NepslidingTools.testModel
         private void button1_Click(object sender, EventArgs e)
         {
             // 上一页
-            if (cur_step > cur_page_lenb)
+            if (cur_step >= cur_page_lenb)
             {
                 cur_step -= cur_page_lenb;
             }

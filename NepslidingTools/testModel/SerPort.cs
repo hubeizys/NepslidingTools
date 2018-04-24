@@ -46,6 +46,7 @@ namespace NepslidingTools.testModel
             catch (Exception err)
             {
                 //  MessageBox.Show(err.Message+ "   " + "请检查端口正常后再接入数据");
+                sp1.Close();
                 Console.WriteLine(err.Message + "   " + "请检查端口正常后再接入数据");
             }
 
@@ -95,6 +96,10 @@ namespace NepslidingTools.testModel
                                                                             //    }
                                                                             //    txtReceive.Text += strRcv + "\r\n";             //显示信息
                                                                             //}
+                    if (receivedData.Length<=0)
+                    {
+                        return;
+                    }
                     string strRcv = null;
                     //int decNum = 0;//存储十进制
                     for (int i = 0; i < receivedData.Length; i++) //窗体显示

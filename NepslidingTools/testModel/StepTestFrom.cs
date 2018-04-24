@@ -45,17 +45,20 @@ namespace NepslidingTools.testModel
 
         public void jiangyaozhixin(string a)
         {
+            if(textcl.IsHandleCreated)
             textcl.Invoke(new Action(() =>
             {
-                textcl.Text = a;
+                if (textcl.Text == a)
+                {
+                    textcl.Text += " ";
+                }
+                else { textcl.Text = a; }
+
             }));
 
 
             //Console.WriteLine("我将要执行aaa计划");
         }
-
-
-      
 
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
@@ -78,7 +81,12 @@ namespace NepslidingTools.testModel
             ports_list = ports_man.GetModelList(string.Format("  mac = '{0}'", local_id));
             //MessageBox.Show(ports_list.Count.ToString());
             #endregion
-
+            if (ports_list.Count <=0 )
+            {
+                MessageBox.Show("没有任何可用的测量设备");
+                this.Close();
+                return;
+            }
             // 对当前串口的展示， 以及默认的串口
             lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
             foreach (Maticsoft.Model.port tmp_port in ports_list)
@@ -101,8 +109,8 @@ namespace NepslidingTools.testModel
                 // Create the 3d View
                 theView = theApplication.CreateView(panel3d.Handle.ToInt32(), size.Width, size.Height);
                 theView.RequestDraw();
-
                 #endregion
+
 
                 #region 构建dgv 数据结构 以及填充数据
                 DataTable dtb = new DataTable();
@@ -414,7 +422,6 @@ namespace NepslidingTools.testModel
             {
                 return;
             }
-
             #region 判断当前的测试， 是不是合理的
             // 理论值
             double LL = Convert.ToDouble(txtll.Text);
@@ -435,28 +442,45 @@ namespace NepslidingTools.testModel
                 combjg.Text = "Ng";
             }
             #endregion
-            this.timer_tostep.Enabled = true;
+
             #region 根据最后一列判断 获得最后一列 ，如果没有列就添加一列
             DataTable dt = dgv1.DataSource as DataTable;
             DataRow need_change_rows = null;
 
             //DataColumn need_change_count = null;
-            foreach (DataRow temp in dt.Rows)
+            int need_cahnge_row = 0;
+            int col_num = dt.Columns.Count;
+            if (dt.Rows.Count > 0 && dt.Rows[need_cahnge_row][col_num - 1].ToString() == "")
             {
-                int col_num = dt.Columns.Count;
-                //Console.WriteLine(string.Format("temp[col_num -1 ] == {0}", temp[col_num-1]));
-                if (temp[col_num - 1].ToString() == "")
-                {
-                    need_change_rows = temp;
-                    break;
-                }
+                need_change_rows = dt.Rows[need_cahnge_row];
             }
+
+            //foreach (DataRow temp in dt.Rows)
+            //{
+            //    int col_num = dt.Columns.Count;
+            //    //Console.WriteLine(string.Format("temp[col_num -1 ] == {0}", temp[col_num-1]));
+            //    if (temp[col_num - 1].ToString() == "")
+            //    {
+            //        need_change_rows = temp;
+            //        break;
+            //    }
+            //}
             if (need_change_rows == null)
             {
+                // 如果 当前第一行的数据不存在数据库。 就提醒应该 保存
+                int test_rowindex = 0;
+                Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+                List<Maticsoft.Model.test> tear_mode = test_bll.GetModelList(string.Format(" measureb='{0}'", dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString()));
+                if (tear_mode.Count == 0)
+                {
+                    MessageBox.Show("请保存上次测试结果，在开始下一次的测试");
+                    return;
+                }
                 need_change_rows = dt.NewRow();
                 // dt.Rows.Add(need_change_rows);
                 dt.Rows.InsertAt(need_change_rows ,0);
             }
+            this.timer_tostep.Enabled = true;
             #endregion
 
 
@@ -469,11 +493,6 @@ namespace NepslidingTools.testModel
                 string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
                 if (comboBox1.Text == sg)
                 {
-                    int last_row = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
-                    string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                    string dnum = num.ToString();
-                    dgv1.Rows[test_row].Cells["测试编号"].Value = dnum;
-                    dgv1.Rows[test_row].Cells["测试时间"].Value = DateTime.Now.ToString();
                     for (int j = 0; j < dgv1.Rows.Count; j++)
                     {
                         need_change_rows[comboBox1.Text] = textcl.Text;
@@ -481,8 +500,16 @@ namespace NepslidingTools.testModel
                     }
                 }
             }
+            this.dgv1.Refresh();
             #endregion
-
+            int last_row = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
+            if (dgv1.Rows[test_row].Cells["测试编号"].Value.ToString() == "")
+            {
+                string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                string dnum = num.ToString();
+                dgv1.Rows[test_row].Cells["测试编号"].Value = dnum;
+                dgv1.Rows[test_row].Cells["测试时间"].Value = DateTime.Now.ToString();
+            }
 
             #region 判断是不是可以 ok 或者ng了 
             //int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
@@ -490,6 +517,8 @@ namespace NepslidingTools.testModel
             string fz = dt.Rows[test_row][CL - 2].ToString();
             if (fz != "")
             {
+                
+
                 int t = dt.Columns.Count - 3;
                 for (int a = 0; a < t; a++)
                 {
@@ -533,10 +562,12 @@ namespace NepslidingTools.testModel
                     if (Convert.ToDouble(dd) >= cz && Convert.ToDouble(dd) <= hz)
                     {
                         need_change_rows["测试结果"] = "Ok";
+                        this.dgv1.Refresh();
                     }
                     else
                     {
                         need_change_rows["测试结果"] = "NG";
+                        this.dgv1.Refresh();
                         break;
                     }
 
@@ -652,12 +683,64 @@ namespace NepslidingTools.testModel
         //{
         //    dt.Columns.Add(comboBox1.Text);
         //}      
+        private void buttonX3_Click(object sender, EventArgs e)
+        {
+            int test_index = 0;
+            // MessageBox.Show(dgv1.Rows[test_index].Cells["测试结果"] .Value.ToString());
+            if (dgv1.Rows.Count >= 1 && (dgv1.Rows[test_index].Cells["测试结果"].Value == null || dgv1.Rows[test_index].Cells["测试结果"].Value.ToString() == ""))
+            {
+                // dgv1.Rows.RemoveAt(0);
+                if (this.comboBox1.Items.Count > this.comboBox1.SelectedIndex + 1)
+                {
+                    this.comboBox1.SelectedIndex += 1;
+                }
+            }
+        }
+
         private void buttonX4_Click(object sender, EventArgs e)
         {
             //this.comboBox1.Text = "步骤1";
-            this.comboBox1.SelectedIndex = 0;
+            // this.comboBox1.SelectedIndex = 0;
+            //MessageBox.Show(this.dgv1.CurrentRow.Index.ToString());
+
+            //// DataRow dr = (this.dgv1.DataSource as DataTable ).Rows[this.dgv1.CurrentRow.Index];
+            //DataGridViewRow row = this.dgv1.Rows[this.dgv1.CurrentRow.Index];
+            //// 删除选中行， 并且 设置为第一行
+            //this.dgv1.Rows.RemoveAt(this.dgv1.CurrentRow.Index);
+            //this.dgv1.Rows.Insert(0, row);
+
+            // MessageBox.Show();
+            string colname = this.dgv1.Columns[this.dgv1.CurrentCell.ColumnIndex].HeaderText;
+            colname = colname.Replace("步骤", "");
+
+            int col_num = 0;
+            if (int.TryParse(colname, out col_num))
+            {
+                this.comboBox1.SelectedIndex = col_num > 0 ? col_num - 1 : 0;
+            }
+
+            DataTable dt = this.dgv1.DataSource as DataTable;
+            //DataTable dt2 = dt.Copy();
+            DataRow dr = dt.NewRow();
+            foreach (DataColumn aDataColumn in dt.Columns)
+            {
+                dr[aDataColumn.ColumnName] = dt.Rows[dgv1.CurrentRow.Index][aDataColumn.ColumnName];
+            }
+            dr["测试结果"] = "";
+            dt.Rows.RemoveAt(dgv1.CurrentRow.Index);
+            dt.Rows.InsertAt(dr, 0);
+            this.dgv1.Rows[0].Selected = true;
+            this.dgv1.CurrentCell = this.dgv1.Rows[0].Cells[this.dgv1.CurrentCell.ColumnIndex];
+            //this
         }
 
+
+        /// <summary>
+        /// 
+        ///  点击  ===  保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonX1_Click(object sender, EventArgs e)
         {
             string join_point = "";
@@ -668,38 +751,96 @@ namespace NepslidingTools.testModel
             DataTable dt = dgv1.DataSource as DataTable;
             int col_count = dt.Columns.Count - 3;
 
-            for (int i = 0; i < col_count; i++)
-            {
-                string col_name = string.Format("步骤{0}", i + 1);
-                //join_point += dgv1.Rows[last_row].Cells[col_name].Value.ToString();
-                join_point += dt.Rows[test_rowindex][col_name].ToString();
-                if (i == col_count - 1)
-                { break; }
-                join_point += "/";
-            }
-            string bh = dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString();
-            string sj = dgv1.Rows[test_rowindex].Cells["测试时间"].Value.ToString();
-            string JG = dgv1.Rows[test_rowindex].Cells["测试结果"].Value.ToString();
-            // MessageBox.Show(join_point);  
-            //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
-            string ljh = lble.Text;
-            Maticsoft.BLL.test use = new Maticsoft.BLL.test();
-            Maticsoft.Model.test us = new test()
-            {
-                measureb = bh,
-                time = Convert.ToDateTime(sj),
-                step1 = join_point,
-                //step2 = bz2,
-                //step3 = bz3,
-                //step4 = bz4,
-                //step5 = bz5,
-                OKorNG = JG,
-                PN = ljh,
-                workid = global.MachineID
-            };
-            use.Add(us);
+            //for (int n=0; n<dt.Columns.Count; n++)
+            //{
+            //    Console.WriteLine(dt.Columns[n].ColumnName);
+            //}
 
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            List<Maticsoft.Model.test>  tear_mode = test_bll.GetModelList(string.Format(" measureb='{0}'", dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString()));
+            if (tear_mode.Count == 0)
+            {
+                for (int i = 0; i < col_count; i++)
+                {
+                    string col_name = string.Format("步骤{0}", i + 1);
+                    //join_point += dgv1.Rows[last_row].Cells[col_name].Value.ToString();
+                    join_point += dt.Rows[test_rowindex][col_name].ToString();
+                    if (i == col_count - 1)
+                    { break; }
+                    join_point += "/";
+                }
+                string bh = dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString();
+                string sj = dgv1.Rows[test_rowindex].Cells["测试时间"].Value.ToString();
+                string JG = dgv1.Rows[test_rowindex].Cells["测试结果"].Value.ToString();
+                // MessageBox.Show(join_point);  
+                //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
+
+
+
+                string ljh = lble.Text;
+                Maticsoft.BLL.test use = new Maticsoft.BLL.test();
+                Maticsoft.Model.test us = new test()
+                {
+                    measureb = bh,
+                    time = Convert.ToDateTime(sj),
+                    step1 = join_point,
+                    //step2 = bz2,
+                    //step3 = bz3,
+                    //step4 = bz4,
+                    //step5 = bz5,
+                    OKorNG = JG,
+                    PN = ljh,
+                    workid = global.MachineID
+                };
+
+                use.Add(us);
+            }
+            else if (tear_mode.Count == 1)
+            {
+                for (int i = 0; i < col_count; i++)
+                {
+                    string col_name = string.Format("步骤{0}", i + 1);
+                    //join_point += dgv1.Rows[last_row].Cells[col_name].Value.ToString();
+                    join_point += dt.Rows[test_rowindex][col_name].ToString();
+                    if (i == col_count - 1)
+                    { break; }
+                    join_point += "/";
+                }
+                string bh = dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString();
+                string sj = dgv1.Rows[test_rowindex].Cells["测试时间"].Value.ToString();
+                string JG = dgv1.Rows[test_rowindex].Cells["测试结果"].Value.ToString();
+                // MessageBox.Show(join_point);  
+                //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
+
+
+
+                string ljh = lble.Text;
+                Maticsoft.BLL.test use = new Maticsoft.BLL.test();
+                Maticsoft.Model.test us = tear_mode[0];
+                us.time = Convert.ToDateTime(sj);
+                us.step1 = join_point;
+                us.OKorNG = JG;
+                //Maticsoft.Model.test us = new test()
+                //{
+                //    measureb = bh,
+                //    time = Convert.ToDateTime(sj),
+                //    step1 = join_point,
+                //    //step2 = bz2,
+                //    //step3 = bz3,
+                //    //step4 = bz4,
+                //    //step5 = bz5,
+                //    OKorNG = JG,
+                //    PN = ljh,
+                //    workid = global.MachineID
+                //};
+
+                use.Update(us);
+            }
+            else {
+                MessageBox.Show("记录重复， 请管理数据库 ");
+            }
             MessageBox.Show("记录以保存");
+            this.comboBox1.SelectedIndex = 0; 
             #endregion
             return;
             DataTable dtb = new DataTable();
@@ -756,6 +897,11 @@ namespace NepslidingTools.testModel
 
         }
 
+        /// <summary>
+        ///  点击取消
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonX2_Click(object sender, EventArgs e)
         {
             //DataTable dt = new DataTable();
@@ -765,13 +911,44 @@ namespace NepslidingTools.testModel
             //{
             //    dgv1.Rows[last_row1].Cells[i].Value = "";
             //}
-            int test_index = 0;
-            // MessageBox.Show(dgv1.Rows[test_index].Cells["测试结果"] .Value.ToString());
-            if (dgv1.Rows.Count>=1 && (dgv1.Rows[test_index].Cells["测试结果"].Value==null || dgv1.Rows[test_index].Cells["测试结果"].Value.ToString() == ""))
+            //int test_index = 0;
+            //// MessageBox.Show(dgv1.Rows[test_index].Cells["测试结果"] .Value.ToString());
+            //if (dgv1.Rows.Count>=1 && (dgv1.Rows[test_index].Cells["测试结果"].Value==null || dgv1.Rows[test_index].Cells["测试结果"].Value.ToString() == ""))
+            //{
+            //    dgv1.Rows.RemoveAt(0);
+            //    this.comboBox1.SelectedIndex = 0; 
+            //}
+
+            DataTable dtb = this.dgv1.DataSource as DataTable;
+            dtb.Clear();
+            #region 填充下面的dgv数据
+            Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
+            string TS = string.Format("PN = '{0}'", lble.Text);
+            DataSet dst = tst.GetList(TS);
+            DataTable test_datatable = dst.Tables[0];
+            int test_count = test_datatable.Rows.Count;
+            for (int start_test = 0; start_test < test_count; start_test++)
             {
-                dgv1.Rows.RemoveAt(0);
-                this.comboBox1.SelectedIndex = 0; 
+                string bh = test_datatable.Rows[start_test]["measureb"].ToString();
+                string sj = test_datatable.Rows[start_test]["time"].ToString();
+                string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
+                //string stp1 = dst.Tables[0].Rows[i][4].ToString();
+                string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
+                int sp_num = 0;
+                DataRow dr = dtb.NewRow();
+                dr["测试编号"] = bh;
+                dr["测试时间"] = sj;
+                dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
+                foreach (string j in sp)
+                {
+                    sp_num++;
+                    string col_name = string.Format("步骤{0}", sp_num);
+                    dr[col_name] = j;
+                }
+                dtb.Rows.InsertAt(dr, 0);
             }
+            #endregion
+            dgv1.DataSource = dtb;
         }
 
         private void InitTestData()
@@ -856,7 +1033,7 @@ namespace NepslidingTools.testModel
                 this.lab_st.Text = tmp_conn_st ? "连接" : "未连接";
                 if (!tmp_conn_st)
                 {
-                    if (ports_list == null)
+                    if (ports_list == null || ports_list.Count <= 0 )
                     {
                         return;
                     }

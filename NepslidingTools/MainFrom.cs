@@ -159,6 +159,11 @@ namespace NepslidingTools
                     global.MachineID = Convert.ToBase64String(md5.Hash);
                     //MessageBox.Show(Convert.ToBase64String(md5.Hash));
                 }
+                else {
+                    MessageBox.Show("已经过期了，无法继续使用");
+                    MessageBox.Show("配置不正确, 请联系管理员");
+                    System.Environment.Exit(0);
+                }
             }
             else
             {
