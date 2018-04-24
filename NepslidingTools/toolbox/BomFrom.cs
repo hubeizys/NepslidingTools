@@ -76,7 +76,13 @@ namespace NepslidingTools.toolbox
             AddForm af = new AddForm();
             af.Show();
         }
+        
 
+        /// <summary>
+        /// ≤‚ ‘
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
 
