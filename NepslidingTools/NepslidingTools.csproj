@@ -358,11 +358,23 @@
     <Compile Include="textbox.xaml.cs">
       <DependentUpon>textbox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="toolbox\AddComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="toolbox\AddComponent.Designer.cs">
+      <DependentUpon>AddComponent.cs</DependentUpon>
+    </Compile>
     <Compile Include="toolbox\AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="toolbox\AddForm.Designer.cs">
       <DependentUpon>AddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="toolbox\addparts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="toolbox\addparts.Designer.cs">
+      <DependentUpon>addparts.cs</DependentUpon>
     </Compile>
     <Compile Include="toolbox\ADDzhForm.cs">
       <SubType>Form</SubType>
@@ -459,8 +471,14 @@
     <EmbeddedResource Include="testModel\TestBZFrom.resx">
       <DependentUpon>TestBZFrom.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="toolbox\AddComponent.resx">
+      <DependentUpon>AddComponent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="toolbox\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="toolbox\addparts.resx">
+      <DependentUpon>addparts.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="toolbox\ADDzhForm.resx">
       <DependentUpon>ADDzhForm.cs</DependentUpon>

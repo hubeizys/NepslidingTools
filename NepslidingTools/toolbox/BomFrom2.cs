@@ -230,5 +230,50 @@ namespace NepslidingTools.toolbox
             this.label_baifen1.Text = page_info;
             init_dgv();
         }
+
+        private void buttonlj_del_Click(object sender, EventArgs e)
+        {
+            // 获得选中行
+            int index = this.dgvljjl.CurrentCell.RowIndex;
+            if (index >=0 && index < this.dgvljjl.Rows.Count)
+            {
+                var id = this.dgvljjl.Rows[index].Cells["id"].Value;
+                Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+                if (parts_bll.Delete(Convert.ToInt32(id)))
+                {
+                    MessageBox.Show("删除成功");
+                }
+                else { MessageBox.Show("未删除成功"); }
+            }
+        }
+
+        private void button_del_Click(object sender, EventArgs e)
+        {
+            int index = this.dataGridView1.CurrentCell.RowIndex;
+            if (index >= 0 && index < this.dgvljjl.Rows.Count)
+            {
+                var id = this.dataGridView1.Rows[index].Cells["id"].Value;
+                Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
+                if (comp_bll.Delete(Convert.ToInt32(id)))
+                {
+                    MessageBox.Show("删除成功");
+                }
+                else {
+                    MessageBox.Show("没有删除成功");
+                }
+            }
+        }
+
+        private void button_add_Click(object sender, EventArgs e)
+        {
+            AddComponent add_from = new AddComponent();
+            add_from.Show();
+        }
+
+        private void buttolj_add_Click(object sender, EventArgs e)
+        {
+            addparts add_from = new addparts();
+            add_from.Show();
+        }
     }
 }

@@ -405,7 +405,9 @@ namespace NepslidingTools.testModel
             // 
             // comboBox_devs
             // 
+            this.comboBox_devs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.comboBox_devs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_devs.ForeColor = System.Drawing.Color.Black;
             this.comboBox_devs.FormattingEnabled = true;
             this.comboBox_devs.Location = new System.Drawing.Point(94, 205);
             this.comboBox_devs.Name = "comboBox_devs";

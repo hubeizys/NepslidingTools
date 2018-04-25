@@ -43,7 +43,6 @@
             this.buttonjl_pre = new System.Windows.Forms.Button();
             this.label_baifen1 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.buttonlj_edit = new System.Windows.Forms.Button();
             this.buttolj_add = new System.Windows.Forms.Button();
             this.buttonlj_del = new System.Windows.Forms.Button();
             this.button_likequery = new System.Windows.Forms.Button();
@@ -57,13 +56,17 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button_query = new System.Windows.Forms.Button();
-            this.button_edit = new System.Windows.Forms.Button();
             this.button_del = new System.Windows.Forms.Button();
             this.button_add = new System.Windows.Forms.Button();
             this.textBox_query = new System.Windows.Forms.TextBox();
             this.label_lj = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.button_next = new System.Windows.Forms.Button();
+            this.button_pre = new System.Windows.Forms.Button();
+            this.label_tot = new System.Windows.Forms.Label();
             this.componentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.jobnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ARef = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -71,10 +74,6 @@
             this.sm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.photo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.remark = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button_next = new System.Windows.Forms.Button();
-            this.button_pre = new System.Windows.Forms.Button();
-            this.label_tot = new System.Windows.Forms.Label();
             this.tabControl_main.SuspendLayout();
             this.tabPage_lj.SuspendLayout();
             this.tableLayoutPanel_ljjl.SuspendLayout();
@@ -229,7 +228,6 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.buttonlj_edit);
             this.panel4.Controls.Add(this.buttolj_add);
             this.panel4.Controls.Add(this.buttonlj_del);
             this.panel4.Controls.Add(this.button_likequery);
@@ -243,15 +241,6 @@
             this.panel4.Size = new System.Drawing.Size(949, 34);
             this.panel4.TabIndex = 2;
             // 
-            // buttonlj_edit
-            // 
-            this.buttonlj_edit.Location = new System.Drawing.Point(606, 6);
-            this.buttonlj_edit.Name = "buttonlj_edit";
-            this.buttonlj_edit.Size = new System.Drawing.Size(75, 23);
-            this.buttonlj_edit.TabIndex = 7;
-            this.buttonlj_edit.Text = "修改";
-            this.buttonlj_edit.UseVisualStyleBackColor = true;
-            // 
             // buttolj_add
             // 
             this.buttolj_add.Location = new System.Drawing.Point(521, 6);
@@ -260,6 +249,7 @@
             this.buttolj_add.TabIndex = 6;
             this.buttolj_add.Text = "添加";
             this.buttolj_add.UseVisualStyleBackColor = true;
+            this.buttolj_add.Click += new System.EventHandler(this.buttolj_add_Click);
             // 
             // buttonlj_del
             // 
@@ -269,6 +259,7 @@
             this.buttonlj_del.TabIndex = 5;
             this.buttonlj_del.Text = "删除";
             this.buttonlj_del.UseVisualStyleBackColor = true;
+            this.buttonlj_del.Click += new System.EventHandler(this.buttonlj_del_Click);
             // 
             // button_likequery
             // 
@@ -345,7 +336,6 @@
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.button_query);
-            this.panel1.Controls.Add(this.button_edit);
             this.panel1.Controls.Add(this.button_del);
             this.panel1.Controls.Add(this.button_add);
             this.panel1.Controls.Add(this.textBox_query);
@@ -384,15 +374,6 @@
             this.button_query.UseVisualStyleBackColor = true;
             this.button_query.Click += new System.EventHandler(this.button_query_Click);
             // 
-            // button_edit
-            // 
-            this.button_edit.Location = new System.Drawing.Point(527, 6);
-            this.button_edit.Name = "button_edit";
-            this.button_edit.Size = new System.Drawing.Size(75, 23);
-            this.button_edit.TabIndex = 4;
-            this.button_edit.Text = "修改";
-            this.button_edit.UseVisualStyleBackColor = true;
-            // 
             // button_del
             // 
             this.button_del.Location = new System.Drawing.Point(437, 6);
@@ -401,6 +382,7 @@
             this.button_del.TabIndex = 3;
             this.button_del.Text = "删除";
             this.button_del.UseVisualStyleBackColor = true;
+            this.button_del.Click += new System.EventHandler(this.button_del_Click);
             // 
             // button_add
             // 
@@ -410,6 +392,7 @@
             this.button_add.TabIndex = 2;
             this.button_add.Text = "添加";
             this.button_add.UseVisualStyleBackColor = true;
+            this.button_add.Click += new System.EventHandler(this.button_add_Click);
             // 
             // textBox_query
             // 
@@ -434,6 +417,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.componentId,
+            this.Row,
             this.name,
             this.jobnum,
             this.ARef,
@@ -448,55 +432,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(949, 443);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // componentId
-            // 
-            this.componentId.DataPropertyName = "componentId";
-            this.componentId.HeaderText = "id";
-            this.componentId.Name = "componentId";
-            // 
-            // name
-            // 
-            this.name.DataPropertyName = "name";
-            this.name.HeaderText = "零件名";
-            this.name.Name = "name";
-            // 
-            // jobnum
-            // 
-            this.jobnum.DataPropertyName = "jobnum";
-            this.jobnum.HeaderText = "jobnum";
-            this.jobnum.Name = "jobnum";
-            // 
-            // ARef
-            // 
-            this.ARef.DataPropertyName = "ARef";
-            this.ARef.HeaderText = "ARef";
-            this.ARef.Name = "ARef";
-            // 
-            // size
-            // 
-            this.size.DataPropertyName = "size";
-            this.size.HeaderText = "尺寸";
-            this.size.Name = "size";
-            // 
-            // sm
-            // 
-            this.sm.DataPropertyName = "sm";
-            this.sm.HeaderText = "数模";
-            this.sm.Name = "sm";
-            // 
-            // photo
-            // 
-            this.photo.DataPropertyName = "photo";
-            this.photo.HeaderText = "photo";
-            this.photo.Name = "photo";
-            // 
-            // remark
-            // 
-            this.remark.DataPropertyName = "remark";
-            this.remark.HeaderText = "标准管理";
-            this.remark.Name = "remark";
-            this.remark.Text = "管理";
             // 
             // panel2
             // 
@@ -537,6 +472,61 @@
             this.label_tot.Size = new System.Drawing.Size(29, 12);
             this.label_tot.TabIndex = 0;
             this.label_tot.Text = "0/10";
+            // 
+            // componentId
+            // 
+            this.componentId.DataPropertyName = "componentId";
+            this.componentId.HeaderText = "id";
+            this.componentId.Name = "componentId";
+            // 
+            // Row
+            // 
+            this.Row.DataPropertyName = "Row";
+            this.Row.HeaderText = "Row";
+            this.Row.Name = "Row";
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "零件名";
+            this.name.Name = "name";
+            // 
+            // jobnum
+            // 
+            this.jobnum.DataPropertyName = "jobnum";
+            this.jobnum.HeaderText = "工单号";
+            this.jobnum.Name = "jobnum";
+            // 
+            // ARef
+            // 
+            this.ARef.DataPropertyName = "ARef";
+            this.ARef.HeaderText = "生成编号";
+            this.ARef.Name = "ARef";
+            // 
+            // size
+            // 
+            this.size.DataPropertyName = "size";
+            this.size.HeaderText = "尺寸";
+            this.size.Name = "size";
+            // 
+            // sm
+            // 
+            this.sm.DataPropertyName = "sm";
+            this.sm.HeaderText = "数模";
+            this.sm.Name = "sm";
+            // 
+            // photo
+            // 
+            this.photo.DataPropertyName = "photo";
+            this.photo.HeaderText = "photo";
+            this.photo.Name = "photo";
+            // 
+            // remark
+            // 
+            this.remark.DataPropertyName = "remark";
+            this.remark.HeaderText = "标准管理";
+            this.remark.Name = "remark";
+            this.remark.Text = "管理";
             // 
             // BomFrom2
             // 
@@ -581,19 +571,10 @@
         private System.Windows.Forms.Button button_next;
         private System.Windows.Forms.Button button_pre;
         private System.Windows.Forms.Button button_query;
-        private System.Windows.Forms.Button button_edit;
         private System.Windows.Forms.Button button_del;
         private System.Windows.Forms.Button button_add;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn componentId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn jobnum;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ARef;
-        private System.Windows.Forms.DataGridViewTextBoxColumn size;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sm;
-        private System.Windows.Forms.DataGridViewTextBoxColumn photo;
-        private System.Windows.Forms.DataGridViewButtonColumn remark;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel_ljjl;
         private System.Windows.Forms.DataGridView dgvljjl;
         private System.Windows.Forms.Panel panel3;
@@ -608,12 +589,20 @@
         private System.Windows.Forms.Button button_likequery;
         private System.Windows.Forms.Button buttonlj_del;
         private System.Windows.Forms.Button buttolj_add;
-        private System.Windows.Forms.Button buttonlj_edit;
         private System.Windows.Forms.DataGridViewTextBoxColumn PN;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn component;
         private System.Windows.Forms.DataGridViewTextBoxColumn Barcode;
         private System.Windows.Forms.DataGridViewTextBoxColumn ljname;
         private System.Windows.Forms.DataGridViewButtonColumn jilu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn componentId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Row;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn jobnum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ARef;
+        private System.Windows.Forms.DataGridViewTextBoxColumn size;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sm;
+        private System.Windows.Forms.DataGridViewTextBoxColumn photo;
+        private System.Windows.Forms.DataGridViewButtonColumn remark;
     }
 }
