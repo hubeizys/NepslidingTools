@@ -480,6 +480,9 @@ namespace NepslidingTools.testModel
                 need_change_rows = dt.NewRow();
                 // dt.Rows.Add(need_change_rows);
                 dt.Rows.InsertAt(need_change_rows ,0);
+                // Ωπµ„—°÷–
+                this.dgv1.Rows[0].Selected = true;
+                this.dgv1.CurrentCell = this.dgv1.Rows[0].Cells[this.dgv1.CurrentCell.ColumnIndex];
             }
             this.timer_tostep.Enabled = true;
             #endregion

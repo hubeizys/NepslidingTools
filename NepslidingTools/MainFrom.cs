@@ -56,7 +56,7 @@ namespace NepslidingTools
                 MessageBox.Show("权限不够");
                 return;
             }
-            BomFrom bf = new BomFrom();
+            BomFrom2 bf = new BomFrom2();
             bf.ShowDialog();
         }
 

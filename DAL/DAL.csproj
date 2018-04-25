@@ -151,7 +151,9 @@
     <Compile Include="cccc\xx_fapiao.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="geli\usermana.cs" />
+    <Compile Include="plus\ComponentPlus.cs" />
     <Compile Include="plus\configPlus.cs" />
+    <Compile Include="plus\parts.cs" />
     <Compile Include="port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

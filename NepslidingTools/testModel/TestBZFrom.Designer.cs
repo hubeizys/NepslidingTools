@@ -503,7 +503,6 @@ namespace NepslidingTools.testModel
             this.Controls.Add(this.bom_no_lab);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.Black;
             this.Name = "TestBZFrom";
             this.Text = "²âÁ¿±ê×¼";
             this.Deactivate += new System.EventHandler(this.TestBZFrom_Deactivate);
