@@ -33,7 +33,6 @@ namespace NepslidingTools.testModel
             this.cicun_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.scbh_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.gdno_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
-            this.bomname_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.send_bt = new DevComponents.DotNetBar.ButtonX();
             this.tm_lab = new DevComponents.DotNetBar.LabelX();
             this.sgc_lab = new DevComponents.DotNetBar.LabelX();
@@ -43,15 +42,6 @@ namespace NepslidingTools.testModel
             this.testtoolname_lab = new DevComponents.DotNetBar.LabelX();
             this.bom_no_lab = new DevComponents.DotNetBar.LabelX();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tool = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.testlocal = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cicun = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bzz = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sgc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xgc = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.xh = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gjh = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.mdf_bt = new DevComponents.DotNetBar.ButtonX();
             this.new_bt = new DevComponents.DotNetBar.ButtonX();
@@ -61,6 +51,19 @@ namespace NepslidingTools.testModel
             this.sy_bt = new DevComponents.DotNetBar.ButtonX();
             this.button1 = new System.Windows.Forms.Button();
             this.textbox_ljh = new System.Windows.Forms.TextBox();
+            this.comboBox_devs = new System.Windows.Forms.ComboBox();
+            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.componentid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.row = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.devicename = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tools = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.position = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.standardv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.up = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.down = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.devicetype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -146,29 +149,14 @@ namespace NepslidingTools.testModel
             this.gdno_tb.Size = new System.Drawing.Size(157, 22);
             this.gdno_tb.TabIndex = 25;
             // 
-            // bomname_tb
-            // 
-            this.bomname_tb.BackColor = System.Drawing.Color.White;
-            // 
-            // 
-            // 
-            this.bomname_tb.Border.Class = "TextBoxBorder";
-            this.bomname_tb.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.bomname_tb.DisabledBackColor = System.Drawing.Color.White;
-            this.bomname_tb.ForeColor = System.Drawing.Color.Black;
-            this.bomname_tb.Location = new System.Drawing.Point(96, 204);
-            this.bomname_tb.Name = "bomname_tb";
-            this.bomname_tb.PreventEnterBeep = true;
-            this.bomname_tb.Size = new System.Drawing.Size(157, 22);
-            this.bomname_tb.TabIndex = 24;
-            // 
             // send_bt
             // 
             this.send_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.send_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.send_bt.Location = new System.Drawing.Point(571, 668);
+            this.send_bt.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.send_bt.Location = new System.Drawing.Point(721, 599);
             this.send_bt.Name = "send_bt";
-            this.send_bt.Size = new System.Drawing.Size(75, 23);
+            this.send_bt.Size = new System.Drawing.Size(175, 123);
             this.send_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.send_bt.TabIndex = 22;
             this.send_bt.Text = "提交";
@@ -270,7 +258,7 @@ namespace NepslidingTools.testModel
             this.bom_no_lab.Name = "bom_no_lab";
             this.bom_no_lab.Size = new System.Drawing.Size(75, 23);
             this.bom_no_lab.TabIndex = 15;
-            this.bom_no_lab.Text = "零件编号";
+            this.bom_no_lab.Text = "零件类型";
             // 
             // dgv
             // 
@@ -279,91 +267,31 @@ namespace NepslidingTools.testModel
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.step,
-            this.tool,
-            this.testlocal,
-            this.cicun,
-            this.bzz,
-            this.sgc,
-            this.xgc,
-            this.xh,
-            this.gjh});
+            this.componentid,
+            this.row,
+            this.devicename,
+            this.tools,
+            this.position,
+            this.CC,
+            this.standardv,
+            this.up,
+            this.down,
+            this.id,
+            this.devicetype});
             this.dgv.Location = new System.Drawing.Point(12, 68);
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowTemplate.Height = 23;
-            this.dgv.Size = new System.Drawing.Size(746, 316);
+            this.dgv.Size = new System.Drawing.Size(763, 316);
             this.dgv.TabIndex = 30;
+            this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
             this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
             this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
-            // 
-            // step
-            // 
-            this.step.DataPropertyName = "step";
-            this.step.HeaderText = "步骤";
-            this.step.Name = "step";
-            this.step.ReadOnly = true;
-            // 
-            // tool
-            // 
-            this.tool.DataPropertyName = "Tools";
-            this.tool.HeaderText = "测量工具";
-            this.tool.Name = "tool";
-            this.tool.ReadOnly = true;
-            // 
-            // testlocal
-            // 
-            this.testlocal.DataPropertyName = "position";
-            this.testlocal.HeaderText = "测量位置";
-            this.testlocal.Name = "testlocal";
-            this.testlocal.ReadOnly = true;
-            // 
-            // cicun
-            // 
-            this.cicun.DataPropertyName = "CC";
-            this.cicun.HeaderText = "尺寸";
-            this.cicun.Name = "cicun";
-            this.cicun.ReadOnly = true;
-            // 
-            // bzz
-            // 
-            this.bzz.DataPropertyName = "standardv";
-            this.bzz.HeaderText = "标准值";
-            this.bzz.Name = "bzz";
-            this.bzz.ReadOnly = true;
-            // 
-            // sgc
-            // 
-            this.sgc.DataPropertyName = "up";
-            this.sgc.HeaderText = "上公差";
-            this.sgc.Name = "sgc";
-            this.sgc.ReadOnly = true;
-            // 
-            // xgc
-            // 
-            this.xgc.DataPropertyName = "down";
-            this.xgc.HeaderText = "下公差";
-            this.xgc.Name = "xgc";
-            this.xgc.ReadOnly = true;
-            // 
-            // xh
-            // 
-            this.xh.DataPropertyName = "id";
-            this.xh.HeaderText = "序号";
-            this.xh.Name = "xh";
-            this.xh.ReadOnly = true;
-            this.xh.Visible = false;
-            // 
-            // gjh
-            // 
-            this.gjh.DataPropertyName = "PN";
-            this.gjh.HeaderText = "零件号";
-            this.gjh.Name = "gjh";
-            this.gjh.ReadOnly = true;
-            this.gjh.Visible = false;
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.groupBox1.Controls.Add(this.comboBox_devs);
             this.groupBox1.Controls.Add(this.mdf_bt);
             this.groupBox1.Controls.Add(this.new_bt);
             this.groupBox1.Controls.Add(this.testloc_lab);
@@ -377,7 +305,6 @@ namespace NepslidingTools.testModel
             this.groupBox1.Controls.Add(this.scbh_tb);
             this.groupBox1.Controls.Add(this.tm_lab);
             this.groupBox1.Controls.Add(this.gdno_tb);
-            this.groupBox1.Controls.Add(this.bomname_tb);
             this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(12, 416);
             this.groupBox1.Name = "groupBox1";
@@ -417,7 +344,7 @@ namespace NepslidingTools.testModel
             this.groupBox2.Controls.Add(this.xy_xzh);
             this.groupBox2.Controls.Add(this.sy_bt);
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
-            this.groupBox2.Location = new System.Drawing.Point(319, 416);
+            this.groupBox2.Location = new System.Drawing.Point(439, 416);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(336, 130);
             this.groupBox2.TabIndex = 32;
@@ -464,7 +391,7 @@ namespace NepslidingTools.testModel
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(467, 668);
+            this.button1.Location = new System.Drawing.Point(711, 4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 34;
@@ -488,12 +415,112 @@ namespace NepslidingTools.testModel
             this.textbox_ljh.Name = "textbox_ljh";
             this.textbox_ljh.Size = new System.Drawing.Size(257, 22);
             this.textbox_ljh.TabIndex = 35;
+            this.textbox_ljh.TextChanged += new System.EventHandler(this.textbox_ljh_TextChanged);
+            // 
+            // comboBox_devs
+            // 
+            this.comboBox_devs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox_devs.FormattingEnabled = true;
+            this.comboBox_devs.Location = new System.Drawing.Point(94, 205);
+            this.comboBox_devs.Name = "comboBox_devs";
+            this.comboBox_devs.Size = new System.Drawing.Size(158, 21);
+            this.comboBox_devs.TabIndex = 32;
+            // 
+            // step
+            // 
+            this.step.DataPropertyName = "step";
+            this.step.HeaderText = "步骤";
+            this.step.Name = "step";
+            this.step.ReadOnly = true;
+            // 
+            // componentid
+            // 
+            this.componentid.DataPropertyName = "componentid";
+            this.componentid.HeaderText = "零件类型ID";
+            this.componentid.Name = "componentid";
+            this.componentid.ReadOnly = true;
+            this.componentid.Visible = false;
+            // 
+            // row
+            // 
+            this.row.DataPropertyName = "row";
+            this.row.HeaderText = "row";
+            this.row.Name = "row";
+            this.row.ReadOnly = true;
+            this.row.Visible = false;
+            // 
+            // devicename
+            // 
+            this.devicename.DataPropertyName = "devicename";
+            this.devicename.HeaderText = "使用设备";
+            this.devicename.Name = "devicename";
+            this.devicename.ReadOnly = true;
+            // 
+            // tools
+            // 
+            this.tools.DataPropertyName = "tools";
+            this.tools.HeaderText = "测量工具";
+            this.tools.Name = "tools";
+            this.tools.ReadOnly = true;
+            this.tools.Visible = false;
+            // 
+            // position
+            // 
+            this.position.DataPropertyName = "position";
+            this.position.HeaderText = "测量位置";
+            this.position.Name = "position";
+            this.position.ReadOnly = true;
+            // 
+            // CC
+            // 
+            this.CC.DataPropertyName = "CC";
+            this.CC.HeaderText = "尺寸";
+            this.CC.Name = "CC";
+            this.CC.ReadOnly = true;
+            // 
+            // standardv
+            // 
+            this.standardv.DataPropertyName = "standardv";
+            this.standardv.HeaderText = "标准值";
+            this.standardv.Name = "standardv";
+            this.standardv.ReadOnly = true;
+            // 
+            // up
+            // 
+            this.up.DataPropertyName = "up";
+            this.up.HeaderText = "上公差";
+            this.up.Name = "up";
+            this.up.ReadOnly = true;
+            // 
+            // down
+            // 
+            this.down.DataPropertyName = "down";
+            this.down.HeaderText = "下公差";
+            this.down.Name = "down";
+            this.down.ReadOnly = true;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "序号";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // devicetype
+            // 
+            this.devicetype.DataPropertyName = "devicetype";
+            this.devicetype.HeaderText = "测量设备类型";
+            this.devicetype.Name = "devicetype";
+            this.devicetype.ReadOnly = true;
+            this.devicetype.Visible = false;
+            this.devicetype.Width = 120;
             // 
             // TestBZFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(801, 728);
+            this.ClientSize = new System.Drawing.Size(812, 728);
             this.Controls.Add(this.textbox_ljh);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
@@ -523,7 +550,7 @@ namespace NepslidingTools.testModel
         private DevComponents.DotNetBar.Controls.TextBoxX cicun_tb;
         private DevComponents.DotNetBar.Controls.TextBoxX scbh_tb;
         private DevComponents.DotNetBar.Controls.TextBoxX gdno_tb;
-        private DevComponents.DotNetBar.Controls.TextBoxX bomname_tb;
+
         private DevComponents.DotNetBar.ButtonX send_bt;
         private DevComponents.DotNetBar.LabelX tm_lab;
         private DevComponents.DotNetBar.LabelX sgc_lab;
@@ -542,14 +569,18 @@ namespace NepslidingTools.testModel
         private DevComponents.DotNetBar.ButtonX del_bt;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textbox_ljh;
+        private System.Windows.Forms.ComboBox comboBox_devs;
         private System.Windows.Forms.DataGridViewTextBoxColumn step;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tool;
-        private System.Windows.Forms.DataGridViewTextBoxColumn testlocal;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cicun;
-        private System.Windows.Forms.DataGridViewTextBoxColumn bzz;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sgc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn xgc;
-        private System.Windows.Forms.DataGridViewTextBoxColumn xh;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gjh;
+        private System.Windows.Forms.DataGridViewTextBoxColumn componentid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn row;
+        private System.Windows.Forms.DataGridViewTextBoxColumn devicename;
+        private System.Windows.Forms.DataGridViewTextBoxColumn tools;
+        private System.Windows.Forms.DataGridViewTextBoxColumn position;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn standardv;
+        private System.Windows.Forms.DataGridViewTextBoxColumn up;
+        private System.Windows.Forms.DataGridViewTextBoxColumn down;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn devicetype;
     }
 }

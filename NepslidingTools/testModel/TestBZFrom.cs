@@ -14,24 +14,38 @@ namespace NepslidingTools.testModel
     public partial class TestBZFrom : DevComponents.DotNetBar.Metro.MetroForm
     {
         string name = "TestBZFrom";
+        List<Maticsoft.Model.testdevice> td_lists;
         public TestBZFrom()
         {
             InitializeComponent();
         }
 
+        public string LjHao { get; set; }
+
         private void TestBZFrom_Load(object sender, EventArgs e)
         {
+            // 获得工具信息 并放进combox
+            #region 获得所有测量工具信息
+            Maticsoft.BLL.testdevice td = new Maticsoft.BLL.testdevice();
+            td_lists = td.GetModelList("");
+            List<string> device_lists = td_lists.ConvertAll<string>(a => a.devicename);
+            //绑定推荐的数据源  
+            comboBox_devs.Items.AddRange(device_lists.ToArray());
+            #endregion
+
             //MessageBox.Show("000000");
-           
-            textbox_ljh.Text = Program.gdvid;
-            Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
-            string aa = string.Format("PN = '{0}'ORDER BY step", textbox_ljh.Text);
-            DataSet ds = use.GetList(aa);
-            dgv.DataSource = ds.Tables[0];
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                row.Cells["step"].Value = row.Index + 1;
-            }
+
+            // textbox_ljh.Text = Program.gdvid;
+            textbox_ljh.Text = LjHao;
+            initdgv();
+            //Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
+            //string aa = string.Format(" componentId = '{0}' ORDER BY step ", textbox_ljh.Text);
+            //DataSet ds = use.GetListByPage2(aa, "", 0 ,100);
+            //dgv.DataSource = ds.Tables[0];
+            //foreach (DataGridViewRow row in dgv.Rows)
+            //{
+            //    row.Cells["step"].Value = row.Index + 1;
+            //}
             //global.CurActive = "TestBZFrom";
             //Console.WriteLine("当前激活界面是: " + this.name);
             ////Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
@@ -57,35 +71,35 @@ namespace NepslidingTools.testModel
         {
             for (int i = 0; i < dgv.Rows.Count; i++)
             {
-                string to = dgv.Rows[i].Cells["tool"].Value.ToString();
-                string tl = dgv.Rows[i].Cells["testlocal"].Value.ToString();
-                string bz = dgv.Rows[i].Cells["bzz"].Value.ToString();
-                string sg = dgv.Rows[i].Cells["sgc"].Value.ToString();
-                string xg = dgv.Rows[i].Cells["xgc"].Value.ToString();
-                string cun = dgv.Rows[i].Cells["cicun"].Value.ToString();
-                int XH = Convert.ToInt32(dgv.Rows[i].Cells["xh"].Value);
-                string pn = dgv.Rows[i].Cells["gjh"].Value.ToString();
-                int st =Convert.ToInt32( dgv.Rows[i].Cells["step"].Value);
+                string to = dgv.Rows[i].Cells["Tools"].Value.ToString();
+                string tl = dgv.Rows[i].Cells["position"].Value.ToString();
+                string bz = dgv.Rows[i].Cells["standardv"].Value.ToString();
+                string sg = dgv.Rows[i].Cells["up"].Value.ToString();
+                string xg = dgv.Rows[i].Cells["down"].Value.ToString();
+                string cun = dgv.Rows[i].Cells["CC"].Value.ToString();
+                int XH = Convert.ToInt32(dgv.Rows[i].Cells["id"].Value);
+                int st = Convert.ToInt32(dgv.Rows[i].Cells["step"].Value);
                 Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
                 Maticsoft.Model.measures us = new measures()
                 {
                     id = XH,
-                    step=st,
-                    Tools=to,
-                    position=tl,
-                    standardv=bz,
-                    up=sg,
-                    down=xg,
-                    componentId=1,
-                    CC=cun,
+                    step = st,
+                    Tools = to,
+                    position = tl,
+                    standardv = bz,
+                    up = sg,
+                    down = xg,
+                    componentId = 1,
+                    CC = cun,
                 };
                 use.Update(us);
             }
+            MessageBox.Show("数据已经提交");
         }
 
         private void TestBZFrom_Deactivate(object sender, EventArgs e)
         {
-           
+
             if (global.CurActive == this.name)
             {
                 Console.WriteLine("当前激活界面是: " + this.name);
@@ -95,7 +109,7 @@ namespace NepslidingTools.testModel
                 this.TopMost = true;
                 this.Activate();
             }
-           
+
         }
 
         private void TestBZFrom_FormClosed(object sender, FormClosedEventArgs e)
@@ -114,46 +128,52 @@ namespace NepslidingTools.testModel
             try
             {
                 Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
-            Maticsoft.Model.measures us = new measures()
-            {
-                //step=Convert.ToInt32( bz.Text),
-                Tools = bomname_tb.Text,
-                position = gdno_tb.Text,
-                standardv = scbh_tb.Text,
-                up= sandsm_tb.Text,
-                down= tm_tb.Text,
-                CC= cicun_tb.Text,
-                componentId= Convert.ToInt32( textbox_ljh.Text),
-            };
-            use.Add(us);           
-            MessageBox.Show("保存成功");
-            foreach (Control Ctrol in this.Controls)
-            {
-                if (Ctrol is TextBox || Ctrol is TextBoxX)
+                Maticsoft.Model.measures us = new measures()
                 {
-                    //Ctrol.Text = "";
-                        bomname_tb.Text = "";
+                    //step=Convert.ToInt32( bz.Text),
+                    // S Tools = bomname_tb.Text,
+                    position = gdno_tb.Text,
+                    standardv = scbh_tb.Text,
+                    up = sandsm_tb.Text,
+                    down = tm_tb.Text,
+                    CC = cicun_tb.Text,
+                    componentId = Convert.ToInt32(textbox_ljh.Text),
+                };
+                MessageBox.Show(this.comboBox_devs.SelectedIndex.ToString());
+                use.Add(us);
+                MessageBox.Show("保存成功");
+                foreach (Control Ctrol in this.Controls)
+                {
+                    if (Ctrol is TextBox || Ctrol is TextBoxX)
+                    {
+                        //Ctrol.Text = "";
+                        //bomname_tb.Text = "";
                         gdno_tb.Text = "";
                         scbh_tb.Text = "";
                         sandsm_tb.Text = "";
                         tm_tb.Text = "";
                         cicun_tb.Text = "";
                         //textbox_ljh.Text = "";
+                    }
                 }
-            }
-                Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
-                string aa = string.Format("PN = '{0}'ORDER BY step", textbox_ljh.Text);//ORDER BY step
-                DataSet ds = use1.GetList(aa);
-                dgv.DataSource = ds.Tables[0];
-                foreach (DataGridViewRow row in dgv.Rows)
-                {
-                    row.Cells["step"].Value = row.Index + 1;
-                }
+                this.initdgv();
             }
             catch (Exception err)
             {
                 Console.WriteLine(err.Message);
             }
+        }
+        private void initdgv()
+        {
+            Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
+            string aa = string.Format("componentId = '{0}'ORDER BY step", LjHao);//ORDER BY step
+            DataSet ds = use1.GetListByPage2(aa, "", 0, 100);
+            dgv.DataSource = ds.Tables[0];
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                row.Cells["step"].Value = row.Index + 1;
+            }
+
         }
 
         private void mdf_bt_Click(object sender, EventArgs e)
@@ -165,8 +185,8 @@ namespace NepslidingTools.testModel
             //sandsm_tb.Text = dgv.Rows[0].Cells["sgc"].Value.ToString();
             //tm_tb.Text = dgv.Rows[0].Cells["xgc"].Value.ToString();
             //cicun_tb.Text = dgv.Rows[0].Cells["cicun"].Value.ToString();
-            int XH = Convert.ToInt32(dgv.Rows[0].Cells["xh"].Value);
-            String TO = bomname_tb.Text;
+            int XH = Convert.ToInt32(dgv.Rows[0].Cells["id"].Value);
+            //String TO = bomname_tb.Text;
             string PO = gdno_tb.Text;
             string ST = scbh_tb.Text;
             string SG = sandsm_tb.Text;
@@ -174,38 +194,32 @@ namespace NepslidingTools.testModel
             string CI = cicun_tb.Text;
             string LJH = textbox_ljh.Text;
             Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
-                Maticsoft.Model.measures us = new measures()
-                {
-                    id=XH,
-                    //step = Convert.ToInt32(bz.Text),
-                    Tools = TO,
-                    position = PO,
-                    standardv = ST,
-                    up = SG,
-                    down = XG,
-                    CC = CI,                   
-                    componentId = Convert.ToInt32( LJH),
-                };
-                use.Update(us);
-           // }
-            MessageBox.Show("修改成功");
-            foreach (Control Ctrol in this.Controls)
+            Maticsoft.Model.measures us = new measures()
             {
-                if (Ctrol is TextBox)
-                {
-                    Ctrol.Text = "";
-                    bomname_tb.Text = "";
-                    gdno_tb.Text = "";
-                    scbh_tb.Text = "";
-                    sandsm_tb.Text = "";
-                    tm_tb.Text = "";
-                    cicun_tb.Text = "";
-                    textbox_ljh.Text = "";
-                }
-            }
+                id = XH,
+                //step = Convert.ToInt32(bz.Text),
+                Tools = 1.ToString(),
+                position = PO,
+                standardv = ST,
+                up = SG,
+                down = XG,
+                CC = CI,
+                componentId = Convert.ToInt32(LJH),
+            };
+            use.Update(us);
+            // }
+            MessageBox.Show("修改成功");
+            //Ctrol.Text = "";
+            //bomname_tb.Text = "";
+            gdno_tb.Text = "";
+            scbh_tb.Text = "";
+            sandsm_tb.Text = "";
+            tm_tb.Text = "";
+            cicun_tb.Text = "";
+            textbox_ljh.Text = "";
             Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
-            string aa = string.Format("PN = '{0}'ORDER BY step", textbox_ljh.Text);
-            DataSet ds = use1.GetList(aa);
+            string aa = string.Format("componentId = '{0}'ORDER BY step", LjHao);
+            DataSet ds = use1.GetListByPage2(aa, "", 0, 100);
             dgv.DataSource = ds.Tables[0];
             foreach (DataGridViewRow row in dgv.Rows)
             {
@@ -215,30 +229,24 @@ namespace NepslidingTools.testModel
 
         private void dgv_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            // TE_DW.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["danweimc"].Value.ToString();
-            bomname_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["tool"].Value.ToString();
-            gdno_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["testlocal"].Value.ToString();
-            scbh_tb.Text= dgv.Rows[dgv.CurrentRow.Index].Cells["bzz"].Value.ToString();
-            sandsm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["sgc"].Value.ToString();
-            tm_tb.Text= dgv.Rows[dgv.CurrentRow.Index].Cells["xgc"].Value.ToString();
-            cicun_tb.Text= dgv.Rows[dgv.CurrentRow.Index].Cells["cicun"].Value.ToString();
-            textbox_ljh.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["gjh"].Value.ToString();
+
         }
 
         private void del_bt_Click(object sender, EventArgs e)
         {
-            string DR = dgv.Rows[dgv.CurrentRow.Index].Cells["xh"].Value.ToString();
+            string DR = dgv.Rows[dgv.CurrentRow.Index].Cells["id"].Value.ToString();
             Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
             use.Delete(Convert.ToInt32(DR));
             //MessageBox.Show(a["id"].ToString());
             MessageBox.Show("删除成功");
-            Maticsoft.BLL.measures usec = new Maticsoft.BLL.measures();
-            DataSet ds = usec.GetAllList();
-            dgv.DataSource = ds.Tables[0];
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                row.Cells["step"].Value = row.Index + 1;
-            }
+            initdgv();
+            //Maticsoft.BLL.measures usec = new Maticsoft.BLL.measures();
+            //DataSet ds = usec.GetAllList();
+            //dgv.DataSource = ds.Tables[0];
+            //foreach (DataGridViewRow row in dgv.Rows)
+            //{
+            //    row.Cells["step"].Value = row.Index + 1;
+            //}
         }
 
         private void dgv_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -252,8 +260,8 @@ namespace NepslidingTools.testModel
 
         private void sy_bt_Click(object sender, EventArgs e)
         {
-           
-            int rowIndex = dgv.SelectedRows[0].Index;  //得到当前选中行的索引     
+
+            int rowIndex = dgv.CurrentRow.Index;  //得到当前选中行的索引     
 
             if (rowIndex == 0)
             {
@@ -262,6 +270,23 @@ namespace NepslidingTools.testModel
                 return;
             }
 
+            DataTable dt = this.dgv.DataSource as DataTable;
+            //DataTable dt2 = dt.Copy();
+            DataRow dr = dt.NewRow();
+            foreach (DataColumn aDataColumn in dt.Columns)
+            {
+                dr[aDataColumn.ColumnName] = dt.Rows[rowIndex][aDataColumn.ColumnName];
+            }
+            dt.Rows.RemoveAt(dgv.CurrentRow.Index);
+            dt.Rows.InsertAt(dr, rowIndex - 1);
+            this.dgv.Rows[rowIndex - 1].Selected = true;
+            this.dgv.CurrentCell = this.dgv.Rows[rowIndex - 1].Cells[this.dgv.CurrentCell.ColumnIndex];
+
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                row.Cells["step"].Value = row.Index + 1;
+            }
+            return;
             List<string> list = new List<string>();
             for (int i = 0; i < dgv.Columns.Count; i++)
             {
@@ -291,7 +316,22 @@ namespace NepslidingTools.testModel
                 MessageBox.Show("已经是最后一行了!");
                 return;
             }
+            DataTable dt = this.dgv.DataSource as DataTable;
+            DataRow dr = dt.NewRow();
+            foreach (DataColumn aDataColumn in dt.Columns)
+            {
+                dr[aDataColumn.ColumnName] = dt.Rows[rowIndex][aDataColumn.ColumnName];
+            }
+            dt.Rows.RemoveAt(dgv.CurrentRow.Index);
+            dt.Rows.InsertAt(dr, rowIndex + 1);
+            this.dgv.Rows[rowIndex + 1].Selected = true;
+            this.dgv.CurrentCell = this.dgv.Rows[rowIndex + 1].Cells[this.dgv.CurrentCell.ColumnIndex];
 
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                row.Cells["step"].Value = row.Index + 1;
+            }
+            return;
             List<string> list = new List<string>();
             for (int i = 0; i < dgv.Columns.Count; i++)
             {
@@ -313,7 +353,23 @@ namespace NepslidingTools.testModel
 
         private void button2_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void textbox_ljh_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {           
+            // TE_DW.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["danweimc"].Value.ToString();
+            //bomname_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["Tools"].Value.ToString();
+            gdno_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["position"].Value.ToString();
+            scbh_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["standardv"].Value.ToString();
+            sandsm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["up"].Value.ToString();
+            tm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["down"].Value.ToString();
+            cicun_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["CC"].Value.ToString();
         }
     }
 }

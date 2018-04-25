@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NepslidingTools.testModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -102,16 +103,38 @@ namespace NepslidingTools.toolbox
         {
             //MessageBox.Show(e.ColumnIndex.ToString());
             this.tabControl_main.SelectedIndex = 1;
-            string id = dgvljjl.Rows[e.RowIndex].Cells["component"].Value.ToString();
-            this.textBox_query.Text = id;
-            string where_str = "";
-            // 通过零件的id或者零件的名字
-            where_str += string.Format("  componentId= '{0}' ", this.textBox_query.Text);
+            if (e.RowIndex >= 0 && e.RowIndex < dgvljjl.Rows.Count)
+            {
+                string id = dgvljjl.Rows[e.RowIndex].Cells["component"].Value.ToString();
+                this.textBox_query.Text = id;
+                string where_str = "";
+                // 通过零件的id或者零件的名字
+                where_str += string.Format("  componentId= '{0}' ", this.textBox_query.Text);
 
-            Maticsoft.BLL.component com_bll = new Maticsoft.BLL.component();
-            DataSet ds = com_bll.GetListByPage2(where_str, "", cur_step, cur_step + cur_page_lenb);
-            DataTable dt = ds.Tables[0];
-            this.dataGridView1.DataSource = dt;
+                Maticsoft.BLL.component com_bll = new Maticsoft.BLL.component();
+                DataSet ds = com_bll.GetListByPage2(where_str, "", cur_step, cur_step + cur_page_lenb);
+                DataTable dt = ds.Tables[0];
+                this.dataGridView1.DataSource = dt;
+            }
+            else
+            {
+                MessageBox.Show("选中了无效的行");
+            }
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // componentId
+            TestBZFrom tb = new TestBZFrom();
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
+            {
+                tb.LjHao = dataGridView1.Rows[e.RowIndex].Cells["componentId"].Value.ToString();
+                tb.Show();
+            }
+            else
+            {
+                MessageBox.Show("选中了无效的行");
+            }
         }
     }
 }
