@@ -69,11 +69,12 @@
             this.buttonlj_del = new System.Windows.Forms.Button();
             this.buttolj_add = new System.Windows.Forms.Button();
             this.buttonlj_edit = new System.Windows.Forms.Button();
+            this.PN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.component = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.jilu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ljname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jilu = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabControl_main.SuspendLayout();
             this.tabPage_lj.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -356,10 +357,11 @@
             this.dgvljjl.AllowUserToDeleteRows = false;
             this.dgvljjl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvljjl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PN,
             this.id,
             this.component,
-            this.PN,
             this.Barcode,
+            this.ljname,
             this.jilu});
             this.dgvljjl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvljjl.Location = new System.Drawing.Point(3, 43);
@@ -367,6 +369,7 @@
             this.dgvljjl.RowTemplate.Height = 23;
             this.dgvljjl.Size = new System.Drawing.Size(949, 453);
             this.dgvljjl.TabIndex = 0;
+            this.dgvljjl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvljjl_CellClick);
             // 
             // panel3
             // 
@@ -491,6 +494,12 @@
             this.buttonlj_edit.Text = "修改";
             this.buttonlj_edit.UseVisualStyleBackColor = true;
             // 
+            // PN
+            // 
+            this.PN.DataPropertyName = "PN";
+            this.PN.HeaderText = "零件编号";
+            this.PN.Name = "PN";
+            // 
             // id
             // 
             this.id.DataPropertyName = "id";
@@ -503,23 +512,25 @@
             this.component.HeaderText = "类型";
             this.component.Name = "component";
             // 
-            // PN
-            // 
-            this.PN.DataPropertyName = "PN";
-            this.PN.HeaderText = "零件编号";
-            this.PN.Name = "PN";
-            // 
             // Barcode
             // 
             this.Barcode.DataPropertyName = "Barcode";
             this.Barcode.HeaderText = "条码";
             this.Barcode.Name = "Barcode";
             // 
+            // ljname
+            // 
+            this.ljname.DataPropertyName = "name";
+            this.ljname.HeaderText = "零件名";
+            this.ljname.Name = "ljname";
+            // 
             // jilu
             // 
             this.jilu.DataPropertyName = "remark";
             this.jilu.HeaderText = "零件类型基础管理";
             this.jilu.Name = "jilu";
+            this.jilu.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.jilu.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.jilu.Width = 150;
             // 
             // BomFrom2
@@ -530,6 +541,7 @@
             this.Controls.Add(this.tabControl_main);
             this.Name = "BomFrom2";
             this.Text = "零件管理";
+            this.Load += new System.EventHandler(this.BomFrom2_Load);
             this.tabControl_main.ResumeLayout(false);
             this.tabPage_lj.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
@@ -592,10 +604,11 @@
         private System.Windows.Forms.Button buttonlj_del;
         private System.Windows.Forms.Button buttolj_add;
         private System.Windows.Forms.Button buttonlj_edit;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PN;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn component;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PN;
         private System.Windows.Forms.DataGridViewTextBoxColumn Barcode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn jilu;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ljname;
+        private System.Windows.Forms.DataGridViewButtonColumn jilu;
     }
 }

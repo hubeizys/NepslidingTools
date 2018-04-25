@@ -15,8 +15,9 @@ namespace Maticsoft.DAL
         public DataSet GetListByPage2(string strWhere, string orderby, int startIndex, int endIndex)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT * FROM ( ");
-            strSql.Append(" SELECT @row_number:=@row_number + 1 AS ROW, T.* FROM parts T, (SELECT @row_number:= 0) AS aaccc ");
+            //strSql.Append("SELECT * FROM ( ");
+            //strSql.Append(" SELECT @row_number:=@row_number + 1 AS ROW, T.* FROM parts T, (SELECT @row_number:= 0) AS aaccc ");
+            strSql.Append("SELECT * FROM (SELECT @row_number:= @row_number + 1 AS ROW, T.* , component.`name` FROM parts T LEFT JOIN component  ON T.componentId = component.componentId, (SELECT @row_number:= 0) AS aaccc");
             //if (!string.IsNullOrEmpty(orderby.Trim()))
             //{
             //    strSql.Append("order by T." + orderby);
