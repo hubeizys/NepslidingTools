@@ -49,11 +49,11 @@ namespace NepslidingTools.toolbox
             {
                 
                 PN = bom_no_tb.Text,
-                name = bomname_tb.Text,
-                jobnum = gdno_tb.Text,
-                ARef = scbh_tb.Text,
-                size= cicun_tb.Text,
-                sm= sandsm_tb.Text,
+                //name = bomname_tb.Text,
+                //jobnum = gdno_tb.Text,
+                //ARef = scbh_tb.Text,
+                //size= cicun_tb.Text,
+                //sm= sandsm_tb.Text,
                 Barcode= tm_tb.Text,
             };
             use.Add(us);

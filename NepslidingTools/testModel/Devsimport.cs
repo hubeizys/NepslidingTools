@@ -62,7 +62,7 @@ namespace NepslidingTools.testModel
                     mac = cur_macnum,
                     manufacturer = gz_name,
                     portname = cur_work_portname,
-                    componentId = type,
+                    devicetype = type,
                     workid = cur_macnum + "ºÅ¹¤×÷Õ¾"
                 };
                 tempport_bll.Add(tmp_portobj);

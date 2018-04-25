@@ -386,6 +386,7 @@ namespace NepslidingTools.testModel
         private void StepTestFrom_FormClosed(object sender, FormClosedEventArgs e)
         {
             global.CurActive = "main";
+            this.sp_obj.close();
             this.Dispose();
         }
 

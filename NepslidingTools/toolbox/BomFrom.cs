@@ -110,11 +110,11 @@ namespace NepslidingTools.toolbox
                 {
                     id = XH,
                     PN = LJH,
-                    name = NM,
-                    jobnum = GDH,
-                    ARef = CSBH,
-                    size = CC,
-                    sm = sd,
+                    //name = NM,
+                    //jobnum = GDH,
+                    //ARef = CSBH,
+                    //size = CC,
+                    //sm = sd,
                     Barcode = TM,
                 };
                 use.Update(us);
@@ -247,11 +247,11 @@ namespace NepslidingTools.toolbox
                 Maticsoft.Model.parts us = new parts()
                 {
                     PN = LJH,
-                    name = mc,
-                    jobnum = gdh,
-                    ARef = BH,
-                    size = cc,
-                    sm = dsm,
+                    //name = mc,
+                    //jobnum = gdh,
+                    //ARef = BH,
+                    //size = cc,
+                    //sm = dsm,
                     Barcode = tm,
 
                 };

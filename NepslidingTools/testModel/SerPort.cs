@@ -47,7 +47,7 @@ namespace NepslidingTools.testModel
             {
                 //  MessageBox.Show(err.Message+ "   " + "请检查端口正常后再接入数据");
                 sp1.Close();
-                Console.WriteLine(err.Message + "   " + "请检查端口正常后再接入数据");
+                Console.WriteLine(err.Message + "   " + "请检查端口正常后再接入数据  " + sp1.IsOpen);
             }
 
         }
@@ -60,6 +60,13 @@ namespace NepslidingTools.testModel
         public bool port_st()
         {
             return this.sp1.IsOpen;
+        }
+
+
+        public void close()
+        {
+            if (this.sp1.IsOpen)
+            { this.sp1.Close(); }
         }
 
         #region 内部子函数
