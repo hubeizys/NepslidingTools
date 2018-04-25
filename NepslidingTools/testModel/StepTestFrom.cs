@@ -37,6 +37,8 @@ namespace NepslidingTools.testModel
 
         #endregion
 
+        DataTable measures_tables;
+
         public StepTestFrom()
         {
             InitializeComponent();
@@ -60,6 +62,110 @@ namespace NepslidingTools.testModel
             //Console.WriteLine("我将要执行aaa计划");
         }
 
+        private void init_portbytype(int type)
+        {
+            if (sp_obj.port_st())
+            {
+                sp_obj.close();
+            }
+            #region 当前可用设备展示
+            // 获得先得串口列表
+            #region 串口列表 ports_list
+            string local_id = global.MachineID;
+            Maticsoft.BLL.port ports_man = new Maticsoft.BLL.port();
+            ports_list = ports_man.GetModelList(string.Format("  mac = '{0}' and devicetype={1} ", local_id, type));
+            //MessageBox.Show(ports_list.Count.ToString());
+            if (ports_list.Count <= 0)
+            {
+                MessageBox.Show("没有任何可用的测量设备");
+                this.Close();
+                return;
+            }
+            // 对当前串口的展示， 以及默认的串口
+            //lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+            #endregion
+
+            this.cbb_canselect.Items.Clear();
+            foreach (Maticsoft.Model.port tmp_port in ports_list)
+            {
+                this.cbb_canselect.Items.Add(tmp_port.manufacturer);
+            }
+            #endregion
+
+        }
+
+        private void init_table()
+        {
+            #region 构建dgv 数据结构 以及填充数据
+            DataTable dtb = new DataTable();
+            #region 构建datatable 表，  添加表头
+            Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
+            //string st = string.Format("componentId = '{0}'", lble.Text);
+            string st = string.Format("componentId = '{0}' order by step asc", this.comp_type);
+            DataSet ds1 = mes.GetList(st);
+            dtb.Columns.Add("测试编号");
+            dtb.Columns.Add("测试时间");
+
+            for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
+            {
+                string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
+                comboBox1.Text = sg;
+                dtb.Columns.Add(sg.ToString());
+                //dgv1.DataSource = ds.Tables[0];                
+            }
+            dtb.Columns.Add("测试结果");
+            #endregion
+
+            #region 填充下面的dgv数据
+            Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
+            string TS = string.Format("PN = '{0}'", lble.Text);
+            DataSet dst = tst.GetList(TS);
+            DataTable test_datatable = dst.Tables[0];
+            int test_count = test_datatable.Rows.Count;
+            for (int start_test = 0; start_test < test_count; start_test++)
+            {
+                string bh = test_datatable.Rows[start_test]["measureb"].ToString();
+                string sj = test_datatable.Rows[start_test]["time"].ToString();
+                string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
+                //string stp1 = dst.Tables[0].Rows[i][4].ToString();
+                string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
+                int sp_num = 0;
+                DataRow dr = dtb.NewRow();
+                dr["测试编号"] = bh;
+                dr["测试时间"] = sj;
+                dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
+                foreach (string j in sp)
+                {
+                    sp_num++;
+                    string col_name = string.Format("步骤{0}", sp_num);
+                    dr[col_name] = j;
+                }
+                dtb.Rows.InsertAt(dr, 0);
+            }
+            #endregion
+            dgv1.DataSource = dtb;
+            #endregion
+
+        }
+
+        private void show_step()
+        {
+            #region 初始化当前步骤信息
+            Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
+            string st1 = string.Format("componentId = '{0}'  order by step asc", this.comp_type);
+            DataSet ds11 = mes1.GetList(st1);
+            //DataTable dt = new DataTable();
+            //ds1.Tables.Add(dt);
+            measures_tables = ds11.Tables[0];
+            for (int i = 0; i < measures_tables.Rows.Count; i++)
+            {
+                txtll.Text = measures_tables.Rows[i][4].ToString();
+                comboBox1.Items.Add("步骤" + measures_tables.Rows[i]["step"].ToString());
+            }
+            this.comboBox1.SelectedIndex = 0;
+            #endregion
+        }
+
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
             //global.AsynCall((a) => { MessageBox.Show(a.ToString()); }, "test");
@@ -73,28 +179,7 @@ namespace NepslidingTools.testModel
 
             // MessageBox.Show("界面开始了");
             txtkw.Text = global.MachineID;
-            #region 当前可用设备展示
-            // 获得先得串口列表
-            #region 串口列表 ports_list
-            string local_id = global.MachineID;
-            Maticsoft.BLL.port ports_man = new Maticsoft.BLL.port();
-            ports_list = ports_man.GetModelList(string.Format("  mac = '{0}'", local_id));
-            //MessageBox.Show(ports_list.Count.ToString());
-            #endregion
-            if (ports_list.Count <=0 )
-            {
-                MessageBox.Show("没有任何可用的测量设备");
-                this.Close();
-                return;
-            }
-            // 对当前串口的展示， 以及默认的串口
-            lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
-            foreach (Maticsoft.Model.port tmp_port in ports_list)
-            {
-                this.cbb_canselect.Items.Add(tmp_port.manufacturer);
 
-            }
-            #endregion
 
             try
             {
@@ -111,131 +196,26 @@ namespace NepslidingTools.testModel
                 theView.RequestDraw();
                 #endregion
 
+                init_table();
 
-                #region 构建dgv 数据结构 以及填充数据
-                DataTable dtb = new DataTable();
-                #region 构建datatable 表，  添加表头
-                Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-                //string st = string.Format("componentId = '{0}'", lble.Text);
-                string st = string.Format("componentId = '{0}' order by step asc", this.comp_type);
-                DataSet ds1 = mes.GetList(st);
-                dtb.Columns.Add("测试编号");
-                dtb.Columns.Add("测试时间");
+                show_step();
 
-                for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
-                {
-                    string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-                    comboBox1.Text = sg;
-                    dtb.Columns.Add(sg.ToString());
-                    //dgv1.DataSource = ds.Tables[0];                
-                }
-                dtb.Columns.Add("测试结果");
-                #endregion  
-
-                #region 填充下面的dgv数据
-                Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-                string TS = string.Format("PN = '{0}'", lble.Text);
-                DataSet dst = tst.GetList(TS);
-                DataTable test_datatable = dst.Tables[0];
-                int test_count = test_datatable.Rows.Count;
-                for (int start_test = 0; start_test < test_count; start_test++)
-                {
-                    string bh = test_datatable.Rows[start_test]["measureb"].ToString();
-                    string sj = test_datatable.Rows[start_test]["time"].ToString();
-                    string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
-                    //string stp1 = dst.Tables[0].Rows[i][4].ToString();
-                    string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                    int sp_num = 0;
-                    DataRow dr = dtb.NewRow();
-                    dr["测试编号"] = bh;
-                    dr["测试时间"] = sj;
-                    dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
-                    foreach (string j in sp)
-                    {
-                        sp_num++;
-                        string col_name = string.Format("步骤{0}", sp_num);
-                        dr[col_name] = j;
-                    }
-                    dtb.Rows.InsertAt(dr, 0);
-                }
-                #endregion   
-                dgv1.DataSource = dtb;
-                #endregion
-
-                #region -----------------------
-                //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
-                //string aa = string.Format("PN = '{0}'", lble.Text);
-                //DataSet ds = usec.GetList(aa);
-                //string stp1 = ds.Tables[0].Rows[1][4].ToString();
-                //string[] sp = stp1.Split(new char[] { '/' });//获取数据集合
-                //foreach (string j in sp) ;
-
-
-                //Maticsoft.BLL.test usec = new Maticsoft.BLL.test();
-                //string aa = string.Format("PN = '{0}'", lble.Text);
-                //DataSet ds = usec.GetList(aa);
-                ////DataSet ds = usec.GetAllList();
-                //dgv1.DataSource = ds.Tables[0];
-
-                //if (comboBox1.Text=="第一步") {
-                #endregion
-
-                #region 初始化当前步骤信息
-                Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                string st1 = string.Format("componentId = '{0}'  order by step asc", this.comp_type);
-                DataSet ds11 = mes1.GetList(st1);
-                //DataTable dt = new DataTable();
-                //ds1.Tables.Add(dt);
-
-                for (int i = 0; i < ds11.Tables[0].Rows.Count; i++)
-                {
-                    txtll.Text = ds11.Tables[0].Rows[i][4].ToString();
-                    comboBox1.Items.Add("步骤" + ds11.Tables[0].Rows[i]["step"].ToString());
-                }
-                this.comboBox1.SelectedIndex = 0;
-                #endregion
-                // }
-
+                string device_type = measures_tables.Rows[0]["devicetype"].ToString();
+                init_portbytype(Convert.ToInt32(device_type));
+                lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
                 #region 初始化串口信息
-
                 sp_obj.CheckPort();
                 sp_obj.init_port(ports_list[0].portname);
                 sp_obj.Processfunc = jiangyaozhixin;
-
                 global.CurActive = "steptest";
                 #endregion
-
-                #region  ------------------
-                //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
-                //this.Size = ScreenArea.Size;
-                //Location = (Point)new Size(0, 0);
-                //this.TopMost = true;
-                //this.Activate();
-                //DataTable dt = new DataTable();//创建表
-                //dt.Columns.Add("nearNo", typeof(string));//添加列
-                //dt.Columns.Add("TestTime", typeof(DateTime));
-                //dt.Columns.Add("OkOrNg", typeof(String));
-                //dt.Columns.Add("step1", typeof(String));
-                //dt.Columns.Add("step2", typeof(String));
-                //dt.Columns.Add("step3", typeof(String));
-                //dt.Columns.Add("step4", typeof(String));
-                //dt.Columns.Add("step5", typeof(String));
-                //dt.Rows.Add(new object[] { "2017113212200101", DateTime.Now, "OK", "0.1", "0", "1", "0.12", "-0.1" });//添加行
-                //dt.Rows.Add(new object[] { "2017113212200102", DateTime.Now, "NG", "-0.2", "0", "0.1", "0", "0" });
-                //dt.Rows.Add(new object[] { "2017113212200103", DateTime.Now, "OK", "0.1", "-0.1", "0.2", "0", "0.1" });
-                //this.dgv1.DataSource = dt;
-                #endregion
-
             }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
             }
 
-
-            //this.InitTestData();
             this.timer1.Enabled = true;
-            //this.test();
             create_serpoint();
         }
 
@@ -977,6 +957,10 @@ namespace NepslidingTools.testModel
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            int index = comboBox1.SelectedIndex;
+            string device_type = measures_tables.Rows[index]["devicetype"].ToString();
+            init_portbytype(Convert.ToInt32(device_type));
+            lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
             this.InitTestData();
             create_serpoint();
             /*

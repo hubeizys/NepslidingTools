@@ -22,6 +22,11 @@ namespace NepslidingTools.testModel
 
         public string LjHao { get; set; }
 
+        /// <summary>
+        /// 界面load事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TestBZFrom_Load(object sender, EventArgs e)
         {
             // 获得工具信息 并放进combox
@@ -67,7 +72,7 @@ namespace NepslidingTools.testModel
             //this.dgv.DataSource = dt;
         }
 
-        private void send_bt_Click(object sender, EventArgs e)
+        private void allupdate()
         {
             for (int i = 0; i < dgv.Rows.Count; i++)
             {
@@ -79,6 +84,7 @@ namespace NepslidingTools.testModel
                 string cun = dgv.Rows[i].Cells["CC"].Value.ToString();
                 int XH = Convert.ToInt32(dgv.Rows[i].Cells["id"].Value);
                 int st = Convert.ToInt32(dgv.Rows[i].Cells["step"].Value);
+                int device_type = Convert.ToInt32( dgv.Rows[i].Cells["devicetype"].Value == null ? "0" : dgv.Rows[i].Cells["devicetype"].Value);
                 Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
                 Maticsoft.Model.measures us = new measures()
                 {
@@ -91,9 +97,16 @@ namespace NepslidingTools.testModel
                     down = xg,
                     componentId = 1,
                     CC = cun,
+                    devicetype = device_type,
                 };
                 use.Update(us);
             }
+        }
+
+        private void send_bt_Click(object sender, EventArgs e)
+        {
+            allupdate();
+            groupBox1.Enabled = true;
             MessageBox.Show("数据已经提交");
         }
 
@@ -109,7 +122,6 @@ namespace NepslidingTools.testModel
                 this.TopMost = true;
                 this.Activate();
             }
-
         }
 
         private void TestBZFrom_FormClosed(object sender, FormClosedEventArgs e)
@@ -123,39 +135,80 @@ namespace NepslidingTools.testModel
             this.Close();
         }
 
+        /// <summary>
+        /// 
+        /// 新建规矩
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void new_bt_Click(object sender, EventArgs e)
         {
             try
             {
+                #region 判断条件
+
+
+                if (gdno_tb.Text == "")
+                {
+                    MessageBox.Show("请填写位置");
+                    return;
+                }
+                if (scbh_tb.Text == "")
+                {
+                    MessageBox.Show("请填写标准值");
+                    return;
+                }
+                if (sandsm_tb.Text == "")
+                {
+                    MessageBox.Show("请填上公差");
+                    return;
+                }
+                if (tm_tb.Text == "")
+                {
+                    MessageBox.Show("请填下公差");
+                    return;
+                }
+                if (cicun_tb.Text == "")
+                {
+                    MessageBox.Show("请填写尺寸");
+                    return;
+                }
+                if (comboBox_devs.Text == "")
+                {
+                    MessageBox.Show("请选择工具");
+                    return;
+                }
+                else
+                {
+                    int index = comboBox_devs.SelectedIndex;
+
+                }
+                #endregion
+                int max_step = dgv.Rows.Count;
+
                 Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
                 Maticsoft.Model.measures us = new measures()
                 {
-                    //step=Convert.ToInt32( bz.Text),
+                    // step=Convert.ToInt32( bz.Text),
                     // S Tools = bomname_tb.Text,
                     position = gdno_tb.Text,
                     standardv = scbh_tb.Text,
                     up = sandsm_tb.Text,
                     down = tm_tb.Text,
                     CC = cicun_tb.Text,
-                    componentId = Convert.ToInt32(textbox_ljh.Text),
+                    componentId = Convert.ToInt32(this.LjHao),
+                    devicetype = this.td_lists[comboBox_devs.SelectedIndex].devicetype,
+                    step = max_step + 1,
+                    Tools = comboBox_devs.Text,
                 };
-                MessageBox.Show(this.comboBox_devs.SelectedIndex.ToString());
+                // MessageBox.Show(this.comboBox_devs.SelectedIndex.ToString());
                 use.Add(us);
-                MessageBox.Show("保存成功");
-                foreach (Control Ctrol in this.Controls)
-                {
-                    if (Ctrol is TextBox || Ctrol is TextBoxX)
-                    {
-                        //Ctrol.Text = "";
-                        //bomname_tb.Text = "";
-                        gdno_tb.Text = "";
-                        scbh_tb.Text = "";
-                        sandsm_tb.Text = "";
-                        tm_tb.Text = "";
-                        cicun_tb.Text = "";
-                        //textbox_ljh.Text = "";
-                    }
-                }
+                MessageBox.Show("已经提交保存");
+                gdno_tb.Text = "";
+                scbh_tb.Text = "";
+                sandsm_tb.Text = "";
+                tm_tb.Text = "";
+                cicun_tb.Text = "";
                 this.initdgv();
             }
             catch (Exception err)
@@ -163,6 +216,11 @@ namespace NepslidingTools.testModel
                 Console.WriteLine(err.Message);
             }
         }
+
+        /// <summary>
+        /// 
+        /// 初始化整个表格
+        /// </summary>
         private void initdgv()
         {
             Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
@@ -173,9 +231,14 @@ namespace NepslidingTools.testModel
             {
                 row.Cells["step"].Value = row.Index + 1;
             }
-
         }
 
+
+        /// <summary>
+        /// 修改
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void mdf_bt_Click(object sender, EventArgs e)
         {
             //for (int i=0; i<dgv.Rows.Count;i++) {
@@ -185,26 +248,63 @@ namespace NepslidingTools.testModel
             //sandsm_tb.Text = dgv.Rows[0].Cells["sgc"].Value.ToString();
             //tm_tb.Text = dgv.Rows[0].Cells["xgc"].Value.ToString();
             //cicun_tb.Text = dgv.Rows[0].Cells["cicun"].Value.ToString();
-            int XH = Convert.ToInt32(dgv.Rows[0].Cells["id"].Value);
+            #region 判断条件
+
+
+            if (gdno_tb.Text == "")
+            {
+                MessageBox.Show("请填写位置");
+                return;
+            }
+            if (scbh_tb.Text == "")
+            {
+                MessageBox.Show("请填写标准值");
+                return;
+            }
+            if (sandsm_tb.Text == "")
+            {
+                MessageBox.Show("请填上公差");
+                return;
+            }
+            if (tm_tb.Text == "")
+            {
+                MessageBox.Show("请填下公差");
+                return;
+            }
+            if (cicun_tb.Text == "")
+            {
+                MessageBox.Show("请填写尺寸");
+                return;
+            }
+            if (comboBox_devs.Text == "")
+            {
+                MessageBox.Show("请选择工具");
+                return;
+            }
+
+            #endregion
+            int step_index = dgv.CurrentCell.RowIndex;
+            int XH = Convert.ToInt32(dgv.Rows[step_index].Cells["id"].Value);
             //String TO = bomname_tb.Text;
             string PO = gdno_tb.Text;
             string ST = scbh_tb.Text;
             string SG = sandsm_tb.Text;
             string XG = tm_tb.Text;
             string CI = cicun_tb.Text;
-            string LJH = textbox_ljh.Text;
+            // string LJH = textbox_ljh.Text;
             Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
             Maticsoft.Model.measures us = new measures()
             {
                 id = XH,
-                //step = Convert.ToInt32(bz.Text),
                 Tools = 1.ToString(),
                 position = PO,
                 standardv = ST,
                 up = SG,
                 down = XG,
                 CC = CI,
-                componentId = Convert.ToInt32(LJH),
+                componentId = Convert.ToInt32(this.LjHao),
+                step = Convert.ToInt32(dgv.Rows[step_index].Cells["step"].Value),
+                devicetype = this.td_lists[comboBox_devs.SelectedIndex].devicetype
             };
             use.Update(us);
             // }
@@ -232,6 +332,11 @@ namespace NepslidingTools.testModel
 
         }
 
+        /// <summary>
+        ///  删除按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void del_bt_Click(object sender, EventArgs e)
         {
             string DR = dgv.Rows[dgv.CurrentRow.Index].Cells["id"].Value.ToString();
@@ -240,13 +345,7 @@ namespace NepslidingTools.testModel
             //MessageBox.Show(a["id"].ToString());
             MessageBox.Show("删除成功");
             initdgv();
-            //Maticsoft.BLL.measures usec = new Maticsoft.BLL.measures();
-            //DataSet ds = usec.GetAllList();
-            //dgv.DataSource = ds.Tables[0];
-            //foreach (DataGridViewRow row in dgv.Rows)
-            //{
-            //    row.Cells["step"].Value = row.Index + 1;
-            //}
+            allupdate();
         }
 
         private void dgv_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -258,9 +357,15 @@ namespace NepslidingTools.testModel
             }*/
         }
 
+
+        /// <summary>
+        /// 上移动按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void sy_bt_Click(object sender, EventArgs e)
         {
-
+            this.groupBox1.Enabled = false;
             int rowIndex = dgv.CurrentRow.Index;  //得到当前选中行的索引     
 
             if (rowIndex == 0)
@@ -307,8 +412,14 @@ namespace NepslidingTools.testModel
             //dgv.Rows[dgv.CurrentRow.Index-1].Selected = true;
         }
 
+        /// <summary>
+        /// 下移动按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void xy_xzh_Click(object sender, EventArgs e)
         {
+            this.groupBox1.Enabled = false;
             int rowIndex = dgv.SelectedRows[0].Index;  //得到当前选中行的索引     
 
             if (rowIndex == dgv.Rows.Count - 1)
@@ -362,7 +473,7 @@ namespace NepslidingTools.testModel
         }
 
         private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
-        {           
+        {
             // TE_DW.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["danweimc"].Value.ToString();
             //bomname_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["Tools"].Value.ToString();
             gdno_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["position"].Value.ToString();

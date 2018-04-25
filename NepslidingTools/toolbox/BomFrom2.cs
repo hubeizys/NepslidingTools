@@ -48,7 +48,7 @@ namespace NepslidingTools.toolbox
             }
 
             Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
-            DataSet ds = parts_bll.GetListByPage2(where_str, "", lj_cur_step, lj_cur_page_lenb);
+            DataSet ds = parts_bll.GetListByPage2(where_str, "", lj_cur_step, lj_cur_step + lj_cur_page_lenb);
             DataTable dt = ds.Tables[0];
 
             if (this.textBox_type.Text != "")
@@ -87,11 +87,35 @@ namespace NepslidingTools.toolbox
         private void button_query_Click(object sender, EventArgs e)
         {
             this.init_dgv();
+            string where_str = " 1=1 ";
+            if (this.textBoxljjl_query.Text != "")
+            {
+                where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
+            }
+
+            Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+            lj_totle_num = parts_bll.GetRecordCount(where_str);
+
+            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", 1, tot_page_index);
+            this.label_tot.Text = page_info;
         }
 
         private void button_likequery_Click(object sender, EventArgs e)
         {
             init_ljjldgv();
+            string where_str = " 1=1 ";
+            if (this.textBoxljjl_query.Text != "")
+            {
+                where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
+            }
+
+            Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+            totle_num =  parts_bll.GetRecordCount(where_str);
+
+            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", 1, tot_page_index);
+            this.label_baifen1.Text = page_info;
         }
 
         private void BomFrom2_Load(object sender, EventArgs e)
@@ -135,6 +159,76 @@ namespace NepslidingTools.toolbox
             {
                 MessageBox.Show("选中了无效的行");
             }
+        }
+
+        private void buttonjl_pre_Click(object sender, EventArgs e)
+        {
+            // 上一页
+            if (cur_step >= cur_page_lenb)
+            {
+                cur_step -= cur_page_lenb;
+            }
+            else if (cur_step < cur_page_lenb)
+            {
+                cur_step = 0;
+            }
+
+            int cur_page_index = cur_step / this.cur_page_lenb + 1;
+            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", cur_page_index, tot_page_index);
+            this.label_baifen1.Text = page_info;
+            init_ljjldgv();
+        }
+
+        private void buttonjl_next_Click(object sender, EventArgs e)
+        {
+            if (cur_step + cur_page_lenb > this.totle_num)
+            {
+                return;
+            }
+            cur_step += cur_page_lenb;
+
+            int cur_page_index = cur_step / this.cur_page_lenb + 1;
+            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", cur_page_index, tot_page_index);
+            this.label_baifen1.Text = page_info;
+            init_ljjldgv();
+        }
+
+        private void button_pre_Click(object sender, EventArgs e)
+        {
+            
+            // 上一页
+            if (lj_cur_step  >= lj_cur_page_lenb)
+            {
+                lj_cur_step -= lj_cur_page_lenb;
+            }
+            else if (lj_cur_step < lj_cur_page_lenb)
+            {
+                lj_cur_step = 0;
+            }
+
+            int cur_page_index = lj_cur_step / this.lj_cur_page_lenb + 1;
+            int tot_page_index = this.totle_num / this.lj_cur_page_lenb + (this.totle_num % this.lj_cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", cur_page_index, tot_page_index);
+            this.label_baifen1.Text = page_info;
+            init_dgv();
+        }
+
+        private void button_next_Click(object sender, EventArgs e)
+        {
+            
+            if (lj_cur_step + lj_cur_page_lenb > this.totle_num)
+            {
+                return;
+            }
+            lj_cur_step += lj_cur_page_lenb;
+
+            int cur_page_index = lj_cur_step / this.lj_cur_page_lenb + 1;
+            int tot_page_index = this.totle_num / this.lj_cur_page_lenb + (this.totle_num % this.lj_cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", cur_page_index, tot_page_index);
+            this.label_baifen1.Text = page_info;
+            init_dgv();
         }
     }
 }

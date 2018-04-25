@@ -318,7 +318,6 @@ namespace NepslidingTools.testModel
             // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
             DataSet ds = test_bll.GetListByPage(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
             DataTable dt = ds.Tables[0];
-            this.totle_num = dt.Rows.Count;
             DataTable dest_table = dgv.DataSource as DataTable;
 
             #region 根据数据 更新表结构  ==== 惰性加入数据
@@ -399,6 +398,12 @@ namespace NepslidingTools.testModel
         private void query_bt_Click(object sender, EventArgs e)
         {
             this.reQuery();
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            string where_string = this.query_wherestring();
+            this.totle_num = test_bll.GetRecordCount(where_string);
+            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", 1, tot_page_index);
+            this.labelX1.Text = page_info;
             return;
 
             DataTable dtb = new DataTable();
@@ -704,8 +709,8 @@ namespace NepslidingTools.testModel
             }
 
             int cur_page_index = cur_step / this.cur_page_lenb + 1;
-            int tot_page_index = this.totle_num / this.cur_page_lenb + 1;
-            string page_info = string.Format("{1}/{1}", cur_page_index, tot_page_index);
+            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", cur_page_index, tot_page_index);
             this.labelX1.Text = page_info;
             this.reQuery();
         }
@@ -719,16 +724,9 @@ namespace NepslidingTools.testModel
             }
             cur_step += cur_page_lenb;
 
-            //{
-
-            //    //if (cur_step + 2*  cur_page_lenb > cur_num)
-            //    //{
-            //    //    this.cur_page_lenb = cur_num;
-            //    //}
-            //}
-            int cur_page_index = cur_step / this.cur_page_lenb + 1;
-            int tot_page_index = this.totle_num / this.cur_page_lenb + 1;
-            string page_info = string.Format("{1}/{1}", cur_page_index, tot_page_index);
+            int cur_page_index = cur_step / this.cur_page_lenb +1 ;
+            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb==0?0:1);
+            string page_info = string.Format("{0}/{1}", cur_page_index, tot_page_index);
             this.labelX1.Text = page_info;
             this.reQuery();
         }
