@@ -204,9 +204,78 @@ namespace NepslidingTools.testModel
             //    }
             //}
             #endregion
-            daochu dc = new daochu();
-            dc.resa = this;
-            dc.ShowDialog();
+            //daochu dc = new daochu();
+            //dc.resa = this;
+            //dc.ShowDialog();
+
+            //DataTable dt2 = new DataTable();
+            ////构建一个计算用的表格
+            //Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+            //List<Maticsoft.Model.measures> mea_list = mea_bll.GetModelList(string.Format(" componentId = '{0}' order by step ", this.comp_type));
+            //foreach (Maticsoft.Model.measures mea_obj in mea_list)
+            //{
+            //    dt2.Columns.Add(new DataColumn("s"+mea_obj.step.ToString(), typeof(string)));
+            //}
+
+
+            // 取得数据。 分解数据。 填充数据
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            radioGroup1.SelectedIndex = 2;
+            string where_string1 = this.query_wherestring();
+            DataSet ds =  test_bll.GetList(where_string1);
+            DataTable dt = ds.Tables[0];
+
+            List<double[]> bbb = new List<double[]>();
+            foreach(DataRow dr in dt.Rows)
+            {
+                string step = dr["step1"].ToString();
+                string[] temp_step = step.Split('/');
+                //for (int i = 1; i<=temp_step.Length ;i++)
+                //{
+                //    DataRow dr_temp =   dt2.NewRow();
+                //    dr_temp[]
+                //}
+                for (int i = 0; i < temp_step.Length; i++)
+                {
+                    
+                    // dr_temp[i] = temp_step[i];
+                    Console.WriteLine("temp_step[i] == " + temp_step[i] + " ===  " + i);
+                }
+                //if (temp_step.Length == dt2.Columns.Count)
+                //{
+                //    DataRow dr_temp = dt2.NewRow();
+
+                //    dt2.Rows.Add(dr_temp);
+                //    Console.WriteLine(Environment.NewLine);
+                //}
+            }
+
+            
+            // 分析数据
+
+            //foreach (DataColumn aa in dt2.Columns)
+            //{
+            //    string rr = dt2.Select("", aa.ColumnName + " DESC")[0][aa.ColumnName] as string;
+            //    //object max = dt2.Compute(string.Format( "Max({0})", aa.ColumnName), "true");
+            //    MessageBox.Show(rr);
+            //}
+        }
+
+        private string get_okpara()
+        {
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            radioGroup1.SelectedIndex = 2;
+            string where_string1 = this.query_wherestring();
+            int tot = test_bll.GetRecordCount(where_string1);
+
+            radioGroup1.SelectedIndex = 0;
+            string where_string2 = this.query_wherestring();
+            int ok_num = test_bll.GetRecordCount(where_string2);
+
+            double percent = Convert.ToDouble(ok_num) / Convert.ToDouble(tot);
+            string result = string.Format("{0:0.00%}", percent);//得到5.88%
+            //MessageBox.Show(result);
+            return result;
         }
 
         private void button3_Click(object sender, EventArgs e)

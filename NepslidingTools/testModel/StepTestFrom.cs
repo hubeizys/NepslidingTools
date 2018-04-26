@@ -62,6 +62,16 @@ namespace NepslidingTools.testModel
             //Console.WriteLine("我将要执行aaa计划");
         }
 
+        private void init_photobytype(int type)
+        {
+            Maticsoft.BLL.testdevice dt_bll = new Maticsoft.BLL.testdevice();
+            Maticsoft.Model.testdevice dt_model =  dt_bll.GetModel(type);
+            string dir = System.Environment.CurrentDirectory;
+            dir = dir + "\\images\\" + dt_model.remark;
+            //MessageBox.Show(dir);
+            pictureBox1.Image = Image.FromFile(dir);
+        }
+
         private void init_portbytype(int type)
         {
             if (sp_obj.port_st())
@@ -202,6 +212,7 @@ namespace NepslidingTools.testModel
 
                 string device_type = measures_tables.Rows[0]["devicetype"].ToString();
                 init_portbytype(Convert.ToInt32(device_type));
+                init_photobytype(Convert.ToInt32(device_type));
                 lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
                 #region 初始化串口信息
                 sp_obj.CheckPort();
@@ -212,6 +223,7 @@ namespace NepslidingTools.testModel
             }
             catch (Exception err)
             {
+                Console.WriteLine(err.Message);
                 MessageBox.Show(err.Message);
             }
 
@@ -960,6 +972,7 @@ namespace NepslidingTools.testModel
             int index = comboBox1.SelectedIndex;
             string device_type = measures_tables.Rows[index]["devicetype"].ToString();
             init_portbytype(Convert.ToInt32(device_type));
+            init_photobytype(Convert.ToInt32(device_type));
             lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
             this.InitTestData();
             create_serpoint();
