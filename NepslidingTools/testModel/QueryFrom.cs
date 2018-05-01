@@ -208,14 +208,14 @@ namespace NepslidingTools.testModel
             //dc.resa = this;
             //dc.ShowDialog();
 
-            //DataTable dt2 = new DataTable();
-            ////构建一个计算用的表格
-            //Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
-            //List<Maticsoft.Model.measures> mea_list = mea_bll.GetModelList(string.Format(" componentId = '{0}' order by step ", this.comp_type));
-            //foreach (Maticsoft.Model.measures mea_obj in mea_list)
-            //{
-            //    dt2.Columns.Add(new DataColumn("s"+mea_obj.step.ToString(), typeof(string)));
-            //}
+            DataTable dt2 = new DataTable();
+            //构建一个计算用的表格
+            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+            List<Maticsoft.Model.measures> mea_list = mea_bll.GetModelList(string.Format(" componentId = '{0}' order by step ", this.comp_type));
+            foreach (Maticsoft.Model.measures mea_obj in mea_list)
+            {
+                dt2.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
+            }
 
 
             // 取得数据。 分解数据。 填充数据
@@ -230,35 +230,68 @@ namespace NepslidingTools.testModel
             {
                 string step = dr["step1"].ToString();
                 string[] temp_step = step.Split('/');
-                //for (int i = 1; i<=temp_step.Length ;i++)
-                //{
-                //    DataRow dr_temp =   dt2.NewRow();
-                //    dr_temp[]
-                //}
-                for (int i = 0; i < temp_step.Length; i++)
-                {
-                    
-                    // dr_temp[i] = temp_step[i];
-                    Console.WriteLine("temp_step[i] == " + temp_step[i] + " ===  " + i);
-                }
-                //if (temp_step.Length == dt2.Columns.Count)
-                //{
-                //    DataRow dr_temp = dt2.NewRow();
 
-                //    dt2.Rows.Add(dr_temp);
-                //    Console.WriteLine(Environment.NewLine);
-                //}
+                if (temp_step.Length == dt2.Columns.Count)
+                {
+                    DataRow dr_temp = dt2.NewRow();
+                    for (int i = 0; i < temp_step.Length; i++)
+                    {
+                        double temp_d = 0;
+                        Double.TryParse(temp_step[i], out temp_d);
+                        dr_temp["s"+(i+1).ToString()] = temp_d;
+                        Console.WriteLine("temp_step[i] == " + temp_step[i] + " ===  " + i);
+                    }
+                    dt2.Rows.Add(dr_temp);
+                    //Console.WriteLine(Environment.NewLine);
+                }
             }
 
-            
-            // 分析数据
 
-            //foreach (DataColumn aa in dt2.Columns)
-            //{
-            //    string rr = dt2.Select("", aa.ColumnName + " DESC")[0][aa.ColumnName] as string;
-            //    //object max = dt2.Compute(string.Format( "Max({0})", aa.ColumnName), "true");
-            //    MessageBox.Show(rr);
-            //}
+            /*
+             CPK=Cp*（1-|Ca|）
+            Ca (Capability of Accuracy)：制程准确度；在衡量「实际平均值」与「规格中心值」之一致性。对於单边规格，因不存在规格中心，因此不存在Ca；对於双边规格，Ca=(ˉx-U)/(T/2)。
+            Cp (Capability of Precision)：制程精密度；在衡量「规格公差宽度」与「制程变异宽度」之比例。对於单边规格，只有上限和中心值，Cpu = | USL-ˉx | / 3σ 或 只有下限和中心值，Cpl = | ˉx -LSL | / 3σ；对於双边规格：Cp=(USL-LSL) / 6σ=T/6σ
+            注意: 计算Cpk时，取样数据至少应有20组数据，而且数据要具有一定代表性。
+
+            某零件质量要求为20±0.15，抽样100件，测得：-x =20.05mm；s=0.05mm，求过程能力指数。根据零件的规格要求，Tu=20.15，Tl=19.85
+            M=Tu+Tl/2=(20.15+19.85)/2=20.00
+            ε=|M- 20.05|=0.05
+            T = USL - LSL = 20.15 - 19.85 = 0.3
+            CPK = CP*（|1-CA|）
+            = (T-2ε)/6s = (0.3-2*0.05)/(6*0.05)=(0.3-0.1)/(6*0.05)≈0.67
+            */
+            // 分析数据
+            // mea_list
+            foreach (DataColumn aa in dt2.Columns)
+            {
+                string col_name = aa.ColumnName.Replace("s", "");
+                List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x=>x.step == Convert.ToInt32(col_name)).Select(x =>x).ToList<Maticsoft.Model.measures>();
+                //string rr = dt2.Select("", aa.ColumnName + " DESC")[0][aa.ColumnName].ToString();
+                object max = dt2.Compute(string.Format( "Max({0})", aa.ColumnName), "true");
+                //  MessageBox.Show(max.ToString());
+                object min = dt2.Compute(string.Format("Min({0})", aa.ColumnName), "true");
+
+                double sta = Convert.ToDouble(mea_obj[0].standardv);
+
+                double va_x1 = Convert.ToDouble( max);
+                double va_x2 = Convert.ToDouble( min);
+                double va_x = va_x1 - sta > sta - va_x2 ? va_x1 : va_x2;
+                double va_s = sta - va_x;
+
+                double tu = sta + Convert.ToDouble(mea_obj[0].up);
+                double ti = sta - Convert.ToDouble(mea_obj[0].down) ;
+
+                double v_m = (tu + ti) / 2;
+                double sgm = Math.Abs(sta - va_x);
+                double v_t = tu - ti;
+
+                double cpk = (v_t - 2 * sgm) /( 6 * va_s);
+                Console.WriteLine(string.Format("max == {0} --- min {1}----- {2}::{3}", max, min, mea_obj[0].up, mea_obj[0].down));
+                Console.WriteLine(Environment.NewLine);
+                Console.WriteLine(string.Format("cpk == {0}", cpk));
+            }
+
+
         }
 
         private string get_okpara()
@@ -801,3 +834,5 @@ namespace NepslidingTools.testModel
         }
     }
 }
+ 
+ 
