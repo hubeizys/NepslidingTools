@@ -262,6 +262,7 @@ namespace NepslidingTools.testModel
             */
             // 分析数据
             // mea_list
+            string all_cpk = "";
             foreach (DataColumn aa in dt2.Columns)
             {
                 string col_name = aa.ColumnName.Replace("s", "");
@@ -273,8 +274,8 @@ namespace NepslidingTools.testModel
 
                 double sta = Convert.ToDouble(mea_obj[0].standardv);
 
-                double va_x1 = Convert.ToDouble( max);
-                double va_x2 = Convert.ToDouble( min);
+                double va_x1 = Convert.ToDouble( max is DBNull ? 0:max);
+                double va_x2 = Convert.ToDouble( min is DBNull ? 0:min);
                 double va_x = va_x1 - sta > sta - va_x2 ? va_x1 : va_x2;
                 double va_s = sta - va_x;
 
@@ -289,11 +290,71 @@ namespace NepslidingTools.testModel
                 Console.WriteLine(string.Format("max == {0} --- min {1}----- {2}::{3}", max, min, mea_obj[0].up, mea_obj[0].down));
                 Console.WriteLine(Environment.NewLine);
                 Console.WriteLine(string.Format("cpk == {0}", cpk));
+                all_cpk += "\t" + aa.ColumnName + "= " + cpk;
             }
-
-
+            string op = "\t" + get_okpara();
+            //MessageBox.Show("all_cpk" + all_cpk + "   op" + op);
+            string all_op = "all_cpk" + all_cpk + "   op" + op;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fName = saveFileDialog1.FileName;
+                //File fileOpen = new File(fName);
+                //isFileHaveName = true;
+                //richTextBox1.Text = fileOpen.ReadFile();
+                //richTextBox1.AppendText("");
+                this.DataToExcel(dt, fName, all_op);
+            }
         }
 
+        /// <summary>  
+        /// Datatable生成Excel表格并返回路径  
+        /// </summary>  
+        /// <param name="m_DataTable">Datatable</param>  
+        /// <param name="s_FileName">文件名</param>  
+        /// <returns></returns>  
+        public string DataToExcel(System.Data.DataTable m_DataTable, string s_FileName, string op)
+        {
+            //string FileName = AppDomain.CurrentDomain.BaseDirectory + s_FileName + ".xls";  //文件存放路径  
+            if (System.IO.File.Exists(s_FileName))                                //存在则删除  
+            {
+                System.IO.File.Delete(s_FileName);
+            }
+            System.IO.FileStream objFileStream;
+            System.IO.StreamWriter objStreamWriter;
+            string strLine = "";
+            objFileStream = new System.IO.FileStream(s_FileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+            objStreamWriter = new System.IO.StreamWriter(objFileStream, Encoding.Unicode);
+            for (int i = 0; i < m_DataTable.Columns.Count; i++)
+            {
+                strLine = strLine + m_DataTable.Columns[i].Caption.ToString() + Convert.ToChar(9);      //写列标题  
+            }
+            objStreamWriter.WriteLine(strLine);
+            strLine = "";
+            for (int i = 0; i < m_DataTable.Rows.Count; i++)
+            {
+                for (int j = 0; j < m_DataTable.Columns.Count; j++)
+                {
+                    if (m_DataTable.Rows[i].ItemArray[j] == null)
+                        strLine = strLine + " " + Convert.ToChar(9);                                    //写内容  
+                    else
+                    {
+                        string rowstr = "";
+                        rowstr = m_DataTable.Rows[i].ItemArray[j].ToString();
+                        if (rowstr.IndexOf("\r\n") > 0)
+                            rowstr = rowstr.Replace("\r\n", " ");
+                        if (rowstr.IndexOf("\t") > 0)
+                            rowstr = rowstr.Replace("\t", " ");
+                        strLine = strLine + rowstr + Convert.ToChar(9);
+                    }
+                }
+                objStreamWriter.WriteLine(strLine);
+                strLine = "";
+            }
+            objStreamWriter.WriteLine(op + Convert.ToChar(9));
+            objStreamWriter.Close();
+            objFileStream.Close();
+            return s_FileName;        //返回生成文件的绝对路径  
+        }
         private string get_okpara()
         {
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();

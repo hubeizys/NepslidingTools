@@ -67,6 +67,8 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.dgv = new System.Windows.Forms.DataGridView();
             this.fuche = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tlp_main.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.head_tpl.SuspendLayout();
@@ -532,6 +534,16 @@ namespace NepslidingTools.testModel
             this.fuche.Text = "复测";
             this.fuche.UseColumnTextForButtonValue = true;
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "文本文件|*.xls";
+            this.openFileDialog1.RestoreDirectory = true;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "excel文件|*.xls";
+            // 
             // QueryFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -596,5 +608,7 @@ namespace NepslidingTools.testModel
         private DevExpress.XtraGrid.Columns.GridColumn bomNo;
         private System.Windows.Forms.DataGridView dgv;
         private DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn fuche;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }

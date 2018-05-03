@@ -116,6 +116,14 @@ namespace NepslidingTools.testModel
             dtb.Columns.Add("测试编号");
             dtb.Columns.Add("测试时间");
 
+            if (ds1.Tables[0].Rows.Count <=0)
+            {
+                MessageBox.Show("请设置此零件步骤");
+                // this.Dispose(false);
+                this.Close();
+                return;
+            }
+
             for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
             {
                 string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
@@ -167,6 +175,12 @@ namespace NepslidingTools.testModel
             //DataTable dt = new DataTable();
             //ds1.Tables.Add(dt);
             measures_tables = ds11.Tables[0];
+            if (measures_tables.Rows.Count <= 0)
+            {
+                MessageBox.Show("请设置此零件步骤");
+                this.Close();
+            }
+
             for (int i = 0; i < measures_tables.Rows.Count; i++)
             {
                 txtll.Text = measures_tables.Rows[i][4].ToString();
@@ -463,12 +477,16 @@ namespace NepslidingTools.testModel
                 // 如果 当前第一行的数据不存在数据库。 就提醒应该 保存
                 int test_rowindex = 0;
                 Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
-                List<Maticsoft.Model.test> tear_mode = test_bll.GetModelList(string.Format(" measureb='{0}'", dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString()));
-                if (tear_mode.Count == 0)
+                if (dgv1.Rows.Count>0)
                 {
-                    MessageBox.Show("请保存上次测试结果，在开始下一次的测试");
-                    return;
+                    List<Maticsoft.Model.test> tear_mode = test_bll.GetModelList(string.Format(" measureb='{0}'", dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString()));
+                    if (tear_mode.Count == 0)
+                    {
+                        MessageBox.Show("请保存上次测试结果，在开始下一次的测试");
+                        return;
+                    }
                 }
+
                 need_change_rows = dt.NewRow();
                 // dt.Rows.Add(need_change_rows);
                 dt.Rows.InsertAt(need_change_rows ,0);
@@ -503,6 +521,7 @@ namespace NepslidingTools.testModel
             {
                 string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                 string dnum = num.ToString();
+                dnum = "p" + dnum;
                 dgv1.Rows[test_row].Cells["测试编号"].Value = dnum;
                 dgv1.Rows[test_row].Cells["测试时间"].Value = DateTime.Now.ToString();
             }
@@ -513,8 +532,7 @@ namespace NepslidingTools.testModel
             string fz = dt.Rows[test_row][CL - 2].ToString();
             if (fz != "")
             {
-                
-
+               
                 int t = dt.Columns.Count - 3;
                 for (int a = 0; a < t; a++)
                 {
@@ -973,6 +991,10 @@ namespace NepslidingTools.testModel
             string device_type = measures_tables.Rows[index]["devicetype"].ToString();
             init_portbytype(Convert.ToInt32(device_type));
             init_photobytype(Convert.ToInt32(device_type));
+            if (ports_list.Count <= 0)
+            {
+                return;
+            }
             lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
             this.InitTestData();
             create_serpoint();

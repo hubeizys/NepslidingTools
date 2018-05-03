@@ -61,10 +61,6 @@
             this.textBox_query = new System.Windows.Forms.TextBox();
             this.label_lj = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.button_next = new System.Windows.Forms.Button();
-            this.button_pre = new System.Windows.Forms.Button();
-            this.label_tot = new System.Windows.Forms.Label();
             this.componentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -74,6 +70,12 @@
             this.sm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.photo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.remark = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.button_next = new System.Windows.Forms.Button();
+            this.button_pre = new System.Windows.Forms.Button();
+            this.label_tot = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.tabControl_main.SuspendLayout();
             this.tabPage_lj.SuspendLayout();
             this.tableLayoutPanel_ljjl.SuspendLayout();
@@ -354,6 +356,7 @@
             this.button2.TabIndex = 7;
             this.button2.Text = "从外部导入";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -363,6 +366,7 @@
             this.button1.TabIndex = 6;
             this.button1.Text = "导出选中行";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button_query
             // 
@@ -433,46 +437,6 @@
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.button_next);
-            this.panel2.Controls.Add(this.button_pre);
-            this.panel2.Controls.Add(this.label_tot);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 492);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(949, 34);
-            this.panel2.TabIndex = 2;
-            // 
-            // button_next
-            // 
-            this.button_next.Location = new System.Drawing.Point(183, 6);
-            this.button_next.Name = "button_next";
-            this.button_next.Size = new System.Drawing.Size(75, 23);
-            this.button_next.TabIndex = 2;
-            this.button_next.Text = "下一页";
-            this.button_next.UseVisualStyleBackColor = true;
-            this.button_next.Click += new System.EventHandler(this.button_next_Click);
-            // 
-            // button_pre
-            // 
-            this.button_pre.Location = new System.Drawing.Point(19, 6);
-            this.button_pre.Name = "button_pre";
-            this.button_pre.Size = new System.Drawing.Size(75, 23);
-            this.button_pre.TabIndex = 1;
-            this.button_pre.Text = "上一页";
-            this.button_pre.UseVisualStyleBackColor = true;
-            this.button_pre.Click += new System.EventHandler(this.button_pre_Click);
-            // 
-            // label_tot
-            // 
-            this.label_tot.AutoSize = true;
-            this.label_tot.Location = new System.Drawing.Point(118, 11);
-            this.label_tot.Name = "label_tot";
-            this.label_tot.Size = new System.Drawing.Size(29, 12);
-            this.label_tot.TabIndex = 0;
-            this.label_tot.Text = "0/10";
-            // 
             // componentId
             // 
             this.componentId.DataPropertyName = "componentId";
@@ -527,6 +491,56 @@
             this.remark.HeaderText = "标准管理";
             this.remark.Name = "remark";
             this.remark.Text = "管理";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.button_next);
+            this.panel2.Controls.Add(this.button_pre);
+            this.panel2.Controls.Add(this.label_tot);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(3, 492);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(949, 34);
+            this.panel2.TabIndex = 2;
+            // 
+            // button_next
+            // 
+            this.button_next.Location = new System.Drawing.Point(183, 6);
+            this.button_next.Name = "button_next";
+            this.button_next.Size = new System.Drawing.Size(75, 23);
+            this.button_next.TabIndex = 2;
+            this.button_next.Text = "下一页";
+            this.button_next.UseVisualStyleBackColor = true;
+            this.button_next.Click += new System.EventHandler(this.button_next_Click);
+            // 
+            // button_pre
+            // 
+            this.button_pre.Location = new System.Drawing.Point(19, 6);
+            this.button_pre.Name = "button_pre";
+            this.button_pre.Size = new System.Drawing.Size(75, 23);
+            this.button_pre.TabIndex = 1;
+            this.button_pre.Text = "上一页";
+            this.button_pre.UseVisualStyleBackColor = true;
+            this.button_pre.Click += new System.EventHandler(this.button_pre_Click);
+            // 
+            // label_tot
+            // 
+            this.label_tot.AutoSize = true;
+            this.label_tot.Location = new System.Drawing.Point(118, 11);
+            this.label_tot.Name = "label_tot";
+            this.label_tot.Size = new System.Drawing.Size(29, 12);
+            this.label_tot.TabIndex = 0;
+            this.label_tot.Text = "0/10";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "excel文件|*.xls";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "excel文件|*.xls";
+            this.openFileDialog1.RestoreDirectory = true;
             // 
             // BomFrom2
             // 
@@ -604,5 +618,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn sm;
         private System.Windows.Forms.DataGridViewTextBoxColumn photo;
         private System.Windows.Forms.DataGridViewButtonColumn remark;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

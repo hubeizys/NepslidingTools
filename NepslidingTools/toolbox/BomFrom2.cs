@@ -1,9 +1,13 @@
 ﻿using NepslidingTools.testModel;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -274,6 +278,286 @@ namespace NepslidingTools.toolbox
         {
             addparts add_from = new addparts();
             add_from.Show();
+        }
+        /// <summary>
+        /// 将excel中的数据导入到DataTable中
+        /// </summary>
+        /// <param name="sheetName">excel工作薄sheet的名称</param>
+        /// <param name="isFirstRowColumn">第一行是否是DataTable的列名</param>
+        /// <returns>返回的DataTable</returns>
+        public DataTable ExcelToDataTable(string fileName, string sheetName, bool isFirstRowColumn)
+        {
+            ISheet sheet = null;
+            DataTable data = new DataTable();
+            int startRow = 0;
+            try
+            {
+                IWorkbook workbook;
+                var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+                //if (fileName.IndexOf(".xlsx") > 0) // 2007版本
+                //    workbook = new XSSFWorkbook(fs);
+                ////else if (fileName.IndexOf(".xls") > 0) // 2003版本
+                //else
+                //    workbook = new HSSFWorkbook(fs);
+                workbook = new HSSFWorkbook(fs);
+                if (sheetName != null)
+                {
+                    sheet = workbook.GetSheet(sheetName);
+                    if (sheet == null) //如果没有找到指定的sheetName对应的sheet，则尝试获取第一个sheet
+                    {
+                        sheet = workbook.GetSheetAt(0);
+                    }
+                }
+                else
+                {
+                    sheet = workbook.GetSheetAt(0);
+                }
+                if (sheet != null)
+                {
+                    IRow firstRow = sheet.GetRow(0);
+                    int cellCount = firstRow.LastCellNum; //一行最后一个cell的编号 即总的列数
+
+                    if (isFirstRowColumn)
+                    {
+                        for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
+                        {
+                            ICell cell = firstRow.GetCell(i);
+                            if (cell != null)
+                            {
+                                string cellValue = cell.StringCellValue;
+                                if (cellValue != null)
+                                {
+                                    DataColumn column = new DataColumn(cellValue);
+                                    data.Columns.Add(column);
+                                }
+                            }
+                        }
+                        startRow = sheet.FirstRowNum + 1;
+                    }
+                    else
+                    {
+                        startRow = sheet.FirstRowNum;
+                    }
+
+                    //最后一列的标号
+                    int rowCount = sheet.LastRowNum;
+                    for (int i = startRow; i <= rowCount; ++i)
+                    {
+                        IRow row = sheet.GetRow(i);
+                        if (row == null) continue; //没有数据的行默认是null　　　　　　　
+
+                        DataRow dataRow = data.NewRow();
+                        for (int j = row.FirstCellNum; j < cellCount; ++j)
+                        {
+                            if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null
+                                dataRow[j] = row.GetCell(j).ToString();
+                        }
+                        data.Rows.Add(dataRow);
+                    }
+                }
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message);
+                return null;
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string componentId = dataGridView1.CurrentRow.Cells["componentId"].Value.ToString();
+            Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
+            DataSet ds= comp_bll.GetList(string.Format( " componentId = '{0}'", componentId));
+            DataTable dt = ds.Tables[0];
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string fName = saveFileDialog1.FileName;
+                //this.DataToExcel(dt, fName);
+                Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+                DataSet ds2 = mea_bll.GetList(string.Format(" componentId = '{0}'", componentId));
+                DataTable dt2 = ds2.Tables[0];
+
+                for (int i = 0; i < dt2.Rows.Count; i++)
+                {
+                    for (int j = 0; j < dt2.Columns.Count; j++)
+                    {
+                        Console.WriteLine(dt2.Rows[i][j].ToString());
+                    }
+                }
+                this.TableToExcelForXLSX2003(dt, dt2, fName, "s1");
+                // this.TableToExcelForXLSX2003(dt2, fName, "s2");
+                //string file_name = Path.GetFileNameWithoutExtension(fName) + "详情"+ Path.GetExtension(fName);
+                //file_name = Path.GetDirectoryName(fName)+ "\\" + file_name;
+                //this.DataToExcel(dt2, file_name);
+                //this.TableToExcelForXLSX2003(dt2, file_name, "s2");
+            }
+        }
+        /// <summary>  
+        /// Datatable生成Excel表格并返回路径  
+        /// </summary>  
+        /// <param name="m_DataTable">Datatable</param>  
+        /// <param name="s_FileName">文件名</param>  
+        /// <returns></returns>  
+        public string DataToExcel(System.Data.DataTable m_DataTable, string s_FileName)
+        {
+            //string FileName = AppDomain.CurrentDomain.BaseDirectory + s_FileName + ".xls";  //文件存放路径  
+            if (System.IO.File.Exists(s_FileName))                                //存在则删除  
+            {
+                System.IO.File.Delete(s_FileName);
+            }
+            System.IO.FileStream objFileStream;
+            System.IO.StreamWriter objStreamWriter;
+            string strLine = "";
+            objFileStream = new System.IO.FileStream(s_FileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.Write);
+            objStreamWriter = new System.IO.StreamWriter(objFileStream, Encoding.Unicode);
+            for (int i = 0; i < m_DataTable.Columns.Count; i++)
+            {
+                strLine = strLine + m_DataTable.Columns[i].Caption.ToString() + Convert.ToChar(9);      //写列标题  
+            }
+            objStreamWriter.WriteLine(strLine);
+            strLine = "";
+            for (int i = 0; i < m_DataTable.Rows.Count; i++)
+            {
+                for (int j = 0; j < m_DataTable.Columns.Count; j++)
+                {
+                    if (m_DataTable.Rows[i].ItemArray[j] == null)
+                        strLine = strLine + " " + Convert.ToChar(9);                                    //写内容  
+                    else
+                    {
+                        string rowstr = "";
+                        rowstr = m_DataTable.Rows[i].ItemArray[j].ToString();
+                        if (rowstr.IndexOf("\r\n") > 0)
+                            rowstr = rowstr.Replace("\r\n", " ");
+                        if (rowstr.IndexOf("\t") > 0)
+                            rowstr = rowstr.Replace("\t", " ");
+                        strLine = strLine + rowstr + Convert.ToChar(9);
+                    }
+                }
+                objStreamWriter.WriteLine(strLine);
+                strLine = "";
+            }
+            objStreamWriter.Close();
+            objFileStream.Close();
+            return s_FileName;        //返回生成文件的绝对路径  
+        }
+
+        /// <summary>
+        /// DataTable导出Excel2003（.xls）
+        /// </summary>
+        /// <param name="dt">DataTable</param>
+        /// <param name="file">文件路径（.xls）</param>
+        /// <param name="sheetname">Excel工作表名</param>
+        public void TableToExcelForXLSX2003(DataTable dt, DataTable dt2, string file, string sheetname)
+        {
+            HSSFWorkbook xssfworkbook = new HSSFWorkbook();//建立Excel2003对象
+            HSSFSheet sheet = (HSSFSheet)xssfworkbook.CreateSheet(sheetname);//新建一个名称为sheetname的工作簿
+            //设置列名
+            HSSFRow row = (HSSFRow)sheet.CreateRow(0);
+            for (int i = 0; i < dt.Columns.Count; i++)
+            {
+                ICell cell = (ICell)row.CreateCell(i);
+                cell.SetCellValue(dt.Columns[i].ColumnName);
+            }
+            //单元格赋值
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                IRow row1 = sheet.CreateRow(i + 1);
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    ICell cell = row1.CreateCell(j);
+                    cell.SetCellValue(dt.Rows[i][j].ToString());
+                }
+            }
+
+            HSSFSheet sheet2 = (HSSFSheet)xssfworkbook.CreateSheet("s2");//新建一个名称为sheetname的工作簿
+
+            //设置列名
+            HSSFRow row2 = (HSSFRow)sheet2.CreateRow(0);
+            for (int i = 0; i < dt2.Columns.Count; i++)
+            {
+                ICell cell = (ICell)row2.CreateCell(i);
+                cell.SetCellValue(dt2.Columns[i].ColumnName);
+            }
+            //单元格赋值
+            for (int i = 0; i < dt2.Rows.Count; i++)
+            {
+                IRow row1 = sheet2.CreateRow(i + 1);
+                for (int j = 0; j < dt2.Columns.Count; j++)
+                {
+                    ICell cell = row1.CreateCell(j);
+                    cell.SetCellValue(dt2.Rows[i][j].ToString());
+                }
+            }
+
+            using (System.IO.Stream stream = File.OpenWrite(file))
+            {
+                xssfworkbook.Write(stream);
+                stream.Close();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                DataTable dt = ExcelToDataTable(openFileDialog1.FileName, "s1", true);
+                //for (int i = 0; i < dt.Rows.Count; i++)
+                //{
+                //    for (int j = 0; j < dt.Columns.Count; j++)
+                //    {
+                //        Console.WriteLine(dt.Rows[i][j].ToString());
+                //    }
+                //}
+                Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
+                
+                for (int i=0; i<dt.Rows.Count;i++)
+                {
+                    if (! comp_bll.Exists(Convert.ToInt32(dt.Rows[i]["componentId"])))
+                    {
+                        Maticsoft.Model.component comp_mode = new Maticsoft.Model.component()
+                        {
+                            componentId = Convert.ToInt32(dt.Rows[i]["componentId"]),
+                            ARef = Convert.ToString(dt.Rows[i]["ARef"]),
+                            jobnum = Convert.ToString(dt.Rows[i]["jobnum"]),
+                            name = Convert.ToString(dt.Rows[i]["name"]),
+                            size = Convert.ToString(dt.Rows[i]["size"]),
+                            photo = Convert.ToString(dt.Rows[i]["photo"]),
+                            sm = Convert.ToString(dt.Rows[i]["sm"]),
+                            remark = Convert.ToString(dt.Rows[i]["remark"])
+                        };
+                        comp_bll.Add(comp_mode);
+                    }
+                }
+
+                DataTable dt2 = ExcelToDataTable(openFileDialog1.FileName, "s2", true);
+                Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+                for (int i = 0; i < dt2.Rows.Count; i++)
+                {
+                    if (!mea_bll.Exists(Convert.ToInt32(dt2.Rows[i]["id"])))
+                    {
+                        Maticsoft.Model.measures mea_obj = new Maticsoft.Model.measures()
+                        {
+                            id = Convert.ToInt32(dt2.Rows[i]["id"]),
+                            componentId = Convert.ToInt32(dt2.Rows[i]["componentId"]),
+                            standardv = Convert.ToString(dt2.Rows[i]["standardv"]),
+                            step = Convert.ToInt32(dt2.Rows[i]["step"]),
+                            down = Convert.ToString(dt2.Rows[i]["down"]),
+                            up = Convert.ToString(dt2.Rows[i]["up"]),
+                            devicetype = Convert.ToInt32(dt2.Rows[i]["devicetype"]),
+                            position = Convert.ToString(dt2.Rows[i]["position"]),
+                            Tools = Convert.ToString(dt2.Rows[i]["Tools"]),
+                            CC = Convert.ToString(dt2.Rows[i]["CC"]),
+                        };
+                        mea_bll.Add(mea_obj);
+                    }
+                }
+            }
+
         }
     }
 }
