@@ -109,6 +109,8 @@
             this.Controls.Add(this.textBox_lxm);
             this.Controls.Add(this.textBox_ljh);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "addparts";
             this.Text = "addparts";
             this.Load += new System.EventHandler(this.addparts_Load);

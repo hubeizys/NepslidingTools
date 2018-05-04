@@ -27,6 +27,12 @@ namespace NepslidingTools.toolbox
                 this.comboBox1.Items.AddRange(com_strlist.ToArray());
             }
         }
+        public void setenableSetValue(string ljh, string code)
+        {
+            this.textBox_ljh.Text = ljh;
+            this.textBox_lxm.Text = code;
+            this.textBox_ljh.Enabled = false;
+        } 
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -51,23 +57,43 @@ namespace NepslidingTools.toolbox
                 }
 
                 Maticsoft.BLL.parts part_bll = new Maticsoft.BLL.parts();
-                Maticsoft.Model.parts parts_mode = new Maticsoft.Model.parts()
+                List<Maticsoft.Model.parts> parts_list = part_bll.GetModelList( string.Format( " PN = '{0}'", textBox_ljh.Text));
+                if (parts_list.Count > 0)
                 {
-                    Barcode = textBox_lxm.Text,
-                    PN = textBox_ljh.Text,
-                    remark = "管理号",
-                    componentId = this.comp_list[comboBox1.SelectedIndex].componentId,
-                };
-
-
-                if (part_bll.Add(parts_mode))
-                {
-                    MessageBox.Show("添加成功");
+                    Maticsoft.Model.parts parts_exmode = parts_list[0];
+                    parts_exmode.Barcode = textBox_lxm.Text;
+                    parts_exmode.PN = textBox_ljh.Text;
+                    parts_exmode.remark = "管理号";
+                    parts_exmode.componentId = this.comp_list[comboBox1.SelectedIndex].componentId;
+                    if (part_bll.Update(parts_exmode))
+                    {
+                        MessageBox.Show("更新成功");
+                    }
+                    else {
+                        MessageBox.Show("更新失败");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("添加失败");
+                    Maticsoft.Model.parts parts_mode = new Maticsoft.Model.parts()
+                    {
+                        Barcode = textBox_lxm.Text,
+                        PN = textBox_ljh.Text,
+                        remark = "管理号",
+                        componentId = this.comp_list[comboBox1.SelectedIndex].componentId,
+                    };
+
+
+                    if (part_bll.Add(parts_mode))
+                    {
+                        MessageBox.Show("添加成功");
+                    }
+                    else
+                    {
+                        MessageBox.Show("添加失败");
+                    }
                 }
+               
             }
             catch (Exception err)
             {

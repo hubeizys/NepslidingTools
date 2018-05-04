@@ -413,6 +413,7 @@ namespace NepslidingTools.testModel
             this.comboBox_devs.Name = "comboBox_devs";
             this.comboBox_devs.Size = new System.Drawing.Size(158, 21);
             this.comboBox_devs.TabIndex = 32;
+            this.comboBox_devs.SelectedIndexChanged += new System.EventHandler(this.comboBox_devs_SelectedIndexChanged);
             // 
             // mdf_bt
             // 
@@ -532,6 +533,8 @@ namespace NepslidingTools.testModel
             this.Controls.Add(this.bom_no_lab);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "TestBZFrom";
             this.Text = "²âÁ¿±ê×¼";
             this.Deactivate += new System.EventHandler(this.TestBZFrom_Deactivate);

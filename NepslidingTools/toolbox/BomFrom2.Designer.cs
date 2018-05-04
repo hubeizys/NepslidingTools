@@ -97,7 +97,7 @@
             this.tabControl_main.Location = new System.Drawing.Point(0, 0);
             this.tabControl_main.Name = "tabControl_main";
             this.tabControl_main.SelectedIndex = 0;
-            this.tabControl_main.Size = new System.Drawing.Size(969, 561);
+            this.tabControl_main.Size = new System.Drawing.Size(966, 561);
             this.tabControl_main.TabIndex = 0;
             this.tabControl_main.SelectedIndexChanged += new System.EventHandler(this.tabControl_main_SelectedIndexChanged);
             // 
@@ -107,7 +107,7 @@
             this.tabPage_lj.Location = new System.Drawing.Point(4, 22);
             this.tabPage_lj.Name = "tabPage_lj";
             this.tabPage_lj.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_lj.Size = new System.Drawing.Size(961, 535);
+            this.tabPage_lj.Size = new System.Drawing.Size(958, 535);
             this.tabPage_lj.TabIndex = 0;
             this.tabPage_lj.Text = "零件记录";
             this.tabPage_lj.UseVisualStyleBackColor = true;
@@ -126,7 +126,7 @@
             this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_ljjl.Size = new System.Drawing.Size(955, 529);
+            this.tableLayoutPanel_ljjl.Size = new System.Drawing.Size(952, 529);
             this.tableLayoutPanel_ljjl.TabIndex = 0;
             // 
             // dgvljjl
@@ -145,7 +145,7 @@
             this.dgvljjl.Location = new System.Drawing.Point(3, 43);
             this.dgvljjl.Name = "dgvljjl";
             this.dgvljjl.RowTemplate.Height = 23;
-            this.dgvljjl.Size = new System.Drawing.Size(949, 453);
+            this.dgvljjl.Size = new System.Drawing.Size(946, 453);
             this.dgvljjl.TabIndex = 0;
             this.dgvljjl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvljjl_CellClick);
             // 
@@ -196,7 +196,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(3, 502);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(949, 24);
+            this.panel3.Size = new System.Drawing.Size(946, 24);
             this.panel3.TabIndex = 1;
             // 
             // buttonjl_next
@@ -240,7 +240,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(3, 3);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(949, 34);
+            this.panel4.Size = new System.Drawing.Size(946, 34);
             this.panel4.TabIndex = 2;
             // 
             // buttolj_add
@@ -311,7 +311,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(961, 535);
+            this.tabPage2.Size = new System.Drawing.Size(958, 535);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "零件配置";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -330,7 +330,7 @@
             this.tableLayoutPanel_configmain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel_configmain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel_configmain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel_configmain.Size = new System.Drawing.Size(955, 529);
+            this.tableLayoutPanel_configmain.Size = new System.Drawing.Size(952, 529);
             this.tableLayoutPanel_configmain.TabIndex = 0;
             // 
             // panel1
@@ -345,7 +345,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(949, 34);
+            this.panel1.Size = new System.Drawing.Size(946, 34);
             this.panel1.TabIndex = 0;
             // 
             // button2
@@ -433,7 +433,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(3, 43);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(949, 443);
+            this.dataGridView1.Size = new System.Drawing.Size(946, 443);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -500,7 +500,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 492);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(949, 34);
+            this.panel2.Size = new System.Drawing.Size(946, 34);
             this.panel2.TabIndex = 2;
             // 
             // button_next
@@ -546,8 +546,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 561);
+            this.ClientSize = new System.Drawing.Size(966, 561);
             this.Controls.Add(this.tabControl_main);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "BomFrom2";
             this.Text = "零件管理";
             this.Load += new System.EventHandler(this.BomFrom2_Load);

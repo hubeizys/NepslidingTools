@@ -82,6 +82,7 @@ namespace NepslidingTools.testModel
                 string sg = dgv.Rows[i].Cells["up"].Value.ToString();
                 string xg = dgv.Rows[i].Cells["down"].Value.ToString();
                 string cun = dgv.Rows[i].Cells["CC"].Value.ToString();
+                int componentid = Convert.ToInt32( dgv.Rows[i].Cells["componentid"].Value);
                 int XH = Convert.ToInt32(dgv.Rows[i].Cells["id"].Value);
                 int st = Convert.ToInt32(dgv.Rows[i].Cells["step"].Value);
                 int device_type = Convert.ToInt32( dgv.Rows[i].Cells["devicetype"].Value == null ? "0" : dgv.Rows[i].Cells["devicetype"].Value);
@@ -95,7 +96,7 @@ namespace NepslidingTools.testModel
                     standardv = bz,
                     up = sg,
                     down = xg,
-                    componentId = 1,
+                    componentId = componentid,
                     CC = cun,
                     devicetype = device_type,
                 };
@@ -481,6 +482,11 @@ namespace NepslidingTools.testModel
             sandsm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["up"].Value.ToString();
             tm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["down"].Value.ToString();
             cicun_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["CC"].Value.ToString();
+        }
+
+        private void comboBox_devs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -87,9 +87,7 @@ namespace NepslidingTools.testModel
             //MessageBox.Show(ports_list.Count.ToString());
             if (ports_list.Count <= 0)
             {
-                MessageBox.Show("没有任何可用的测量设备");
-                this.Close();
-                return;
+                // MessageBox.Show("没有任何可用的测量设备");
             }
             // 对当前串口的展示， 以及默认的串口
             //lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
@@ -156,7 +154,8 @@ namespace NepslidingTools.testModel
                 {
                     sp_num++;
                     string col_name = string.Format("步骤{0}", sp_num);
-                    dr[col_name] = j;
+                    if( dtb.Columns.Contains(col_name))
+                    { dr[col_name] = j; }
                 }
                 dtb.Rows.InsertAt(dr, 0);
             }

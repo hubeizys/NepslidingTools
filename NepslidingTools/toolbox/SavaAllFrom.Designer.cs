@@ -34,8 +34,8 @@ namespace NepslidingTools.toolbox
             this.backup_tim = new DevComponents.DotNetBar.Controls.DataGridViewDateTimeInputColumn();
             this.remake = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.save_sql_bt = new DevComponents.DotNetBar.ButtonX();
             this.button1 = new System.Windows.Forms.Button();
+            this.save_sql_bt = new DevComponents.DotNetBar.ButtonX();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -83,6 +83,7 @@ namespace NepslidingTools.toolbox
             // 
             this.backup_name.HeaderText = "备份文件";
             this.backup_name.Name = "backup_name";
+            this.backup_name.ReadOnly = true;
             // 
             // backup_tim
             // 
@@ -121,6 +122,7 @@ namespace NepslidingTools.toolbox
             // 
             this.remake.HeaderText = "注释";
             this.remake.Name = "remake";
+            this.remake.ReadOnly = true;
             // 
             // panel1
             // 
@@ -132,6 +134,17 @@ namespace NepslidingTools.toolbox
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(453, 94);
             this.panel1.TabIndex = 1;
+            // 
+            // button1
+            // 
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(169, 39);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(148, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "导入选中行";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // save_sql_bt
             // 
@@ -145,16 +158,6 @@ namespace NepslidingTools.toolbox
             this.save_sql_bt.Text = "保存当前数据";
             this.save_sql_bt.Click += new System.EventHandler(this.save_sql_bt_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(169, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(148, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "导入选中行";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // SavaAllFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -163,6 +166,8 @@ namespace NepslidingTools.toolbox
             this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "SavaAllFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "持久化";

@@ -133,6 +133,17 @@ namespace NepslidingTools.toolbox
             this.tabControl_main.SelectedIndex = 1;
             if (e.RowIndex >= 0 && e.RowIndex < dgvljjl.Rows.Count)
             {
+                // MessageBox.Show(dgvljjl.Columns.Count.ToString() + " "+ e.ColumnIndex);
+                if (e.ColumnIndex == 5)
+                {
+                    addparts addp = new addparts();
+                    string ljh = dgvljjl.Rows[e.RowIndex].Cells["PN"].Value.ToString();
+                    string Barcode = dgvljjl.Rows[e.RowIndex].Cells["Barcode"].Value.ToString();
+                    addp.setenableSetValue(ljh, Barcode);
+                    addp.ShowDialog();
+                    return;
+                    MessageBox.Show("设置位置");
+                }
                 string id = dgvljjl.Rows[e.RowIndex].Cells["component"].Value.ToString();
                 this.textBox_query.Text = id;
                 string where_str = "";
@@ -256,7 +267,7 @@ namespace NepslidingTools.toolbox
             int index = this.dataGridView1.CurrentCell.RowIndex;
             if (index >= 0 && index < this.dgvljjl.Rows.Count)
             {
-                var id = this.dataGridView1.Rows[index].Cells["id"].Value;
+                var id = this.dataGridView1.Rows[index].Cells["componentId"].Value;
                 Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
                 if (comp_bll.Delete(Convert.ToInt32(id)))
                 {
