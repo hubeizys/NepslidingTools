@@ -536,6 +536,7 @@ namespace NepslidingTools.testModel
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "TestBZFrom";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "²âÁ¿±ê×¼";
             this.Deactivate += new System.EventHandler(this.TestBZFrom_Deactivate);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TestBZFrom_FormClosed);

@@ -11,7 +11,7 @@ using System.IO.Ports;
 namespace NepslidingTools.testModel
 {
 
-    public partial class Devsimport : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class Devsimport : Form
     {
         private SerPort sp_obj = new SerPort();
         private string device_type = "ruler";

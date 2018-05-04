@@ -33,12 +33,12 @@ namespace NepslidingTools.toolbox
         {
             if (tabControl_main.SelectedIndex == 0)
             {
-                this.init_ljjldgv();
+                // MessageBox.Show("导入零件类型数据");
+                this.init_dgv();
             }
             else if (tabControl_main.SelectedIndex == 1)
             {
-                // MessageBox.Show("导入零件类型数据");
-                this.init_dgv();
+                this.init_ljjldgv();
             }
         }
 
@@ -167,8 +167,11 @@ namespace NepslidingTools.toolbox
             TestBZFrom tb = new TestBZFrom();
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
             {
-                tb.LjHao = dataGridView1.Rows[e.RowIndex].Cells["componentId"].Value.ToString();
-                tb.Show();
+                if (e.ColumnIndex == 3)
+                {
+                    tb.LjHao = dataGridView1.Rows[e.RowIndex].Cells["componentId"].Value.ToString();
+                    tb.Show();
+                }
             }
             else
             {
@@ -569,6 +572,41 @@ namespace NepslidingTools.toolbox
                 }
             }
 
+        }
+
+        private void bt_update_Click(object sender, EventArgs e)
+        {
+            DataGridViewRow dgr = dataGridView1.CurrentRow;
+            if (dgr != null)
+            {
+                Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
+                Maticsoft.Model.component comp_mode = new Maticsoft.Model.component
+                {
+                    ARef = dgr.Cells["ARef"].Value.ToString(),
+                    componentId = Convert.ToInt32(dgr.Cells["componentId"].Value),
+                    jobnum = dgr.Cells["jobnum"].Value.ToString(),
+                    size = dgr.Cells["size"].Value.ToString(),
+                    name = dgr.Cells["name"].Value.ToString(),
+                    photo = dgr.Cells["photo"].Value.ToString(),
+                    remark = dgr.Cells["remark"].Value.ToString(),
+                    sm = dgr.Cells["sm"].Value.ToString(),
+                };
+                if (comp_bll.Update(comp_mode))
+                {
+                    MessageBox.Show("更新成功");
+                }
+                else
+                {
+                    MessageBox.Show("更新失败");
+                }
+            }
+           
+        }
+
+        private void bt_updata2_Click(object sender, EventArgs e)
+        {
+            //DataGridViewRow dgr = dgvljjl.CurrentRow;
+            //Maticsoft.BLL.
         }
     }
 }

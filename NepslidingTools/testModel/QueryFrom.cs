@@ -437,6 +437,23 @@ namespace NepslidingTools.testModel
             return where_str;
             #endregion
         }
+        private void SetColor()
+        {
+            foreach (DataGridViewRow row in this.dgv.Rows)
+            {
+                this.dgv.BeginInvoke(new Action(()=> {
+                    foreach (DataGridViewColumn dgc in dgv.Columns)
+                    {
+                        string glo_str = row.Cells[dgc.Name].Value.ToString();
+                        int index = glo_str.IndexOf("Æ«²î");
+                        if (index != -1 )
+                        {
+                            row.Cells[dgc.Name].Style.BackColor = Color.Red;
+                        }
+                    }
+                }));
+            }
+        }
 
         private void reQuery()
         {
@@ -544,6 +561,7 @@ namespace NepslidingTools.testModel
                             else
                             {
                                 dest_table.Rows[i][sg] = "Æ«²î" + (test_info - stand_info).ToString();
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Red;
                             }
                         }
                     }

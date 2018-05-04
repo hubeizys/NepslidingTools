@@ -28,7 +28,7 @@ namespace NepslidingTools.toolbox
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
+            DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             this.main_tlp = new System.Windows.Forms.TableLayoutPanel();
             this.search_gb = new System.Windows.Forms.GroupBox();
             this.head_tlp = new System.Windows.Forms.TableLayoutPanel();
@@ -318,9 +318,9 @@ namespace NepslidingTools.toolbox
             this.users_gc.EmbeddedNavigator.Appearance.ForeColor = System.Drawing.Color.Black;
             this.users_gc.EmbeddedNavigator.Appearance.Options.UseBackColor = true;
             this.users_gc.EmbeddedNavigator.Appearance.Options.UseForeColor = true;
-            gridLevelNode2.RelationName = "Level1";
+            gridLevelNode1.RelationName = "Level1";
             this.users_gc.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
-            gridLevelNode2});
+            gridLevelNode1});
             this.users_gc.Location = new System.Drawing.Point(3, 183);
             this.users_gc.MainView = this.manuser;
             this.users_gc.Name = "users_gc";

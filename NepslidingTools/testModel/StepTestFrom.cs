@@ -990,13 +990,14 @@ namespace NepslidingTools.testModel
             string device_type = measures_tables.Rows[index]["devicetype"].ToString();
             init_portbytype(Convert.ToInt32(device_type));
             init_photobytype(Convert.ToInt32(device_type));
+
+            this.InitTestData();
+            create_serpoint();
             if (ports_list.Count <= 0)
             {
                 return;
             }
             lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
-            this.InitTestData();
-            create_serpoint();
             /*
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
             string st = string.Format("PN = '{0}'", lble.Text);

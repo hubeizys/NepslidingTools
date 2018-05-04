@@ -168,6 +168,7 @@
             this.Controls.Add(this.textBox_name);
             this.Controls.Add(this.lab_name);
             this.Name = "AddComponent";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddComponent";
             this.ResumeLayout(false);
             this.PerformLayout();

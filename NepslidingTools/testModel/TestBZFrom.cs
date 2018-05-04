@@ -11,7 +11,7 @@ using DevComponents.DotNetBar.Controls;
 
 namespace NepslidingTools.testModel
 {
-    public partial class TestBZFrom : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class TestBZFrom : Form
     {
         string name = "TestBZFrom";
         List<Maticsoft.Model.testdevice> td_lists;

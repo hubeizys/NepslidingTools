@@ -10,7 +10,7 @@ using DevComponents.DotNetBar;
 
 namespace NepslidingTools.testModel
 {
-    public partial class DevSt : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class DevSt : Form
     {
         string name = "DevSt";
         public DevSt()

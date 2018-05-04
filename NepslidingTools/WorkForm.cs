@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Forms;
 
 namespace NepslidingTools
 {
-    public partial class WorkForm : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class WorkForm : Form
     {
         public  int comp_type = 0;
         public string comp_name = "";
@@ -25,7 +26,7 @@ namespace NepslidingTools
             }
             else
             {
-                MessageBox.Show("未知零件类型");
+                System.Windows.Forms.MessageBox.Show("未知零件类型");
                 this.Close();
             }
             #endregion
@@ -37,7 +38,7 @@ namespace NepslidingTools
             {
                 this.comp_name = comp_mode.name;
             }
-            MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
+            System.Windows.Forms.MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
             #endregion
         }
     }

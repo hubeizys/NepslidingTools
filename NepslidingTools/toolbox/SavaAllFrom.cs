@@ -12,7 +12,7 @@ using DevComponents.DotNetBar;
 
 namespace NepslidingTools.toolbox
 {
-    public partial class SavaAllFrom : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class SavaAllFrom : Form
     {
 
         private int index = 0;

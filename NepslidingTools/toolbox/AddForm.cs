@@ -10,7 +10,7 @@ using Maticsoft.Model;
 
 namespace NepslidingTools.toolbox
 {
-    public partial class AddForm : DevComponents.DotNetBar.Metro.MetroForm
+    public partial class AddForm : Form
     {
         string name = "AddForm";
         public AddForm()
