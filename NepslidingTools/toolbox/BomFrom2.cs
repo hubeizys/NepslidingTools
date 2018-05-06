@@ -163,6 +163,7 @@ namespace NepslidingTools.toolbox
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            // MessageBox.Show(e.ColumnIndex.ToString());
             // componentId
             TestBZFrom tb = new TestBZFrom();
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
@@ -172,6 +173,13 @@ namespace NepslidingTools.toolbox
                     tb.LjHao = dataGridView1.Rows[e.RowIndex].Cells["componentId"].Value.ToString();
                     tb.Show();
                 }
+
+                // 数模处理
+                if (e.ColumnIndex == 7)
+                {
+
+                }
+
             }
             else
             {

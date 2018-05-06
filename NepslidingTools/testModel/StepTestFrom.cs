@@ -57,8 +57,6 @@ namespace NepslidingTools.testModel
                 else { textcl.Text = a; }
 
             }));
-
-
             //Console.WriteLine("我将要执行aaa计划");
         }
 

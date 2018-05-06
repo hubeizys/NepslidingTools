@@ -488,5 +488,13 @@ namespace NepslidingTools.testModel
         {
 
         }
+
+        private void panel1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (ofg_cad.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
     }
 }

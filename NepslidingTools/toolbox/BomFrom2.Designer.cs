@@ -29,24 +29,10 @@
         private void InitializeComponent()
         {
             this.tabControl_main = new System.Windows.Forms.TabControl();
-            this.tabPage_lj = new System.Windows.Forms.TabPage();
-            this.tableLayoutPanel_ljjl = new System.Windows.Forms.TableLayoutPanel();
-            this.dgvljjl = new System.Windows.Forms.DataGridView();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.buttonjl_next = new System.Windows.Forms.Button();
-            this.buttonjl_pre = new System.Windows.Forms.Button();
-            this.label_baifen1 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.buttolj_add = new System.Windows.Forms.Button();
-            this.buttonlj_del = new System.Windows.Forms.Button();
-            this.button_likequery = new System.Windows.Forms.Button();
-            this.textBox_type = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBoxljjl_query = new System.Windows.Forms.TextBox();
-            this.label_likekey = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel_configmain = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bt_update = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.button_query = new System.Windows.Forms.Button();
@@ -68,9 +54,9 @@
             this.button_next = new System.Windows.Forms.Button();
             this.button_pre = new System.Windows.Forms.Button();
             this.label_tot = new System.Windows.Forms.Label();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.bt_update = new System.Windows.Forms.Button();
+            this.tabPage_lj = new System.Windows.Forms.TabPage();
+            this.tableLayoutPanel_ljjl = new System.Windows.Forms.TableLayoutPanel();
+            this.dgvljjl = new System.Windows.Forms.DataGridView();
             this.PN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.row2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,17 +64,32 @@
             this.Barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ljname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.jilu = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.buttonjl_next = new System.Windows.Forms.Button();
+            this.buttonjl_pre = new System.Windows.Forms.Button();
+            this.label_baifen1 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.buttolj_add = new System.Windows.Forms.Button();
+            this.buttonlj_del = new System.Windows.Forms.Button();
+            this.button_likequery = new System.Windows.Forms.Button();
+            this.textBox_type = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.textBoxljjl_query = new System.Windows.Forms.TextBox();
+            this.label_likekey = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.ofd_sm = new System.Windows.Forms.OpenFileDialog();
             this.tabControl_main.SuspendLayout();
-            this.tabPage_lj.SuspendLayout();
-            this.tableLayoutPanel_ljjl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvljjl)).BeginInit();
-            this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel_configmain.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel2.SuspendLayout();
+            this.tabPage_lj.SuspendLayout();
+            this.tableLayoutPanel_ljjl.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvljjl)).BeginInit();
+            this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl_main
@@ -102,172 +103,6 @@
             this.tabControl_main.Size = new System.Drawing.Size(966, 561);
             this.tabControl_main.TabIndex = 0;
             this.tabControl_main.SelectedIndexChanged += new System.EventHandler(this.tabControl_main_SelectedIndexChanged);
-            // 
-            // tabPage_lj
-            // 
-            this.tabPage_lj.Controls.Add(this.tableLayoutPanel_ljjl);
-            this.tabPage_lj.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_lj.Name = "tabPage_lj";
-            this.tabPage_lj.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_lj.Size = new System.Drawing.Size(958, 535);
-            this.tabPage_lj.TabIndex = 0;
-            this.tabPage_lj.Text = "零件记录";
-            this.tabPage_lj.UseVisualStyleBackColor = true;
-            // 
-            // tableLayoutPanel_ljjl
-            // 
-            this.tableLayoutPanel_ljjl.ColumnCount = 1;
-            this.tableLayoutPanel_ljjl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_ljjl.Controls.Add(this.dgvljjl, 0, 1);
-            this.tableLayoutPanel_ljjl.Controls.Add(this.panel3, 0, 2);
-            this.tableLayoutPanel_ljjl.Controls.Add(this.panel4, 0, 0);
-            this.tableLayoutPanel_ljjl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel_ljjl.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel_ljjl.Name = "tableLayoutPanel_ljjl";
-            this.tableLayoutPanel_ljjl.RowCount = 3;
-            this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel_ljjl.Size = new System.Drawing.Size(952, 529);
-            this.tableLayoutPanel_ljjl.TabIndex = 0;
-            // 
-            // dgvljjl
-            // 
-            this.dgvljjl.AllowUserToAddRows = false;
-            this.dgvljjl.AllowUserToDeleteRows = false;
-            this.dgvljjl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvljjl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.PN,
-            this.row2,
-            this.id,
-            this.component,
-            this.Barcode,
-            this.ljname,
-            this.jilu});
-            this.dgvljjl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvljjl.Location = new System.Drawing.Point(3, 43);
-            this.dgvljjl.Name = "dgvljjl";
-            this.dgvljjl.RowTemplate.Height = 23;
-            this.dgvljjl.Size = new System.Drawing.Size(946, 453);
-            this.dgvljjl.TabIndex = 0;
-            this.dgvljjl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvljjl_CellClick);
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.buttonjl_next);
-            this.panel3.Controls.Add(this.buttonjl_pre);
-            this.panel3.Controls.Add(this.label_baifen1);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(3, 502);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(946, 24);
-            this.panel3.TabIndex = 1;
-            // 
-            // buttonjl_next
-            // 
-            this.buttonjl_next.Location = new System.Drawing.Point(174, 0);
-            this.buttonjl_next.Name = "buttonjl_next";
-            this.buttonjl_next.Size = new System.Drawing.Size(75, 23);
-            this.buttonjl_next.TabIndex = 5;
-            this.buttonjl_next.Text = "下一页";
-            this.buttonjl_next.UseVisualStyleBackColor = true;
-            this.buttonjl_next.Click += new System.EventHandler(this.buttonjl_next_Click);
-            // 
-            // buttonjl_pre
-            // 
-            this.buttonjl_pre.Location = new System.Drawing.Point(10, 0);
-            this.buttonjl_pre.Name = "buttonjl_pre";
-            this.buttonjl_pre.Size = new System.Drawing.Size(75, 23);
-            this.buttonjl_pre.TabIndex = 4;
-            this.buttonjl_pre.Text = "上一页";
-            this.buttonjl_pre.UseVisualStyleBackColor = true;
-            this.buttonjl_pre.Click += new System.EventHandler(this.buttonjl_pre_Click);
-            // 
-            // label_baifen1
-            // 
-            this.label_baifen1.AutoSize = true;
-            this.label_baifen1.Location = new System.Drawing.Point(109, 5);
-            this.label_baifen1.Name = "label_baifen1";
-            this.label_baifen1.Size = new System.Drawing.Size(29, 12);
-            this.label_baifen1.TabIndex = 3;
-            this.label_baifen1.Text = "0/10";
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.buttolj_add);
-            this.panel4.Controls.Add(this.buttonlj_del);
-            this.panel4.Controls.Add(this.button_likequery);
-            this.panel4.Controls.Add(this.textBox_type);
-            this.panel4.Controls.Add(this.label3);
-            this.panel4.Controls.Add(this.textBoxljjl_query);
-            this.panel4.Controls.Add(this.label_likekey);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel4.Location = new System.Drawing.Point(3, 3);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(946, 34);
-            this.panel4.TabIndex = 2;
-            // 
-            // buttolj_add
-            // 
-            this.buttolj_add.Location = new System.Drawing.Point(517, 6);
-            this.buttolj_add.Name = "buttolj_add";
-            this.buttolj_add.Size = new System.Drawing.Size(75, 23);
-            this.buttolj_add.TabIndex = 6;
-            this.buttolj_add.Text = "添加";
-            this.buttolj_add.UseVisualStyleBackColor = true;
-            this.buttolj_add.Click += new System.EventHandler(this.buttolj_add_Click);
-            // 
-            // buttonlj_del
-            // 
-            this.buttonlj_del.Location = new System.Drawing.Point(434, 6);
-            this.buttonlj_del.Name = "buttonlj_del";
-            this.buttonlj_del.Size = new System.Drawing.Size(75, 23);
-            this.buttonlj_del.TabIndex = 5;
-            this.buttonlj_del.Text = "删除";
-            this.buttonlj_del.UseVisualStyleBackColor = true;
-            this.buttonlj_del.Click += new System.EventHandler(this.buttonlj_del_Click);
-            // 
-            // button_likequery
-            // 
-            this.button_likequery.Location = new System.Drawing.Point(351, 6);
-            this.button_likequery.Name = "button_likequery";
-            this.button_likequery.Size = new System.Drawing.Size(75, 23);
-            this.button_likequery.TabIndex = 4;
-            this.button_likequery.Text = "查询";
-            this.button_likequery.UseVisualStyleBackColor = true;
-            this.button_likequery.Click += new System.EventHandler(this.button_likequery_Click);
-            // 
-            // textBox_type
-            // 
-            this.textBox_type.Location = new System.Drawing.Point(210, 7);
-            this.textBox_type.Name = "textBox_type";
-            this.textBox_type.Size = new System.Drawing.Size(100, 21);
-            this.textBox_type.TabIndex = 3;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(175, 11);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "类型";
-            // 
-            // textBoxljjl_query
-            // 
-            this.textBoxljjl_query.Location = new System.Drawing.Point(56, 7);
-            this.textBoxljjl_query.Name = "textBoxljjl_query";
-            this.textBoxljjl_query.Size = new System.Drawing.Size(100, 21);
-            this.textBoxljjl_query.TabIndex = 1;
-            // 
-            // label_likekey
-            // 
-            this.label_likekey.AutoSize = true;
-            this.label_likekey.Location = new System.Drawing.Point(8, 11);
-            this.label_likekey.Name = "label_likekey";
-            this.label_likekey.Size = new System.Drawing.Size(41, 12);
-            this.label_likekey.TabIndex = 0;
-            this.label_likekey.Text = "关键字";
             // 
             // tabPage2
             // 
@@ -312,6 +147,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(946, 34);
             this.panel1.TabIndex = 0;
+            // 
+            // bt_update
+            // 
+            this.bt_update.Location = new System.Drawing.Point(521, 6);
+            this.bt_update.Name = "bt_update";
+            this.bt_update.Size = new System.Drawing.Size(89, 23);
+            this.bt_update.TabIndex = 8;
+            this.bt_update.Text = "更新选中行";
+            this.bt_update.UseVisualStyleBackColor = true;
+            this.bt_update.Click += new System.EventHandler(this.bt_update_Click);
             // 
             // button2
             // 
@@ -497,25 +342,54 @@
             this.label_tot.TabIndex = 0;
             this.label_tot.Text = "0/10";
             // 
-            // saveFileDialog1
+            // tabPage_lj
             // 
-            this.saveFileDialog1.Filter = "excel文件|*.xls";
+            this.tabPage_lj.Controls.Add(this.tableLayoutPanel_ljjl);
+            this.tabPage_lj.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_lj.Name = "tabPage_lj";
+            this.tabPage_lj.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_lj.Size = new System.Drawing.Size(958, 535);
+            this.tabPage_lj.TabIndex = 0;
+            this.tabPage_lj.Text = "零件记录";
+            this.tabPage_lj.UseVisualStyleBackColor = true;
             // 
-            // openFileDialog1
+            // tableLayoutPanel_ljjl
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "excel文件|*.xls";
-            this.openFileDialog1.RestoreDirectory = true;
+            this.tableLayoutPanel_ljjl.ColumnCount = 1;
+            this.tableLayoutPanel_ljjl.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_ljjl.Controls.Add(this.dgvljjl, 0, 1);
+            this.tableLayoutPanel_ljjl.Controls.Add(this.panel3, 0, 2);
+            this.tableLayoutPanel_ljjl.Controls.Add(this.panel4, 0, 0);
+            this.tableLayoutPanel_ljjl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel_ljjl.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel_ljjl.Name = "tableLayoutPanel_ljjl";
+            this.tableLayoutPanel_ljjl.RowCount = 3;
+            this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel_ljjl.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel_ljjl.Size = new System.Drawing.Size(952, 529);
+            this.tableLayoutPanel_ljjl.TabIndex = 0;
             // 
-            // bt_update
+            // dgvljjl
             // 
-            this.bt_update.Location = new System.Drawing.Point(521, 6);
-            this.bt_update.Name = "bt_update";
-            this.bt_update.Size = new System.Drawing.Size(89, 23);
-            this.bt_update.TabIndex = 8;
-            this.bt_update.Text = "更新选中行";
-            this.bt_update.UseVisualStyleBackColor = true;
-            this.bt_update.Click += new System.EventHandler(this.bt_update_Click);
+            this.dgvljjl.AllowUserToAddRows = false;
+            this.dgvljjl.AllowUserToDeleteRows = false;
+            this.dgvljjl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvljjl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PN,
+            this.row2,
+            this.id,
+            this.component,
+            this.Barcode,
+            this.ljname,
+            this.jilu});
+            this.dgvljjl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvljjl.Location = new System.Drawing.Point(3, 43);
+            this.dgvljjl.Name = "dgvljjl";
+            this.dgvljjl.RowTemplate.Height = 23;
+            this.dgvljjl.Size = new System.Drawing.Size(946, 453);
+            this.dgvljjl.TabIndex = 0;
+            this.dgvljjl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvljjl_CellClick);
             // 
             // PN
             // 
@@ -565,6 +439,137 @@
             this.jilu.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.jilu.Width = 150;
             // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.buttonjl_next);
+            this.panel3.Controls.Add(this.buttonjl_pre);
+            this.panel3.Controls.Add(this.label_baifen1);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 502);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(946, 24);
+            this.panel3.TabIndex = 1;
+            // 
+            // buttonjl_next
+            // 
+            this.buttonjl_next.Location = new System.Drawing.Point(174, 0);
+            this.buttonjl_next.Name = "buttonjl_next";
+            this.buttonjl_next.Size = new System.Drawing.Size(75, 23);
+            this.buttonjl_next.TabIndex = 5;
+            this.buttonjl_next.Text = "下一页";
+            this.buttonjl_next.UseVisualStyleBackColor = true;
+            this.buttonjl_next.Click += new System.EventHandler(this.buttonjl_next_Click);
+            // 
+            // buttonjl_pre
+            // 
+            this.buttonjl_pre.Location = new System.Drawing.Point(10, 0);
+            this.buttonjl_pre.Name = "buttonjl_pre";
+            this.buttonjl_pre.Size = new System.Drawing.Size(75, 23);
+            this.buttonjl_pre.TabIndex = 4;
+            this.buttonjl_pre.Text = "上一页";
+            this.buttonjl_pre.UseVisualStyleBackColor = true;
+            this.buttonjl_pre.Click += new System.EventHandler(this.buttonjl_pre_Click);
+            // 
+            // label_baifen1
+            // 
+            this.label_baifen1.AutoSize = true;
+            this.label_baifen1.Location = new System.Drawing.Point(109, 5);
+            this.label_baifen1.Name = "label_baifen1";
+            this.label_baifen1.Size = new System.Drawing.Size(29, 12);
+            this.label_baifen1.TabIndex = 3;
+            this.label_baifen1.Text = "0/10";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.buttolj_add);
+            this.panel4.Controls.Add(this.buttonlj_del);
+            this.panel4.Controls.Add(this.button_likequery);
+            this.panel4.Controls.Add(this.textBox_type);
+            this.panel4.Controls.Add(this.label3);
+            this.panel4.Controls.Add(this.textBoxljjl_query);
+            this.panel4.Controls.Add(this.label_likekey);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel4.Location = new System.Drawing.Point(3, 3);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(946, 34);
+            this.panel4.TabIndex = 2;
+            // 
+            // buttolj_add
+            // 
+            this.buttolj_add.Location = new System.Drawing.Point(517, 6);
+            this.buttolj_add.Name = "buttolj_add";
+            this.buttolj_add.Size = new System.Drawing.Size(75, 23);
+            this.buttolj_add.TabIndex = 6;
+            this.buttolj_add.Text = "添加";
+            this.buttolj_add.UseVisualStyleBackColor = true;
+            this.buttolj_add.Click += new System.EventHandler(this.buttolj_add_Click);
+            // 
+            // buttonlj_del
+            // 
+            this.buttonlj_del.Location = new System.Drawing.Point(434, 6);
+            this.buttonlj_del.Name = "buttonlj_del";
+            this.buttonlj_del.Size = new System.Drawing.Size(75, 23);
+            this.buttonlj_del.TabIndex = 5;
+            this.buttonlj_del.Text = "删除";
+            this.buttonlj_del.UseVisualStyleBackColor = true;
+            this.buttonlj_del.Click += new System.EventHandler(this.buttonlj_del_Click);
+            // 
+            // button_likequery
+            // 
+            this.button_likequery.Location = new System.Drawing.Point(351, 6);
+            this.button_likequery.Name = "button_likequery";
+            this.button_likequery.Size = new System.Drawing.Size(75, 23);
+            this.button_likequery.TabIndex = 4;
+            this.button_likequery.Text = "查询";
+            this.button_likequery.UseVisualStyleBackColor = true;
+            this.button_likequery.Click += new System.EventHandler(this.button_likequery_Click);
+            // 
+            // textBox_type
+            // 
+            this.textBox_type.Location = new System.Drawing.Point(210, 7);
+            this.textBox_type.Name = "textBox_type";
+            this.textBox_type.Size = new System.Drawing.Size(100, 21);
+            this.textBox_type.TabIndex = 3;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(175, 11);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(29, 12);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "类型";
+            // 
+            // textBoxljjl_query
+            // 
+            this.textBoxljjl_query.Location = new System.Drawing.Point(56, 7);
+            this.textBoxljjl_query.Name = "textBoxljjl_query";
+            this.textBoxljjl_query.Size = new System.Drawing.Size(100, 21);
+            this.textBoxljjl_query.TabIndex = 1;
+            // 
+            // label_likekey
+            // 
+            this.label_likekey.AutoSize = true;
+            this.label_likekey.Location = new System.Drawing.Point(8, 11);
+            this.label_likekey.Name = "label_likekey";
+            this.label_likekey.Size = new System.Drawing.Size(41, 12);
+            this.label_likekey.TabIndex = 0;
+            this.label_likekey.Text = "关键字";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "excel文件|*.xls";
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "excel文件|*.xls";
+            this.openFileDialog1.RestoreDirectory = true;
+            // 
+            // ofd_sm
+            // 
+            this.ofd_sm.FileName = "openFileDialog2";
+            // 
             // BomFrom2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -578,13 +583,6 @@
             this.Text = "零件管理";
             this.Load += new System.EventHandler(this.BomFrom2_Load);
             this.tabControl_main.ResumeLayout(false);
-            this.tabPage_lj.ResumeLayout(false);
-            this.tableLayoutPanel_ljjl.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvljjl)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tableLayoutPanel_configmain.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -592,6 +590,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabPage_lj.ResumeLayout(false);
+            this.tableLayoutPanel_ljjl.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvljjl)).EndInit();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -648,5 +653,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Barcode;
         private System.Windows.Forms.DataGridViewTextBoxColumn ljname;
         private System.Windows.Forms.DataGridViewButtonColumn jilu;
+        private System.Windows.Forms.OpenFileDialog ofd_sm;
     }
 }

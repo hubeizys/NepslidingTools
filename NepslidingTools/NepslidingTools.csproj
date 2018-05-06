@@ -355,6 +355,7 @@
     <Compile Include="testModel\TestBZFrom.Designer.cs">
       <DependentUpon>TestBZFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="testModel\ToolsFiles.cs" />
     <Compile Include="textbox.xaml.cs">
       <DependentUpon>textbox.xaml</DependentUpon>
     </Compile>
@@ -515,6 +516,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="shumo\5472182.igs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\timg.jpg" />

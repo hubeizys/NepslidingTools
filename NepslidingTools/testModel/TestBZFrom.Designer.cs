@@ -64,6 +64,8 @@ namespace NepslidingTools.testModel
             this.sy_bt = new DevComponents.DotNetBar.ButtonX();
             this.button1 = new System.Windows.Forms.Button();
             this.textbox_ljh = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.ofg_cad = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -154,7 +156,7 @@ namespace NepslidingTools.testModel
             this.send_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.send_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.send_bt.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.send_bt.Location = new System.Drawing.Point(599, 599);
+            this.send_bt.Location = new System.Drawing.Point(476, 570);
             this.send_bt.Name = "send_bt";
             this.send_bt.Size = new System.Drawing.Size(175, 123);
             this.send_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -282,7 +284,7 @@ namespace NepslidingTools.testModel
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowTemplate.Height = 23;
-            this.dgv.Size = new System.Drawing.Size(763, 316);
+            this.dgv.Size = new System.Drawing.Size(745, 316);
             this.dgv.TabIndex = 30;
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
             this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
@@ -446,7 +448,7 @@ namespace NepslidingTools.testModel
             this.groupBox2.Controls.Add(this.xy_xzh);
             this.groupBox2.Controls.Add(this.sy_bt);
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
-            this.groupBox2.Location = new System.Drawing.Point(439, 416);
+            this.groupBox2.Location = new System.Drawing.Point(315, 409);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(336, 130);
             this.groupBox2.TabIndex = 32;
@@ -493,7 +495,7 @@ namespace NepslidingTools.testModel
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(711, 4);
+            this.button1.Location = new System.Drawing.Point(657, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 34;
@@ -519,11 +521,25 @@ namespace NepslidingTools.testModel
             this.textbox_ljh.TabIndex = 35;
             this.textbox_ljh.TextChanged += new System.EventHandler(this.textbox_ljh_TextChanged);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.panel1.Location = new System.Drawing.Point(763, 68);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(595, 581);
+            this.panel1.TabIndex = 36;
+            this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
+            // 
+            // ofg_cad
+            // 
+            this.ofg_cad.FileName = "openFileDialog1";
+            // 
             // TestBZFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(812, 728);
+            this.ClientSize = new System.Drawing.Size(1370, 728);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.textbox_ljh);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
@@ -588,5 +604,7 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.DataGridViewTextBoxColumn down;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn devicetype;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.OpenFileDialog ofg_cad;
     }
 }
