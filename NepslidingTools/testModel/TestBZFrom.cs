@@ -8,16 +8,39 @@ using System.Windows.Forms;
 using DevComponents.DotNetBar;
 using Maticsoft.Model;
 using DevComponents.DotNetBar.Controls;
+using AnyCAD.Platform;
+using AnyCAD.Exchange;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace NepslidingTools.testModel
 {
     public partial class TestBZFrom : Form
     {
+        private AnyCAD.Presentation.RenderWindow3d renderView = null;
         string name = "TestBZFrom";
         List<Maticsoft.Model.testdevice> td_lists;
         public TestBZFrom()
         {
             InitializeComponent();
+            this.renderView = new AnyCAD.Presentation.RenderWindow3d();
+            this.renderView.Location = new System.Drawing.Point(0, 0);
+            this.renderView.Size = this.panel1.Size;
+            this.renderView.TabIndex = 1;
+            this.panel1.Controls.Add(this.renderView);
+            this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
+        }
+
+        private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
+        {
+            // Console.WriteLine("aaaaaaaaaaa");
+            SceneNode sc_node = this.renderView.SceneManager.GetSelectedNode();
+            if (sc_node != null)
+            {
+                MessageBox.Show(sc_node.GetName() + "===" + sc_node.GetHashCode() + "--00--" + sc_node.GetId().AsInt());
+                FaceStyle style = new FaceStyle();
+                this.renderView.SceneManager.ClearSelection();
+            }
         }
 
         public string LjHao { get; set; }
@@ -231,6 +254,28 @@ namespace NepslidingTools.testModel
             foreach (DataGridViewRow row in dgv.Rows)
             {
                 row.Cells["step"].Value = row.Index + 1;
+            }
+
+            Maticsoft.BLL.component mea_bll = new Maticsoft.BLL.component();
+            Maticsoft.Model.component comp_mode = mea_bll.GetModel(Convert.ToInt32( LjHao));
+            if (comp_mode != null)
+            {
+                
+                Task a_task = new Task(new Action(()=> {
+                    Thread.Sleep(1000);
+                    renderView.Invoke(new Action(() =>
+                    {
+                        string base_dir = Environment.CurrentDirectory;
+                        base_dir += "\\shumo\\";
+                        base_dir += comp_mode.sm;
+                        IgesReader reader = new IgesReader();
+                        bool ret = reader.Read(base_dir, new CadView(this.renderView));
+                        Console.WriteLine("ret ====== " + ret);
+                        renderView.FitAll();
+                        renderView.RequestDraw();
+                    }));
+                }));
+                a_task.Start();
             }
         }
 
@@ -495,6 +540,19 @@ namespace NepslidingTools.testModel
             {
 
             }
+        }
+
+        private void panel1_Click(object sender, EventArgs e)
+        {
+            if (ofg_cad.ShowDialog() == DialogResult.OK)
+            {
+
+            }
+        }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            OnRenderWindow_MouseClick(sender, e as MouseEventArgs);
         }
     }
 }

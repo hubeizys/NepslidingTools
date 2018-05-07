@@ -31,9 +31,9 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram2 = new DevExpress.XtraCharts.XYDiagram();
-            Series series2 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView2 = new DevExpress.XtraCharts.LineSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
+            Series series1 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -84,6 +84,7 @@ namespace NepslidingTools.testModel
             this.label1 = new System.Windows.Forms.Label();
             this.timer_portst = new System.Windows.Forms.Timer(this.components);
             this.timer_tostep = new System.Windows.Forms.Timer(this.components);
+            this.timer_shine = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
@@ -551,16 +552,16 @@ namespace NepslidingTools.testModel
             // chartControl1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.chartControl1, 3);
-            xyDiagram2.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram2.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram2;
+            xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram1;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.chartControl1.Location = new System.Drawing.Point(3, 288);
             this.chartControl1.Name = "chartControl1";
-            series2.Name = "测量结果波动";
-            series2.View = lineSeriesView2;
+            series1.Name = "测量结果波动";
+            series1.View = lineSeriesView1;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series2};
+        series1};
             this.chartControl1.Size = new System.Drawing.Size(1120, 154);
             this.chartControl1.TabIndex = 8;
             // 
@@ -650,6 +651,10 @@ namespace NepslidingTools.testModel
             this.timer_tostep.Interval = 1000;
             this.timer_tostep.Tick += new System.EventHandler(this.timer_tostep_Tick);
             // 
+            // timer_shine
+            // 
+            this.timer_shine.Tick += new System.EventHandler(this.timer_shine_Tick);
+            // 
             // StepTestFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -734,5 +739,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.TextBox txtbox_gcxia;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer timer_tostep;
+        private System.Windows.Forms.Timer timer_shine;
     }
 }

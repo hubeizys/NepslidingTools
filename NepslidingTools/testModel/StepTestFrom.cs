@@ -9,12 +9,15 @@ using DevComponents.DotNetBar;
 using AnyCAD.Platform;
 using Maticsoft.Model;
 using System.Threading;
+using System.Threading.Tasks;
+using AnyCAD.Exchange;
 
 namespace NepslidingTools.testModel
 {
     public partial class StepTestFrom : WorkForm
     {
         string name = "steptest";
+        private AnyCAD.Presentation.RenderWindow3d renderView = null;
 
         #region 串口变量
         private SerPort sp_obj = new SerPort();
@@ -42,7 +45,18 @@ namespace NepslidingTools.testModel
         public StepTestFrom()
         {
             InitializeComponent();
-            this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);
+            this.renderView = new AnyCAD.Presentation.RenderWindow3d();
+            this.renderView.Location = new System.Drawing.Point(0, 0);
+            this.renderView.Size = this.panel3d.Size;
+            this.renderView.TabIndex = 1;
+            this.panel3d.Controls.Add(this.renderView);
+            this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
+
+            // this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);
+        }
+
+        private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
+        {
         }
 
         public void jiangyaozhixin(string a)
@@ -189,6 +203,24 @@ namespace NepslidingTools.testModel
 
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
+
+            Task a_task = new Task(new Action(() => {
+                Thread.Sleep(1000);
+                renderView.Invoke(new Action(() =>
+                {
+                    string base_dir = Environment.CurrentDirectory;
+                    base_dir += "\\shumo\\";
+                    base_dir += "5472182.igs";
+                    IgesReader reader = new IgesReader();
+                    bool ret = reader.Read(base_dir, new CadView(this.renderView));
+                    Console.WriteLine("ret ====== " + ret);
+                    renderView.FitAll();
+                    renderView.RequestDraw();
+                }));
+            }));
+            a_task.Start();
+
+            this.timer_shine.Enabled = true;
             //global.AsynCall((a) => { MessageBox.Show(a.ToString()); }, "test");
 
             #region 获得零件号，通过零件号获得详细信息
@@ -206,15 +238,15 @@ namespace NepslidingTools.testModel
             {
                 // cad 信息
                 #region andcad 初始化
-                if (StepTestFrom.theApplication == null)
-                {
-                    StepTestFrom.theApplication = new AnyCAD.Platform.Application();
-                    StepTestFrom.theApplication.Initialize();
-                }
-                Size size = panel3d.Size;
-                // Create the 3d View
-                theView = theApplication.CreateView(panel3d.Handle.ToInt32(), size.Width, size.Height);
-                theView.RequestDraw();
+                //if (StepTestFrom.theApplication == null)
+                //{
+                //    StepTestFrom.theApplication = new AnyCAD.Platform.Application();
+                //    StepTestFrom.theApplication.Initialize();
+                //}
+                //Size size = panel3d.Size;
+                //// Create the 3d View
+                //theView = theApplication.CreateView(panel3d.Handle.ToInt32(), size.Width, size.Height);
+                //theView.RequestDraw();
                 #endregion
 
                 init_table();
@@ -298,62 +330,64 @@ namespace NepslidingTools.testModel
             T.Start();
         }
 
+        /*
         private SceneNode ShowTopoShape(TopoShape topoShape, int id)
         {
             // Add the TopoShape to Scene.
-            TopoShapeConvert convertor = new TopoShapeConvert();
-            SceneNode faceNode = convertor.ToFaceNode(topoShape, 0.5f);
-            faceNode.SetId(id);
-            theView.GetSceneManager().AddNode(faceNode);
-            return faceNode;
-        }
+            //TopoShapeConvert convertor = new TopoShapeConvert();
+            //SceneNode faceNode = convertor.ToFaceNode(topoShape, 0.5f);
+            //faceNode.SetId(id);
+            //theView.GetSceneManager().AddNode(faceNode);
+            //return faceNode;
+        }*/
 
 
         private void test()
         {
-            TopoShape box = shapeMaker.MakeBox(new Vector3(40, -20, 0), new Vector3(0, 0, 1), new Vector3(30, 40, 60));
+            return;
+            //TopoShape box = shapeMaker.MakeBox(new Vector3(40, -20, 0), new Vector3(0, 0, 1), new Vector3(30, 40, 60));
 
-            SceneNode sceneNode = ShowTopoShape(box, 101);
+            //SceneNode sceneNode = ShowTopoShape(box, 101);
 
-            FaceStyle style = new FaceStyle();
-            style.SetColor(new ColorValue(0.5f, 0.3f, 0, 1));
-            sceneNode.SetFaceStyle(style);
+            //FaceStyle style = new FaceStyle();
+            //style.SetColor(new ColorValue(0.5f, 0.3f, 0, 1));
+            //sceneNode.SetFaceStyle(style);
 
-            TopoShape cylinder = shapeMaker.MakeCylinder(new Vector3(80, 0, 0), new Vector3(0, 0, 1), 20, 100, 315);
-            SceneNode sceneNode1 = ShowTopoShape(cylinder, 102);
-            FaceStyle style1 = new FaceStyle();
-            style.SetColor(new ColorValue(0.1f, 0.3f, 0.8f, 1));
-            sceneNode.SetFaceStyle(style);
+            //TopoShape cylinder = shapeMaker.MakeCylinder(new Vector3(80, 0, 0), new Vector3(0, 0, 1), 20, 100, 315);
+            //SceneNode sceneNode1 = ShowTopoShape(cylinder, 102);
+            //FaceStyle style1 = new FaceStyle();
+            //style.SetColor(new ColorValue(0.1f, 0.3f, 0.8f, 1));
+            //sceneNode.SetFaceStyle(style);
 
-            int size = 20;
-            // Create the outline edge
-            TopoShape arc = shapeMaker.MakeArc3Pts(new Vector3(-size, 0, 0), new Vector3(size, 0, 0), new Vector3(0, size, 0));
-            TopoShape line1 = shapeMaker.MakeLine(new Vector3(-size, -size, 0), new Vector3(-size, 0, 0));
-            TopoShape line2 = shapeMaker.MakeLine(new Vector3(size, -size, 0), new Vector3(size, 0, 0));
-            TopoShape line3 = shapeMaker.MakeLine(new Vector3(-size, -size, 0), new Vector3(size, -size, 0));
+            //int size = 20;
+            //// Create the outline edge
+            //TopoShape arc = shapeMaker.MakeArc3Pts(new Vector3(-size, 0, 0), new Vector3(size, 0, 0), new Vector3(0, size, 0));
+            //TopoShape line1 = shapeMaker.MakeLine(new Vector3(-size, -size, 0), new Vector3(-size, 0, 0));
+            //TopoShape line2 = shapeMaker.MakeLine(new Vector3(size, -size, 0), new Vector3(size, 0, 0));
+            //TopoShape line3 = shapeMaker.MakeLine(new Vector3(-size, -size, 0), new Vector3(size, -size, 0));
 
-            TopoShapeGroup shapeGroup = new TopoShapeGroup();
-            shapeGroup.Add(line1);
-            shapeGroup.Add(arc);
-            shapeGroup.Add(line2);
-            shapeGroup.Add(line3);
+            //TopoShapeGroup shapeGroup = new TopoShapeGroup();
+            //shapeGroup.Add(line1);
+            //shapeGroup.Add(arc);
+            //shapeGroup.Add(line2);
+            //shapeGroup.Add(line3);
 
-            TopoShape wire = shapeMaker.MakeWire(shapeGroup);
-            TopoShape face = shapeMaker.MakeFace(wire);
+            //TopoShape wire = shapeMaker.MakeWire(shapeGroup);
+            //TopoShape face = shapeMaker.MakeFace(wire);
 
-            // Extrude
-            TopoShape extrude = shapeMaker.Extrude(face, 100, new Vector3(0, 0, 1));
-            ShowTopoShape(extrude, 104);
+            //// Extrude
+            //TopoShape extrude = shapeMaker.Extrude(face, 100, new Vector3(0, 0, 1));
+            //ShowTopoShape(extrude, 104);
 
-            // Check find....
-            SceneNode findNode = theView.GetSceneManager().FindNode(104);
-            theView.GetSceneManager().SelectNode(findNode);
+            //// Check find....
+            //SceneNode findNode = theView.GetSceneManager().FindNode(104);
+            //theView.GetSceneManager().SelectNode(findNode);
 
         }
 
         private void OnMouseWheel(object sender, MouseEventArgs e)
         {
-            ViewUtility.OnMouseWheelEvent(theView, e);
+            //ViewUtility.OnMouseWheelEvent(theView, e);
         }
         private void panel3d_Paint(object sender, PaintEventArgs e)
         {
@@ -365,25 +399,27 @@ namespace NepslidingTools.testModel
 
         private void panel3d_MouseDown(object sender, MouseEventArgs e)
         {
-            ViewUtility.OnMouseDownEvent(theView, e);
+            //ViewUtility.OnMouseDownEvent(theView, e);
         }
 
         private void panel3d_MouseMove(object sender, MouseEventArgs e)
         {
-            MessageBox.Show(theView.ToString());
-            ViewUtility.OnMouseMoveEvent(theView, e);
+            return;
+            //MessageBox.Show(theView.ToString());
+            //ViewUtility.OnMouseMoveEvent(theView, e);
         }
 
         private void panel3d_MouseUp(object sender, MouseEventArgs e)
         {
-            ViewUtility.OnMouseUpEvent(theView, e);
+            return;
+            //ViewUtility.OnMouseUpEvent(theView, e);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-
-            theView.RequestDraw();
-            theView.Redraw();
+            return;
+            //theView.RequestDraw();
+            //theView.Redraw();
         }
 
         private void StepTestFrom_FormClosed(object sender, FormClosedEventArgs e)
@@ -982,10 +1018,16 @@ namespace NepslidingTools.testModel
             }
         }
 
+        private int position = 0;
+        Dictionary<int, FaceStyle> key_colors = new Dictionary<int, FaceStyle>();
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            clearcolor();
             int index = comboBox1.SelectedIndex;
             string device_type = measures_tables.Rows[index]["devicetype"].ToString();
+            string loc_position = measures_tables.Rows[index]["position"].ToString();
+            position = Convert.ToInt32(loc_position);
             init_portbytype(Convert.ToInt32(device_type));
             init_photobytype(Convert.ToInt32(device_type));
 
@@ -1044,6 +1086,9 @@ namespace NepslidingTools.testModel
 
             }));
 
+            //设置闪亮的地方
+
+
         }
 
         private void timer_portst_Tick(object sender, EventArgs e)
@@ -1077,6 +1122,50 @@ namespace NepslidingTools.testModel
                 this.comboBox1.SelectedIndex += 1;
             }
             this.timer_tostep.Enabled = false;
+        }
+
+        private void clearcolor()
+        {
+            foreach (KeyValuePair<int, FaceStyle> a in key_colors)
+            {
+                SceneNode node = this.renderView.SceneManager.FindNode(new ElementId(a.Key));
+                node.SetFaceStyle(a.Value);
+            }
+        }
+
+        int n = 0;
+        private void timer_shine_Tick(object sender, EventArgs e)
+        {
+            n++;
+            if (this.renderView!=null && this.renderView.SceneManager == null)
+                return;
+            SceneNode node = this.renderView.SceneManager.FindNode(new ElementId(position));
+            
+            if (node != null)
+            {
+                FaceStyle value = null;
+                if (key_colors.TryGetValue(position, out value))
+                {
+                    if (n % 2 == 0)
+                    {
+                        node.SetFaceStyle(value);
+                    }
+                    else
+                    {
+                        FaceStyle fa = new FaceStyle();
+                        fa.SetColor(new ColorValue(1, 1, 1));
+                        node.SetFaceStyle(fa);
+                    }
+                }
+                else {
+                    FaceStyle cur_sty = node.GetFaceStyle();
+                    key_colors.Add(position, cur_sty);
+                }
+                //MessageBox.Show(node.GetFaceStyle().GetColor().ToRGBA().ToString());
+
+                
+            }
+       
         }
     }
 }

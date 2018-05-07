@@ -31,7 +31,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -59,9 +59,17 @@
     <StartupObject>NepslidingTools.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AnyCAD.Foundation.Net, Version=1.0.5005.33863, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="AnyCAD.Exchange.Net, Version=9.0.6653.26827, Culture=neutral, PublicKeyToken=adad17ef48f32d48, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\cloud\Downloads\AnyCAD_Sample-4.0\AnyCAD_Sample-4.0\bin\AnyCAD.Foundation.Net.dll</HintPath>
+      <HintPath>bin\Debug\AnyCAD.Exchange.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="AnyCAD.Foundation.Net, Version=9.0.6653.26823, Culture=neutral, PublicKeyToken=adad17ef48f32d48, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\AnyCAD.Foundation.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="AnyCAD.Presentation.Net, Version=9.0.6653.26827, Culture=neutral, PublicKeyToken=adad17ef48f32d48, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\AnyCAD.Presentation.Net.dll</HintPath>
     </Reference>
     <Reference Include="DevComponents.DotNetBar.Charts, Version=14.0.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
     <Reference Include="DevComponents.DotNetBar.SuperGrid, Version=14.0.0.3, Culture=neutral, PublicKeyToken=c39c3242a43eee2b, processorArchitecture=MSIL" />
@@ -318,6 +326,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="systools.cs" />
+    <Compile Include="testModel\cadview.cs" />
     <Compile Include="testModel\daochu.cs">
       <SubType>Form</SubType>
     </Compile>
