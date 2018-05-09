@@ -529,12 +529,6 @@ namespace NepslidingTools.testModel
             }, dt);
             parent.ContinueWith((t) =>
             {
-                //Array.ForEach(t.Result, (r) =>
-                //{
-                //    // MessageBox.Show("aaaa");
-                //    Console.WriteLine(string.Format("===== ============ {0}", r));
-                //    //string.Format();
-                //});
                 for (int i = 0; i < t.Result.Length; i++)
                 {
                     string[] sp_l = t.Result[i].Split('/');
@@ -553,14 +547,11 @@ namespace NepslidingTools.testModel
                                 continue;
                             }
                             double test_info = Convert.ToDouble(test_str);
-
-                            if (stand_info == test_info)
+                            dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
+                            if ( Convert.ToDouble(mea_obj.down) <= test_info &&  Convert.ToDouble(mea_obj.up) >= test_info)
                             {
-                                dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
                             }
-                            else
-                            {
-                                dest_table.Rows[i][sg] = "Æ«²î" + (test_info - stand_info).ToString();
+                            else {
                                 dgv.Rows[i].Cells[sg].Style.BackColor = Color.Red;
                             }
                         }

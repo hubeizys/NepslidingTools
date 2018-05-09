@@ -65,8 +65,8 @@ namespace NepslidingTools.testModel
             this.button1 = new System.Windows.Forms.Button();
             this.textbox_ljh = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button_add = new System.Windows.Forms.Button();
             this.ofg_cad = new System.Windows.Forms.OpenFileDialog();
-            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -244,7 +244,7 @@ namespace NepslidingTools.testModel
             // 
             this.testtoolname_lab.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.testtoolname_lab.ForeColor = System.Drawing.Color.Black;
-            this.testtoolname_lab.Location = new System.Drawing.Point(6, 204);
+            this.testtoolname_lab.Location = new System.Drawing.Point(6, 202);
             this.testtoolname_lab.Name = "testtoolname_lab";
             this.testtoolname_lab.Size = new System.Drawing.Size(75, 23);
             this.testtoolname_lab.TabIndex = 16;
@@ -526,7 +526,7 @@ namespace NepslidingTools.testModel
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button_add);
             this.panel1.Location = new System.Drawing.Point(763, 68);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(595, 581);
@@ -534,19 +534,19 @@ namespace NepslidingTools.testModel
             this.panel1.Click += new System.EventHandler(this.panel1_Click);
             this.panel1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.panel1_MouseClick);
             // 
+            // button_add
+            // 
+            this.button_add.Location = new System.Drawing.Point(51, 44);
+            this.button_add.Name = "button_add";
+            this.button_add.Size = new System.Drawing.Size(75, 23);
+            this.button_add.TabIndex = 0;
+            this.button_add.Text = "Ìí¼Ó";
+            this.button_add.UseVisualStyleBackColor = true;
+            this.button_add.Click += new System.EventHandler(this.button2_Click_1);
+            // 
             // ofg_cad
             // 
             this.ofg_cad.FileName = "openFileDialog1";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(51, 44);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 0;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // TestBZFrom
             // 
@@ -621,6 +621,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.DataGridViewTextBoxColumn devicetype;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.OpenFileDialog ofg_cad;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button_add;
     }
 }

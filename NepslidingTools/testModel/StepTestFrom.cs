@@ -18,7 +18,7 @@ namespace NepslidingTools.testModel
     {
         string name = "steptest";
         private AnyCAD.Presentation.RenderWindow3d renderView = null;
-
+        
         #region 串口变量
         private SerPort sp_obj = new SerPort();
         List<Maticsoft.Model.port> ports_list;
@@ -45,14 +45,17 @@ namespace NepslidingTools.testModel
         public StepTestFrom()
         {
             InitializeComponent();
+            
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
+            
             this.renderView.Location = new System.Drawing.Point(0, 0);
             this.renderView.Size = this.panel3d.Size;
             this.renderView.TabIndex = 1;
             this.panel3d.Controls.Add(this.renderView);
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
-
+            //this.renderView.MouseEnter += new EventHandler(aa_MouseEnter);
             // this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);
+            
         }
 
         private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
@@ -82,6 +85,8 @@ namespace NepslidingTools.testModel
             dir = dir + "\\images\\" + dt_model.remark;
             //MessageBox.Show(dir);
             pictureBox1.Image = Image.FromFile(dir);
+
+            labelX3.Text = "工具: "+ dt_model.devicename;
         }
 
         private void init_portbytype(int type)
@@ -136,7 +141,7 @@ namespace NepslidingTools.testModel
 
             for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
             {
-                string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
+                string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();
                 comboBox1.Text = sg;
                 dtb.Columns.Add(sg.ToString());
                 //dgv1.DataSource = ds.Tables[0];                
@@ -204,13 +209,22 @@ namespace NepslidingTools.testModel
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
 
+            
+            //global.AsynCall((a) => { MessageBox.Show(a.ToString()); }, "test");
+
+            #region 获得零件号，通过零件号获得详细信息
+            // 获得零件号
+            lble.Text = Program.txtbh;
+            //global.AsynCall(this.dealwithcomp, lble.Text);
+            dealwithcomp(lble.Text);
+            #endregion
             Task a_task = new Task(new Action(() => {
                 Thread.Sleep(1000);
                 renderView.Invoke(new Action(() =>
                 {
                     string base_dir = Environment.CurrentDirectory;
                     base_dir += "\\shumo\\";
-                    base_dir += "5472182.igs";
+                    base_dir += this.mode;
                     IgesReader reader = new IgesReader();
                     bool ret = reader.Read(base_dir, new CadView(this.renderView));
                     Console.WriteLine("ret ====== " + ret);
@@ -221,15 +235,7 @@ namespace NepslidingTools.testModel
             a_task.Start();
 
             this.timer_shine.Enabled = true;
-            //global.AsynCall((a) => { MessageBox.Show(a.ToString()); }, "test");
-
-            #region 获得零件号，通过零件号获得详细信息
-            // 获得零件号
-            lble.Text = Program.txtbh;
-            //global.AsynCall(this.dealwithcomp, lble.Text);
-            dealwithcomp(lble.Text);
-            #endregion
-
+            this.timer_ref.Enabled = true;
             // MessageBox.Show("界面开始了");
             txtkw.Text = global.MachineID;
 
@@ -393,7 +399,6 @@ namespace NepslidingTools.testModel
         {
             if (theView == null)
                 return;
-
             theView.Redraw();
         }
 
@@ -458,30 +463,34 @@ namespace NepslidingTools.testModel
 
         private void textcl_TextChanged(object sender, EventArgs e)
         {
+            int test_row = 0;
             if (textcl.Text == "")
             {
-                return;
+            
             }
-            #region 判断当前的测试， 是不是合理的
-            // 理论值
-            double LL = Convert.ToDouble(txtll.Text);
-            // 公差值
-            double GC = Convert.ToDouble(txtgc.Text);
-            // 测量值
-            double BZ = Convert.ToDouble(textcl.Text);
+            else {
+                #region 判断当前的测试， 是不是合理的
+                // 理论值
+                double LL = Convert.ToDouble(txtll.Text);
+                // 公差值
+                double GC = Convert.ToDouble(txtgc.Text);
+                // 测量值
+                double BZ = Convert.ToDouble(textcl.Text);
 
-            int test_row = 0;
-            double cz = LL - GC;
-            double hz = LL + GC;
-            if (BZ >= cz && BZ <= hz)
-            {
-                this.combjg.Text = "Ok";
+
+                double cz = LL - GC;
+                double hz = LL + GC;
+                if (BZ >= cz && BZ <= hz)
+                {
+                    this.combjg.Text = "Ok";
+                }
+                else
+                {
+                    combjg.Text = "Ng";
+                }
+                #endregion
+
             }
-            else
-            {
-                combjg.Text = "Ng";
-            }
-            #endregion
 
             #region 根据最后一列判断 获得最后一列 ，如果没有列就添加一列
             DataTable dt = dgv1.DataSource as DataTable;
@@ -495,16 +504,6 @@ namespace NepslidingTools.testModel
                 need_change_rows = dt.Rows[need_cahnge_row];
             }
 
-            //foreach (DataRow temp in dt.Rows)
-            //{
-            //    int col_num = dt.Columns.Count;
-            //    //Console.WriteLine(string.Format("temp[col_num -1 ] == {0}", temp[col_num-1]));
-            //    if (temp[col_num - 1].ToString() == "")
-            //    {
-            //        need_change_rows = temp;
-            //        break;
-            //    }
-            //}
             if (need_change_rows == null)
             {
                 // 如果 当前第一行的数据不存在数据库。 就提醒应该 保存
@@ -543,10 +542,10 @@ namespace NepslidingTools.testModel
                     for (int j = 0; j < dgv1.Rows.Count; j++)
                     {
                         need_change_rows[comboBox1.Text] = textcl.Text;
-                        //string BJ = need_change_rows[comboBox1.Text].ToString(); 
                     }
                 }
             }
+
             this.dgv1.Refresh();
             #endregion
             int last_row = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
@@ -562,10 +561,10 @@ namespace NepslidingTools.testModel
             #region 判断是不是可以 ok 或者ng了 
             //int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
             int CL = dt.Columns.Count;
+            
             string fz = dt.Rows[test_row][CL - 2].ToString();
-            if (fz != "")
+            if (comboBox1.SelectedIndex + 1 == CL-3)
             {
-               
                 int t = dt.Columns.Count - 3;
                 for (int a = 0; a < t; a++)
                 {
@@ -573,40 +572,17 @@ namespace NepslidingTools.testModel
                     string col_name = string.Format("步骤{0}", a + 1);
                     dd = dt.Rows[test_row][col_name].ToString();
 
-                    if (dd == "")
-                    {
-                        break;
-                    }
-                    #region ---------------------
-                    // 获得步骤信息
-                    /*
-                    Maticsoft.BLL.measures mesq = new Maticsoft.BLL.measures();
-                    string ste = string.Format("PN = '{0}'", lble.Text);
-                    DataSet dsf = mesq.GetList(ste);
-                    //for (int i = 0; i < dsf.Tables[0].Rows.Count; i++)
-                    //{
-                    string sg = "步骤" + dsf.Tables[0].Rows[a]["step"].ToString();// comboBox1.Items.Add()
-
-                    comboBox1.Text = sg;
-                    */
-
-
-                    //Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                    // string st1 = string.Format("PN = '{0}'", lble.Text);
-                    // DataSet ds11 = mes1.GetList(st1);
-                    #endregion
-
-
                     txtll.Text = ds1.Tables[0].Rows[a][4].ToString();
                     string shang_gc = ds1.Tables[0].Rows[a][5].ToString();
                     string xia_gc = ds1.Tables[0].Rows[a][6].ToString();
-
-                    cz = Convert.ToDouble(txtll.Text) - Convert.ToDouble(xia_gc);
-                    hz = Convert.ToDouble(txtll.Text) + Convert.ToDouble(shang_gc);
-
-                    string tt = "";
-                    
-                    if (Convert.ToDouble(dd) >= cz && Convert.ToDouble(dd) <= hz)
+                    double xcz = 0;
+                    double xhz = 0;
+                    if (txtll.Text != null)
+                    {
+                        xcz = Convert.ToDouble(txtll.Text) - Convert.ToDouble(xia_gc);
+                        xhz = Convert.ToDouble(txtll.Text) + Convert.ToDouble(shang_gc);
+                    }
+                    if (dd == "" || ( dd!= "" && Convert.ToDouble(dd) >= xcz && Convert.ToDouble(dd) <= xhz))
                     {
                         need_change_rows["测试结果"] = "Ok";
                         this.dgv1.Refresh();
@@ -617,146 +593,51 @@ namespace NepslidingTools.testModel
                         this.dgv1.Refresh();
                         break;
                     }
-
-                    
-                    #region ------------
-                    /*
-                    if (tt != "Ok")
-                    {
-                        need_change_rows["测试结果"] = "NG";
-                        break;
-                    }
-                    else
-                    {
-                        need_change_rows["测试结果"] = "Ok";
-                    }*/
-                    //  }
-                    #endregion
-
+                   
                 }
             }
             #endregion
         }
-
-
-
-
-
-
-        //if (dt.Columns[dt.Columns.Count-2].ToString() != "")
-        //if (comboBox1.Text == "步骤1")
-        //{
-        //    for (int i=0;i<dgv1.Rows.Count ;i++) {
-        //        //dt.Columns.Add();
-        //        need_change_rows[comboBox1.Text] = textcl.Text;
-        //        dgv1.Rows[i].Cells["测试时间"].Value = DateTime.Now.ToString();
-        //        //need_change_rows["TestTime"] = DateTime.Now.ToString();
-        //        // need_change_rows["step1"] = textcl.Text;
-        //       // Random rd = new Random();
-        //        string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-        //        //int num2 = rd.Next(Convert.ToInt32( num));
-        //        string dnum = num.ToString();
-        //        dgv1.Rows[i].Cells["测试编号"].Value = dnum;
-        //        // need_change_rows["nearNo"] = dnum;
-        //    }
-        //    }
-
-        //    if (comboBox1.Text == "步骤2")
-        //    {
-
-        //        need_change_rows[comboBox1.Text] = textcl.Text;
-
-        //        //need_change_rows["step2"] = textcl.Text;
-
-        //        //DataTable dt1 = dgv1.DataSource as DataTable;
-        //        //DataRow dr1 = dt1.NewRow();
-
-        //        //dr1["step2"] = textcl.Text;
-        //        //dt1.Rows.Add(dr1);
-
-        //        //DataTable dt = dgv1.DataSource as DataTable;
-        //        //string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-        //        //int num2 = rd.Next(0000,9999);
-        //        //string dnum = num.ToString();
-        //        // dgv1.Rows[i].Cells["nearNo"].Value = dnum;
-        //        //dt.Rows.Add(1, dnum, DateTime.Now.ToString(), "", textcl.Text);
-
-        //    }
-        //    if (comboBox1.Text == "步骤3")
-        //    {
-
-        //        need_change_rows[comboBox1.Text] = textcl.Text;
-        //        //need_change_rows["step3"] = textcl.Text;
-
-        //    }
-        //    if (comboBox1.Text == "步骤4")
-        //    {
-
-        //        need_change_rows[comboBox1.Text] = textcl.Text;
-        //        //need_change_rows["step4"] = textcl.Text;
-
-        //    }
-        //    if (comboBox1.Text == "步骤5")
-        //    {
-
-        //        need_change_rows[comboBox1.Text] = textcl.Text;
-        //        //need_change_rows["step5"] = textcl.Text;
-        //        double stp1 = Convert.ToDouble(need_change_rows[10]);
-        //        double stp2 = Convert.ToDouble(need_change_rows[11]);
-        //        double stp3 = Convert.ToDouble(need_change_rows[12]);
-        //        double stp4 = Convert.ToDouble(need_change_rows[13]);
-        //        double stp5 = Convert.ToDouble(need_change_rows[14]);
-        //        if (stp1 >= cz && stp1 <= hz && stp2 >= cz && stp2 <= hz && stp3 >= cz && stp3 <= hz && stp4 >= cz && stp4 <= hz && stp5 >= cz && stp5 <= hz)
-        //        {
-        //            need_change_rows["OkOrNg"] = "Ok";
-        //        }
-        //        else
-        //        {
-        //            need_change_rows["OkOrNg"] = "Ng";
-        //        }
-        //        //DataTable dt = dgv1.DataSource as DataTable;
-        //        //dt.Rows.Add(1, "", "", "", "", "", "", textcl.Text);
-
-        //    }
-        //Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-        //string st = string.Format("PN = '{0}'", lble.Text);
-        //DataSet ds1 = mes.GetList(st);
-        //for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
-        //{
-        //    comboBox1.Items.Add(ds1.Tables[0].Rows[i]["step"].ToString());
-        //}
-
-        //    if (comboBox1.Text!=sg)
-        //{
-        //    dt.Columns.Add(comboBox1.Text);
-        //}      
+ 
         private void buttonX3_Click(object sender, EventArgs e)
         {
             int test_index = 0;
             // MessageBox.Show(dgv1.Rows[test_index].Cells["测试结果"] .Value.ToString());
             if (dgv1.Rows.Count >= 1 && (dgv1.Rows[test_index].Cells["测试结果"].Value == null || dgv1.Rows[test_index].Cells["测试结果"].Value.ToString() == ""))
             {
-                // dgv1.Rows.RemoveAt(0);
+                if (this.comboBox1.SelectedIndex + 1 == this.comboBox1.Items.Count)
+                {
+                    this.textcl.Text = "";
+                }
                 if (this.comboBox1.Items.Count > this.comboBox1.SelectedIndex + 1)
                 {
                     this.comboBox1.SelectedIndex += 1;
+                }
+
+            }
+            else {
+                DataTable dt = dgv1.DataSource as DataTable;
+                DataRow need_change_rows = dt.NewRow();
+                // dt.Rows.Add(need_change_rows);
+                dt.Rows.InsertAt(need_change_rows, 0);
+                // 焦点选中
+                this.dgv1.Rows[0].Selected = true;
+                this.dgv1.CurrentCell = this.dgv1.Rows[0].Cells[this.dgv1.CurrentCell.ColumnIndex];
+
+                string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+                string dnum = num.ToString();
+                dnum = "p" + dnum;
+                dgv1.Rows[0].Cells["测试编号"].Value = dnum;
+                dgv1.Rows[0].Cells["测试时间"].Value = DateTime.Now.ToString();
+                if (this.comboBox1.Items.Count > 1)
+                {
+                    this.comboBox1.SelectedIndex = 1;
                 }
             }
         }
 
         private void buttonX4_Click(object sender, EventArgs e)
         {
-            //this.comboBox1.Text = "步骤1";
-            // this.comboBox1.SelectedIndex = 0;
-            //MessageBox.Show(this.dgv1.CurrentRow.Index.ToString());
-
-            //// DataRow dr = (this.dgv1.DataSource as DataTable ).Rows[this.dgv1.CurrentRow.Index];
-            //DataGridViewRow row = this.dgv1.Rows[this.dgv1.CurrentRow.Index];
-            //// 删除选中行， 并且 设置为第一行
-            //this.dgv1.Rows.RemoveAt(this.dgv1.CurrentRow.Index);
-            //this.dgv1.Rows.Insert(0, row);
-
-            // MessageBox.Show();
             string colname = this.dgv1.Columns[this.dgv1.CurrentCell.ColumnIndex].HeaderText;
             colname = colname.Replace("步骤", "");
 
@@ -867,20 +748,6 @@ namespace NepslidingTools.testModel
                 us.time = Convert.ToDateTime(sj);
                 us.step1 = join_point;
                 us.OKorNG = JG;
-                //Maticsoft.Model.test us = new test()
-                //{
-                //    measureb = bh,
-                //    time = Convert.ToDateTime(sj),
-                //    step1 = join_point,
-                //    //step2 = bz2,
-                //    //step3 = bz3,
-                //    //step4 = bz4,
-                //    //step5 = bz5,
-                //    OKorNG = JG,
-                //    PN = ljh,
-                //    workid = global.MachineID
-                //};
-
                 use.Update(us);
             }
             else {
@@ -951,21 +818,6 @@ namespace NepslidingTools.testModel
         /// <param name="e"></param>
         private void buttonX2_Click(object sender, EventArgs e)
         {
-            //DataTable dt = new DataTable();
-            //dgv1.DataSource = dt;
-            //int last_row1 = dgv1.Rows.GetLastRow(DataGridViewElementStates.Displayed);
-            //for (int i = 0; i < dgv1.ColumnCount; i++)
-            //{
-            //    dgv1.Rows[last_row1].Cells[i].Value = "";
-            //}
-            //int test_index = 0;
-            //// MessageBox.Show(dgv1.Rows[test_index].Cells["测试结果"] .Value.ToString());
-            //if (dgv1.Rows.Count>=1 && (dgv1.Rows[test_index].Cells["测试结果"].Value==null || dgv1.Rows[test_index].Cells["测试结果"].Value.ToString() == ""))
-            //{
-            //    dgv1.Rows.RemoveAt(0);
-            //    this.comboBox1.SelectedIndex = 0; 
-            //}
-
             DataTable dtb = this.dgv1.DataSource as DataTable;
             dtb.Clear();
             #region 填充下面的dgv数据
@@ -1018,16 +870,16 @@ namespace NepslidingTools.testModel
             }
         }
 
-        private int position = 0;
         Dictionary<int, FaceStyle> key_colors = new Dictionary<int, FaceStyle>();
-
+        string[] position_list = null;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             clearcolor();
             int index = comboBox1.SelectedIndex;
             string device_type = measures_tables.Rows[index]["devicetype"].ToString();
             string loc_position = measures_tables.Rows[index]["position"].ToString();
-            position = Convert.ToInt32(loc_position);
+
+            position_list = loc_position.Split(',');
             init_portbytype(Convert.ToInt32(device_type));
             init_photobytype(Convert.ToInt32(device_type));
 
@@ -1038,30 +890,7 @@ namespace NepslidingTools.testModel
                 return;
             }
             lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
-            /*
-            Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            string st = string.Format("PN = '{0}'", lble.Text);
-            DataSet ds1 = mes.GetList(st);
-            for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
-            {
-                string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-
-                if (comboBox1.Text == sg)
-                {
-                    textcl.Text = "";
-                    comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
-                    // Maticsoft.BLL.measures aa = new Maticsoft.BLL.measures();
-                    Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                    string st1 = string.Format("PN = '{0}' and  step='{1}'", lble.Text, comboBox1.Text);
-                    DataSet ds11 = mes1.GetList(st1);
-                    for (int j = 0; j < ds11.Tables[0].Rows.Count; j++)
-                    {
-                        txtll.Text = ds11.Tables[0].Rows[j][4].ToString();
-
-                    }
-                }
-                
-            }*/
+          
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -1134,38 +963,76 @@ namespace NepslidingTools.testModel
         }
 
         int n = 0;
+
         private void timer_shine_Tick(object sender, EventArgs e)
         {
             n++;
             if (this.renderView!=null && this.renderView.SceneManager == null)
                 return;
-            SceneNode node = this.renderView.SceneManager.FindNode(new ElementId(position));
-            
-            if (node != null)
+            if(position_list != null)
+            foreach (string ca in position_list)
             {
-                FaceStyle value = null;
-                if (key_colors.TryGetValue(position, out value))
+                int index = 0;
+                if (!int.TryParse(ca, out index))
                 {
-                    if (n % 2 == 0)
+                    continue;
+                }
+                SceneNode node = this.renderView.SceneManager.FindNode(new ElementId(index));
+
+                if (node != null)
+                {
+                    FaceStyle value = null;
+                    if (key_colors.TryGetValue(index, out value))
                     {
-                        node.SetFaceStyle(value);
+                        if (n % 2 == 0)
+                        {
+                            node.SetFaceStyle(value);
+                        }
+                        else
+                        {
+                            FaceStyle fa = new FaceStyle();
+                            fa.SetColor(new ColorValue(1, 1, 1));
+                            node.SetFaceStyle(fa);
+                        }
                     }
                     else
                     {
-                        FaceStyle fa = new FaceStyle();
-                        fa.SetColor(new ColorValue(1, 1, 1));
-                        node.SetFaceStyle(fa);
+                        FaceStyle cur_sty = node.GetFaceStyle();
+                        key_colors.Add(index, cur_sty);
                     }
                 }
-                else {
-                    FaceStyle cur_sty = node.GetFaceStyle();
-                    key_colors.Add(position, cur_sty);
-                }
-                //MessageBox.Show(node.GetFaceStyle().GetColor().ToRGBA().ToString());
-
-                
             }
-       
+        }
+
+        private void StepTestFrom_MouseEnter(object sender, EventArgs e)
+        {
+            //this.renderView.RequestDraw();
+            
+        }
+        private void aa_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel3d_MouseEnter(object sender, EventArgs e)
+        {
+        }
+
+        private void tableLayoutPanel1_MouseEnter(object sender, EventArgs e)
+        {
+            renderView.FitAll();
+            renderView.RequestDraw();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            renderView.Height += 1;
+        }
+
+        private void timer_ref_Tick(object sender, EventArgs e)
+        {
+            this.renderView.Height += 1;
+            this.renderView.Height -= 1;
         }
     }
 }

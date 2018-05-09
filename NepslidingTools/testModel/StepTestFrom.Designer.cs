@@ -85,6 +85,7 @@ namespace NepslidingTools.testModel
             this.timer_portst = new System.Windows.Forms.Timer(this.components);
             this.timer_tostep = new System.Windows.Forms.Timer(this.components);
             this.timer_shine = new System.Windows.Forms.Timer(this.components);
+            this.timer_ref = new System.Windows.Forms.Timer(this.components);
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
@@ -131,6 +132,7 @@ namespace NepslidingTools.testModel
             this.panel3d.TabIndex = 2;
             this.panel3d.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3d_Paint);
             this.panel3d.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3d_MouseDown);
+            this.panel3d.MouseEnter += new System.EventHandler(this.panel3d_MouseEnter);
             this.panel3d.MouseUp += new System.Windows.Forms.MouseEventHandler(this.panel3d_MouseUp);
             // 
             // panel2
@@ -457,6 +459,7 @@ namespace NepslidingTools.testModel
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 42.18329F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1126, 742);
             this.tableLayoutPanel1.TabIndex = 6;
+            this.tableLayoutPanel1.MouseEnter += new System.EventHandler(this.tableLayoutPanel1_MouseEnter);
             // 
             // panel1
             // 
@@ -655,6 +658,10 @@ namespace NepslidingTools.testModel
             // 
             this.timer_shine.Tick += new System.EventHandler(this.timer_shine_Tick);
             // 
+            // timer_ref
+            // 
+            this.timer_ref.Tick += new System.EventHandler(this.timer_ref_Tick);
+            // 
             // StepTestFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -672,6 +679,7 @@ namespace NepslidingTools.testModel
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StepTestFrom_FormClosed);
             this.Load += new System.EventHandler(this.StepTestFrom_Load);
             this.Scroll += new System.Windows.Forms.ScrollEventHandler(this.StepTestFrom_Scroll);
+            this.MouseEnter += new System.EventHandler(this.StepTestFrom_MouseEnter);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -740,5 +748,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer timer_tostep;
         private System.Windows.Forms.Timer timer_shine;
+        private System.Windows.Forms.Timer timer_ref;
     }
 }

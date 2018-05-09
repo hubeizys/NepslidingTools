@@ -352,6 +352,7 @@ namespace NepslidingTools.toolbox
             this.username.Caption = "用户名";
             this.username.FieldName = "user";
             this.username.Name = "username";
+            this.username.OptionsColumn.AllowEdit = false;
             this.username.Visible = true;
             this.username.VisibleIndex = 0;
             // 
@@ -360,6 +361,7 @@ namespace NepslidingTools.toolbox
             this.addTime.Caption = "添加时间";
             this.addTime.FieldName = "addtime";
             this.addTime.Name = "addTime";
+            this.addTime.OptionsColumn.AllowEdit = false;
             this.addTime.Visible = true;
             this.addTime.VisibleIndex = 1;
             // 
@@ -368,6 +370,7 @@ namespace NepslidingTools.toolbox
             this.power.Caption = "权利";
             this.power.FieldName = "power";
             this.power.Name = "power";
+            this.power.OptionsColumn.AllowEdit = false;
             this.power.Visible = true;
             this.power.VisibleIndex = 2;
             // 

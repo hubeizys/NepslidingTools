@@ -33,13 +33,22 @@ namespace NepslidingTools.testModel
 
         private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
         {
-            // Console.WriteLine("aaaaaaaaaaa");
             SceneNode sc_node = this.renderView.SceneManager.GetSelectedNode();
             if (sc_node != null)
             {
-                MessageBox.Show(sc_node.GetName() + "===" + sc_node.GetHashCode() + "--00--" + sc_node.GetId().AsInt());
+                // MessageBox.Show(sc_node.GetName() + "===" + sc_node.GetHashCode() + "--00--" + sc_node.GetId().AsInt());
                 FaceStyle style = new FaceStyle();
                 this.renderView.SceneManager.ClearSelection();
+                string[] pos_list = gdno_tb.Text.Split(',');
+                string id = sc_node.GetId().AsInt().ToString();
+                if (-1 == Array.IndexOf(pos_list, id))
+                {
+                    if (gdno_tb.Text != "")
+                    {
+                        gdno_tb.Text += ",";
+                    }
+                    gdno_tb.Text += id;
+                }
             }
         }
 
@@ -60,39 +69,9 @@ namespace NepslidingTools.testModel
             //绑定推荐的数据源  
             comboBox_devs.Items.AddRange(device_lists.ToArray());
             #endregion
-
-            //MessageBox.Show("000000");
-
             // textbox_ljh.Text = Program.gdvid;
             textbox_ljh.Text = LjHao;
             initdgv();
-            //Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
-            //string aa = string.Format(" componentId = '{0}' ORDER BY step ", textbox_ljh.Text);
-            //DataSet ds = use.GetListByPage2(aa, "", 0 ,100);
-            //dgv.DataSource = ds.Tables[0];
-            //foreach (DataGridViewRow row in dgv.Rows)
-            //{
-            //    row.Cells["step"].Value = row.Index + 1;
-            //}
-            //global.CurActive = "TestBZFrom";
-            //Console.WriteLine("当前激活界面是: " + this.name);
-            ////Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
-            ////this.Size = ScreenArea.Size;
-            //Location = (Point)new Size(0, 0);
-            //this.TopMost = true;
-            //this.Activate();
-
-            //DataTable dt = new DataTable();//创建表
-            //dt.Columns.Add("step", typeof(int));//添加列
-            //dt.Columns.Add("tool", typeof(String));
-            //dt.Columns.Add("testlocal", typeof(String));
-            //dt.Columns.Add("bzz", typeof(double));//添加列
-            //dt.Columns.Add("sgc", typeof(double));
-            //dt.Columns.Add("xgc", typeof(double));
-            //dt.Rows.Add(new object[] { 1, "卡尺001", "工位1" , 10, 0.12, 0.123});//添加行
-            //dt.Rows.Add(new object[] { 2, "卡尺011", "工位12", 10, 0.0, 1.4 });
-            //dt.Rows.Add(new object[] { 3, "卡尺301", "工位92", 10, 2.6, 6.23 });
-            //this.dgv.DataSource = dt;
         }
 
         private void allupdate()

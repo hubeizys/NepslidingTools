@@ -163,8 +163,7 @@ namespace NepslidingTools.toolbox
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // MessageBox.Show(e.ColumnIndex.ToString());
-            // componentId
+            //MessageBox.Show(e.ColumnIndex.ToString());
             TestBZFrom tb = new TestBZFrom();
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
             {
@@ -177,7 +176,13 @@ namespace NepslidingTools.toolbox
                 // 数模处理
                 if (e.ColumnIndex == 7)
                 {
-
+                    string cur_dir = System.Environment.CurrentDirectory;
+                    ofd_sm.InitialDirectory = cur_dir+"\\shumo";
+                    if (this.ofd_sm.ShowDialog() == DialogResult.OK)
+                    {
+                        MessageBox.Show(ofd_sm.FileName);
+                    }
+                    this.dataGridView1.CurrentCell.Value = Path.GetFileName(ofd_sm.FileName);
                 }
 
             }
