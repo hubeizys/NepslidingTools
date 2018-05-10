@@ -34,8 +34,8 @@ D:\360Downloads\NepslidingTools\NepslidingTools\DAL\bin\Debug\Maticsoft.Common.p
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\bin\Debug\Maticsoft.DBUtility.pdb
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\bin\Debug\Maticsoft.DBUtility.dll.config
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\bin\Debug\Maticsoft.Model.pdb
-D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\DAL.csproj.CoreCompileInputs.cache
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\DAL.csproj.CopyComplete
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\Maticsoft.DAL.dll
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\Maticsoft.DAL.pdb
+D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\DAL.csprojAssemblyReference.cache

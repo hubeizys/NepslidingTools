@@ -28,11 +28,11 @@ namespace NepslidingTools.testModel
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem1 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.Utils.KeyShortcut keyShortcut1 = new DevExpress.Utils.KeyShortcut();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem16 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem17 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem18 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.Utils.KeyShortcut keyShortcut6 = new DevExpress.Utils.KeyShortcut();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
             this.tlp_main = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.head_tpl = new System.Windows.Forms.TableLayoutPanel();
@@ -69,6 +69,7 @@ namespace NepslidingTools.testModel
             this.fuche = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.label_result = new System.Windows.Forms.TextBox();
             this.tlp_main.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.head_tpl.SuspendLayout();
@@ -87,16 +88,18 @@ namespace NepslidingTools.testModel
             this.tlp_main.ColumnCount = 1;
             this.tlp_main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tlp_main.Controls.Add(this.groupBox1, 0, 0);
-            this.tlp_main.Controls.Add(this.panelend, 0, 2);
-            this.tlp_main.Controls.Add(this.query_gc, 0, 3);
+            this.tlp_main.Controls.Add(this.panelend, 0, 3);
+            this.tlp_main.Controls.Add(this.query_gc, 0, 4);
             this.tlp_main.Controls.Add(this.dgv, 0, 1);
+            this.tlp_main.Controls.Add(this.label_result, 0, 2);
             this.tlp_main.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlp_main.ForeColor = System.Drawing.Color.Black;
             this.tlp_main.Location = new System.Drawing.Point(0, 0);
             this.tlp_main.Name = "tlp_main";
-            this.tlp_main.RowCount = 4;
+            this.tlp_main.RowCount = 5;
             this.tlp_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.tlp_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlp_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
             this.tlp_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tlp_main.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tlp_main.Size = new System.Drawing.Size(909, 732);
@@ -269,16 +272,16 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
-            radioGroupItem1.Description = "OK";
-            radioGroupItem1.Value = null;
-            radioGroupItem2.Description = "NG";
-            radioGroupItem2.Value = null;
-            radioGroupItem3.Description = "All";
-            radioGroupItem3.Value = null;
+            radioGroupItem16.Description = "OK";
+            radioGroupItem16.Value = null;
+            radioGroupItem17.Description = "NG";
+            radioGroupItem17.Value = null;
+            radioGroupItem18.Description = "All";
+            radioGroupItem18.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            radioGroupItem1,
-            radioGroupItem2,
-            radioGroupItem3});
+            radioGroupItem16,
+            radioGroupItem17,
+            radioGroupItem18});
             this.radioGroup1.Size = new System.Drawing.Size(114, 23);
             this.radioGroup1.TabIndex = 8;
             // 
@@ -502,7 +505,7 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1.AutoHeight = false;
             this.repositoryItemButtonEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut1, serializableAppearanceObject1, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut6, serializableAppearanceObject6, "", null, null, true)});
             this.repositoryItemButtonEdit1.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -520,7 +523,7 @@ namespace NepslidingTools.testModel
             this.dgv.Location = new System.Drawing.Point(4, 105);
             this.dgv.Name = "dgv";
             this.dgv.RowTemplate.Height = 27;
-            this.dgv.Size = new System.Drawing.Size(901, 569);
+            this.dgv.Size = new System.Drawing.Size(901, 488);
             this.dgv.TabIndex = 5;
             this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
             this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
@@ -544,6 +547,16 @@ namespace NepslidingTools.testModel
             // 
             this.saveFileDialog1.Filter = "excelÎÄ¼þ|*.xls";
             // 
+            // label_result
+            // 
+            this.label_result.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_result.Enabled = false;
+            this.label_result.Location = new System.Drawing.Point(4, 600);
+            this.label_result.Multiline = true;
+            this.label_result.Name = "label_result";
+            this.label_result.Size = new System.Drawing.Size(901, 74);
+            this.label_result.TabIndex = 6;
+            // 
             // QueryFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -561,6 +574,7 @@ namespace NepslidingTools.testModel
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.QueryFrom_FormClosed);
             this.Load += new System.EventHandler(this.QueryFrom_Load);
             this.tlp_main.ResumeLayout(false);
+            this.tlp_main.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.head_tpl.ResumeLayout(false);
             this.head_tpl.PerformLayout();
@@ -612,5 +626,6 @@ namespace NepslidingTools.testModel
         private DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn fuche;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.TextBox label_result;
     }
 }

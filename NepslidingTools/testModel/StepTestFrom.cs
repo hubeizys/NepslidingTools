@@ -553,7 +553,7 @@ namespace NepslidingTools.testModel
             {
                 string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                 string dnum = num.ToString();
-                dnum = "p" + dnum;
+                
                 dgv1.Rows[test_row].Cells["²âÊÔ±àºÅ"].Value = dnum;
                 dgv1.Rows[test_row].Cells["²âÊÔÊ±¼ä"].Value = DateTime.Now.ToString();
             }
@@ -626,7 +626,7 @@ namespace NepslidingTools.testModel
 
                 string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
                 string dnum = num.ToString();
-                dnum = "p" + dnum;
+           
                 dgv1.Rows[0].Cells["²âÊÔ±àºÅ"].Value = dnum;
                 dgv1.Rows[0].Cells["²âÊÔÊ±¼ä"].Value = DateTime.Now.ToString();
                 if (this.comboBox1.Items.Count > 1)

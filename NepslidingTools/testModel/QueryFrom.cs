@@ -144,71 +144,9 @@ namespace NepslidingTools.testModel
             stf.Show();
         }
 
-        private void buttonX1_Click(object sender, EventArgs e)
+        private void jisuan()
         {
-            #region ----------------------------------
-            //SaveFileDialog dlg = new SaveFileDialog();
-            //dlg.Filter = "Execl files (*.xls)|*.xls";
-            //dlg.FilterIndex = 0;
-            //dlg.RestoreDirectory = true;
-            //dlg.CreatePrompt = true;
-            //dlg.Title = "保存为Excel文件";
-
-            //if (dlg.ShowDialog() == DialogResult.OK)
-            //{
-            //    Stream myStream;
-            //    myStream = dlg.OpenFile();
-            //    StreamWriter sw = new StreamWriter(myStream, System.Text.Encoding.GetEncoding(-0));
-            //    string columnTitle = "";
-            //    try
-            //    {
-            //        //写入列标题     
-            //        for (int i = 0; i < dgv.ColumnCount; i++)
-            //        {
-            //            if (i > 0)
-            //            {
-            //                columnTitle += "/t";
-            //            }
-            //            columnTitle += dgv.Columns[i].HeaderText;
-            //        }
-            //        sw.WriteLine(columnTitle);
-
-            //        //写入列内容     
-            //        for (int j = 0; j < dgv.Rows.Count; j++)
-            //        {
-            //            string columnValue = "";
-            //            for (int k = 0; k < dgv.Columns.Count; k++)
-            //            {
-            //                if (k > 0)
-            //                {
-            //                    columnValue += "/t";
-            //                }
-            //                if (dgv.Rows[j].Cells[k].Value == null)
-            //                    columnValue += "";
-            //                else
-            //                    columnValue += dgv.Rows[j].Cells[k].Value.ToString().Trim();
-            //            }
-            //            sw.WriteLine(columnValue);
-            //        }
-            //        sw.Close();
-            //        myStream.Close();
-            //    }
-            //    catch (Exception er)
-            //    {
-            //        MessageBox.Show(er.ToString());
-            //    }
-            //    finally
-            //    {
-            //        sw.Close();
-            //        myStream.Close();
-            //    }
-            //}
-            #endregion
-            //daochu dc = new daochu();
-            //dc.resa = this;
-            //dc.ShowDialog();
-
-            DataTable dt2 = new DataTable();
+            DataTable dt2 = NewMethod();
             //构建一个计算用的表格
             Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
             List<Maticsoft.Model.measures> mea_list = mea_bll.GetModelList(string.Format(" componentId = '{0}' order by step ", this.comp_type));
@@ -217,16 +155,16 @@ namespace NepslidingTools.testModel
                 dt2.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
             }
 
-
             // 取得数据。 分解数据。 填充数据
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
-            radioGroup1.SelectedIndex = 2;
             string where_string1 = this.query_wherestring();
-            DataSet ds =  test_bll.GetList(where_string1);
+            radioGroup1.SelectedIndex = 2;
+            DataSet ds = test_bll.GetList(where_string1);
+            //DataTable dt = this.dgv.DataSource as DataTable;
             DataTable dt = ds.Tables[0];
 
             List<double[]> bbb = new List<double[]>();
-            foreach(DataRow dr in dt.Rows)
+            foreach (DataRow dr in dt.Rows)
             {
                 string step = dr["step1"].ToString();
                 string[] temp_step = step.Split('/');
@@ -238,15 +176,13 @@ namespace NepslidingTools.testModel
                     {
                         double temp_d = 0;
                         Double.TryParse(temp_step[i], out temp_d);
-                        dr_temp["s"+(i+1).ToString()] = temp_d;
+                        dr_temp["s" + (i + 1).ToString()] = temp_d;
                         Console.WriteLine("temp_step[i] == " + temp_step[i] + " ===  " + i);
                     }
                     dt2.Rows.Add(dr_temp);
                     //Console.WriteLine(Environment.NewLine);
                 }
             }
-
-
             /*
              CPK=Cp*（1-|Ca|）
             Ca (Capability of Accuracy)：制程准确度；在衡量「实际平均值」与「规格中心值」之一致性。对於单边规格，因不存在规格中心，因此不存在Ca；对於双边规格，Ca=(ˉx-U)/(T/2)。
@@ -263,38 +199,136 @@ namespace NepslidingTools.testModel
             // 分析数据
             // mea_list
             string all_cpk = "";
+            Dictionary<string, double> cpk_dic = new Dictionary<string, double>();
             foreach (DataColumn aa in dt2.Columns)
             {
                 string col_name = aa.ColumnName.Replace("s", "");
-                List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x=>x.step == Convert.ToInt32(col_name)).Select(x =>x).ToList<Maticsoft.Model.measures>();
+                List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x => x.step == Convert.ToInt32(col_name)).Select(x => x).ToList<Maticsoft.Model.measures>();
                 //string rr = dt2.Select("", aa.ColumnName + " DESC")[0][aa.ColumnName].ToString();
-                object max = dt2.Compute(string.Format( "Max({0})", aa.ColumnName), "true");
+                object max = dt2.Compute(string.Format("Max({0})", aa.ColumnName), "true");
                 //  MessageBox.Show(max.ToString());
                 object min = dt2.Compute(string.Format("Min({0})", aa.ColumnName), "true");
 
                 double sta = Convert.ToDouble(mea_obj[0].standardv);
 
-                double va_x1 = Convert.ToDouble( max is DBNull ? 0:max);
-                double va_x2 = Convert.ToDouble( min is DBNull ? 0:min);
+                double va_x1 = Convert.ToDouble(max is DBNull ? 0 : max);
+                double va_x2 = Convert.ToDouble(min is DBNull ? 0 : min);
                 double va_x = va_x1 - sta > sta - va_x2 ? va_x1 : va_x2;
                 double va_s = sta - va_x;
 
                 double tu = sta + Convert.ToDouble(mea_obj[0].up);
-                double ti = sta - Convert.ToDouble(mea_obj[0].down) ;
+                double ti = sta - Convert.ToDouble(mea_obj[0].down);
 
                 double v_m = (tu + ti) / 2;
                 double sgm = Math.Abs(sta - va_x);
                 double v_t = tu - ti;
 
-                double cpk = (v_t - 2 * sgm) /( 6 * va_s);
+                double cpk = (v_t - 2 * sgm) / (6 * va_s);
                 Console.WriteLine(string.Format("max == {0} --- min {1}----- {2}::{3}", max, min, mea_obj[0].up, mea_obj[0].down));
                 Console.WriteLine(Environment.NewLine);
                 Console.WriteLine(string.Format("cpk == {0}", cpk));
-                all_cpk += "\t" + aa.ColumnName + "= " + cpk;
+                all_cpk += " " + aa.ColumnName + "= " + cpk;
+                cpk_dic.Add(aa.ColumnName, cpk);
             }
             string op = "\t" + get_okpara();
             //MessageBox.Show("all_cpk" + all_cpk + "   op" + op);
-            string all_op = "all_cpk" + all_cpk + "   op" + op;
+            label_result.Invoke(new Action(() => {
+                label_result.Text = string.Format("all_cpk" + all_cpk + "   op" + op);
+            }));
+        }
+
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            DataTable dt2 = NewMethod();
+            //构建一个计算用的表格
+            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+            List<Maticsoft.Model.measures> mea_list = mea_bll.GetModelList(string.Format(" componentId = '{0}' order by step ", this.comp_type));
+            foreach (Maticsoft.Model.measures mea_obj in mea_list)
+            {
+                dt2.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
+            }
+
+            // 取得数据。 分解数据。 填充数据
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            string where_string1 = this.query_wherestring();
+            radioGroup1.SelectedIndex = 2;
+            DataSet ds = test_bll.GetList(where_string1);
+            //DataTable dt = this.dgv.DataSource as DataTable;
+            DataTable dt = ds.Tables[0];
+
+            List<double[]> bbb = new List<double[]>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                string step = dr["step1"].ToString();
+                string[] temp_step = step.Split('/');
+
+                if (temp_step.Length == dt2.Columns.Count)
+                {
+                    DataRow dr_temp = dt2.NewRow();
+                    for (int i = 0; i < temp_step.Length; i++)
+                    {
+                        double temp_d = 0;
+                        Double.TryParse(temp_step[i], out temp_d);
+                        dr_temp["s" + (i + 1).ToString()] = temp_d;
+                        Console.WriteLine("temp_step[i] == " + temp_step[i] + " ===  " + i);
+                    }
+                    dt2.Rows.Add(dr_temp);
+                    //Console.WriteLine(Environment.NewLine);
+                }
+            }
+            /*
+             CPK=Cp*（1-|Ca|）
+            Ca (Capability of Accuracy)：制程准确度；在衡量「实际平均值」与「规格中心值」之一致性。对於单边规格，因不存在规格中心，因此不存在Ca；对於双边规格，Ca=(ˉx-U)/(T/2)。
+            Cp (Capability of Precision)：制程精密度；在衡量「规格公差宽度」与「制程变异宽度」之比例。对於单边规格，只有上限和中心值，Cpu = | USL-ˉx | / 3σ 或 只有下限和中心值，Cpl = | ˉx -LSL | / 3σ；对於双边规格：Cp=(USL-LSL) / 6σ=T/6σ
+            注意: 计算Cpk时，取样数据至少应有20组数据，而且数据要具有一定代表性。
+
+            某零件质量要求为20±0.15，抽样100件，测得：-x =20.05mm；s=0.05mm，求过程能力指数。根据零件的规格要求，Tu=20.15，Tl=19.85
+            M=Tu+Tl/2=(20.15+19.85)/2=20.00
+            ε=|M- 20.05|=0.05
+            T = USL - LSL = 20.15 - 19.85 = 0.3
+            CPK = CP*（|1-CA|）
+            = (T-2ε)/6s = (0.3-2*0.05)/(6*0.05)=(0.3-0.1)/(6*0.05)≈0.67
+            */
+            // 分析数据
+            // mea_list
+            string all_cpk = "";
+            Dictionary<string, double> cpk_dic = new Dictionary<string, double>();
+            foreach (DataColumn aa in dt2.Columns)
+            {
+                string col_name = aa.ColumnName.Replace("s", "");
+                List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x => x.step == Convert.ToInt32(col_name)).Select(x => x).ToList<Maticsoft.Model.measures>();
+                //string rr = dt2.Select("", aa.ColumnName + " DESC")[0][aa.ColumnName].ToString();
+                object max = dt2.Compute(string.Format("Max({0})", aa.ColumnName), "true");
+                //  MessageBox.Show(max.ToString());
+                object min = dt2.Compute(string.Format("Min({0})", aa.ColumnName), "true");
+
+                double sta = Convert.ToDouble(mea_obj[0].standardv);
+
+                double va_x1 = Convert.ToDouble(max is DBNull ? 0 : max);
+                double va_x2 = Convert.ToDouble(min is DBNull ? 0 : min);
+                double va_x = va_x1 - sta > sta - va_x2 ? va_x1 : va_x2;
+                double va_s = sta - va_x;
+
+                double tu = sta + Convert.ToDouble(mea_obj[0].up);
+                double ti = sta - Convert.ToDouble(mea_obj[0].down);
+
+                double v_m = (tu + ti) / 2;
+                double sgm = Math.Abs(sta - va_x);
+                double v_t = tu - ti;
+
+                double cpk = (v_t - 2 * sgm) / (6 * va_s);
+                Console.WriteLine(string.Format("max == {0} --- min {1}----- {2}::{3}", max, min, mea_obj[0].up, mea_obj[0].down));
+                Console.WriteLine(Environment.NewLine);
+                Console.WriteLine(string.Format("cpk == {0}", cpk));
+                all_cpk += " " + aa.ColumnName + "= " + cpk;
+                cpk_dic.Add(aa.ColumnName, cpk);
+            }
+            string op = "\t" + get_okpara();
+            //MessageBox.Show("all_cpk" + all_cpk + "   op" + op);
+            label_result.Invoke(new Action(()=> {
+                label_result.Text = string.Format("all_cpk" + all_cpk + "   op" + op);
+            }));
+            string all_op =  "   合格率" + op;
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 string fName = saveFileDialog1.FileName;
@@ -302,8 +336,55 @@ namespace NepslidingTools.testModel
                 //isFileHaveName = true;
                 //richTextBox1.Text = fileOpen.ReadFile();
                 //richTextBox1.AppendText("");
-                this.DataToExcel(dt, fName, all_op);
+                // this.DataToExcel(dt, fName, all_op);
+                Task daochu_task = new Task(new Action(()=> {
+                    DataTable all_data = dt.Copy();
+                    // 添加列
+                    foreach (Maticsoft.Model.measures mea_obj in mea_list)
+                    {
+                        all_data.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
+                    }
+
+                    foreach (DataRow dr in all_data.Rows)
+                    {
+                        dr["measureb"] = "'" + dr["measureb"];
+                        string step = dr["step1"].ToString();
+                        string[] temp_step = step.Split('/');
+                        
+                        for (int i =0; i< temp_step.Length ;i++)
+                        {
+                            string colname = "s" + (i + 1).ToString();
+                            if(all_data.Columns.Contains(colname))
+                            {
+                                double a = 0;
+                                double.TryParse(temp_step[i], out a);
+                                dr[colname] = a;
+                            }
+                        }
+                    }
+                    DataRow dr_cpk = all_data.NewRow();
+                    foreach (KeyValuePair<string, double> kp in cpk_dic)
+                    {
+                        if (all_data.Columns.Contains(kp.Key))
+                        {
+                            dr_cpk[kp.Key] = kp.Value;
+                        }
+                    }
+                    all_data.Rows.Add(dr_cpk);
+                    all_data.Columns.Remove("step1");
+                    this.DataToExcel(all_data, fName, all_op);
+                }));
+                daochu_task.Start();
             }
+        }
+
+        private static DataTable NewMethod()
+        {
+            //daochu dc = new daochu();
+            //dc.resa = this;
+            //dc.ShowDialog();
+
+            return new DataTable();
         }
 
         /// <summary>  
@@ -455,7 +536,7 @@ namespace NepslidingTools.testModel
             }
         }
 
-        private void reQuery()
+        private void reQuery(bool all=false)
         {
 
             string where_string = this.query_wherestring();
@@ -496,7 +577,14 @@ namespace NepslidingTools.testModel
             // 查询出来test 数据
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
-            DataSet ds = test_bll.GetListByPage(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
+            DataSet ds = new DataSet();
+            if (all == true)
+            {
+                ds = test_bll.GetListByPage(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
+            }
+            else {
+                ds = test_bll.GetListByPage(where_string, "", 0, 10000);
+            }
             DataTable dt = ds.Tables[0];
             DataTable dest_table = dgv.DataSource as DataTable;
 
@@ -576,6 +664,8 @@ namespace NepslidingTools.testModel
             int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
             string page_info = string.Format("{0}/{1}", 1, tot_page_index);
             this.labelX1.Text = page_info;
+
+            jisuan();
             return;
 
             DataTable dtb = new DataTable();

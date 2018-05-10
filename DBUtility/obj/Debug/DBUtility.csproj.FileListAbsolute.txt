@@ -15,8 +15,8 @@ D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\bin\Debug\IBatisNet.Co
 D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\bin\Debug\IBatisNet.DataMapper.dll
 D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\bin\Debug\MySql.Data.dll
 D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\bin\Debug\System.Data.SQLite.DLL
-D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\obj\Debug\DBUtility.csprojResolveAssemblyReference.cache
 D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\obj\Debug\DBUtility.csproj.CoreCompileInputs.cache
 D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\obj\Debug\DBUtility.csproj.CopyComplete
 D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\obj\Debug\Maticsoft.DBUtility.dll
 D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\obj\Debug\Maticsoft.DBUtility.pdb
+D:\360Downloads\NepslidingTools\NepslidingTools\DBUtility\obj\Debug\DBUtility.csprojAssemblyReference.cache
