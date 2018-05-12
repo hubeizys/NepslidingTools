@@ -118,8 +118,9 @@ namespace NepslidingTools
                 baseconfig bc_xin = new baseconfig
                 {
                     companyName = "test",
-                    expTime = DateTime.Now.AddDays(7),
+                    expTime = DateTime.Now.AddMonths(7),
                     version = "0.1",
+                    startTime = DateTime.Now,
 
                 };
                 if (config_bll.Add(bc_xin))
@@ -138,6 +139,7 @@ namespace NepslidingTools
                 //MessageBox.Show("");
                 List<baseconfig> bc_list = config_bll.GetModelList("");
                 //MessageBox.Show("exptime ====== datetime " +  bc_list[0].expTime.ToString() +  DateTime.Now.ToString());
+                global.startTime = (DateTime)bc_list[0].startTime;
                 if (bc_list[0].expTime > DateTime.Now)
                 {
                     MessageBox.Show("使用期限" + bc_list[0].expTime);

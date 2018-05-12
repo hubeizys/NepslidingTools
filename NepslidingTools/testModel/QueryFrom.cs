@@ -99,6 +99,9 @@ namespace NepslidingTools.testModel
             textBox_ljhao.Text = Program.gdvid;
             global.CurActive = "QueryFrom";
 
+            this.timeselect_dtp.Value = global.startTime;
+            this.dgv.ReadOnly = true;
+
             #region 一共有多少
             // 下一页
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
@@ -636,12 +639,28 @@ namespace NepslidingTools.testModel
                             }
                             double test_info = Convert.ToDouble(test_str);
                             dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
-                            if ( Convert.ToDouble(mea_obj.down) <= test_info &&  Convert.ToDouble(mea_obj.up) >= test_info)
+                            if (stand_info - Convert.ToDouble(mea_obj.down) > test_info)
                             {
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Blue;
                             }
-                            else {
+
+                            else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
+                            {
                                 dgv.Rows[i].Cells[sg].Style.BackColor = Color.Red;
                             }
+                            else
+                            {
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Green;
+                            }
+                            //else if ()
+                            //{ }
+
+                            //if (  <= test_info &&  Convert.ToDouble(mea_obj.up) >= test_info)
+                            //{
+                            //}
+                            //else {
+                            //    dgv.Rows[i].Cells[sg].Style.BackColor = Color.Red;
+                            //}
                         }
                     }
                 }
@@ -891,9 +910,8 @@ namespace NepslidingTools.testModel
 
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            Program.txtbh = textBox_ljhao.Text;
-            StepTestFrom stf = new StepTestFrom();
-            stf.Show();
+            //MessageBox.Show(dgv.CurrentCell.ColumnIndex.ToString());
+            contextMenuStrip1.Show(Cursor.Position);
         }
 
         private void dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -991,6 +1009,46 @@ namespace NepslidingTools.testModel
             string page_info = string.Format("{0}/{1}", cur_page_index, tot_page_index);
             this.labelX1.Text = page_info;
             this.reQuery();
+        }
+
+        private void 重测ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Program.txtbh = textBox_ljhao.Text;
+            StepTestFrom stf = new StepTestFrom();
+            stf.Show();
+        }
+
+        private void bt_ri_Click(object sender, EventArgs e)
+        {
+            DateTime cur = DateTime.Now;
+            DateTime start = cur.AddDays(-1);
+
+            timeselect_dtp.Value = start;
+            dtp.Value = cur;
+            reQuery();
+            jisuan();
+        }
+
+        private void bt_zou_Click(object sender, EventArgs e)
+        {
+            DateTime cur = DateTime.Now;
+            DateTime start = cur.AddDays(-7);
+
+            timeselect_dtp.Value = start;
+            dtp.Value = cur;
+            reQuery();
+            jisuan();
+        }
+
+        private void bt_yue_Click(object sender, EventArgs e)
+        {
+            DateTime cur = DateTime.Now;
+            DateTime start = cur.AddMonths(-1) ;
+
+            timeselect_dtp.Value = start;
+            dtp.Value = cur;
+            reQuery();
+            jisuan();
         }
     }
 }

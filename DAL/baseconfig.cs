@@ -17,18 +17,20 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string version, DateTime expTime, string companyName)
+        public bool Exists(string version, DateTime startTime, DateTime expTime, string companyName)
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("select count(1) from baseconfig");
-            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
+            strSql.Append(" where  version=@ version and startTime=@startTime and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@startTime", MySqlDbType.DateTime),
                     new MySqlParameter("@expTime", MySqlDbType.DateTime),
                     new MySqlParameter("@companyName", MySqlDbType.VarChar,255)         };
             parameters[0].Value = version;
-            parameters[1].Value = expTime;
-            parameters[2].Value = companyName;
+            parameters[1].Value = startTime;
+            parameters[2].Value = expTime;
+            parameters[3].Value = companyName;
 
             return DbHelperMySQL.Exists(strSql.ToString(), parameters);
         }
@@ -41,16 +43,18 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into baseconfig(");
-            strSql.Append(" ` version`,expTime,companyName)");
+            strSql.Append(" version,startTime,expTime,companyName)");
             strSql.Append(" values (");
-            strSql.Append("@version,@expTime,@companyName)");
+            strSql.Append("@ version,@startTime,@expTime,@companyName)");
             MySqlParameter[] parameters = {
-                    new MySqlParameter("@version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@startTime", MySqlDbType.DateTime),
                     new MySqlParameter("@expTime", MySqlDbType.DateTime),
                     new MySqlParameter("@companyName", MySqlDbType.VarChar,255)};
             parameters[0].Value = model.version;
-            parameters[1].Value = model.expTime;
-            parameters[2].Value = model.companyName;
+            parameters[1].Value = model.startTime;
+            parameters[2].Value = model.expTime;
+            parameters[3].Value = model.companyName;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -70,16 +74,19 @@ namespace Maticsoft.DAL
             StringBuilder strSql = new StringBuilder();
             strSql.Append("update baseconfig set ");
             strSql.Append(" version=@ version,");
+            strSql.Append("startTime=@startTime,");
             strSql.Append("expTime=@expTime,");
             strSql.Append("companyName=@companyName");
-            //strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
+            strSql.Append(" where  version=@ version and startTime=@startTime and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@startTime", MySqlDbType.DateTime),
                     new MySqlParameter("@expTime", MySqlDbType.DateTime),
                     new MySqlParameter("@companyName", MySqlDbType.VarChar,255)};
             parameters[0].Value = model.version;
-            parameters[1].Value = model.expTime;
-            parameters[2].Value = model.companyName;
+            parameters[1].Value = model.startTime;
+            parameters[2].Value = model.expTime;
+            parameters[3].Value = model.companyName;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -95,19 +102,21 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(string version, DateTime expTime, string companyName)
+        public bool Delete(string version, DateTime startTime, DateTime expTime, string companyName)
         {
 
             StringBuilder strSql = new StringBuilder();
             strSql.Append("delete from baseconfig ");
-            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
+            strSql.Append(" where  version=@ version and startTime=@startTime and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@startTime", MySqlDbType.DateTime),
                     new MySqlParameter("@expTime", MySqlDbType.DateTime),
                     new MySqlParameter("@companyName", MySqlDbType.VarChar,255)         };
             parameters[0].Value = version;
-            parameters[1].Value = expTime;
-            parameters[2].Value = companyName;
+            parameters[1].Value = startTime;
+            parameters[2].Value = expTime;
+            parameters[3].Value = companyName;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -124,19 +133,21 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.baseconfig GetModel(string version, DateTime expTime, string companyName)
+        public Maticsoft.Model.baseconfig GetModel(string version, DateTime startTime, DateTime expTime, string companyName)
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  version,expTime,companyName from baseconfig ");
-            strSql.Append(" where  version=@ version and expTime=@expTime and companyName=@companyName ");
+            strSql.Append("select  version,startTime,expTime,companyName from baseconfig ");
+            strSql.Append(" where  version=@ version and startTime=@startTime and expTime=@expTime and companyName=@companyName ");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@ version", MySqlDbType.VarChar,32),
+                    new MySqlParameter("@startTime", MySqlDbType.DateTime),
                     new MySqlParameter("@expTime", MySqlDbType.DateTime),
                     new MySqlParameter("@companyName", MySqlDbType.VarChar,255)         };
             parameters[0].Value = version;
-            parameters[1].Value = expTime;
-            parameters[2].Value = companyName;
+            parameters[1].Value = startTime;
+            parameters[2].Value = expTime;
+            parameters[3].Value = companyName;
 
             Maticsoft.Model.baseconfig model = new Maticsoft.Model.baseconfig();
             DataSet ds = DbHelperMySQL.Query(strSql.ToString(), parameters);
@@ -163,6 +174,10 @@ namespace Maticsoft.DAL
                 {
                     model.version = row[" version"].ToString();
                 }
+                if (row["startTime"] != null && row["startTime"].ToString() != "")
+                {
+                    model.startTime = DateTime.Parse(row["startTime"].ToString());
+                }
                 if (row["expTime"] != null && row["expTime"].ToString() != "")
                 {
                     model.expTime = DateTime.Parse(row["expTime"].ToString());
@@ -181,7 +196,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select  ` version`,expTime,companyName ");
+            strSql.Append("select baseconfig.` version`,startTime,expTime,companyName ");
             strSql.Append(" FROM baseconfig ");
             if (strWhere.Trim() != "")
             {

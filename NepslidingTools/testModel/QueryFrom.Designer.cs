@@ -28,11 +28,12 @@ namespace NepslidingTools.testModel
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem16 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem17 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem18 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.Utils.KeyShortcut keyShortcut6 = new DevExpress.Utils.KeyShortcut();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem4 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem5 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem6 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.Utils.KeyShortcut keyShortcut2 = new DevExpress.Utils.KeyShortcut();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             this.tlp_main = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.head_tpl = new System.Windows.Forms.TableLayoutPanel();
@@ -55,6 +56,18 @@ namespace NepslidingTools.testModel
             this.button1 = new System.Windows.Forms.Button();
             this.query_gc = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.dgv = new System.Windows.Forms.DataGridView();
+            this.label_result = new System.Windows.Forms.TextBox();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.重测ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.取消ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fuche = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.bt_ri = new System.Windows.Forms.Button();
+            this.bt_zou = new System.Windows.Forms.Button();
+            this.bt_yue = new System.Windows.Forms.Button();
             this.bomNo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TestNo = new DevExpress.XtraGrid.Columns.GridColumn();
             this.TestLoc = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -65,11 +78,6 @@ namespace NepslidingTools.testModel
             this.result = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Retest = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
-            this.dgv = new System.Windows.Forms.DataGridView();
-            this.fuche = new DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.label_result = new System.Windows.Forms.TextBox();
             this.tlp_main.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.head_tpl.SuspendLayout();
@@ -77,8 +85,10 @@ namespace NepslidingTools.testModel
             this.panelend.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.query_gc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // tlp_main
@@ -138,6 +148,7 @@ namespace NepslidingTools.testModel
             this.head_tpl.Controls.Add(this.radioGroup1, 1, 1);
             this.head_tpl.Controls.Add(this.textBox_ljhao, 1, 0);
             this.head_tpl.Controls.Add(this.button3, 6, 1);
+            this.head_tpl.Controls.Add(this.panel1, 5, 1);
             this.head_tpl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.head_tpl.ForeColor = System.Drawing.Color.Black;
             this.head_tpl.Location = new System.Drawing.Point(3, 18);
@@ -272,16 +283,16 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
-            radioGroupItem16.Description = "OK";
-            radioGroupItem16.Value = null;
-            radioGroupItem17.Description = "NG";
-            radioGroupItem17.Value = null;
-            radioGroupItem18.Description = "All";
-            radioGroupItem18.Value = null;
+            radioGroupItem4.Description = "OK";
+            radioGroupItem4.Value = null;
+            radioGroupItem5.Description = "NG";
+            radioGroupItem5.Value = null;
+            radioGroupItem6.Description = "All";
+            radioGroupItem6.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            radioGroupItem16,
-            radioGroupItem17,
-            radioGroupItem18});
+            radioGroupItem4,
+            radioGroupItem5,
+            radioGroupItem6});
             this.radioGroup1.Size = new System.Drawing.Size(114, 23);
             this.radioGroup1.TabIndex = 8;
             // 
@@ -415,6 +426,115 @@ namespace NepslidingTools.testModel
             this.gridView1.GridControl = this.query_gc;
             this.gridView1.Name = "gridView1";
             // 
+            // dgv
+            // 
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToResizeRows = false;
+            this.dgv.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.fuche});
+            this.dgv.ContextMenuStrip = this.contextMenuStrip1;
+            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv.Location = new System.Drawing.Point(4, 105);
+            this.dgv.Name = "dgv";
+            this.dgv.RowTemplate.Height = 27;
+            this.dgv.Size = new System.Drawing.Size(901, 488);
+            this.dgv.TabIndex = 5;
+            this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
+            this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
+            // 
+            // label_result
+            // 
+            this.label_result.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label_result.Enabled = false;
+            this.label_result.Location = new System.Drawing.Point(4, 600);
+            this.label_result.Multiline = true;
+            this.label_result.Name = "label_result";
+            this.label_result.Size = new System.Drawing.Size(901, 74);
+            this.label_result.TabIndex = 6;
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "文本文件|*.xls";
+            this.openFileDialog1.RestoreDirectory = true;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "excel文件|*.xls";
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.重测ToolStripMenuItem,
+            this.取消ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 48);
+            // 
+            // 重测ToolStripMenuItem
+            // 
+            this.重测ToolStripMenuItem.Name = "重测ToolStripMenuItem";
+            this.重测ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.重测ToolStripMenuItem.Text = "重测";
+            this.重测ToolStripMenuItem.Click += new System.EventHandler(this.重测ToolStripMenuItem_Click);
+            // 
+            // 取消ToolStripMenuItem
+            // 
+            this.取消ToolStripMenuItem.Name = "取消ToolStripMenuItem";
+            this.取消ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.取消ToolStripMenuItem.Text = "取消";
+            // 
+            // fuche
+            // 
+            this.fuche.HeaderText = "复测操作";
+            this.fuche.Name = "fuche";
+            this.fuche.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.fuche.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.fuche.Text = "复测";
+            this.fuche.UseColumnTextForButtonValue = true;
+            this.fuche.Visible = false;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.bt_yue);
+            this.panel1.Controls.Add(this.bt_zou);
+            this.panel1.Controls.Add(this.bt_ri);
+            this.panel1.Location = new System.Drawing.Point(537, 43);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(158, 27);
+            this.panel1.TabIndex = 16;
+            // 
+            // bt_ri
+            // 
+            this.bt_ri.Location = new System.Drawing.Point(0, 2);
+            this.bt_ri.Name = "bt_ri";
+            this.bt_ri.Size = new System.Drawing.Size(40, 23);
+            this.bt_ri.TabIndex = 0;
+            this.bt_ri.Text = "日";
+            this.bt_ri.UseVisualStyleBackColor = true;
+            this.bt_ri.Click += new System.EventHandler(this.bt_ri_Click);
+            // 
+            // bt_zou
+            // 
+            this.bt_zou.Location = new System.Drawing.Point(54, 2);
+            this.bt_zou.Name = "bt_zou";
+            this.bt_zou.Size = new System.Drawing.Size(40, 23);
+            this.bt_zou.TabIndex = 1;
+            this.bt_zou.Text = "周";
+            this.bt_zou.UseVisualStyleBackColor = true;
+            this.bt_zou.Click += new System.EventHandler(this.bt_zou_Click);
+            // 
+            // bt_yue
+            // 
+            this.bt_yue.Location = new System.Drawing.Point(108, 2);
+            this.bt_yue.Name = "bt_yue";
+            this.bt_yue.Size = new System.Drawing.Size(40, 23);
+            this.bt_yue.TabIndex = 2;
+            this.bt_yue.Text = "月";
+            this.bt_yue.UseVisualStyleBackColor = true;
+            this.bt_yue.Click += new System.EventHandler(this.bt_yue_Click);
+            // 
             // bomNo
             // 
             this.bomNo.Caption = "零件号";
@@ -505,57 +625,11 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1.AutoHeight = false;
             this.repositoryItemButtonEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "复测", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut6, serializableAppearanceObject6, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "复测", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut2, serializableAppearanceObject2, "", null, null, true)});
             this.repositoryItemButtonEdit1.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
             this.repositoryItemButtonEdit1.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.repositoryItemButtonEdit1_ButtonClick);
-            // 
-            // dgv
-            // 
-            this.dgv.AllowUserToAddRows = false;
-            this.dgv.AllowUserToResizeRows = false;
-            this.dgv.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.fuche});
-            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv.Location = new System.Drawing.Point(4, 105);
-            this.dgv.Name = "dgv";
-            this.dgv.RowTemplate.Height = 27;
-            this.dgv.Size = new System.Drawing.Size(901, 488);
-            this.dgv.TabIndex = 5;
-            this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
-            this.dgv.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellEndEdit);
-            // 
-            // fuche
-            // 
-            this.fuche.HeaderText = "复测操作";
-            this.fuche.Name = "fuche";
-            this.fuche.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.fuche.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.fuche.Text = "复测";
-            this.fuche.UseColumnTextForButtonValue = true;
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            this.openFileDialog1.Filter = "文本文件|*.xls";
-            this.openFileDialog1.RestoreDirectory = true;
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "excel文件|*.xls";
-            // 
-            // label_result
-            // 
-            this.label_result.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label_result.Enabled = false;
-            this.label_result.Location = new System.Drawing.Point(4, 600);
-            this.label_result.Multiline = true;
-            this.label_result.Name = "label_result";
-            this.label_result.Size = new System.Drawing.Size(901, 74);
-            this.label_result.TabIndex = 6;
             // 
             // QueryFrom
             // 
@@ -582,8 +656,10 @@ namespace NepslidingTools.testModel
             this.panelend.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.query_gc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -623,9 +699,16 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Button button3;
         private DevExpress.XtraGrid.Columns.GridColumn bomNo;
         private System.Windows.Forms.DataGridView dgv;
-        private DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn fuche;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.TextBox label_result;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 重测ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 取消ToolStripMenuItem;
+        private DevComponents.DotNetBar.Controls.DataGridViewButtonXColumn fuche;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button bt_yue;
+        private System.Windows.Forms.Button bt_zou;
+        private System.Windows.Forms.Button bt_ri;
     }
 }

@@ -11,7 +11,8 @@ namespace Maticsoft.Model
         { }
         #region Model
         private string _version;
-		private DateTime? _exptime;
+		private DateTime? _starttime;
+        private DateTime? _exptime;
         private string _companyname;
         /// <summary>
         /// 
@@ -20,6 +21,14 @@ namespace Maticsoft.Model
         {
             set { _version = value; }
             get { return _version; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime? startTime
+        {
+            set { _starttime = value; }
+            get { return _starttime; }
         }
         /// <summary>
         /// 

@@ -17,9 +17,9 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 是否存在该记录
         /// </summary>
-        public bool Exists(string version, DateTime expTime, string companyName)
+        public bool Exists(string version, DateTime startTime, DateTime expTime, string companyName)
         {
-            return dal.Exists(version, expTime, companyName);
+            return dal.Exists(version, startTime, expTime, companyName);
         }
 
         /// <summary>
@@ -41,34 +41,34 @@ namespace Maticsoft.BLL
         /// <summary>
         /// 删除一条数据
         /// </summary>
-        public bool Delete(string version, DateTime expTime, string companyName)
+        public bool Delete(string version, DateTime startTime, DateTime expTime, string companyName)
         {
 
-            return dal.Delete(version, expTime, companyName);
+            return dal.Delete(version, startTime, expTime, companyName);
         }
 
         /// <summary>
         /// 得到一个对象实体
         /// </summary>
-        public Maticsoft.Model.baseconfig GetModel(string version, DateTime expTime, string companyName)
+        public Maticsoft.Model.baseconfig GetModel(string version, DateTime startTime, DateTime expTime, string companyName)
         {
 
-            return dal.GetModel(version, expTime, companyName);
+            return dal.GetModel(version, startTime, expTime, companyName);
         }
 
         /// <summary>
         /// 得到一个对象实体，从缓存中
         /// </summary>
-        public Maticsoft.Model.baseconfig GetModelByCache(string version, DateTime expTime, string companyName)
+        public Maticsoft.Model.baseconfig GetModelByCache(string version, DateTime startTime, DateTime expTime, string companyName)
         {
 
-            string CacheKey = "baseconfigModel-" + version + expTime + companyName;
+            string CacheKey = "baseconfigModel-" + version + startTime + expTime + companyName;
             object objModel = Maticsoft.Common.DataCache.GetCache(CacheKey);
             if (objModel == null)
             {
                 try
                 {
-                    objModel = dal.GetModel(version, expTime, companyName);
+                    objModel = dal.GetModel(version, startTime, expTime, companyName);
                     if (objModel != null)
                     {
                         int ModelCache = Maticsoft.Common.ConfigHelper.GetConfigInt("ModelCache");
