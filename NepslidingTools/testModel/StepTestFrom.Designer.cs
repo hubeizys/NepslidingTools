@@ -33,6 +33,8 @@ namespace NepslidingTools.testModel
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
             Series series1 = new DevExpress.XtraCharts.Series();
+            Series series2 = new DevExpress.XtraCharts.Series("³¬²î", DevExpress.XtraCharts.ViewType.Point);
+            Series series3 = new DevExpress.XtraCharts.Series("¸º³¬²î", DevExpress.XtraCharts.ViewType.Point);
             LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -163,6 +165,7 @@ namespace NepslidingTools.testModel
             this.txtkw.Name = "txtkw";
             this.txtkw.Size = new System.Drawing.Size(163, 22);
             this.txtkw.TabIndex = 8;
+            this.txtkw.TextChanged += new System.EventHandler(this.txtkw_TextChanged);
             // 
             // textcl
             // 
@@ -563,8 +566,10 @@ namespace NepslidingTools.testModel
             this.chartControl1.Name = "chartControl1";
             series1.Name = "²âÁ¿½á¹û²¨¶¯";
             series1.View = lineSeriesView1;
+            series2.Name = "³¬²î";
+            series3.Name = "¸º³¬²î";
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series1};
+        series1, series2, series3};
             this.chartControl1.Size = new System.Drawing.Size(1120, 154);
             this.chartControl1.TabIndex = 8;
             // 

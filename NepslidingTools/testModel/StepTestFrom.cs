@@ -11,6 +11,7 @@ using Maticsoft.Model;
 using System.Threading;
 using System.Threading.Tasks;
 using AnyCAD.Exchange;
+using DevExpress.XtraCharts;
 
 namespace NepslidingTools.testModel
 {
@@ -177,6 +178,17 @@ namespace NepslidingTools.testModel
                 dtb.Rows.InsertAt(dr, 0);
             }
             #endregion
+
+
+            #region 添加新行
+            string num = DateTime.Now.ToString("yyyyMMddHHmmssfff");
+            string dnum = num.ToString();
+            DataRow dr2 = dtb.NewRow();
+            dr2["测试编号"] = dnum;
+            dr2["测试时间"] = DateTime.Now;
+            dtb.Rows.InsertAt(dr2, 0);
+            #endregion
+
             dgv1.DataSource = dtb;
             #endregion
 
@@ -256,9 +268,7 @@ namespace NepslidingTools.testModel
                 #endregion
 
                 init_table();
-
                 show_step();
-
                 string device_type = measures_tables.Rows[0]["devicetype"].ToString();
                 init_portbytype(Convert.ToInt32(device_type));
                 init_photobytype(Convert.ToInt32(device_type));
@@ -277,6 +287,7 @@ namespace NepslidingTools.testModel
             }
 
             this.timer1.Enabled = true;
+
             create_serpoint();
         }
 
@@ -289,7 +300,7 @@ namespace NepslidingTools.testModel
                 try
                 {
                     Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
-                    List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList(string.Format(" PN = '{0}'  ORDER BY test.time desc LIMIT 100", lble.Text));
+                    List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList(string.Format(" PN = '{0}'  ORDER BY test.time asc LIMIT 100", lble.Text));
                     // MessageBox.Show(test_lists.Count.ToString());
                     // 分割结果。 并且放在折线图上面
                     int cur_index = 0;
@@ -305,6 +316,8 @@ namespace NepslidingTools.testModel
                     this.chartControl1.BeginInvoke(new Action(() =>
                     {
                         this.chartControl1.Series[0].Points.Clear();
+                        this.chartControl1.Series[1].Points.Clear();
+                        this.chartControl1.Series[2].Points.Clear();
                     }));
                     foreach (Maticsoft.Model.test test_obj in test_lists)
                     {
@@ -323,8 +336,31 @@ namespace NepslidingTools.testModel
                         Console.WriteLine(results[cur_index - 1]);
                         this.chartControl1.Invoke(new Action(() =>
                         {
+                            n++;
+                            if (results[cur_index - 1] != "")
+                            {                // 理论值
+                                double LL = Convert.ToDouble(txtll.Text);
+                                // 公差值
+                                double GC = Convert.ToDouble(txtgc.Text);
+                                // 测量值
+                                double BZ = Convert.ToDouble(results[cur_index - 1] == "" ? "0": results[cur_index - 1]);
 
-                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n++, results[cur_index - 1]==""? "0": results[cur_index - 1]));
+
+                                double cz = LL - GC;
+                                double hz = LL + GC;
+                                if (BZ >= hz)
+                                {
+                                    this.chartControl1.Series[1].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                                }
+                                if (BZ < cz)
+                                {
+                                    this.chartControl1.Series[2].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                                }
+                                double cur_de = Convert.ToDouble(results[cur_index - 1]);
+                            }
+                           
+                            //this.chartControl1.Series[0].Points.Insert(0,new DevExpress.XtraCharts.SeriesPoint( results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1]==""? "0": results[cur_index - 1]));
                         }));
                     }
                 }
@@ -489,7 +525,6 @@ namespace NepslidingTools.testModel
                     combjg.Text = "Ng";
                 }
                 #endregion
-
             }
 
             #region 根据最后一列判断 获得最后一列 ，如果没有列就添加一列
@@ -592,8 +627,7 @@ namespace NepslidingTools.testModel
                         need_change_rows["测试结果"] = "NG";
                         this.dgv1.Refresh();
                         break;
-                    }
-                   
+                    }    
                 }
             }
             #endregion
@@ -754,8 +788,9 @@ namespace NepslidingTools.testModel
                 MessageBox.Show("记录重复， 请管理数据库 ");
             }
             MessageBox.Show("记录以保存");
-            this.comboBox1.SelectedIndex = 0; 
+            this.comboBox1.SelectedIndex = 0;
             #endregion
+            create_serpoint();
             return;
             DataTable dtb = new DataTable();
             #region 构建datatable 表
@@ -1033,6 +1068,11 @@ namespace NepslidingTools.testModel
         {
             this.renderView.Height += 1;
             this.renderView.Height -= 1;
+        }
+
+        private void txtkw_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

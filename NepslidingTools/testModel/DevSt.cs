@@ -99,9 +99,23 @@ namespace NepslidingTools.testModel
             }
         }
 
+        private void button_Click2(object sender, EventArgs e)
+        {   
+            Program.txtbh = (sender as Button) .Text;
+            StepTestFrom stf = new StepTestFrom();
+            stf.ShowDialog();
+        }
 
         private void button_Click(object sender, EventArgs e)
         {
+            string num_text = (sender as Button).Text;
+            if(num_text == textBoxX1.Text)
+            {
+                Program.txtbh = num_text;
+                StepTestFrom stf = new StepTestFrom();
+                stf.ShowDialog();
+                return;
+            }
             // MessageBox.Show((sender as Button).Text );
             textBoxX1.Invoke(new Action(()=> {
                 textBoxX1.Text = (sender as Button).Text;
