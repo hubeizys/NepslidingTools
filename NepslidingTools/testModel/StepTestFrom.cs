@@ -510,19 +510,47 @@ namespace NepslidingTools.testModel
                 double LL = Convert.ToDouble(txtll.Text);
                 // 公差值
                 double GC = Convert.ToDouble(txtgc.Text);
+                // 下公差 
+                double XGc = Convert.ToDouble(txtbox_gcxia.Text);
                 // 测量值
                 double BZ = Convert.ToDouble(textcl.Text);
 
-
-                double cz = LL - GC;
+                //double show_value = BZ - LL - GC;
+                double cz = LL - XGc;
                 double hz = LL + GC;
                 if (BZ >= cz && BZ <= hz)
                 {
                     this.combjg.Text = "Ok";
+                    lab_cc.ForeColor = Color.Green;
+                    lab_cc.Text = BZ.ToString();
                 }
                 else
                 {
                     combjg.Text = "Ng";
+
+                    lab_cc.Font = new System.Drawing.Font(lab_cc.Font.FontFamily, 36, lab_cc.Font.Style);
+
+                    Console.WriteLine(string.Format("BZ :{0} == hz {1} -- cz{2}", BZ, hz, cz));
+                    if (BZ > hz)
+                    {
+                        lab_cc.ForeColor = Color.Red;
+                        //lab_cc.Text = show_value.ToString() ;
+                        lab_cc.Text = (BZ - hz).ToString();
+                    }
+
+                    if (BZ < cz)
+                    {
+                        lab_cc.ForeColor = Color.Blue;
+                        lab_cc.Text = "-" + (cz-BZ).ToString();
+                    }
+
+                }
+
+                if (lab_cc.Text.Length > 4)
+                {
+                    //System.Drawing.Font tremp = lab_cc.Font;
+                    //tremp.Size = 30;
+                    lab_cc.Font = new System.Drawing.Font(lab_cc.Font.FontFamily, 30, lab_cc.Font.Style);
                 }
                 #endregion
             }
@@ -938,6 +966,7 @@ namespace NepslidingTools.testModel
             //Console.WriteLine(cbb_canselect.SelectedValue.ToString() + " == " + cbb_canselect.SelectedText + " 11 " + cbb_canselect.SelectedItem.ToString());
             MessageBox.Show(ports_list[cbb_canselect.SelectedIndex].manufacturer);
             lab_defportname.Text = ports_list[cbb_canselect.SelectedIndex].manufacturer + " - " + ports_list[cbb_canselect.SelectedIndex].portname;
+            txtkw.Text = ports_list[cbb_canselect.SelectedIndex].portname.Replace("COM", "");
             this.lab_st.Invoke(new Action(() =>
             {
                 bool tmp_conn_st = this.sp_obj.port_st();

@@ -218,6 +218,11 @@ namespace NepslidingTools.testModel
         {
             MessageBox.Show("ppppp");
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
     class a
     {
