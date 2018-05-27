@@ -135,6 +135,7 @@
     <Compile Include="plus\ConfigPuls.cs" />
     <Compile Include="plus\measuresPlus.cs" />
     <Compile Include="plus\parts.cs" />
+    <Compile Include="plus\test.cs" />
     <Compile Include="port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

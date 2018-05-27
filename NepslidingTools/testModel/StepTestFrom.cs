@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AnyCAD.Exchange;
 using DevExpress.XtraCharts;
+using Microsoft.VisualBasic;
 
 namespace NepslidingTools.testModel
 {
@@ -128,6 +129,7 @@ namespace NepslidingTools.testModel
             //string st = string.Format("componentId = '{0}'", lble.Text);
             string st = string.Format("componentId = '{0}' order by step asc", this.comp_type);
             DataSet ds1 = mes.GetList(st);
+            dtb.Columns.Add("零件号");
             dtb.Columns.Add("测试编号");
             dtb.Columns.Add("测试时间");
 
@@ -164,6 +166,7 @@ namespace NepslidingTools.testModel
                 string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
                 int sp_num = 0;
                 DataRow dr = dtb.NewRow();
+                dr["零件号"] = lble.Text;
                 dr["测试编号"] = bh;
                 dr["测试时间"] = sj;
                 dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
@@ -627,9 +630,9 @@ namespace NepslidingTools.testModel
             int CL = dt.Columns.Count;
             
             string fz = dt.Rows[test_row][CL - 2].ToString();
-            if (comboBox1.SelectedIndex + 1 == CL-3)
+            if (comboBox1.SelectedIndex + 1 == CL-4)
             {
-                int t = dt.Columns.Count - 3;
+                int t = dt.Columns.Count - 4;
                 for (int a = 0; a < t; a++)
                 {
                     string dd = "";
@@ -658,6 +661,10 @@ namespace NepslidingTools.testModel
                         break;
                     }    
                 }
+
+                string str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                //MessageBox.Show(str);
+                need_change_rows["零件号"] = str;
             }
             #endregion
         }
@@ -740,7 +747,7 @@ namespace NepslidingTools.testModel
             //int col_count = dgv1.Columns.Count - 3;
             #region 添加数据
             DataTable dt = dgv1.DataSource as DataTable;
-            int col_count = dt.Columns.Count - 3;
+            int col_count = dt.Columns.Count - 4;
 
             //for (int n=0; n<dt.Columns.Count; n++)
             //{
@@ -760,31 +767,53 @@ namespace NepslidingTools.testModel
                     { break; }
                     join_point += "/";
                 }
+                string lingjianhao = dgv1.Rows[test_rowindex].Cells["零件号"].Value.ToString();
                 string bh = dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString();
                 string sj = dgv1.Rows[test_rowindex].Cells["测试时间"].Value.ToString();
                 string JG = dgv1.Rows[test_rowindex].Cells["测试结果"].Value.ToString();
-                // MessageBox.Show(join_point);  
-                //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
 
-
-
-                string ljh = lble.Text;
-                Maticsoft.BLL.test use = new Maticsoft.BLL.test();
+                string where_str = " 1=1 and ";
+                where_str += string.Format("  parts.PN = '{0}' OR parts.Barcode = '{1}' ", lingjianhao, lingjianhao);
+                Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+                int totle_num = parts_bll.GetRecordCount(where_str);
+                if (totle_num <=0)
+                {
+                    MessageBox.Show("并没有发现这个零件,请在零件管理中添加");
+                    return;
+                }
+                List<Maticsoft.Model.test>  pa_modes = test_bll.GetModelList2(where_str);
+                //int totle_num = pa_modes.Count;
+                //Maticsoft.BLL.test use = new Maticsoft.BLL.test();
+                foreach (Maticsoft.Model.test test_mode in pa_modes)
+                {
+                    test_bll.Delete(test_mode.id);
+                }
                 Maticsoft.Model.test us = new test()
                 {
                     measureb = bh,
                     time = Convert.ToDateTime(sj),
                     step1 = join_point,
-                    //step2 = bz2,
-                    //step3 = bz3,
-                    //step4 = bz4,
-                    //step5 = bz5,
                     OKorNG = JG,
-                    PN = ljh,
-                    workid = global.MachineID
+                    PN = lingjianhao,
+                    workid = txtkw.Text
                 };
+                test_bll.Add(us);
 
-                use.Add(us);
+                /*
+                if (totle_num > 0)
+                {
+                    MessageBox.Show("发现此零件以前的测试数据,现在将覆盖以前的数据");
+                    pa_modes[0].measureb = bh;
+                    pa_modes[0].time = Convert.ToDateTime(sj);
+                    pa_modes[0].step1 = join_point;
+                    pa_modes[0].OKorNG = JG;
+                    pa_modes[0].PN = lingjianhao;
+                    pa_modes[0].workid = txtkw.Text;
+                    test_bll.Update(pa_modes[0]);
+                }
+                else {
+                }*/
+
             }
             else if (tear_mode.Count == 1)
             {
@@ -797,15 +826,13 @@ namespace NepslidingTools.testModel
                     { break; }
                     join_point += "/";
                 }
+
+                string lingjianhao2 = dgv1.Rows[test_rowindex].Cells["零件号"].Value.ToString();
                 string bh = dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString();
                 string sj = dgv1.Rows[test_rowindex].Cells["测试时间"].Value.ToString();
                 string JG = dgv1.Rows[test_rowindex].Cells["测试结果"].Value.ToString();
                 // MessageBox.Show(join_point);  
-                //string stp = string.Format(bz1 + '/' + bz2 + '/' + bz3 + '/' + bz4 + '/' + bz5);
 
-
-
-                string ljh = lble.Text;
                 Maticsoft.BLL.test use = new Maticsoft.BLL.test();
                 Maticsoft.Model.test us = tear_mode[0];
                 us.time = Convert.ToDateTime(sj);
