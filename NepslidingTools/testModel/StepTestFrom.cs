@@ -19,7 +19,8 @@ namespace NepslidingTools.testModel
     {
         string name = "steptest";
         private AnyCAD.Presentation.RenderWindow3d renderView = null;
-        
+        public int comp_tp = -1;        
+
         #region 串口变量
         private SerPort sp_obj = new SerPort();
         List<Maticsoft.Model.port> ports_list;
@@ -54,9 +55,8 @@ namespace NepslidingTools.testModel
             this.renderView.TabIndex = 1;
             this.panel3d.Controls.Add(this.renderView);
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
-            //this.renderView.MouseEnter += new EventHandler(aa_MouseEnter);
-            // this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);
-            
+            // this.renderView.MouseEnter += new EventHandler(aa_MouseEnter);
+            // this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);     
         }
 
         private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
@@ -86,7 +86,6 @@ namespace NepslidingTools.testModel
             dir = dir + "\\images\\" + dt_model.remark;
             //MessageBox.Show(dir);
             pictureBox1.Image = Image.FromFile(dir);
-
             labelX3.Text = "工具: "+ dt_model.devicename;
         }
 
@@ -220,15 +219,20 @@ namespace NepslidingTools.testModel
 
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
-
-            
             //global.AsynCall((a) => { MessageBox.Show(a.ToString()); }, "test");
-
             #region 获得零件号，通过零件号获得详细信息
             // 获得零件号
             lble.Text = Program.txtbh;
             //global.AsynCall(this.dealwithcomp, lble.Text);
-            dealwithcomp(lble.Text);
+            if (Program.type == -1)
+            {
+                dealwithcomp(lble.Text);
+            }
+            else
+            {
+                dealwithcomp(Program.type);
+            }
+            
             #endregion
             Task a_task = new Task(new Action(() => {
                 Thread.Sleep(1000);
@@ -273,6 +277,7 @@ namespace NepslidingTools.testModel
                 init_portbytype(Convert.ToInt32(device_type));
                 init_photobytype(Convert.ToInt32(device_type));
                 lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+                txtkw.Text = ports_list[0].workid;
                 #region 初始化串口信息
                 sp_obj.CheckPort();
                 sp_obj.init_port(ports_list[0].portname);
@@ -310,7 +315,6 @@ namespace NepslidingTools.testModel
                         cur_index = int.Parse(comboBox1.SelectedItem.ToString().Replace("步骤", ""));
                     }));
 
-
                     // 2 循环获得 最近的个数
                     int n = 1;
                     this.chartControl1.BeginInvoke(new Action(() =>
@@ -322,7 +326,6 @@ namespace NepslidingTools.testModel
                     foreach (Maticsoft.Model.test test_obj in test_lists)
                     {
                         string test_result = test_obj.step1;
-
                         string[] results = test_result.Split('/');
                         // 容灾处理， 如果大于数组。就等于数组的最后一位
                         if (cur_index > results.Length)
@@ -345,7 +348,6 @@ namespace NepslidingTools.testModel
                                 // 测量值
                                 double BZ = Convert.ToDouble(results[cur_index - 1] == "" ? "0": results[cur_index - 1]);
 
-
                                 double cz = LL - GC;
                                 double hz = LL + GC;
                                 if (BZ >= hz)
@@ -358,7 +360,6 @@ namespace NepslidingTools.testModel
                                 }
                                 double cur_de = Convert.ToDouble(results[cur_index - 1]);
                             }
-                           
                             //this.chartControl1.Series[0].Points.Insert(0,new DevExpress.XtraCharts.SeriesPoint( results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
                             this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1]==""? "0": results[cur_index - 1]));
                         }));
@@ -953,7 +954,7 @@ namespace NepslidingTools.testModel
                 return;
             }
             lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
-          
+            txtkw.Text = ports_list[0].workid;
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -966,7 +967,8 @@ namespace NepslidingTools.testModel
             //Console.WriteLine(cbb_canselect.SelectedValue.ToString() + " == " + cbb_canselect.SelectedText + " 11 " + cbb_canselect.SelectedItem.ToString());
             MessageBox.Show(ports_list[cbb_canselect.SelectedIndex].manufacturer);
             lab_defportname.Text = ports_list[cbb_canselect.SelectedIndex].manufacturer + " - " + ports_list[cbb_canselect.SelectedIndex].portname;
-            txtkw.Text = ports_list[cbb_canselect.SelectedIndex].portname.Replace("COM", "");
+            // txtkw.Text = ports_list[cbb_canselect.SelectedIndex].portname.Replace("COM", "");
+            txtkw.Text = ports_list[cbb_canselect.SelectedIndex].workid;
             this.lab_st.Invoke(new Action(() =>
             {
                 bool tmp_conn_st = this.sp_obj.port_st();
@@ -980,8 +982,6 @@ namespace NepslidingTools.testModel
             }));
 
             //设置闪亮的地方
-
-
         }
 
         private void timer_portst_Tick(object sender, EventArgs e)

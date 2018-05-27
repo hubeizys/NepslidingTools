@@ -30,7 +30,9 @@ namespace NepslidingTools.testModel
 
         private void test_bt_Click(object sender, EventArgs e)
         {
-            Program.txtbh= textBoxX1.Text;
+            // 获得类型
+            //Program.txtbh = textBoxX1.Text;
+            Program.type = Convert.ToInt32(textBoxX1.Text);
             if (textBoxX1.Text=="")
             {
                 MessageBox.Show("请输入零件号");
@@ -38,7 +40,6 @@ namespace NepslidingTools.testModel
             }
             StepTestFrom stf = new StepTestFrom();
             stf.ShowDialog();
-            
         }
 
         private void buttonX5_Click(object sender, EventArgs e)
@@ -88,12 +89,15 @@ namespace NepslidingTools.testModel
             //this.TopMost = true;
             //this.Activate();
             this.last_flp.Controls.Clear();
-            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
-            List<Maticsoft.Model.test> test_lists = test_bll.GetModelList(" 1=1 GROUP BY pn LIMIT 10");
-            foreach(var test_obj in test_lists)
+            //Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            //List<Maticsoft.Model.test> test_lists = test_bll.GetModelList(" 1=1 GROUP BY pn LIMIT 10");
+            Maticsoft.BLL.component com_bll = new Maticsoft.BLL.component();
+            List<Maticsoft.Model.component> com_list = com_bll.GetModelList("");
+
+            foreach (var test_obj in com_list)
             {
                 Button a = new Button();
-                a.Text = test_obj.PN;
+                a.Text = test_obj.componentId.ToString();
                 a.Click += new System.EventHandler(this.button_Click);
                 this.last_flp.Controls.Add(a);
             }
@@ -108,18 +112,22 @@ namespace NepslidingTools.testModel
 
         private void button_Click(object sender, EventArgs e)
         {
-            string num_text = (sender as Button).Text;
-            if(num_text == textBoxX1.Text)
-            {
-                Program.txtbh = num_text;
-                StepTestFrom stf = new StepTestFrom();
-                stf.ShowDialog();
-                return;
-            }
-            // MessageBox.Show((sender as Button).Text );
-            textBoxX1.Invoke(new Action(()=> {
-                textBoxX1.Text = (sender as Button).Text;
-            }));
+            Program.txtbh = (sender as Button).Text;
+            StepTestFrom stf = new StepTestFrom();
+            stf.ShowDialog();
+
+            //string num_text = (sender as Button).Text;
+            //if(num_text == textBoxX1.Text)
+            //{
+            //    Program.txtbh = num_text;
+            //    StepTestFrom stf = new StepTestFrom();
+            //    stf.ShowDialog();
+            //    return;
+            //}
+
+            //textBoxX1.Invoke(new Action(()=> {
+            //    textBoxX1.Text = (sender as Button).Text;
+            //}));
         }
     }
 }

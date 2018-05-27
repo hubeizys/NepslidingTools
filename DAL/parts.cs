@@ -37,18 +37,20 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into parts(");
-            strSql.Append("PN,Barcode,componentId,remark)");
+            strSql.Append("PN,Barcode,gongdan,componentId,remark)");
             strSql.Append(" values (");
-            strSql.Append("@PN,@Barcode,@componentId,@remark)");
+            strSql.Append("@PN,@Barcode,@gongdan,@componentId,@remark)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@PN", MySqlDbType.VarChar,64),
                     new MySqlParameter("@Barcode", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@gongdan", MySqlDbType.VarChar,64),
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11),
-                    new MySqlParameter("@remark", MySqlDbType.VarChar,255)};
+                    new MySqlParameter("@remark", MySqlDbType.VarChar,64)};
             parameters[0].Value = model.PN;
             parameters[1].Value = model.Barcode;
-            parameters[2].Value = model.componentId;
-            parameters[3].Value = model.remark;
+            parameters[2].Value = model.gongdan;
+            parameters[3].Value = model.componentId;
+            parameters[4].Value = model.remark;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -69,20 +71,23 @@ namespace Maticsoft.DAL
             strSql.Append("update parts set ");
             strSql.Append("PN=@PN,");
             strSql.Append("Barcode=@Barcode,");
+            strSql.Append("gongdan=@gongdan,");
             strSql.Append("componentId=@componentId,");
             strSql.Append("remark=@remark");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@PN", MySqlDbType.VarChar,64),
                     new MySqlParameter("@Barcode", MySqlDbType.VarChar,64),
+                    new MySqlParameter("@gongdan", MySqlDbType.VarChar,64),
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11),
-                    new MySqlParameter("@remark", MySqlDbType.VarChar,255),
+                    new MySqlParameter("@remark", MySqlDbType.VarChar,64),
                     new MySqlParameter("@id", MySqlDbType.Int32,64)};
             parameters[0].Value = model.PN;
             parameters[1].Value = model.Barcode;
-            parameters[2].Value = model.componentId;
-            parameters[3].Value = model.remark;
-            parameters[4].Value = model.id;
+            parameters[2].Value = model.gongdan;
+            parameters[3].Value = model.componentId;
+            parameters[4].Value = model.remark;
+            parameters[5].Value = model.id;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -146,7 +151,7 @@ namespace Maticsoft.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,PN,Barcode,componentId,remark from parts ");
+            strSql.Append("select id,PN,Barcode,gongdan,componentId,remark from parts ");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@id", MySqlDbType.Int32)
@@ -186,6 +191,10 @@ namespace Maticsoft.DAL
                 {
                     model.Barcode = row["Barcode"].ToString();
                 }
+                if (row["gongdan"] != null)
+                {
+                    model.gongdan = row["gongdan"].ToString();
+                }
                 if (row["componentId"] != null && row["componentId"].ToString() != "")
                 {
                     model.componentId = int.Parse(row["componentId"].ToString());
@@ -204,7 +213,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,PN,Barcode,componentId,remark ");
+            strSql.Append("select id,PN,Barcode,gongdan,componentId,remark ");
             strSql.Append(" FROM parts ");
             if (strWhere.Trim() != "")
             {

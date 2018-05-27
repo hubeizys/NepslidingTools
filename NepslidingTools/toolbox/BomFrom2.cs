@@ -59,7 +59,7 @@ namespace NepslidingTools.toolbox
             {
                 DataTable dtNew = dt.Clone();
                 // where_str += string.Format(" and   {0}", textBox_type.Text);
-                DataRow[] drArr = dt.Select(string.Format(" name like '%{0}%'", this.textBox_type.Text));
+                DataRow[] drArr = dt.Select(string.Format(" componentId = {0}", this.textBox_type.Text));
                 for (int i = 0; i < drArr.Length; i++)
                 {
                     dtNew.ImportRow(drArr[i]);

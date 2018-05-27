@@ -477,7 +477,7 @@ namespace NepslidingTools.testModel
             }
             else
             {
-                MessageBox.Show("«Î ‰»Î¡„º˛∫≈");
+                // MessageBox.Show("«Î ‰»Î¡„º˛∫≈");
                 return where_str;
             }
             #endregion
@@ -676,6 +676,11 @@ namespace NepslidingTools.testModel
 
         private void query_bt_Click(object sender, EventArgs e)
         {
+            if (textBox_ljhao.Text == "")
+            {
+                MessageBox.Show("«Î ‰»Î≤È—Ø◊÷∂Œ");
+                return;
+            }
             this.reQuery();
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             string where_string = this.query_wherestring();

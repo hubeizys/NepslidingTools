@@ -43,6 +43,9 @@ namespace NepslidingTools.testModel
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.completionWizardPage1 = new DevExpress.XtraWizard.CompletionWizardPage();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxX3 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.textBoxX2 = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.wizardPage2 = new DevExpress.XtraWizard.WizardPage();
             this.textBoxX1 = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -195,11 +198,48 @@ namespace NepslidingTools.testModel
             // 
             // completionWizardPage1
             // 
+            this.completionWizardPage1.Controls.Add(this.label2);
+            this.completionWizardPage1.Controls.Add(this.label1);
+            this.completionWizardPage1.Controls.Add(this.textBoxX3);
             this.completionWizardPage1.Controls.Add(this.textBoxX2);
             this.completionWizardPage1.Enabled = true;
             this.completionWizardPage1.Name = "completionWizardPage1";
             this.completionWizardPage1.Size = new System.Drawing.Size(565, 228);
-            this.completionWizardPage1.Text = "测试成功了！为工具命名昵称";
+            this.completionWizardPage1.Text = "测试成功了！为工具命名昵称，并写明工位";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(16, 137);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "工位名";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(16, 68);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(43, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "工具名";
+            // 
+            // textBoxX3
+            // 
+            this.textBoxX3.BackColor = System.Drawing.Color.White;
+            // 
+            // 
+            // 
+            this.textBoxX3.Border.Class = "TextBoxBorder";
+            this.textBoxX3.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.textBoxX3.DisabledBackColor = System.Drawing.Color.White;
+            this.textBoxX3.ForeColor = System.Drawing.Color.Black;
+            this.textBoxX3.Location = new System.Drawing.Point(77, 133);
+            this.textBoxX3.Name = "textBoxX3";
+            this.textBoxX3.PreventEnterBeep = true;
+            this.textBoxX3.Size = new System.Drawing.Size(253, 22);
+            this.textBoxX3.TabIndex = 1;
             // 
             // textBoxX2
             // 
@@ -211,7 +251,7 @@ namespace NepslidingTools.testModel
             this.textBoxX2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.textBoxX2.DisabledBackColor = System.Drawing.Color.White;
             this.textBoxX2.ForeColor = System.Drawing.Color.Black;
-            this.textBoxX2.Location = new System.Drawing.Point(13, 81);
+            this.textBoxX2.Location = new System.Drawing.Point(77, 64);
             this.textBoxX2.Name = "textBoxX2";
             this.textBoxX2.PreventEnterBeep = true;
             this.textBoxX2.Size = new System.Drawing.Size(253, 22);
@@ -264,6 +304,7 @@ namespace NepslidingTools.testModel
             this.wizardPage1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.completionWizardPage1.ResumeLayout(false);
+            this.completionWizardPage1.PerformLayout();
             this.wizardPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -283,5 +324,8 @@ namespace NepslidingTools.testModel
         private DevExpress.XtraWizard.WizardPage wizardPage2;
         private DevComponents.DotNetBar.Controls.TextBoxX textBoxX1;
         private DevComponents.DotNetBar.Controls.TextBoxX textBoxX2;
+        private DevComponents.DotNetBar.Controls.TextBoxX textBoxX3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -49,7 +49,11 @@ namespace NepslidingTools.toolbox
                     MessageBox.Show("序列号为空");
                     return;
                 }
-
+                if (textbox_gongdan.Text == "")
+                {
+                    MessageBox.Show("工单号为空");
+                    return;
+                }
                 if (comboBox1.SelectedIndex < 0)
                 {
                     MessageBox.Show("请选择正确的类型");
@@ -63,8 +67,10 @@ namespace NepslidingTools.toolbox
                     Maticsoft.Model.parts parts_exmode = parts_list[0];
                     parts_exmode.Barcode = textBox_lxm.Text;
                     parts_exmode.PN = textBox_ljh.Text;
-                    parts_exmode.remark = "管理号";
+                    parts_exmode.remark = "管理";
+                    parts_exmode.gongdan = textbox_gongdan.Text;
                     parts_exmode.componentId = this.comp_list[comboBox1.SelectedIndex].componentId;
+
                     if (part_bll.Update(parts_exmode))
                     {
                         MessageBox.Show("更新成功");
@@ -79,7 +85,8 @@ namespace NepslidingTools.toolbox
                     {
                         Barcode = textBox_lxm.Text,
                         PN = textBox_ljh.Text,
-                        remark = "管理号",
+                        remark = "管理",
+                        gongdan = textbox_gongdan.Text,
                         componentId = this.comp_list[comboBox1.SelectedIndex].componentId,
                     };
 

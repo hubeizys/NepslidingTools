@@ -50,6 +50,8 @@ namespace NepslidingTools.testModel
                     // 覆盖掉
                     Maticsoft.Model.port temp_port = port_objs[0];
                     temp_port.manufacturer = gz_name;
+                    temp_port.workid = textBoxX3.Text;
+                    temp_port.devicetype = type;
                     tempport_bll.Update(temp_port);
                     MessageBox.Show("以更新,工具已经可以使用");
                 }
@@ -63,7 +65,7 @@ namespace NepslidingTools.testModel
                     manufacturer = gz_name,
                     portname = cur_work_portname,
                     devicetype = type,
-                    workid = cur_macnum + "号工作站"
+                    workid = textBoxX3.Text
                 };
                 tempport_bll.Add(tmp_portobj);
             }
@@ -189,14 +191,7 @@ namespace NepslidingTools.testModel
                 }
             }
 
-            void doing_test(string a)
-            {
-                //MessageBox.Show(" test data : " + a);
-                textBoxX1.Invoke(new Action(() =>
-                {
-                    this.textBoxX1.Text = a;
-                }));
-            }
+
 
             if ("请选择设备" == e.Page.Text)
             {
@@ -213,7 +208,14 @@ namespace NepslidingTools.testModel
 
             }
         }
-
+        void doing_test(string a)
+        {
+            //MessageBox.Show(" test data : " + a);
+            textBoxX1.Invoke(new Action(() =>
+            {
+                this.textBoxX1.Text = a;
+            }));
+        }
         private void groupBox2_CursorChanged(object sender, EventArgs e)
         {
             MessageBox.Show("ppppp");

@@ -9,9 +9,25 @@ namespace NepslidingTools
 {
     public partial class WorkForm : Form
     {
-        public  int comp_type = 0;
+        public int comp_type = 0;
         public string comp_name = "";
         public string mode = "";
+
+        public void dealwithcomp(int type)
+        {
+            comp_type = type;
+            #region 获得零件名字
+            Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
+            Maticsoft.Model.component comp_mode = comp_bll.GetModel(type);
+            if (comp_mode != null)
+            {
+                this.comp_name = comp_mode.name;
+                this.mode = comp_mode.sm;
+            }
+            System.Windows.Forms.MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
+            #endregion
+        }
+
         public void dealwithcomp(object lingjianhao)
         {
             string lj_num = lingjianhao.ToString();

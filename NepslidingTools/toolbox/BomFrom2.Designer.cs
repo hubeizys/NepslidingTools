@@ -48,13 +48,6 @@
             this.tabPage_lj = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel_ljjl = new System.Windows.Forms.TableLayoutPanel();
             this.dgvljjl = new System.Windows.Forms.DataGridView();
-            this.PN = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.row2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.component = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ljname = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.jilu = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel3 = new System.Windows.Forms.Panel();
             this.buttonjl_next = new System.Windows.Forms.Button();
             this.buttonjl_pre = new System.Windows.Forms.Button();
@@ -79,6 +72,14 @@
             this.sm = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.photo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.remark = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.PN = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gongdan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.row2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.component = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Barcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ljname = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jilu = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabControl_main.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel_configmain.SuspendLayout();
@@ -322,6 +323,7 @@
             this.dgvljjl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvljjl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.PN,
+            this.gongdan,
             this.row2,
             this.id,
             this.component,
@@ -335,54 +337,6 @@
             this.dgvljjl.Size = new System.Drawing.Size(946, 453);
             this.dgvljjl.TabIndex = 0;
             this.dgvljjl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvljjl_CellClick);
-            // 
-            // PN
-            // 
-            this.PN.DataPropertyName = "PN";
-            this.PN.HeaderText = "零件编号";
-            this.PN.Name = "PN";
-            this.PN.Visible = false;
-            // 
-            // row2
-            // 
-            this.row2.DataPropertyName = "ROW";
-            this.row2.HeaderText = "row";
-            this.row2.Name = "row2";
-            this.row2.Visible = false;
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "id";
-            this.id.Name = "id";
-            this.id.Visible = false;
-            // 
-            // component
-            // 
-            this.component.DataPropertyName = "componentId";
-            this.component.HeaderText = "类型";
-            this.component.Name = "component";
-            // 
-            // Barcode
-            // 
-            this.Barcode.DataPropertyName = "Barcode";
-            this.Barcode.HeaderText = "条码";
-            this.Barcode.Name = "Barcode";
-            // 
-            // ljname
-            // 
-            this.ljname.DataPropertyName = "name";
-            this.ljname.HeaderText = "零件名";
-            this.ljname.Name = "ljname";
-            // 
-            // jilu
-            // 
-            this.jilu.DataPropertyName = "remark";
-            this.jilu.HeaderText = "零件类型基础管理";
-            this.jilu.Name = "jilu";
-            this.jilu.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.jilu.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.jilu.Width = 150;
             // 
             // panel3
             // 
@@ -540,6 +494,7 @@
             this.jobnum.DataPropertyName = "jobnum";
             this.jobnum.HeaderText = "工单号";
             this.jobnum.Name = "jobnum";
+            this.jobnum.Visible = false;
             // 
             // ARef
             // 
@@ -571,6 +526,59 @@
             this.remark.HeaderText = "标准管理";
             this.remark.Name = "remark";
             this.remark.Text = "管理";
+            // 
+            // PN
+            // 
+            this.PN.DataPropertyName = "PN";
+            this.PN.HeaderText = "零件编号";
+            this.PN.Name = "PN";
+            // 
+            // gongdan
+            // 
+            this.gongdan.DataPropertyName = "gongdan";
+            this.gongdan.HeaderText = "工单号";
+            this.gongdan.Name = "gongdan";
+            // 
+            // row2
+            // 
+            this.row2.DataPropertyName = "ROW";
+            this.row2.HeaderText = "row";
+            this.row2.Name = "row2";
+            this.row2.Visible = false;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.Visible = false;
+            // 
+            // component
+            // 
+            this.component.DataPropertyName = "componentId";
+            this.component.HeaderText = "类型";
+            this.component.Name = "component";
+            // 
+            // Barcode
+            // 
+            this.Barcode.DataPropertyName = "Barcode";
+            this.Barcode.HeaderText = "条码";
+            this.Barcode.Name = "Barcode";
+            // 
+            // ljname
+            // 
+            this.ljname.DataPropertyName = "name";
+            this.ljname.HeaderText = "零件名";
+            this.ljname.Name = "ljname";
+            // 
+            // jilu
+            // 
+            this.jilu.DataPropertyName = "remark";
+            this.jilu.HeaderText = "零件类型基础管理";
+            this.jilu.Name = "jilu";
+            this.jilu.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.jilu.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.jilu.Width = 150;
             // 
             // BomFrom2
             // 
@@ -639,13 +647,6 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button bt_update;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PN;
-        private System.Windows.Forms.DataGridViewTextBoxColumn row2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn component;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Barcode;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ljname;
-        private System.Windows.Forms.DataGridViewButtonColumn jilu;
         private System.Windows.Forms.OpenFileDialog ofd_sm;
         private System.Windows.Forms.DataGridViewTextBoxColumn componentId;
         private System.Windows.Forms.DataGridViewTextBoxColumn Row;
@@ -656,5 +657,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn sm;
         private System.Windows.Forms.DataGridViewTextBoxColumn photo;
         private System.Windows.Forms.DataGridViewButtonColumn remark;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gongdan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn row2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn component;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Barcode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ljname;
+        private System.Windows.Forms.DataGridViewButtonColumn jilu;
     }
 }

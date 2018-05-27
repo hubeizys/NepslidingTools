@@ -13,6 +13,7 @@ namespace Maticsoft.Model
         private int _id;
         private string _pn;
         private string _barcode;
+        private string _gongdan;
         private int? _componentid;
         private string _remark;
         /// <summary>
@@ -38,6 +39,14 @@ namespace Maticsoft.Model
         {
             set { _barcode = value; }
             get { return _barcode; }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string gongdan
+        {
+            set { _gongdan = value; }
+            get { return _gongdan; }
         }
         /// <summary>
         /// 
