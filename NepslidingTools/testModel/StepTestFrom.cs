@@ -126,7 +126,7 @@ namespace NepslidingTools.testModel
             DataTable dtb = new DataTable();
             #region 构建datatable 表，  添加表头
             Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            //string st = string.Format("componentId = '{0}'", lble.Text);
+
             string st = string.Format("componentId = '{0}' order by step asc", this.comp_type);
             DataSet ds1 = mes.GetList(st);
             dtb.Columns.Add("零件号");
@@ -152,24 +152,22 @@ namespace NepslidingTools.testModel
             #endregion
 
             #region 填充下面的dgv数据
-            Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-            string TS = string.Format("PN = '{0}'", lble.Text);
-            DataSet dst = tst.GetList(TS);
-            DataTable test_datatable = dst.Tables[0];
-            int test_count = test_datatable.Rows.Count;
+            Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
+            List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList2(string.Format("  parts.componentId = '{0}'  ORDER BY test.time asc LIMIT 100", this.comp_type));
+            int test_count = test_lists.Count;
             for (int start_test = 0; start_test < test_count; start_test++)
             {
-                string bh = test_datatable.Rows[start_test]["measureb"].ToString();
-                string sj = test_datatable.Rows[start_test]["time"].ToString();
-                string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
+                string bh = test_lists[start_test].measureb.ToString();
+                string sj = test_lists[start_test].time.ToString();
+                string stp1 = test_lists[start_test].step1.ToString();
                 //string stp1 = dst.Tables[0].Rows[i][4].ToString();
                 string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
                 int sp_num = 0;
                 DataRow dr = dtb.NewRow();
-                dr["零件号"] = lble.Text;
+                dr["零件号"] = test_lists[start_test].PN;
                 dr["测试编号"] = bh;
                 dr["测试时间"] = sj;
-                dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
+                dr["测试结果"] = test_lists[start_test].OKorNG.ToString();
                 foreach (string j in sp)
                 {
                     sp_num++;
@@ -224,18 +222,7 @@ namespace NepslidingTools.testModel
         {
             //global.AsynCall((a) => { MessageBox.Show(a.ToString()); }, "test");
             #region 获得零件号，通过零件号获得详细信息
-            // 获得零件号
-            lble.Text = Program.txtbh;
-            //global.AsynCall(this.dealwithcomp, lble.Text);
-            if (Program.type == -1)
-            {
-                dealwithcomp(lble.Text);
-            }
-            else
-            {
-                dealwithcomp(Program.type);
-            }
-            
+            dealwithcomp(Program.type);
             #endregion
             Task a_task = new Task(new Action(() => {
                 Thread.Sleep(1000);
@@ -308,7 +295,7 @@ namespace NepslidingTools.testModel
                 try
                 {
                     Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
-                    List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList(string.Format(" PN = '{0}'  ORDER BY test.time asc LIMIT 100", lble.Text));
+                    List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList2(string.Format("  parts.componentId = '{0}'  ORDER BY test.time asc LIMIT 100", this.comp_type));
                     // MessageBox.Show(test_lists.Count.ToString());
                     // 分割结果。 并且放在折线图上面
                     int cur_index = 0;
@@ -848,53 +835,7 @@ namespace NepslidingTools.testModel
             #endregion
             create_serpoint();
             return;
-            DataTable dtb = new DataTable();
-            #region 构建datatable 表
-            Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            string st = string.Format("componentId = '{0}'", this.comp_type);
-            DataSet ds1 = mes.GetList(st);
-            dtb.Columns.Add("测试编号");
-            dtb.Columns.Add("测试时间");
-
-            for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
-            {
-                string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-                comboBox1.Text = sg;
-                dtb.Columns.Add(sg.ToString());
-                //dgv1.DataSource = ds.Tables[0];                
-            }
-            dtb.Columns.Add("测试结果");
-            #endregion
             
-            #region 填充数据
-            Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-            string TS = string.Format("PN = '{0}'", lble.Text);
-            DataSet dst = tst.GetList(TS);
-            DataTable test_datatable = dst.Tables[0];
-            int test_count = test_datatable.Rows.Count;
-            for (int start_test = 0; start_test < test_count; start_test++)
-            {
-                //string bh = ;
-                //string sj = ;
-                string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
-                //string stp1 = dst.Tables[0].Rows[i][4].ToString();
-                string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                int sp_num = 0;
-                DataRow dr = dtb.NewRow();
-                dr["测试编号"] = test_datatable.Rows[start_test]["measureb"].ToString();
-                dr["测试时间"] = test_datatable.Rows[start_test]["time"].ToString();
-                dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
-                foreach (string j in sp)
-                {
-                    sp_num++;
-                    string col_name = string.Format("步骤{0}", sp_num);
-                    dr[col_name] = j;
-                }
-                dtb.Rows.Add(dr);
-            }
-            #endregion
-            dgv1.DataSource = dtb;
-
         }
         private void dgv1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -912,23 +853,29 @@ namespace NepslidingTools.testModel
             DataTable dtb = this.dgv1.DataSource as DataTable;
             dtb.Clear();
             #region 填充下面的dgv数据
-            Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-            string TS = string.Format("PN = '{0}'", lble.Text);
-            DataSet dst = tst.GetList(TS);
-            DataTable test_datatable = dst.Tables[0];
-            int test_count = test_datatable.Rows.Count;
+
+            Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
+            List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList2(string.Format("  parts.componentId = '{0}'  ORDER BY test.time asc LIMIT 100", this.comp_type));
+            int test_count = test_lists.Count;
+
+            //Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
+            //string TS = string.Format("PN = '{0}'", lble.Text);
+            //DataSet dst = tst.GetList(TS);
+            //DataTable test_datatable = dst.Tables[0];
+            //int test_count = test_datatable.Rows.Count;
             for (int start_test = 0; start_test < test_count; start_test++)
             {
-                string bh = test_datatable.Rows[start_test]["measureb"].ToString();
-                string sj = test_datatable.Rows[start_test]["time"].ToString();
-                string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
+                string bh = test_lists[start_test].measureb.ToString();
+                string sj = test_lists[start_test].time.ToString();
+                string stp1 = test_lists[start_test].step1.ToString();
                 //string stp1 = dst.Tables[0].Rows[i][4].ToString();
                 string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
                 int sp_num = 0;
                 DataRow dr = dtb.NewRow();
+                dr["零件号"] = test_lists[start_test].PN;
                 dr["测试编号"] = bh;
                 dr["测试时间"] = sj;
-                dr["测试结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
+                dr["测试结果"] = test_lists[start_test].OKorNG.ToString();
                 foreach (string j in sp)
                 {
                     sp_num++;

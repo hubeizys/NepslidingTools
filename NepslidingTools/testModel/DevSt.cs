@@ -30,14 +30,18 @@ namespace NepslidingTools.testModel
 
         private void test_bt_Click(object sender, EventArgs e)
         {
-            // 获得类型
-            //Program.txtbh = textBoxX1.Text;
-            Program.type = Convert.ToInt32(textBoxX1.Text);
-            if (textBoxX1.Text=="")
+            if (textBoxX1.Text == "")
             {
                 MessageBox.Show("请输入零件号");
                 return;
             }
+            // 获得类型
+            //Program.txtbh = textBoxX1.Text;
+            Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+            List<Maticsoft.Model.parts> parts_mode = parts_bll.GetModelList(string.Format(" PN='{0}' ", textBoxX1.Text));
+            if (parts_mode.Count <= 0)
+                return;
+            Program.type = Convert.ToInt32(parts_mode[0].componentId);
             StepTestFrom stf = new StepTestFrom();
             stf.ShowDialog();
         }
@@ -112,7 +116,7 @@ namespace NepslidingTools.testModel
 
         private void button_Click(object sender, EventArgs e)
         {
-            Program.txtbh = (sender as Button).Text;
+            Program.type = Convert.ToInt32( (sender as Button).Text);
             StepTestFrom stf = new StepTestFrom();
             stf.ShowDialog();
 
