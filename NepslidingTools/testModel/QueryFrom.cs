@@ -116,34 +116,11 @@ namespace NepslidingTools.testModel
 
             // 添加 智能补全
             this.AddAutoComp();
-            // this.dealwithcomp(textBox_ljhao.Text);
-            #region ------------------------------
-            //Rectangle ScreenArea = System.Windows.Forms.Screen.GetWorkingArea(this);
-            //this.Size = ScreenArea.Size;
-
-            //this.TopMost = true;
-            //this.Activate();
-
-            //DataTable dt = new DataTable();                                     //创建表
-            //dt.Columns.Add("bomNo", typeof(Int32));                             //添加列
-            //dt.Columns.Add("TestNo", typeof(Int32));
-            //dt.Columns.Add("TestLoc", typeof(String));
-            //dt.Columns.Add("TestTime", typeof(DateTime));
-            //dt.Columns.Add("step1", typeof(string));
-            //dt.Columns.Add("step2", typeof(string));
-            //dt.Columns.Add("step3", typeof(string));
-            //dt.Columns.Add("result", typeof(string));
-            //dt.Rows.Add(new object[] { 10001, 2123120, "工位1", DateTime.Now,"偏差1mm","偏差-2mm","无偏差" ,"OK"});//添加行
-            //dt.Rows.Add(new object[] { 10002, 2321115, "工位1", DateTime.Now, "偏差101mm", "偏差10mm", "偏差1mm", "NG"});
-            //dt.Rows.Add(new object[] { 10003, 3011111, "工位1", DateTime.Now, "偏差1mm", "偏差1mm", "无偏差", "OK"});
-            //dt.Rows.Add(new object[] { 10004, 3421112 , "工位2", DateTime.Now, "偏差1mm", "偏差1mm", "偏差-134mm", "NG"});
-            //query_gc.DataSource = dt;
-            #endregion
         }
 
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
-            Program.txtbh = textBox_ljhao.Text;
+            Program.type = Convert.ToInt32( textBox_ljhao.Text);
             StepTestFrom stf = new StepTestFrom();
             stf.Show();
         }
@@ -249,7 +226,7 @@ namespace NepslidingTools.testModel
                 string key_name = par.Key.Replace("s","步骤");
                 temp_dr[key_name] = par.Value.ToString("0.00");
             }
-            temp_dr["测量结果"] = op.Replace("\t", "");
+            temp_dr["结果"] = op.Replace("\t", "");
             temp_table.Rows.Add(temp_dr);
 
             #endregion
@@ -329,6 +306,7 @@ namespace NepslidingTools.testModel
 
             xlsApp.Columns[3].ColumnWidth = 20;
             xlsApp.Columns[4].ColumnWidth = 20;
+            xlsApp.Columns[3].NumberFormat = "@";
             //8.填写DataTable中的数据
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -364,143 +342,6 @@ namespace NepslidingTools.testModel
                 SaveToExcel(fName, this.dgv.DataSource as DataTable);
             }
             return;
-            DataTable dt2 = NewMethod();
-            //构建一个计算用的表格
-            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
-            List<Maticsoft.Model.measures> mea_list = mea_bll.GetModelList(string.Format(" componentId = '{0}' order by step ", this.comp_type));
-            foreach (Maticsoft.Model.measures mea_obj in mea_list)
-            {
-                dt2.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
-            }
-
-            // 取得数据。 分解数据。 填充数据
-            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
-            string where_string1 = this.query_wherestring();
-            radioGroup1.SelectedIndex = 2;
-            DataSet ds = test_bll.GetList(where_string1);
-            //DataTable dt = this.dgv.DataSource as DataTable;
-            DataTable dt = ds.Tables[0];
-
-            List<double[]> bbb = new List<double[]>();
-            foreach (DataRow dr in dt.Rows)
-            {
-                string step = dr["step1"].ToString();
-                string[] temp_step = step.Split('/');
-
-                if (temp_step.Length == dt2.Columns.Count)
-                {
-                    DataRow dr_temp = dt2.NewRow();
-                    for (int i = 0; i < temp_step.Length; i++)
-                    {
-                        double temp_d = 0;
-                        Double.TryParse(temp_step[i], out temp_d);
-                        dr_temp["s" + (i + 1).ToString()] = temp_d;
-                        Console.WriteLine("temp_step[i] == " + temp_step[i] + " ===  " + i);
-                    }
-                    dt2.Rows.Add(dr_temp);
-                    //Console.WriteLine(Environment.NewLine);
-                }
-            }
-            /*
-             CPK=Cp*（1-|Ca|）
-            Ca (Capability of Accuracy)：制程准确度；在衡量「实际平均值」与「规格中心值」之一致性。对於单边规格，因不存在规格中心，因此不存在Ca；对於双边规格，Ca=(ˉx-U)/(T/2)。
-            Cp (Capability of Precision)：制程精密度；在衡量「规格公差宽度」与「制程变异宽度」之比例。对於单边规格，只有上限和中心值，Cpu = | USL-ˉx | / 3σ 或 只有下限和中心值，Cpl = | ˉx -LSL | / 3σ；对於双边规格：Cp=(USL-LSL) / 6σ=T/6σ
-            注意: 计算Cpk时，取样数据至少应有20组数据，而且数据要具有一定代表性。
-
-            某零件质量要求为20±0.15，抽样100件，测得：-x =20.05mm；s=0.05mm，求过程能力指数。根据零件的规格要求，Tu=20.15，Tl=19.85
-            M=Tu+Tl/2=(20.15+19.85)/2=20.00
-            ε=|M- 20.05|=0.05
-            T = USL - LSL = 20.15 - 19.85 = 0.3
-            CPK = CP*（|1-CA|）
-            = (T-2ε)/6s = (0.3-2*0.05)/(6*0.05)=(0.3-0.1)/(6*0.05)≈0.67
-            */
-            // 分析数据
-            // mea_list
-            string all_cpk = "";
-            Dictionary<string, double> cpk_dic = new Dictionary<string, double>();
-            foreach (DataColumn aa in dt2.Columns)
-            {
-                string col_name = aa.ColumnName.Replace("s", "");
-                List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x => x.step == Convert.ToInt32(col_name)).Select(x => x).ToList<Maticsoft.Model.measures>();
-                //string rr = dt2.Select("", aa.ColumnName + " DESC")[0][aa.ColumnName].ToString();
-                object max = dt2.Compute(string.Format("Max({0})", aa.ColumnName), "true");
-                //  MessageBox.Show(max.ToString());
-                object min = dt2.Compute(string.Format("Min({0})", aa.ColumnName), "true");
-
-                double sta = Convert.ToDouble(mea_obj[0].standardv);
-
-                double va_x1 = Convert.ToDouble(max is DBNull ? 0 : max);
-                double va_x2 = Convert.ToDouble(min is DBNull ? 0 : min);
-                double va_x = va_x1 - sta > sta - va_x2 ? va_x1 : va_x2;
-                double va_s = sta - va_x;
-
-                double tu = sta + Convert.ToDouble(mea_obj[0].up);
-                double ti = sta - Convert.ToDouble(mea_obj[0].down);
-
-                double v_m = (tu + ti) / 2;
-                double sgm = Math.Abs(sta - va_x);
-                double v_t = tu - ti;
-
-                double cpk = (v_t - 2 * sgm) / (6 * va_s);
-                Console.WriteLine(string.Format("max == {0} --- min {1}----- {2}::{3}", max, min, mea_obj[0].up, mea_obj[0].down));
-                Console.WriteLine(Environment.NewLine);
-                Console.WriteLine(string.Format("cpk == {0}", cpk));
-                all_cpk += " " + aa.ColumnName + "= " + cpk;
-                cpk_dic.Add(aa.ColumnName, cpk);
-            }
-            string op = "\t" + get_okpara();
-            //MessageBox.Show("all_cpk" + all_cpk + "   op" + op);
-            label_result.Invoke(new Action(()=> {
-                label_result.Text = string.Format("all_cpk" + all_cpk + "   op" + op);
-            }));
-            string all_op =  "   合格率" + op;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string fName = saveFileDialog1.FileName;
-                //File fileOpen = new File(fName);
-                //isFileHaveName = true;
-                //richTextBox1.Text = fileOpen.ReadFile();
-                //richTextBox1.AppendText("");
-                // this.DataToExcel(dt, fName, all_op);
-                Task daochu_task = new Task(new Action(()=> {
-                    DataTable all_data = dt.Copy();
-                    // 添加列
-                    foreach (Maticsoft.Model.measures mea_obj in mea_list)
-                    {
-                        all_data.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
-                    }
-
-                    foreach (DataRow dr in all_data.Rows)
-                    {
-                        dr["measureb"] = "'" + dr["measureb"];
-                        string step = dr["step1"].ToString();
-                        string[] temp_step = step.Split('/');
-                        
-                        for (int i =0; i< temp_step.Length ;i++)
-                        {
-                            string colname = "s" + (i + 1).ToString();
-                            if(all_data.Columns.Contains(colname))
-                            {
-                                double a = 0;
-                                double.TryParse(temp_step[i], out a);
-                                dr[colname] = a;
-                            }
-                        }
-                    }
-                    DataRow dr_cpk = all_data.NewRow();
-                    foreach (KeyValuePair<string, double> kp in cpk_dic)
-                    {
-                        if (all_data.Columns.Contains(kp.Key))
-                        {
-                            dr_cpk[kp.Key] = kp.Value;
-                        }
-                    }
-                    all_data.Rows.Add(dr_cpk);
-                    all_data.Columns.Remove("step1");
-                    this.DataToExcel(all_data, fName, all_op);
-                }));
-                daochu_task.Start();
-            }
         }
 
         private static DataTable NewMethod()
@@ -590,12 +431,15 @@ namespace NepslidingTools.testModel
             #region 按照需求查出表
             // 罗列条件
             //////////////// 零件号
+            //Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
+            //List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList2(string.Format("  parts.componentId = '{0}'  ORDER BY test.time asc LIMIT 100", this.comp_type));
+            //int test_count = test_lists.Count;
 
             #region 零件号基础信息
-            string lijianhao = textBox_ljhao.Text;
-            if (lijianhao != null && lijianhao != "")
+            string lingjian_leixing = textBox_ljhao.Text;
+            if (lingjian_leixing != null && lingjian_leixing != "")
             {
-                where_str += string.Format(" and PN = '{0}' ", lijianhao);
+                where_str += string.Format(" and N.componentId = {0} ", lingjian_leixing);
             }
             else
             {
@@ -643,6 +487,69 @@ namespace NepslidingTools.testModel
             return where_str;
             #endregion
         }
+
+        private string query_wherestring_withparam(string param)
+        {
+            string where_str = " 1=1 ";
+            #region 按照需求查出表
+            // 罗列条件
+            //////////////// 零件号
+            //Maticsoft.BLL.test Test_bll = new Maticsoft.BLL.test();
+            //List<Maticsoft.Model.test> test_lists = Test_bll.GetModelList2(string.Format("  parts.componentId = '{0}'  ORDER BY test.time asc LIMIT 100", this.comp_type));
+            //int test_count = test_lists.Count;
+
+            #region 零件号基础信息
+            if (param != null && param != "")
+            {
+                where_str += string.Format(" and {0} ", param);
+            }
+            else
+            {
+                // MessageBox.Show("请输入零件号");
+                return where_str;
+            }
+            #endregion
+
+            #region 预备 --查询-- 表字段
+            // 
+            //////////////// 时间
+            #region 时间条件
+            int cmp = timeselect_dtp.Value.CompareTo(dtp.Value);
+            if (cmp < 0)
+            {
+                where_str += string.Format(" and  time >= '{0}'and time<='{1}' ", timeselect_dtp.Value, dtp.Value);
+            }
+            #endregion
+
+            //////////////// ok or ng
+            #region 是否成功的条件
+            if (radioGroup1.SelectedIndex == 0)
+            {
+                where_str += string.Format(" and OKorNG = '{0}' ", "OK");
+            }
+            else if (radioGroup1.SelectedIndex == 1)
+            {
+                where_str += string.Format(" and OKorNG = '{0}' ", "NG");
+            }
+            else if (radioGroup1.SelectedIndex == 2)
+            {
+                // where_str += string.Format(" and OKorNG = '{0}' ", "ALL");
+            }
+            #endregion
+
+            //////////////// 工作站
+            #region 工作站 筛选
+            if (txt_workst.Text != "")
+            {
+                where_str += string.Format(" and workid = '{0}'  ", txt_workst.Text);
+            }
+            #endregion
+
+
+            return where_str;
+            #endregion
+        }
+
         private void SetColor()
         {
             foreach (DataGridViewRow row in this.dgv.Rows)
@@ -670,7 +577,7 @@ namespace NepslidingTools.testModel
             string lijianhao = textBox_ljhao.Text;
             if (lijianhao != null && lijianhao != "")
             {
-                this.dealwithcomp(lijianhao);
+                this.dealwithcomp(Convert.ToInt32( lijianhao));
             }
             else
             {
@@ -678,9 +585,6 @@ namespace NepslidingTools.testModel
             }
 
             #region 构建基本的表形状
-            //DataTable dtb = new DataTable();
-            //
-            //string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
             DataTable mea_dt = new DataTable();
             Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
             List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}", this.comp_type));
@@ -695,7 +599,7 @@ namespace NepslidingTools.testModel
                 string sg = "步骤" + mea_obj.step.ToString();
                 mea_dt.Columns.Add(sg.ToString());
             }
-            mea_dt.Columns.Add("测量结果");
+            mea_dt.Columns.Add("结果");
             dgv.DataSource = mea_dt;
             #endregion
 
@@ -705,10 +609,10 @@ namespace NepslidingTools.testModel
             DataSet ds = new DataSet();
             if (all == true)
             {
-                ds = test_bll.GetListByPage(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
+                ds = test_bll.GetListByPage2(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
             }
             else {
-                ds = test_bll.GetListByPage(where_string, "", 0, 10000);
+                ds = test_bll.GetListByPage2(where_string, "", 0, 10000);
             }
             DataTable dt = ds.Tables[0];
             DataTable dest_table = dgv.DataSource as DataTable;
@@ -728,7 +632,7 @@ namespace NepslidingTools.testModel
                     xin_dr["零件号"] = local_dt.Rows[i]["PN"];
                     xin_dr["测量编号"] = local_dt.Rows[i]["measureb"];
                     xin_dr["测量时间"] = local_dt.Rows[i]["time"];
-                    xin_dr["测量结果"] = local_dt.Rows[i]["OKorNG"];
+                    xin_dr["结果"] = local_dt.Rows[i]["OKorNG"];
                     dest_table.Rows.Add(xin_dr);
                     //xin_dr.Rows[][] = local_dt.Rows[i][0] 
                     new Task((index) =>
@@ -813,210 +717,6 @@ namespace NepslidingTools.testModel
 
             jisuan();
             return;
-
-            DataTable dtb = new DataTable();
-            #region 构建datatable 表
-            Maticsoft.BLL.measures mes = new Maticsoft.BLL.measures();
-            string st = string.Format("PN = '{0}'", textBox_ljhao.Text);
-            DataSet ds1 = mes.GetList(st);
-            #region 添加
-            dtb.Columns.Add("零件号");
-            dtb.Columns.Add("测量编号");
-            dtb.Columns.Add("测量时间");
-            for (int i = 0; i < ds1.Tables[0].Rows.Count; i++)
-            {
-                string sg = "步骤" + ds1.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-                                                                            // comboBox1.Text = sg;
-                dtb.Columns.Add(sg.ToString());
-                //dgv1.DataSource = ds.Tables[0];                
-            }
-            dtb.Columns.Add("测量结果");
-
-            #endregion
-            #region 填充数据
-            if (radioGroup1.SelectedIndex == 0)
-            {
-                Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-                DateTime sj = Convert.ToDateTime(dtp.Text);
-                DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);
-                string TS = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}' and OKorNG='{3}'", textBox_ljhao.Text, sj1, sj, "OK");
-                DataSet dst = tst.GetList(TS);
-                DataTable test_datatable = dst.Tables[0];
-                int test_count = test_datatable.Rows.Count;
-                for (int start_test = 0; start_test < test_count; start_test++)
-                {
-                    string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
-                    string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                    int sp_num = 0;
-                    DataRow dr = dtb.NewRow();
-                    string aa = test_datatable.Rows[start_test]["measureb"].ToString();
-                    dr["测量编号"] = aa;
-                    dr["测量时间"] = test_datatable.Rows[start_test]["time"].ToString();
-                    dr["测量结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
-                    dr["零件号"] = test_datatable.Rows[start_test]["PN"].ToString();
-                    foreach (string j in sp)
-                    {
-                        string tt = "";
-                        sp_num++;
-                        string col_name = string.Format("步骤{0}", sp_num);
-                        Maticsoft.BLL.measures ms = new Maticsoft.BLL.measures();
-                        string pr = string.Format("PN = '{0}'", textBox_ljhao.Text);
-                        DataSet std = mes.GetList(pr);
-
-                        for (int i = 0; i < std.Tables[0].Rows.Count; i++)
-                        {
-
-                            string sg = "步骤" + std.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-
-                            if (col_name == sg)
-                            {
-                                // comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
-                                Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                                string st1 = string.Format("PN = '{0}' ", textBox_ljhao.Text);
-                                DataSet ds11 = mes1.GetList(st1);
-                                for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
-                                {
-                                    tt = ds11.Tables[0].Rows[b][4].ToString();
-                                    double rr = Convert.ToDouble(j);
-                                    double yy = Convert.ToDouble(tt);
-                                    dr[col_name] = "偏差" + (rr - yy) + "mm";//Convert.ToDouble(j) - Convert.ToDouble(tt);
-                                    string vv = dr[col_name].ToString();
-                                    break;
-                                }
-                            }
-                        }
-
-                    }
-
-                    dtb.Rows.Add(dr);
-                }
-            }
-            if (radioGroup1.SelectedIndex == 1)
-            {
-                Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-                DateTime sj = Convert.ToDateTime(dtp.Text);
-                DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);
-                string TS = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}' and OKorNG='{3}'", textBox_ljhao.Text, sj1, sj, "Ng");
-                DataSet dst = tst.GetList(TS);
-                DataTable test_datatable = dst.Tables[0];
-                int test_count = test_datatable.Rows.Count;
-                for (int start_test = 0; start_test < test_count; start_test++)
-                {
-                    string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
-                    string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                    int sp_num = 0;
-                    DataRow dr = dtb.NewRow();
-                    string aa = test_datatable.Rows[start_test]["measureb"].ToString();
-                    dr["测量编号"] = aa;
-                    dr["测量时间"] = test_datatable.Rows[start_test]["time"].ToString();
-                    dr["测量结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
-                    dr["零件号"] = test_datatable.Rows[start_test]["PN"].ToString();
-                    foreach (string j in sp)
-                    {
-                        string tt = "";
-                        sp_num++;
-                        string col_name = string.Format("步骤{0}", sp_num);
-                        Maticsoft.BLL.measures ms = new Maticsoft.BLL.measures();
-                        string pr = string.Format("PN = '{0}'", textBox_ljhao.Text);
-                        DataSet std = mes.GetList(pr);
-
-                        for (int i = 0; i < std.Tables[0].Rows.Count; i++)
-                        {
-
-                            string sg = "步骤" + std.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-
-                            if (col_name == sg)
-                            {
-
-                                // comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
-                                Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                                string st1 = string.Format("PN = '{0}' ", textBox_ljhao.Text);
-                                DataSet ds11 = mes1.GetList(st1);
-                                for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
-                                {
-                                    tt = ds11.Tables[0].Rows[b][4].ToString();
-                                    double rr = Convert.ToDouble(j);
-                                    double yy = Convert.ToDouble(tt);
-                                    dr[col_name] = "偏差" + (rr - yy) + "mm";//Convert.ToDouble(j) - Convert.ToDouble(tt);
-                                    string vv = dr[col_name].ToString();
-                                    break;
-                                }
-                            }
-                        }
-
-                    }
-
-                    dtb.Rows.Add(dr);
-                }
-            }
-            if (radioGroup1.SelectedIndex == 2)
-            {
-                Maticsoft.BLL.test tst = new Maticsoft.BLL.test();
-                DateTime sj = Convert.ToDateTime(dtp.Text);
-                DateTime sj1 = Convert.ToDateTime(timeselect_dtp.Text);
-                string TS = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}'", textBox_ljhao.Text, sj1, sj);
-                string TS1 = string.Format("PN = '{0}'and time >= '{1}'and time<='{2}' and OKorNG='{3}'", textBox_ljhao.Text, sj1, sj, "OK");
-                DataSet dst1 = tst.GetList(TS1);
-                DataTable test_datatable1 = dst1.Tables[0];
-                int test_count1 = test_datatable1.Rows.Count;
-                Program.hg = test_count1;
-                DataSet dst = tst.GetList(TS);
-                DataTable test_datatable = dst.Tables[0];
-                int test_count = test_datatable.Rows.Count;
-                Program.qb = test_count;
-                for (int start_test = 0; start_test < test_count; start_test++)
-                {
-                    string stp1 = test_datatable.Rows[start_test]["step1"].ToString();
-                    string[] sp = stp1.Split(new char[] { '/' });//获取数据集合                 
-                    int sp_num = 0;
-                    DataRow dr = dtb.NewRow();
-                    string aa = test_datatable.Rows[start_test]["measureb"].ToString();
-                    dr["测量编号"] = aa;
-                    dr["测量时间"] = test_datatable.Rows[start_test]["time"].ToString();
-                    dr["测量结果"] = test_datatable.Rows[start_test]["OKorNG"].ToString();
-                    dr["零件号"] = test_datatable.Rows[start_test]["PN"].ToString();
-                    foreach (string j in sp)
-                    {
-                        string tt = "";
-                        sp_num++;
-                        string col_name = string.Format("步骤{0}", sp_num);
-                        Maticsoft.BLL.measures ms = new Maticsoft.BLL.measures();
-                        string pr = string.Format("PN = '{0}'", textBox_ljhao.Text);
-                        DataSet std = mes.GetList(pr);
-
-                        for (int i = 0; i < std.Tables[0].Rows.Count; i++)
-                        {
-
-                            string sg = "步骤" + std.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
-
-                            if (col_name == sg)
-                            {
-
-                                // comboBox1.Text = ds1.Tables[0].Rows[i]["step"].ToString();
-                                Maticsoft.BLL.measures mes1 = new Maticsoft.BLL.measures();
-                                string st1 = string.Format("PN = '{0}' ", textBox_ljhao.Text);
-                                DataSet ds11 = mes1.GetList(st1);
-                                for (int b = 0; b < ds11.Tables[0].Rows.Count; b++)
-                                {
-                                    tt = ds11.Tables[0].Rows[b][4].ToString();
-                                    double rr = Convert.ToDouble(j);
-                                    double yy = Convert.ToDouble(tt);
-                                    dr[col_name] = "偏差" + (rr - yy) + "mm";//Convert.ToDouble(j) - Convert.ToDouble(tt);
-                                    string vv = dr[col_name].ToString();
-                                    break;
-                                }
-                            }
-                        }
-
-                    }
-
-                    dtb.Rows.Add(dr);
-                }
-            }
-            #endregion
-            #endregion
-            // query_gc.DataSource = dtb;
-            dgv.DataSource = dtb;
         }
 
         private void QueryFrom_Deactivate(object sender, EventArgs e)
@@ -1048,19 +748,19 @@ namespace NepslidingTools.testModel
 
         private void AddAutoComp()
         {
-            Task<List<Maticsoft.Model.parts>> ff_task = new Task<List<Maticsoft.Model.parts>>(() =>
+            Task<List<Maticsoft.Model.component>> ff_task = new Task<List<Maticsoft.Model.component>>(() =>
             {
-                List<Maticsoft.Model.parts> ret_list = new List<Maticsoft.Model.parts>();
-                Maticsoft.BLL.parts part_bll = new Maticsoft.BLL.parts();
+                List<Maticsoft.Model.component> ret_list = new List<Maticsoft.Model.component>();
+                Maticsoft.BLL.component part_bll = new Maticsoft.BLL.component();
                 ret_list = part_bll.GetModelList(" ");
                 return ret_list;
             });
             ff_task.ContinueWith((ret_list) =>
             {
                 var datasou = new AutoCompleteStringCollection();
-                List<Maticsoft.Model.parts> local_ret_list = ret_list.Result;
+                List<Maticsoft.Model.component> local_ret_list = ret_list.Result;
                 //ret_list.ConvertAll();
-                List<string> pn_list = local_ret_list.ConvertAll<string>((temp_obj) => { return temp_obj.PN; });
+                List<string> pn_list = local_ret_list.ConvertAll<string>((temp_obj) => { return temp_obj.componentId.ToString(); });
                 datasou.AddRange(pn_list.ToArray());
                 textBox_ljhao.BeginInvoke(new Action(() =>
                 {
@@ -1074,28 +774,7 @@ namespace NepslidingTools.testModel
 
         private void textBox_ljhao_TextChanged(object sender, EventArgs e)
         {
-
             return;
-            var source = new AutoCompleteStringCollection();
-            source.AddRange(new string[]
-                    {
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December"
-                    });
-
-            textBox_ljhao.AutoCompleteCustomSource = source;
-            textBox_ljhao.AutoCompleteMode = AutoCompleteMode.Suggest;
-            textBox_ljhao.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         private void head_tpl_Paint(object sender, PaintEventArgs e)
@@ -1140,7 +819,7 @@ namespace NepslidingTools.testModel
 
         private void 重测ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Program.txtbh = textBox_ljhao.Text;
+            Program.type = Convert.ToInt32( textBox_ljhao.Text);
             StepTestFrom stf = new StepTestFrom();
             stf.Show();
         }

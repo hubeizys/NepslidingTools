@@ -16,5 +16,13 @@ namespace Maticsoft.BLL
             DataSet ds = dal.GetList2(strWhere);
             return DataTableToList(ds.Tables[0]);
         }
+
+        /// <summary>
+        /// 分页获取数据列表
+        /// </summary>
+        public DataSet GetListByPage2(string strWhere, string orderby, int startIndex, int endIndex)
+        {
+            return dal.GetListByPage2(strWhere, orderby, startIndex, endIndex);
+        }
     }
 }

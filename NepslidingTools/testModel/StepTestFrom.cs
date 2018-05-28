@@ -1077,5 +1077,15 @@ namespace NepslidingTools.testModel
         {
 
         }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void combjg_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

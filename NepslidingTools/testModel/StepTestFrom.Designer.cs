@@ -31,13 +31,13 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram24 = new DevExpress.XtraCharts.XYDiagram();
-            Series series70 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView24 = new DevExpress.XtraCharts.LineSeriesView();
-            Series series71 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView47 = new DevExpress.XtraCharts.PointSeriesView();
-            Series series72 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView48 = new DevExpress.XtraCharts.PointSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram3 = new DevExpress.XtraCharts.XYDiagram();
+            Series series7 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView3 = new DevExpress.XtraCharts.LineSeriesView();
+            Series series8 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView5 = new DevExpress.XtraCharts.PointSeriesView();
+            Series series9 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView6 = new DevExpress.XtraCharts.PointSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -86,14 +86,14 @@ namespace NepslidingTools.testModel
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lab_cc = new System.Windows.Forms.Label();
             this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
             this.timer_portst = new System.Windows.Forms.Timer(this.components);
             this.timer_tostep = new System.Windows.Forms.Timer(this.components);
             this.timer_shine = new System.Windows.Forms.Timer(this.components);
             this.timer_ref = new System.Windows.Forms.Timer(this.components);
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.lab_cc = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
@@ -102,8 +102,8 @@ namespace NepslidingTools.testModel
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
             this.SuspendLayout();
             // 
             // lj_lab
@@ -164,12 +164,13 @@ namespace NepslidingTools.testModel
             this.tableLayoutPanel1.SetRowSpan(this.panel2, 2);
             this.panel2.Size = new System.Drawing.Size(438, 261);
             this.panel2.TabIndex = 3;
+            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // txtkw
             // 
             this.txtkw.BackColor = System.Drawing.Color.White;
             this.txtkw.ForeColor = System.Drawing.Color.Black;
-            this.txtkw.Location = new System.Drawing.Point(163, 236);
+            this.txtkw.Location = new System.Drawing.Point(163, 223);
             this.txtkw.Name = "txtkw";
             this.txtkw.Size = new System.Drawing.Size(58, 22);
             this.txtkw.TabIndex = 8;
@@ -179,7 +180,7 @@ namespace NepslidingTools.testModel
             // 
             this.textcl.BackColor = System.Drawing.Color.White;
             this.textcl.ForeColor = System.Drawing.Color.Black;
-            this.textcl.Location = new System.Drawing.Point(302, 238);
+            this.textcl.Location = new System.Drawing.Point(302, 225);
             this.textcl.Name = "textcl";
             this.textcl.Size = new System.Drawing.Size(100, 22);
             this.textcl.TabIndex = 7;
@@ -190,16 +191,17 @@ namespace NepslidingTools.testModel
             this.combjg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.combjg.ForeColor = System.Drawing.Color.Black;
             this.combjg.FormattingEnabled = true;
-            this.combjg.Location = new System.Drawing.Point(88, 198);
+            this.combjg.Location = new System.Drawing.Point(88, 192);
             this.combjg.Name = "combjg";
             this.combjg.Size = new System.Drawing.Size(121, 21);
             this.combjg.TabIndex = 6;
             this.combjg.Visible = false;
+            this.combjg.SelectedIndexChanged += new System.EventHandler(this.combjg_SelectedIndexChanged);
             // 
             // button1
             // 
             this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Location = new System.Drawing.Point(327, 196);
+            this.button1.Location = new System.Drawing.Point(327, 190);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 5;
@@ -228,7 +230,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX3.ForeColor = System.Drawing.Color.Black;
-            this.labelX3.Location = new System.Drawing.Point(228, 197);
+            this.labelX3.Location = new System.Drawing.Point(228, 191);
             this.labelX3.Name = "labelX3";
             this.labelX3.Size = new System.Drawing.Size(103, 23);
             this.labelX3.TabIndex = 3;
@@ -241,7 +243,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX2.ForeColor = System.Drawing.Color.Black;
-            this.labelX2.Location = new System.Drawing.Point(237, 236);
+            this.labelX2.Location = new System.Drawing.Point(237, 223);
             this.labelX2.Name = "labelX2";
             this.labelX2.Size = new System.Drawing.Size(70, 23);
             this.labelX2.TabIndex = 2;
@@ -254,7 +256,7 @@ namespace NepslidingTools.testModel
             // 
             this.labelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.labelX1.ForeColor = System.Drawing.Color.Black;
-            this.labelX1.Location = new System.Drawing.Point(107, 236);
+            this.labelX1.Location = new System.Drawing.Point(107, 223);
             this.labelX1.Name = "labelX1";
             this.labelX1.Size = new System.Drawing.Size(60, 23);
             this.labelX1.TabIndex = 1;
@@ -652,26 +654,56 @@ namespace NepslidingTools.testModel
             this.panel4.Size = new System.Drawing.Size(1120, 143);
             this.panel4.TabIndex = 10;
             // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.White;
+            this.panel5.Controls.Add(this.label5);
+            this.panel5.Controls.Add(this.lab_cc);
+            this.panel5.Location = new System.Drawing.Point(950, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(167, 143);
+            this.panel5.TabIndex = 9;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(4, 5);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(170, 50);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "½á¹ûÅÐ¶¨";
+            // 
+            // lab_cc
+            // 
+            this.lab_cc.AutoSize = true;
+            this.lab_cc.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lab_cc.Location = new System.Drawing.Point(0, 71);
+            this.lab_cc.Name = "lab_cc";
+            this.lab_cc.Size = new System.Drawing.Size(172, 64);
+            this.lab_cc.TabIndex = 0;
+            this.lab_cc.Text = "³¬²îÖµ";
+            // 
             // chartControl1
             // 
-            xyDiagram24.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram24.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram24;
+            xyDiagram3.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram3.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram3;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Left;
             this.chartControl1.Legend.TextVisible = false;
             this.chartControl1.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
             this.chartControl1.Location = new System.Drawing.Point(0, 0);
             this.chartControl1.Name = "chartControl1";
-            series70.Name = "²âÁ¿½á¹û²¨¶¯";
-            series70.View = lineSeriesView24;
-            series71.Name = "³¬²î";
-            series71.View = pointSeriesView47;
-            series72.Name = "¸º³¬²î";
-            series72.View = pointSeriesView48;
+            series7.Name = "²âÁ¿½á¹û²¨¶¯";
+            series7.View = lineSeriesView3;
+            series8.Name = "³¬²î";
+            series8.View = pointSeriesView5;
+            series9.Name = "¸º³¬²î";
+            series9.View = pointSeriesView6;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series70,
-        series71,
-        series72};
+        series7,
+        series8,
+        series9};
             this.chartControl1.Size = new System.Drawing.Size(950, 143);
             this.chartControl1.TabIndex = 8;
             // 
@@ -693,36 +725,6 @@ namespace NepslidingTools.testModel
             // timer_ref
             // 
             this.timer_ref.Tick += new System.EventHandler(this.timer_ref_Tick);
-            // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.White;
-            this.panel5.Controls.Add(this.label5);
-            this.panel5.Controls.Add(this.lab_cc);
-            this.panel5.Location = new System.Drawing.Point(950, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(167, 143);
-            this.panel5.TabIndex = 9;
-            // 
-            // lab_cc
-            // 
-            this.lab_cc.AutoSize = true;
-            this.lab_cc.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lab_cc.Location = new System.Drawing.Point(0, 71);
-            this.lab_cc.Name = "lab_cc";
-            this.lab_cc.Size = new System.Drawing.Size(172, 64);
-            this.lab_cc.TabIndex = 0;
-            this.lab_cc.Text = "³¬²îÖµ";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Î¢ÈíÑÅºÚ", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(4, 5);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(170, 50);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "½á¹ûÅÐ¶¨";
             // 
             // StepTestFrom
             // 
@@ -753,9 +755,9 @@ namespace NepslidingTools.testModel
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
             this.ResumeLayout(false);
 
         }
