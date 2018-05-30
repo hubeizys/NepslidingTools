@@ -20,6 +20,10 @@ namespace NepslidingTools.testModel
         int cur_page_lenb = 20;
         int totle_num = 0;
 
+        int totle_page_num = 0;
+        int cur_page_num = 0;
+
+        int defalut_select = 2;
         public QueryFrom()
         {
             InitializeComponent();
@@ -97,7 +101,7 @@ namespace NepslidingTools.testModel
 
         private void QueryFrom_Load(object sender, EventArgs e)
         {
-            textBox_ljhao.Text = Program.gdvid;
+            //textBox_ljhao.Text = Program.gdvid;
             global.CurActive = "QueryFrom";
 
             this.timeselect_dtp.Value = global.startTime;
@@ -107,9 +111,19 @@ namespace NepslidingTools.testModel
             // 下一页
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             string where_string = this.query_wherestring();
-            this.totle_num = test_bll.GetRecordCount(where_string);
+            this.totle_num = test_bll.GetRecordCount2(where_string);
 
-            string parem_num = string.Format("1/{0}", this.totle_num / this.cur_page_lenb + 1);
+            // 当前多少页面
+            if (this.totle_num % this.cur_page_lenb == 0)
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb;
+            }
+            else
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb + 1;
+            }
+
+            string parem_num = string.Format("1/{0}", this.totle_page_num);
             labelX1.Text = parem_num;
             #endregion
 
@@ -140,7 +154,7 @@ namespace NepslidingTools.testModel
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             string where_string1 = this.query_wherestring();
             radioGroup1.SelectedIndex = 2;
-            DataSet ds = test_bll.GetList(where_string1);
+            DataSet ds = test_bll.GetList3(where_string1);
             //DataTable dt = this.dgv.DataSource as DataTable;
             DataTable dt = ds.Tables[0];
 
@@ -407,11 +421,11 @@ namespace NepslidingTools.testModel
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             radioGroup1.SelectedIndex = 2;
             string where_string1 = this.query_wherestring();
-            int tot = test_bll.GetRecordCount(where_string1);
+            int tot = test_bll.GetRecordCount2(where_string1);
 
             radioGroup1.SelectedIndex = 0;
             string where_string2 = this.query_wherestring();
-            int ok_num = test_bll.GetRecordCount(where_string2);
+            int ok_num = test_bll.GetRecordCount2(where_string2);
 
             double percent = Convert.ToDouble(ok_num) / Convert.ToDouble(tot);
             string result = string.Format("{0:0.00%}", percent);//得到5.88%
@@ -609,7 +623,7 @@ namespace NepslidingTools.testModel
             DataSet ds = new DataSet();
             if (all == true)
             {
-                ds = test_bll.GetListByPage2(where_string, "", cur_step + 1, cur_step + cur_page_lenb);
+                ds = test_bll.GetListByPage2(where_string, "", cur_page_lenb * cur_page_num, cur_page_lenb  * (1+cur_page_num));
             }
             else {
                 ds = test_bll.GetListByPage2(where_string, "", 0, 10000);
@@ -702,20 +716,33 @@ namespace NepslidingTools.testModel
 
         private void query_bt_Click(object sender, EventArgs e)
         {
+            // MessageBox.Show(radioGroup1.SelectedIndex.ToString());
+            this.defalut_select = radioGroup1.SelectedIndex;
             if (textBox_ljhao.Text == "")
             {
                 MessageBox.Show("请输入查询字段");
                 return;
             }
             this.reQuery();
+
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             string where_string = this.query_wherestring();
-            this.totle_num = test_bll.GetRecordCount(where_string);
-            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
-            string page_info = string.Format("{0}/{1}", 1, tot_page_index);
-            this.labelX1.Text = page_info;
+            this.totle_num = test_bll.GetRecordCount2(where_string);
+            if (this.totle_num % this.cur_page_lenb == 0)
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb;
+            }
+            else
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb + 1;
+            }
 
+            //int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", 1, totle_page_num);
+            this.labelX1.Text = page_info;
             jisuan();
+
+            this.radioGroup1.SelectedIndex = defalut_select;
             return;
         }
 
@@ -784,6 +811,16 @@ namespace NepslidingTools.testModel
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            if (this.cur_page_num > 0)
+            {
+                cur_page_num--;
+                string page_par = string.Format("{0}/{1}", cur_page_num+1, totle_page_num);
+                this.labelX1.Text = page_par;
+            }
+
+            this.reQuery(true);
+            return;
             // 上一页
             if (cur_step >= cur_page_lenb)
             {
@@ -804,6 +841,14 @@ namespace NepslidingTools.testModel
         private void button2_Click(object sender, EventArgs e)
         {
 
+            if (this.cur_page_num < this.totle_page_num)
+            {
+                cur_page_num++;
+                string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
+                this.labelX1.Text = page_par;
+            }
+            this.reQuery(true);
+            return;
             if (cur_step + cur_page_lenb > this.totle_num)
             {
                 return;
@@ -861,7 +906,11 @@ namespace NepslidingTools.testModel
         {
 
         }
+
+        private void radioGroup1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
- 
- 
+#endregion

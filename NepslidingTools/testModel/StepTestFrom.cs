@@ -338,7 +338,7 @@ namespace NepslidingTools.testModel
                                 // 测量值
                                 double BZ = Convert.ToDouble(results[cur_index - 1] == "" ? "0": results[cur_index - 1]);
 
-                                double cz = LL - GC;
+                                double cz = LL + GC;
                                 double hz = LL + GC;
                                 if (BZ >= hz)
                                 {
@@ -506,33 +506,31 @@ namespace NepslidingTools.testModel
                 // 测量值
                 double BZ = Convert.ToDouble(textcl.Text);
 
-                //double show_value = BZ - LL - GC;
-                double cz = LL - XGc;
+                double cz = LL + XGc;
                 double hz = LL + GC;
                 if (BZ >= cz && BZ <= hz)
                 {
                     this.combjg.Text = "Ok";
                     lab_cc.ForeColor = Color.Green;
-                    lab_cc.Text = BZ.ToString();
+                    lab_cc.Text = (BZ).ToString();
+                    label5.Text = "合格";
                 }
                 else
                 {
                     combjg.Text = "Ng";
-
+                    label5.Text = "超差";
                     lab_cc.Font = new System.Drawing.Font(lab_cc.Font.FontFamily, 36, lab_cc.Font.Style);
 
                     Console.WriteLine(string.Format("BZ :{0} == hz {1} -- cz{2}", BZ, hz, cz));
                     if (BZ > hz)
                     {
                         lab_cc.ForeColor = Color.Red;
-                        //lab_cc.Text = show_value.ToString() ;
-                        lab_cc.Text = (BZ - hz).ToString();
+                        lab_cc.Text = (BZ - LL).ToString();
                     }
-
                     if (BZ < cz)
                     {
                         lab_cc.ForeColor = Color.Blue;
-                        lab_cc.Text = "-" + (cz-BZ).ToString();
+                        lab_cc.Text = (BZ - LL).ToString();
                     }
 
                 }

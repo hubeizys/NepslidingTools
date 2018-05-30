@@ -16,6 +16,20 @@ namespace Maticsoft.BLL
             DataSet ds = dal.GetList2(strWhere);
             return DataTableToList(ds.Tables[0]);
         }
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
+        public DataSet GetList3(string strWhere)
+        {
+            return dal.GetList3(strWhere);
+        }
+        /// <summary>
+        /// 分页获取数据列表
+        /// </summary>
+        public int GetRecordCount2(string strWhere)
+        {
+            return dal.GetRecordCount2(strWhere);
+        }
 
         /// <summary>
         /// 分页获取数据列表

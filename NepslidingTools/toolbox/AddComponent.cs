@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -75,6 +76,50 @@ namespace NepslidingTools.toolbox
             {
                 MessageBox.Show(err.Message);
             } 
+        }
+
+        private void textBox_sm_TextChanged(object sender, EventArgs e)
+        {
+            //string cur_dir = System.Environment.CurrentDirectory;
+            //ofd_sm.InitialDirectory = cur_dir + "\\shumo";
+            //if (this.ofd_sm.ShowDialog() == DialogResult.OK)
+            //{
+            //    MessageBox.Show(ofd_sm.FileName);
+            //}
+            //textBox_sm.Text = Path.GetFileName(ofd_sm.FileName);
+        }
+
+        private void textBox_picname_TextChanged(object sender, EventArgs e)
+        {
+            //string cur_dir = System.Environment.CurrentDirectory;
+            //ofd_sm.InitialDirectory = cur_dir + "\\images";
+            //if (this.ofd_sm.ShowDialog() == DialogResult.OK)
+            //{
+            //    MessageBox.Show(ofd_sm.FileName);
+            //}
+            //textBox_picname.Text = Path.GetFileName(ofd_sm.FileName);
+        }
+
+        private void textBox_sm_Click(object sender, EventArgs e)
+        {
+            string cur_dir = System.Environment.CurrentDirectory;
+            ofd_sm.InitialDirectory = cur_dir + "\\shumo";
+            if (this.ofd_sm.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(ofd_sm.FileName);
+            }
+            textBox_sm.Text = Path.GetFileName(ofd_sm.FileName);
+        }
+
+        private void textBox_picname_Click(object sender, EventArgs e)
+        {
+            string cur_dir = System.Environment.CurrentDirectory;
+            ofd_sm.InitialDirectory = cur_dir + "\\images";
+            if (this.ofd_sm.ShowDialog() == DialogResult.OK)
+            {
+                MessageBox.Show(ofd_sm.FileName);
+            }
+            textBox_picname.Text = Path.GetFileName(ofd_sm.FileName);
         }
     }
 }

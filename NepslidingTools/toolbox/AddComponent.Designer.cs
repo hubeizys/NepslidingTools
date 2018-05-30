@@ -41,6 +41,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox_picname = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.ofd_sm = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // lab_name
@@ -123,6 +124,8 @@
             this.textBox_sm.Name = "textBox_sm";
             this.textBox_sm.Size = new System.Drawing.Size(100, 21);
             this.textBox_sm.TabIndex = 10;
+            this.textBox_sm.Click += new System.EventHandler(this.textBox_sm_Click);
+            this.textBox_sm.TextChanged += new System.EventHandler(this.textBox_sm_TextChanged);
             // 
             // label5
             // 
@@ -139,6 +142,8 @@
             this.textBox_picname.Name = "textBox_picname";
             this.textBox_picname.Size = new System.Drawing.Size(100, 21);
             this.textBox_picname.TabIndex = 12;
+            this.textBox_picname.Click += new System.EventHandler(this.textBox_picname_Click);
+            this.textBox_picname.TextChanged += new System.EventHandler(this.textBox_picname_TextChanged);
             // 
             // label6
             // 
@@ -148,6 +153,11 @@
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 11;
             this.label6.Text = "图片名称";
+            // 
+            // ofd_sm
+            // 
+            this.ofd_sm.FileName = "file";
+            this.ofd_sm.InitialDirectory = "shumo";
             // 
             // AddComponent
             // 
@@ -190,5 +200,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox_picname;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.OpenFileDialog ofd_sm;
     }
 }

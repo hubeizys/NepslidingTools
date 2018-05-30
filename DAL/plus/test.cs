@@ -13,6 +13,21 @@ namespace Maticsoft.DAL
         /// <summary>
         /// 获得数据列表
         /// </summary>
+        public DataSet GetList3(string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT test.*, N.Barcode  FROM test LEFT JOIN parts N ON test.PN = N.PN  ");
+
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            return DbHelperMySQL.Query(strSql.ToString());
+        }
+
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
         public DataSet GetList2(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
@@ -24,7 +39,27 @@ namespace Maticsoft.DAL
             }
             return DbHelperMySQL.Query(strSql.ToString());
         }
-
+        /// <summary>
+        /// 获取记录总数
+        /// </summary>
+        public int GetRecordCount2(string strWhere)
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("select count(1) FROM test LEFT JOIN parts N ON test.PN = N.PN  ");
+            if (strWhere.Trim() != "")
+            {
+                strSql.Append(" where " + strWhere);
+            }
+            object obj = DbHelperMySQL.GetSingle(strSql.ToString());
+            if (obj == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(obj);
+            }
+        }
         /// <summary>
         /// 分页获取数据列表
         /// </summary>

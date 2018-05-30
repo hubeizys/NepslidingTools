@@ -19,10 +19,19 @@ namespace NepslidingTools.toolbox
         int cur_step = 0;
         int cur_page_lenb = 20;
         int totle_num = 0;
+        int totle_num2 = 0;
+
 
         int lj_cur_step = 0;
         int lj_cur_page_lenb = 20;
         int lj_totle_num = 0;
+
+
+        int totle_page_num = 0;
+        int cur_page_num = 0;
+
+        int totle_page_num2 = 0;
+        int cur_page_num2 = 0;
 
         public BomFrom2()
         {
@@ -52,7 +61,7 @@ namespace NepslidingTools.toolbox
             }
 
             Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
-            DataSet ds = parts_bll.GetListByPage2(where_str, "", lj_cur_step, lj_cur_step + lj_cur_page_lenb);
+            DataSet ds = parts_bll.GetListByPage2(where_str, "", cur_page_lenb * cur_page_num2, cur_page_lenb * (1 + cur_page_num2));
             DataTable dt = ds.Tables[0];
 
             if (this.textBox_type.Text != "")
@@ -82,7 +91,7 @@ namespace NepslidingTools.toolbox
                 where_str += string.Format("  and ( componentId like '%{0}%' or name like '%{1}%') ", this.textBox_query.Text, this.textBox_query.Text);
             }
             Maticsoft.BLL.component com_bll = new Maticsoft.BLL.component();
-            DataSet ds = com_bll.GetListByPage2(where_str, "", cur_step, cur_step + cur_page_lenb);
+            DataSet ds = com_bll.GetListByPage2(where_str, "", cur_page_lenb * cur_page_num, cur_page_lenb * (1 + cur_page_num));
             DataTable dt = ds.Tables[0];
             this.dataGridView1.DataSource = dt;
             #endregion
@@ -90,24 +99,30 @@ namespace NepslidingTools.toolbox
 
         private void button_query_Click(object sender, EventArgs e)
         {
-            this.init_dgv();
             string where_str = " 1=1 ";
-            if (this.textBoxljjl_query.Text != "")
+            if (this.textBox_query.Text != "")
             {
-                where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
+                // 通过零件的id或者零件的名字
+                where_str += string.Format("  and ( componentId like '%{0}%' or name like '%{1}%') ", this.textBox_query.Text, this.textBox_query.Text);
             }
+            Maticsoft.BLL.component parts_bll = new Maticsoft.BLL.component();
+            totle_num = parts_bll.GetRecordCount(where_str);
 
-            Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
-            lj_totle_num = parts_bll.GetRecordCount(where_str);
-
-            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
-            string page_info = string.Format("{0}/{1}", 1, tot_page_index);
+            if (this.totle_num % this.cur_page_lenb == 0)
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb;
+            }
+            else
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb + 1;
+            }
+            string page_info = string.Format("{0}/{1}", 1, totle_page_num);
             this.label_tot.Text = page_info;
+            this.init_dgv();
         }
 
         private void button_likequery_Click(object sender, EventArgs e)
         {
-            init_ljjldgv();
             string where_str = " 1=1 ";
             if (this.textBoxljjl_query.Text != "")
             {
@@ -115,16 +130,45 @@ namespace NepslidingTools.toolbox
             }
 
             Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
-            totle_num =  parts_bll.GetRecordCount(where_str);
+            totle_num2 =  parts_bll.GetRecordCount(where_str);
 
-            int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
-            string page_info = string.Format("{0}/{1}", 1, tot_page_index);
+            if (this.totle_num2 % this.cur_page_lenb == 0)
+            {
+                this.totle_page_num2 = this.totle_num2 / this.cur_page_lenb;
+            }
+            else
+            {
+                this.totle_page_num2 = this.totle_num2 / this.cur_page_lenb + 1;
+            }
+
+            //int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+            string page_info = string.Format("{0}/{1}", 1, totle_page_num2);
             this.label_baifen1.Text = page_info;
+            init_ljjldgv();
         }
 
         private void BomFrom2_Load(object sender, EventArgs e)
         {
-            this.init_ljjldgv();
+            string where_str = " 1=1 ";
+            if (this.textBoxljjl_query.Text != "")
+            {
+                where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
+            }
+
+            Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+            totle_num = parts_bll.GetRecordCount(where_str);
+            if (this.totle_num % this.cur_page_lenb == 0)
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb;
+            }
+            else
+            {
+                this.totle_page_num = this.totle_num / this.cur_page_lenb + 1;
+            }
+            string page_info = string.Format("{0}/{1}", 1, totle_page_num);
+            this.label_tot.Text = page_info;
+            this.init_dgv();
+
         }
 
         private void dgvljjl_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -134,7 +178,7 @@ namespace NepslidingTools.toolbox
             if (e.RowIndex >= 0 && e.RowIndex < dgvljjl.Rows.Count)
             {
                 // MessageBox.Show(dgvljjl.Columns.Count.ToString() + " "+ e.ColumnIndex);
-                if (e.ColumnIndex == 5)
+                if (e.ColumnIndex == 6)
                 {
                     addparts addp = new addparts();
                     string ljh = dgvljjl.Rows[e.RowIndex].Cells["PN"].Value.ToString();
@@ -163,7 +207,7 @@ namespace NepslidingTools.toolbox
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            //MessageBox.Show(e.ColumnIndex.ToString());
+            // MessageBox.Show(e.ColumnIndex.ToString());
             TestBZFrom tb = new TestBZFrom();
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
             {
@@ -185,6 +229,17 @@ namespace NepslidingTools.toolbox
                     this.dataGridView1.CurrentCell.Value = Path.GetFileName(ofd_sm.FileName);
                 }
 
+                if (e.ColumnIndex == 8)
+                {
+                    string cur_dir = System.Environment.CurrentDirectory;
+                    ofd_sm.InitialDirectory = cur_dir + "\\images";
+                    if (this.ofd_sm.ShowDialog() == DialogResult.OK)
+                    {
+                        MessageBox.Show(ofd_sm.FileName);
+                    }
+                    this.dataGridView1.CurrentCell.Value = Path.GetFileName(ofd_sm.FileName);
+                }
+
             }
             else
             {
@@ -194,6 +249,15 @@ namespace NepslidingTools.toolbox
 
         private void buttonjl_pre_Click(object sender, EventArgs e)
         {
+
+            if (this.cur_page_num > 0)
+            {
+                cur_page_num--;
+                string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
+                this.label_baifen1.Text = page_par;
+            }
+            init_ljjldgv();
+            return;
             // 上一页
             if (cur_step >= cur_page_lenb)
             {
@@ -213,6 +277,16 @@ namespace NepslidingTools.toolbox
 
         private void buttonjl_next_Click(object sender, EventArgs e)
         {
+
+            if (this.cur_page_num2 < this.totle_page_num2)
+            {
+                cur_page_num2++;
+                string page_par = string.Format("{0}/{1}", cur_page_num2 + 1, totle_page_num2);
+                this.label_baifen1.Text = page_par;
+            }
+            init_ljjldgv();
+            return;
+
             if (cur_step + cur_page_lenb > this.totle_num)
             {
                 return;
@@ -228,7 +302,14 @@ namespace NepslidingTools.toolbox
 
         private void button_pre_Click(object sender, EventArgs e)
         {
-            
+            if (this.cur_page_num > 0)
+            {
+                cur_page_num--;
+                string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
+                this.label_tot.Text = page_par;
+            }
+            init_dgv();
+            return;
             // 上一页
             if (lj_cur_step  >= lj_cur_page_lenb)
             {
@@ -248,7 +329,16 @@ namespace NepslidingTools.toolbox
 
         private void button_next_Click(object sender, EventArgs e)
         {
-            
+
+            if (this.cur_page_num < this.totle_page_num)
+            {
+                cur_page_num++;
+                string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
+                this.label_tot.Text = page_par;
+            }
+            init_dgv();
+            return;
+
             if (lj_cur_step + lj_cur_page_lenb > this.totle_num)
             {
                 return;
@@ -620,6 +710,11 @@ namespace NepslidingTools.toolbox
         {
             //DataGridViewRow dgr = dgvljjl.CurrentRow;
             //Maticsoft.BLL.
+        }
+
+        private void label_tot_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
