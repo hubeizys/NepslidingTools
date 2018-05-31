@@ -18,6 +18,7 @@ namespace NepslidingTools
         public static string txtstr;
         public static string txtbh;
         public static int type;
+
         public static float hg;
         public static float qb;
         public static string DK; 

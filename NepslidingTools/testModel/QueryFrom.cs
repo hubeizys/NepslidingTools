@@ -17,7 +17,7 @@ namespace NepslidingTools.testModel
     {
         string name = "QueryFrom";
         int cur_step = 0;
-        int cur_page_lenb = 20;
+        int cur_page_lenb = 17;
         int totle_num = 0;
 
         int totle_page_num = 0;
@@ -153,7 +153,7 @@ namespace NepslidingTools.testModel
             // 取得数据。 分解数据。 填充数据
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             string where_string1 = this.query_wherestring();
-            radioGroup1.SelectedIndex = 2;
+            // radioGroup1.SelectedIndex = 2;
             DataSet ds = test_bll.GetList3(where_string1);
             //DataTable dt = this.dgv.DataSource as DataTable;
             DataTable dt = ds.Tables[0];
@@ -231,18 +231,21 @@ namespace NepslidingTools.testModel
                 label_result.Text = string.Format("all_cpk" + all_cpk + "   op" + op);
             }));
 
-            #region 添加一行总结
-            DataTable temp_table = dgv.DataSource as DataTable;
-            DataRow temp_dr = temp_table.NewRow();
-            temp_dr["零件号"] = "结果与CPK";
-            foreach (KeyValuePair<string, double> par in cpk_dic)
+            dgv.Invoke(new Action(() =>
             {
-                string key_name = par.Key.Replace("s","步骤");
-                temp_dr[key_name] = par.Value.ToString("0.00");
-            }
-            temp_dr["结果"] = op.Replace("\t", "");
-            temp_table.Rows.Add(temp_dr);
-
+                #region 添加一行总结
+                DataTable temp_table = dgv.DataSource as DataTable;
+                DataRow temp_dr = temp_table.NewRow();
+                temp_dr["零件号"] = "结果与CPK";
+                foreach (KeyValuePair<string, double> par in cpk_dic)
+                {
+                    string key_name = par.Key.Replace("s", "步骤");
+                    temp_dr[key_name] = par.Value.ToString("0.00");
+                }
+                temp_dr["结果"] = op.Replace("\t", "");
+                temp_table.Rows.Add(temp_dr);
+                dgv.Refresh();
+            }));
             #endregion
         }
         /// <summary>
@@ -418,17 +421,22 @@ namespace NepslidingTools.testModel
         }
         private string get_okpara()
         {
-            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
-            radioGroup1.SelectedIndex = 2;
-            string where_string1 = this.query_wherestring();
-            int tot = test_bll.GetRecordCount2(where_string1);
+            string result = "";
+            radioGroup1.Invoke(new Action(() =>
+            {
+                Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+                radioGroup1.SelectedIndex = 2;
+                string where_string1 = this.query_wherestring();
+                int tot = test_bll.GetRecordCount2(where_string1);
 
-            radioGroup1.SelectedIndex = 0;
-            string where_string2 = this.query_wherestring();
-            int ok_num = test_bll.GetRecordCount2(where_string2);
+                radioGroup1.SelectedIndex = 0;
+                string where_string2 = this.query_wherestring();
+                int ok_num = test_bll.GetRecordCount2(where_string2);
 
-            double percent = Convert.ToDouble(ok_num) / Convert.ToDouble(tot);
-            string result = string.Format("{0:0.00%}", percent);//得到5.88%
+                double percent = Convert.ToDouble(ok_num) / Convert.ToDouble(tot);
+                result = string.Format("{0:0.00%}", percent);//得到5.88%
+            }));
+            
             //MessageBox.Show(result);
             return result;
         }
@@ -704,6 +712,9 @@ namespace NepslidingTools.testModel
                         }
                     }
                 }
+
+                // 计算 
+                jisuan();
             });
 
             parent.Start();
@@ -723,7 +734,7 @@ namespace NepslidingTools.testModel
                 MessageBox.Show("请输入查询字段");
                 return;
             }
-            this.reQuery();
+            this.reQuery(true);
 
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             string where_string = this.query_wherestring();
@@ -740,7 +751,6 @@ namespace NepslidingTools.testModel
             //int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
             string page_info = string.Format("{0}/{1}", 1, totle_page_num);
             this.labelX1.Text = page_info;
-            jisuan();
 
             this.radioGroup1.SelectedIndex = defalut_select;
             return;
@@ -877,7 +887,7 @@ namespace NepslidingTools.testModel
             timeselect_dtp.Value = start;
             dtp.Value = cur;
             reQuery();
-            jisuan();
+        
         }
 
         private void bt_zou_Click(object sender, EventArgs e)
@@ -888,7 +898,7 @@ namespace NepslidingTools.testModel
             timeselect_dtp.Value = start;
             dtp.Value = cur;
             reQuery();
-            jisuan();
+        
         }
 
         private void bt_yue_Click(object sender, EventArgs e)
@@ -899,7 +909,7 @@ namespace NepslidingTools.testModel
             timeselect_dtp.Value = start;
             dtp.Value = cur;
             reQuery();
-            jisuan();
+        
         }
 
         private void panelend_Paint(object sender, PaintEventArgs e)

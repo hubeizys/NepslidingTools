@@ -20,7 +20,9 @@ namespace NepslidingTools.testModel
     {
         string name = "steptest";
         private AnyCAD.Presentation.RenderWindow3d renderView = null;
-        public int comp_tp = -1;        
+        public int comp_tp = -1;
+
+        public string CompId { get; set; }
 
         #region 串口变量
         private SerPort sp_obj = new SerPort();
@@ -525,12 +527,12 @@ namespace NepslidingTools.testModel
                     if (BZ > hz)
                     {
                         lab_cc.ForeColor = Color.Red;
-                        lab_cc.Text = (BZ - LL).ToString();
+                        lab_cc.Text = (BZ - hz).ToString();
                     }
                     if (BZ < cz)
                     {
                         lab_cc.ForeColor = Color.Blue;
-                        lab_cc.Text = (BZ - LL).ToString();
+                        lab_cc.Text = (cz - BZ).ToString();
                     }
 
                 }
@@ -646,10 +648,17 @@ namespace NepslidingTools.testModel
                         break;
                     }    
                 }
-
-                string str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
-                //MessageBox.Show(str);
+                string str = "";
+                if (this.CompId != null && this.CompId != "")
+                {
+                    str = CompId;
+                }
+                else
+                {
+                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                }
                 need_change_rows["零件号"] = str;
+                this.CompId = "";
             }
             #endregion
         }
@@ -767,8 +776,6 @@ namespace NepslidingTools.testModel
                     return;
                 }
                 List<Maticsoft.Model.test>  pa_modes = test_bll.GetModelList2(where_str);
-                //int totle_num = pa_modes.Count;
-                //Maticsoft.BLL.test use = new Maticsoft.BLL.test();
                 foreach (Maticsoft.Model.test test_mode in pa_modes)
                 {
                     test_bll.Delete(test_mode.id);
@@ -832,6 +839,7 @@ namespace NepslidingTools.testModel
             this.comboBox1.SelectedIndex = 0;
             #endregion
             create_serpoint();
+            init_table();
             return;
             
         }

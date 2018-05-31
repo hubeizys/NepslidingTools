@@ -42,7 +42,9 @@ namespace NepslidingTools.testModel
             if (parts_mode.Count <= 0)
                 return;
             Program.type = Convert.ToInt32(parts_mode[0].componentId);
+
             StepTestFrom stf = new StepTestFrom();
+            stf.CompId = textBoxX1.Text;
             stf.ShowDialog();
         }
 

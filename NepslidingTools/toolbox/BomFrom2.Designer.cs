@@ -487,7 +487,7 @@
             this.label_baifen1.Name = "label_baifen1";
             this.label_baifen1.Size = new System.Drawing.Size(23, 12);
             this.label_baifen1.TabIndex = 3;
-            this.label_baifen1.Text = "0/1";
+            this.label_baifen1.Text = "1/1";
             // 
             // panel4
             // 

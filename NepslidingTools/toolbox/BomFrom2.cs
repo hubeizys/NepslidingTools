@@ -207,11 +207,11 @@ namespace NepslidingTools.toolbox
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // MessageBox.Show(e.ColumnIndex.ToString());
+            MessageBox.Show(dataGridView1.Columns[e.ColumnIndex].Name);
             TestBZFrom tb = new TestBZFrom();
             if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
             {
-                if (e.ColumnIndex == 3)
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "remark")
                 {
                     tb.LjHao = dataGridView1.Rows[e.RowIndex].Cells["componentId"].Value.ToString();
                     tb.Show();

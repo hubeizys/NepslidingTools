@@ -23,7 +23,7 @@ namespace NepslidingTools.toolbox
             comp_list = component_bll.GetModelList("");
             if (comp_list.Count > 0)
             {
-                List<string> com_strlist = comp_list.ConvertAll<string>(x => x.name);
+                List<string> com_strlist = comp_list.ConvertAll<string>(x => x.componentId.ToString());
                 this.comboBox1.Items.AddRange(com_strlist.ToArray());
             }
         }
@@ -36,7 +36,6 @@ namespace NepslidingTools.toolbox
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             try
             {
                 if (textBox_ljh.Text == "")

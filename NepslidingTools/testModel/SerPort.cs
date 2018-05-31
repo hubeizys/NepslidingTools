@@ -84,9 +84,11 @@ namespace NepslidingTools.testModel
 
         void sp1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            try { 
             if (sp1.IsOpen)     //此处可能没有必要判断是否打开串口，但为了严谨性，我还是加上了
             {
                 Thread.Sleep(500);
+               
                 byte[] byteRead = new byte[sp1.BytesToRead];    //BytesToRead:sp1接收的字符个数
 
                 try
@@ -153,6 +155,10 @@ namespace NepslidingTools.testModel
                     MessageBox.Show(ex.Message, "出错提示");
                     //txtSend.Text = "";
                 }
+            }
+            }catch(Exception err)
+            {
+                Console.WriteLine(err.Message);
             }
         }
 
