@@ -189,6 +189,18 @@ namespace NepslidingTools.testModel
             dr2["测试编号"] = dnum;
             dr2["测试时间"] = DateTime.Now;
             dtb.Rows.InsertAt(dr2, 0);
+            string str = "";
+            if (this.CompId != null && this.CompId != "")
+            {
+                str = CompId;
+            }
+            else
+            {
+                str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+            }
+            dr2["零件号"] = str;
+            this.CompId = "";
+
             #endregion
 
             dgv1.DataSource = dtb;
@@ -288,11 +300,9 @@ namespace NepslidingTools.testModel
             create_serpoint();
         }
 
-        private void create_serpoint()
+        private void create_serpoint(string value = "")
         {
-
-            // 创建折线图线程
-            Thread T = new Thread(() =>
+            Task<string> one = new Task<string>(() =>
             {
                 try
                 {
@@ -309,7 +319,7 @@ namespace NepslidingTools.testModel
 
                     // 2 循环获得 最近的个数
                     int n = 1;
-                    this.chartControl1.BeginInvoke(new Action(() =>
+                    this.chartControl1.Invoke(new Action(() =>
                     {
                         this.chartControl1.Series[0].Points.Clear();
                         this.chartControl1.Series[1].Points.Clear();
@@ -328,6 +338,15 @@ namespace NepslidingTools.testModel
                         {
                             break;
                         }
+
+                        if (dgv1.Rows[0].Cells["测试结果"].Value.ToString() == "")
+                        {
+                            cur_index--;
+                            if (cur_index < 1)
+                                cur_index = 1;
+                        }
+
+
                         Console.WriteLine(results[cur_index - 1]);
                         this.chartControl1.Invoke(new Action(() =>
                         {
@@ -338,7 +357,7 @@ namespace NepslidingTools.testModel
                                 // 公差值
                                 double GC = Convert.ToDouble(txtgc.Text);
                                 // 测量值
-                                double BZ = Convert.ToDouble(results[cur_index - 1] == "" ? "0": results[cur_index - 1]);
+                                double BZ = Convert.ToDouble(results[cur_index - 1] == "" ? "0" : results[cur_index - 1]);
 
                                 double cz = LL + GC;
                                 double hz = LL + GC;
@@ -353,7 +372,8 @@ namespace NepslidingTools.testModel
                                 double cur_de = Convert.ToDouble(results[cur_index - 1]);
                             }
                             //this.chartControl1.Series[0].Points.Insert(0,new DevExpress.XtraCharts.SeriesPoint( results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
-                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1]==""? "0": results[cur_index - 1]));
+                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                            Console.WriteLine(string.Format("this.chartControl1.Series[0].Points {0}", n));
                         }));
                     }
                 }
@@ -361,8 +381,79 @@ namespace NepslidingTools.testModel
                 {
                     MessageBox.Show(err.Message);
                 }
+                return "";
             });
-            T.Start();
+            one.ContinueWith(new Action<Task>(x => {
+
+                int n = this.chartControl1.Series[0].Points.Count;
+                this.chartControl1.Invoke(new Action(() =>
+                {
+                    n += 2;
+                    if (value != "")
+                    {                // 理论值
+                        double LL = Convert.ToDouble(txtll.Text);
+                        // 公差值
+                        double GC = Convert.ToDouble(txtgc.Text);
+                        // 测量值
+                        double BZ = Convert.ToDouble(value);
+
+                        double cz = LL + GC;
+                        double hz = LL + GC;
+                        if (BZ >= hz)
+                        {
+                            this.chartControl1.Series[1].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, value));
+                        }
+                        if (BZ < cz)
+                        {
+                            this.chartControl1.Series[2].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, value));
+                        }
+                        //double cur_de = Convert.ToDouble(results[cur_index - 1]);                
+                        this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, value));
+                        chartControl1.Refresh();
+                        chartControl1.RefreshData();
+                    }
+                    //this.chartControl1.Series[0].Points.Insert(0,new DevExpress.XtraCharts.SeriesPoint( results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+
+                }));
+                
+            }));
+
+            one.Start();
+
+        }
+
+        private void temp_add_serpoint(string value)
+        {
+            int n = this.chartControl1.Series[0].Points.Count;
+            this.chartControl1.Invoke(new Action(() =>
+            {
+                n+=2;
+                if (value != "")
+                {                // 理论值
+                    double LL = Convert.ToDouble(txtll.Text);
+                    // 公差值
+                    double GC = Convert.ToDouble(txtgc.Text);
+                    // 测量值
+                    double BZ = Convert.ToDouble(value);
+
+                    double cz = LL + GC;
+                    double hz = LL + GC;
+                    if (BZ >= hz)
+                    {
+                        this.chartControl1.Series[1].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, value));
+                    }
+                    if (BZ < cz)
+                    {
+                        this.chartControl1.Series[2].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, value));
+                    }
+                    //double cur_de = Convert.ToDouble(results[cur_index - 1]);                
+                    this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, value));
+                    chartControl1.Refresh();
+                    chartControl1.RefreshData();
+                }
+                //this.chartControl1.Series[0].Points.Insert(0,new DevExpress.XtraCharts.SeriesPoint( results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+
+            }));
         }
 
         /*
@@ -576,9 +667,21 @@ namespace NepslidingTools.testModel
                 need_change_rows = dt.NewRow();
                 // dt.Rows.Add(need_change_rows);
                 dt.Rows.InsertAt(need_change_rows ,0);
+                comboBox1.SelectedIndex = 0;
                 // 焦点选中
                 this.dgv1.Rows[0].Selected = true;
                 this.dgv1.CurrentCell = this.dgv1.Rows[0].Cells[this.dgv1.CurrentCell.ColumnIndex];
+                string str = "";
+                if (this.CompId != null && this.CompId != "")
+                {
+                    str = CompId;
+                }
+                else
+                {
+                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                }
+                need_change_rows["零件号"] = str;
+                this.CompId = "";
             }
             this.timer_tostep.Enabled = true;
             #endregion
@@ -636,6 +739,7 @@ namespace NepslidingTools.testModel
                         xcz = Convert.ToDouble(txtll.Text) - Convert.ToDouble(xia_gc);
                         xhz = Convert.ToDouble(txtll.Text) + Convert.ToDouble(shang_gc);
                     }
+                    
                     if (dd == "" || ( dd!= "" && Convert.ToDouble(dd) >= xcz && Convert.ToDouble(dd) <= xhz))
                     {
                         need_change_rows["测试结果"] = "Ok";
@@ -648,21 +752,16 @@ namespace NepslidingTools.testModel
                         break;
                     }    
                 }
-                string str = "";
-                if (this.CompId != null && this.CompId != "")
-                {
-                    str = CompId;
-                }
-                else
-                {
-                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
-                }
-                need_change_rows["零件号"] = str;
-                this.CompId = "";
+                create_serpoint(textcl.Text);
             }
             #endregion
         }
  
+        /// <summary>
+        /// 跳过
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonX3_Click(object sender, EventArgs e)
         {
             int test_index = 0;
@@ -693,6 +792,17 @@ namespace NepslidingTools.testModel
            
                 dgv1.Rows[0].Cells["测试编号"].Value = dnum;
                 dgv1.Rows[0].Cells["测试时间"].Value = DateTime.Now.ToString();
+                string str = "";
+                if (this.CompId != null && this.CompId != "")
+                {
+                    str = CompId;
+                }
+                else
+                {
+                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                }
+                need_change_rows["零件号"] = str;
+                this.CompId = "";
                 if (this.comboBox1.Items.Count > 1)
                 {
                     this.comboBox1.SelectedIndex = 1;
@@ -700,6 +810,12 @@ namespace NepslidingTools.testModel
             }
         }
 
+
+        /// <summary>
+        /// 重测
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void buttonX4_Click(object sender, EventArgs e)
         {
             string colname = this.dgv1.Columns[this.dgv1.CurrentCell.ColumnIndex].HeaderText;
@@ -836,10 +952,11 @@ namespace NepslidingTools.testModel
                 MessageBox.Show("记录重复， 请管理数据库 ");
             }
             MessageBox.Show("记录以保存");
-            this.comboBox1.SelectedIndex = 0;
+
             #endregion
             create_serpoint();
             init_table();
+            this.comboBox1.SelectedIndex = 0;
             return;
             
         }
@@ -928,7 +1045,8 @@ namespace NepslidingTools.testModel
             init_photobytype(Convert.ToInt32(device_type));
 
             this.InitTestData();
-            create_serpoint();
+            create_serpoint(textcl.Text);
+
             if (ports_list.Count <= 0)
             {
                 return;
