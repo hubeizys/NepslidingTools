@@ -28,6 +28,7 @@ namespace NepslidingTools.testModel
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tm_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.sandsm_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.cicun_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
@@ -67,6 +68,7 @@ namespace NepslidingTools.testModel
             this.panel1 = new System.Windows.Forms.Panel();
             this.button_add = new System.Windows.Forms.Button();
             this.ofg_cad = new System.Windows.Forms.OpenFileDialog();
+            this.timer_shine = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -152,6 +154,7 @@ namespace NepslidingTools.testModel
             this.gdno_tb.PreventEnterBeep = true;
             this.gdno_tb.Size = new System.Drawing.Size(157, 22);
             this.gdno_tb.TabIndex = 25;
+            this.gdno_tb.TextChanged += new System.EventHandler(this.gdno_tb_TextChanged);
             // 
             // send_bt
             // 
@@ -548,6 +551,11 @@ namespace NepslidingTools.testModel
             // 
             this.ofg_cad.FileName = "openFileDialog1";
             // 
+            // timer_shine
+            // 
+            this.timer_shine.Interval = 500;
+            this.timer_shine.Tick += new System.EventHandler(this.timer_shine_Tick);
+            // 
             // TestBZFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -622,5 +630,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.OpenFileDialog ofg_cad;
         private System.Windows.Forms.Button button_add;
+        private System.Windows.Forms.Timer timer_shine;
     }
 }

@@ -13,6 +13,7 @@ using AnyCAD.Exchange;
 using System.Threading.Tasks;
 using System.Threading;
 
+
 namespace NepslidingTools.testModel
 {
     public partial class TestBZFrom : Form
@@ -49,6 +50,10 @@ namespace NepslidingTools.testModel
                     }
                     gdno_tb.Text += id;
                 }
+                else
+                {
+
+                }
             }
         }
 
@@ -72,6 +77,7 @@ namespace NepslidingTools.testModel
             // textbox_ljh.Text = Program.gdvid;
             textbox_ljh.Text = LjHao;
             initdgv();
+            this.timer_shine.Enabled = true;
         }
 
         private void allupdate()
@@ -506,6 +512,7 @@ namespace NepslidingTools.testModel
             sandsm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["up"].Value.ToString();
             tm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["down"].Value.ToString();
             cicun_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["CC"].Value.ToString();
+            clearcolor();
         }
 
         private void comboBox_devs_SelectedIndexChanged(object sender, EventArgs e)
@@ -532,6 +539,71 @@ namespace NepslidingTools.testModel
         private void button2_Click_1(object sender, EventArgs e)
         {
             OnRenderWindow_MouseClick(sender, e as MouseEventArgs);
+        }
+
+        private void clearcolor()
+        {
+            foreach (KeyValuePair<int, FaceStyle> a in key_colors)
+            {
+                SceneNode node = this.renderView.SceneManager.FindNode(new ElementId(a.Key));
+                node.SetFaceStyle(a.Value);
+            }
+        }
+        int n = 0;
+        Dictionary<int, FaceStyle> key_colors = new Dictionary<int, FaceStyle>();
+        string[] position_list = null;
+        private static object objlock = new object();
+        private void timer_shine_Tick(object sender, EventArgs e)
+        {
+            n++;
+            if (this.renderView != null && this.renderView.SceneManager == null)
+                return;
+            lock(objlock)
+            { 
+                if (position_list != null)
+                    foreach (string ca in position_list)
+                    {
+                        int index = 0;
+                        if (!int.TryParse(ca, out index))
+                        {
+                            continue;
+                        }
+                        SceneNode node = this.renderView.SceneManager.FindNode(new ElementId(index));
+
+                        if (node != null)
+                        {
+                            FaceStyle value = null;
+                            if (key_colors.TryGetValue(index, out value))
+                            {
+                                if (n % 2 == 0)
+                                {
+                                    node.SetFaceStyle(value);
+                                }
+                                else
+                                {
+                                    FaceStyle fa = new FaceStyle();
+                                    fa.SetColor(new ColorValue(1, 1, 1));
+                                    node.SetFaceStyle(fa);
+                                }
+                            }
+                            else
+                            {
+                                FaceStyle cur_sty = node.GetFaceStyle();
+                                key_colors.Add(index, cur_sty);
+                            }
+                        }
+                    }
+            }
+        }
+
+        private void gdno_tb_TextChanged(object sender, EventArgs e)
+        {
+            lock(objlock)
+            {
+                Console.WriteLine("Î»ÖÃÒÑ½›ÐÞ¸Ä");
+                position_list = this.gdno_tb.Text.Split(',');
+            }
+
         }
     }
 }

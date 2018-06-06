@@ -39,13 +39,13 @@ namespace NepslidingTools.toolbox
 
             // MessageBox.Show(d_info.GetFiles().ToString());
             FileInfo[] arrFi = d_info.GetFiles("*.sql");
-            Array.Sort(arrFi, delegate (FileInfo x, FileInfo y) { return x.Name.CompareTo(y.Name); });
+            Array.Sort(arrFi, delegate (FileInfo x, FileInfo y) { return y.Name.CompareTo(x.Name); });
             int i = 0;
             foreach (var a in arrFi)
             {
                 i++;
                 Console.WriteLine(a.FullName);
-                if (i > 150)
+                if (i > 50)
                 {
                     System.IO.File.Delete(a.FullName);
                 }
@@ -126,11 +126,13 @@ namespace NepslidingTools.toolbox
 
             // MessageBox.Show(d_info.GetFiles().ToString());
             FileInfo[] arrFi = d_info.GetFiles("*.sql");
-            Array.Sort(arrFi, delegate (FileInfo x, FileInfo y) { return x.Name.CompareTo(y.Name); });
+            Array.Sort(arrFi, delegate (FileInfo x, FileInfo y) { return y.Name.CompareTo(x.Name) ; });
             int i = 0;
             this.dataGridView1.Rows.Clear();
             foreach (var a in arrFi)
             {
+                //DataGridViewRow dr = new DataGridViewRow();
+                //dr.Cells[]
                 this.dataGridView1.Rows.Add();
                 this.dataGridView1.Rows[i].Cells[0].Value = Path.GetFileName(a.FullName);
                 this.dataGridView1.Rows[i].Cells[1].Value = a.CreationTime;
@@ -161,6 +163,11 @@ namespace NepslidingTools.toolbox
 
             return;
            
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
