@@ -102,7 +102,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(916, 25);
             this.tableLayoutPanel4.TabIndex = 3;
             // 
@@ -373,6 +373,7 @@
             this.Name = "login4";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "login4";
+            this.Load += new System.EventHandler(this.login4_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.login4_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.login4_KeyPress);
             this.tableLayoutPanel1.ResumeLayout(false);

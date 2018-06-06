@@ -31,13 +31,13 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram3 = new DevExpress.XtraCharts.XYDiagram();
-            Series series7 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView3 = new DevExpress.XtraCharts.LineSeriesView();
-            Series series8 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView5 = new DevExpress.XtraCharts.PointSeriesView();
-            Series series9 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView6 = new DevExpress.XtraCharts.PointSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
+            Series series1 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
+            Series series2 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView1 = new DevExpress.XtraCharts.PointSeriesView();
+            Series series3 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView2 = new DevExpress.XtraCharts.PointSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -686,30 +686,29 @@ namespace NepslidingTools.testModel
             // 
             // chartControl1
             // 
-            xyDiagram3.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram3.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram3;
+            xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram1;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Left;
             this.chartControl1.Legend.TextVisible = false;
             this.chartControl1.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
             this.chartControl1.Location = new System.Drawing.Point(0, 0);
             this.chartControl1.Name = "chartControl1";
-            series7.Name = "测量结果波动";
-            series7.View = lineSeriesView3;
-            series8.Name = "超差";
-            series8.View = pointSeriesView5;
-            series9.Name = "负超差";
-            series9.View = pointSeriesView6;
+            series1.Name = "测量结果波动";
+            series1.View = lineSeriesView1;
+            series2.Name = "超差";
+            series2.View = pointSeriesView1;
+            series3.Name = "负超差";
+            series3.View = pointSeriesView2;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series7,
-        series8,
-        series9};
+        series1,
+        series2,
+        series3};
             this.chartControl1.Size = new System.Drawing.Size(950, 143);
             this.chartControl1.TabIndex = 8;
             // 
             // timer_portst
             // 
-            this.timer_portst.Enabled = true;
             this.timer_portst.Interval = 3000;
             this.timer_portst.Tick += new System.EventHandler(this.timer_portst_Tick);
             // 
@@ -724,6 +723,7 @@ namespace NepslidingTools.testModel
             // 
             // timer_ref
             // 
+            this.timer_ref.Interval = 400;
             this.timer_ref.Tick += new System.EventHandler(this.timer_ref_Tick);
             // 
             // StepTestFrom

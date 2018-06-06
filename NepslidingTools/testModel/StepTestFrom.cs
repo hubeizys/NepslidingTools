@@ -14,6 +14,8 @@ using AnyCAD.Exchange;
 using DevExpress.XtraCharts;
 using Microsoft.VisualBasic;
 
+using NepslidingTools.toolbox;
+
 namespace NepslidingTools.testModel
 {
     public partial class StepTestFrom : WorkForm
@@ -51,8 +53,7 @@ namespace NepslidingTools.testModel
 
         public StepTestFrom()
         {
-            InitializeComponent();
-            
+            InitializeComponent(); 
             this.renderView = new AnyCAD.Presentation.RenderWindow3d();
             
             this.renderView.Location = new System.Drawing.Point(0, 0);
@@ -61,7 +62,8 @@ namespace NepslidingTools.testModel
             this.panel3d.Controls.Add(this.renderView);
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
             // this.renderView.MouseEnter += new EventHandler(aa_MouseEnter);
-            // this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);     
+            // this.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.OnMouseWheel);   
+            
         }
 
         private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
@@ -206,6 +208,7 @@ namespace NepslidingTools.testModel
             #endregion
 
             dgv1.DataSource = dtb;
+            dgv1.Refresh();
             #endregion
 
         }
@@ -234,29 +237,47 @@ namespace NepslidingTools.testModel
             this.comboBox1.SelectedIndex = 0;
             #endregion
         }
-
+        CancellationTokenSource cts = new CancellationTokenSource();
         private void StepTestFrom_Load(object sender, EventArgs e)
         {
+            toolbox.SplashScreen.Show(typeof(SplashForm));
+
+            Task sp_from = new Task(new Action(()=> {
+                while (! cts.IsCancellationRequested)
+                {
+                    Thread.Sleep(1000);
+                    toolbox.SplashScreen.ChangeTitle("111");
+                    Thread.Sleep(1000);
+                    SplashScreen.ChangeTitle("222");
+                    Thread.Sleep(1000);
+                    SplashScreen.ChangeTitle("333");
+                    Thread.Sleep(1000);
+                    SplashScreen.ChangeTitle("444");
+                }
+            }), cts.Token);
+            sp_from.Start();
             //global.AsynCall((a) => { MessageBox.Show(a.ToString()); }, "test");
             #region 获得零件号，通过零件号获得详细信息
             dealwithcomp(Program.type);
             #endregion
-            Task a_task = new Task(new Action(() => {
-                Thread.Sleep(1000);
-                renderView.Invoke(new Action(() =>
-                {
-                    string base_dir = Environment.CurrentDirectory;
-                    base_dir += "\\shumo\\";
-                    base_dir += this.mode;
-                    IgesReader reader = new IgesReader();
-                    bool ret = reader.Read(base_dir, new CadView(this.renderView));
-                    Console.WriteLine("ret ====== " + ret);
-                    renderView.FitAll();
-                    renderView.RequestDraw();
-                }));
+            //Task a_task = new Task(new Action(() => {
+            //    Thread.Sleep(1000);     
+            //}));
+            //a_task.Start();
+            renderView.Invoke(new Action(() =>
+            {
+                string base_dir = Environment.CurrentDirectory;
+                base_dir += "\\shumo\\";
+                base_dir += this.mode;
+                IgesReader reader = new IgesReader();
+                bool ret = reader.Read(base_dir, new CadView(this.renderView));
+                Console.WriteLine("ret ====== " + ret);
+                renderView.FitAll();
+                renderView.RequestDraw();
+                cts.Cancel();
+                sp_from.Wait();
+                SplashScreen.Close();
             }));
-            a_task.Start();
-
             this.timer_shine.Enabled = true;
             this.timer_ref.Enabled = true;
             // MessageBox.Show("界面开始了");
@@ -299,8 +320,9 @@ namespace NepslidingTools.testModel
             }
 
             this.timer1.Enabled = true;
-
+            this.timer_portst.Enabled = true;
             create_serpoint();
+            this.Refresh();
         }
 
         private void create_serpoint(string value = "")
@@ -753,8 +775,15 @@ namespace NepslidingTools.testModel
                         need_change_rows["测试结果"] = "NG";
                         this.dgv1.Refresh();
                         break;
-                    }    
+                    }
                 }
+                string str = "";
+                if (need_change_rows["零件号"].ToString() == "")
+                {
+                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                }
+                need_change_rows["零件号"] = str;
+                this.CompId = "";
                 create_serpoint(textcl.Text);
                 re_test = false;
             }
@@ -944,8 +973,31 @@ namespace NepslidingTools.testModel
                 int totle_num = parts_bll.GetRecordCount(where_str);
                 if (totle_num <=0)
                 {
-                    MessageBox.Show("并没有发现这个零件,请在零件管理中添加");
-                    return;
+                    // DialogResult n = MessageBox.Show("并没有发现这个零件,是否自动添加", "零件添加", MessageBoxButtons.YesNoCancel);
+                    
+                    if (DialogResult.Yes == MessageBox.Show("并没有发现这个零件,是否自动添加", "零件添加", MessageBoxButtons.YesNoCancel))
+                    {
+                        List<Maticsoft.Model.parts> part_mode_list = parts_bll.GetModelList(string.Format("componentId = {0} ORDER BY parts.id DESC LIMIT 1", comp_type));
+                        if (part_mode_list.Count != 1)
+                        {
+                            MessageBox.Show("数据不正确");
+                        }
+                        else {
+                            Maticsoft.Model.parts temp_part_mode = part_mode_list[0];
+                            temp_part_mode.id = 0 ;
+                            temp_part_mode.PN = lingjianhao;
+                            temp_part_mode.Barcode = lingjianhao;
+                            if (parts_bll.Add(temp_part_mode))
+                            {
+                                MessageBox.Show("数据保存成功");
+                            }
+                            else
+                            {
+                                MessageBox.Show("数据保存失败");
+                            }
+                        }
+                    }
+                    else return;
                 }
                 List<Maticsoft.Model.test>  pa_modes = test_bll.GetModelList2(where_str);
                 foreach (Maticsoft.Model.test test_mode in pa_modes)

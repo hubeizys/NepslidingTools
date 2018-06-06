@@ -44,15 +44,26 @@ namespace NepslidingTools.testModel
                 string id = sc_node.GetId().AsInt().ToString();
                 if (-1 == Array.IndexOf(pos_list, id))
                 {
-                    if (gdno_tb.Text != "")
+                    if (gdno_tb.Text != "" && !gdno_tb.Text.EndsWith(","))
                     {
                         gdno_tb.Text += ",";
                     }
                     gdno_tb.Text += id;
+                    return;
                 }
                 else
                 {
-
+                    gdno_tb.Text = "";
+                    // жиж§Ъ§Он
+                    foreach (string temp_date in pos_list)
+                    {
+                        if (id == temp_date)
+                        {
+                            continue;
+                        }
+                        gdno_tb.Text += temp_date;
+                        gdno_tb.Text += ",";
+                    }
                 }
             }
         }
@@ -78,6 +89,7 @@ namespace NepslidingTools.testModel
             textbox_ljh.Text = LjHao;
             initdgv();
             this.timer_shine.Enabled = true;
+            this.timer_ref.Enabled = true;
         }
 
         private void allupdate()
@@ -604,6 +616,12 @@ namespace NepslidingTools.testModel
                 position_list = this.gdno_tb.Text.Split(',');
             }
 
+        }
+
+        private void timer_ref_Tick(object sender, EventArgs e)
+        {
+            this.renderView.Height += 1;
+            this.renderView.Height -= 1;
         }
     }
 }

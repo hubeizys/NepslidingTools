@@ -436,6 +436,13 @@
     <Compile Include="toolbox\SavaAllFrom.Designer.cs">
       <DependentUpon>SavaAllFrom.cs</DependentUpon>
     </Compile>
+    <Compile Include="toolbox\SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="toolbox\SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="toolbox\SplashScreen.cs" />
     <Compile Include="toolbox\UserManForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -524,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="toolbox\SavaAllFrom.resx">
       <DependentUpon>SavaAllFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="toolbox\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="toolbox\UserManForm.resx">
       <DependentUpon>UserManForm.cs</DependentUpon>

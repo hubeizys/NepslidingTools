@@ -43,18 +43,6 @@ namespace NepslidingTools.testModel
             this.testtoolname_lab = new DevComponents.DotNetBar.LabelX();
             this.bom_no_lab = new DevComponents.DotNetBar.LabelX();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.componentid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.row = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.devicename = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tools = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.position = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.standardv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.up = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.down = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.devicetype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox_devs = new System.Windows.Forms.ComboBox();
             this.mdf_bt = new DevComponents.DotNetBar.ButtonX();
@@ -69,6 +57,19 @@ namespace NepslidingTools.testModel
             this.button_add = new System.Windows.Forms.Button();
             this.ofg_cad = new System.Windows.Forms.OpenFileDialog();
             this.timer_shine = new System.Windows.Forms.Timer(this.components);
+            this.timer_ref = new System.Windows.Forms.Timer(this.components);
+            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.componentid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.row = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.devicename = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tools = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.position = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.standardv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.up = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.down = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.devicetype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -85,7 +86,7 @@ namespace NepslidingTools.testModel
             this.tm_tb.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.tm_tb.DisabledBackColor = System.Drawing.Color.White;
             this.tm_tb.ForeColor = System.Drawing.Color.Black;
-            this.tm_tb.Location = new System.Drawing.Point(96, 166);
+            this.tm_tb.Location = new System.Drawing.Point(96, 157);
             this.tm_tb.Name = "tm_tb";
             this.tm_tb.PreventEnterBeep = true;
             this.tm_tb.Size = new System.Drawing.Size(157, 22);
@@ -101,7 +102,7 @@ namespace NepslidingTools.testModel
             this.sandsm_tb.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.sandsm_tb.DisabledBackColor = System.Drawing.Color.White;
             this.sandsm_tb.ForeColor = System.Drawing.Color.Black;
-            this.sandsm_tb.Location = new System.Drawing.Point(96, 132);
+            this.sandsm_tb.Location = new System.Drawing.Point(96, 123);
             this.sandsm_tb.Name = "sandsm_tb";
             this.sandsm_tb.PreventEnterBeep = true;
             this.sandsm_tb.Size = new System.Drawing.Size(157, 22);
@@ -117,7 +118,7 @@ namespace NepslidingTools.testModel
             this.cicun_tb.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.cicun_tb.DisabledBackColor = System.Drawing.Color.White;
             this.cicun_tb.ForeColor = System.Drawing.Color.Black;
-            this.cicun_tb.Location = new System.Drawing.Point(96, 98);
+            this.cicun_tb.Location = new System.Drawing.Point(96, 89);
             this.cicun_tb.Name = "cicun_tb";
             this.cicun_tb.PreventEnterBeep = true;
             this.cicun_tb.Size = new System.Drawing.Size(157, 22);
@@ -133,7 +134,7 @@ namespace NepslidingTools.testModel
             this.scbh_tb.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.scbh_tb.DisabledBackColor = System.Drawing.Color.White;
             this.scbh_tb.ForeColor = System.Drawing.Color.Black;
-            this.scbh_tb.Location = new System.Drawing.Point(96, 64);
+            this.scbh_tb.Location = new System.Drawing.Point(96, 55);
             this.scbh_tb.Name = "scbh_tb";
             this.scbh_tb.PreventEnterBeep = true;
             this.scbh_tb.Size = new System.Drawing.Size(157, 22);
@@ -154,6 +155,7 @@ namespace NepslidingTools.testModel
             this.gdno_tb.PreventEnterBeep = true;
             this.gdno_tb.Size = new System.Drawing.Size(157, 22);
             this.gdno_tb.TabIndex = 25;
+            this.gdno_tb.Visible = false;
             this.gdno_tb.TextChanged += new System.EventHandler(this.gdno_tb_TextChanged);
             // 
             // send_bt
@@ -177,7 +179,7 @@ namespace NepslidingTools.testModel
             // 
             this.tm_lab.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.tm_lab.ForeColor = System.Drawing.Color.Black;
-            this.tm_lab.Location = new System.Drawing.Point(6, 166);
+            this.tm_lab.Location = new System.Drawing.Point(6, 157);
             this.tm_lab.Name = "tm_lab";
             this.tm_lab.Size = new System.Drawing.Size(75, 23);
             this.tm_lab.TabIndex = 21;
@@ -191,7 +193,7 @@ namespace NepslidingTools.testModel
             // 
             this.sgc_lab.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.sgc_lab.ForeColor = System.Drawing.Color.Black;
-            this.sgc_lab.Location = new System.Drawing.Point(6, 132);
+            this.sgc_lab.Location = new System.Drawing.Point(6, 123);
             this.sgc_lab.Name = "sgc_lab";
             this.sgc_lab.Size = new System.Drawing.Size(75, 23);
             this.sgc_lab.TabIndex = 20;
@@ -205,7 +207,7 @@ namespace NepslidingTools.testModel
             // 
             this.cicun_lab.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.cicun_lab.ForeColor = System.Drawing.Color.Black;
-            this.cicun_lab.Location = new System.Drawing.Point(6, 98);
+            this.cicun_lab.Location = new System.Drawing.Point(6, 89);
             this.cicun_lab.Name = "cicun_lab";
             this.cicun_lab.Size = new System.Drawing.Size(75, 23);
             this.cicun_lab.TabIndex = 19;
@@ -219,7 +221,7 @@ namespace NepslidingTools.testModel
             // 
             this.bzz_lab.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.bzz_lab.ForeColor = System.Drawing.Color.Black;
-            this.bzz_lab.Location = new System.Drawing.Point(6, 64);
+            this.bzz_lab.Location = new System.Drawing.Point(6, 55);
             this.bzz_lab.Name = "bzz_lab";
             this.bzz_lab.Size = new System.Drawing.Size(75, 23);
             this.bzz_lab.TabIndex = 18;
@@ -238,6 +240,7 @@ namespace NepslidingTools.testModel
             this.testloc_lab.Size = new System.Drawing.Size(75, 23);
             this.testloc_lab.TabIndex = 17;
             this.testloc_lab.Text = "测量位置";
+            this.testloc_lab.Visible = false;
             // 
             // testtoolname_lab
             // 
@@ -247,7 +250,7 @@ namespace NepslidingTools.testModel
             // 
             this.testtoolname_lab.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.testtoolname_lab.ForeColor = System.Drawing.Color.Black;
-            this.testtoolname_lab.Location = new System.Drawing.Point(6, 202);
+            this.testtoolname_lab.Location = new System.Drawing.Point(6, 193);
             this.testtoolname_lab.Name = "testtoolname_lab";
             this.testtoolname_lab.Size = new System.Drawing.Size(75, 23);
             this.testtoolname_lab.TabIndex = 16;
@@ -289,101 +292,11 @@ namespace NepslidingTools.testModel
             this.dgv.Name = "dgv";
             this.dgv.ReadOnly = true;
             this.dgv.RowTemplate.Height = 23;
-            this.dgv.Size = new System.Drawing.Size(745, 316);
+            this.dgv.Size = new System.Drawing.Size(649, 316);
             this.dgv.TabIndex = 30;
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
             this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
             this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
-            // 
-            // step
-            // 
-            this.step.DataPropertyName = "step";
-            this.step.HeaderText = "步骤";
-            this.step.Name = "step";
-            this.step.ReadOnly = true;
-            // 
-            // componentid
-            // 
-            this.componentid.DataPropertyName = "componentid";
-            this.componentid.HeaderText = "零件类型ID";
-            this.componentid.Name = "componentid";
-            this.componentid.ReadOnly = true;
-            this.componentid.Visible = false;
-            // 
-            // row
-            // 
-            this.row.DataPropertyName = "row";
-            this.row.HeaderText = "row";
-            this.row.Name = "row";
-            this.row.ReadOnly = true;
-            this.row.Visible = false;
-            // 
-            // devicename
-            // 
-            this.devicename.DataPropertyName = "devicename";
-            this.devicename.HeaderText = "使用设备";
-            this.devicename.Name = "devicename";
-            this.devicename.ReadOnly = true;
-            // 
-            // tools
-            // 
-            this.tools.DataPropertyName = "tools";
-            this.tools.HeaderText = "测量工具";
-            this.tools.Name = "tools";
-            this.tools.ReadOnly = true;
-            this.tools.Visible = false;
-            // 
-            // position
-            // 
-            this.position.DataPropertyName = "position";
-            this.position.HeaderText = "测量位置";
-            this.position.Name = "position";
-            this.position.ReadOnly = true;
-            // 
-            // CC
-            // 
-            this.CC.DataPropertyName = "CC";
-            this.CC.HeaderText = "尺寸";
-            this.CC.Name = "CC";
-            this.CC.ReadOnly = true;
-            // 
-            // standardv
-            // 
-            this.standardv.DataPropertyName = "standardv";
-            this.standardv.HeaderText = "标准值";
-            this.standardv.Name = "standardv";
-            this.standardv.ReadOnly = true;
-            // 
-            // up
-            // 
-            this.up.DataPropertyName = "up";
-            this.up.HeaderText = "上公差";
-            this.up.Name = "up";
-            this.up.ReadOnly = true;
-            // 
-            // down
-            // 
-            this.down.DataPropertyName = "down";
-            this.down.HeaderText = "下公差";
-            this.down.Name = "down";
-            this.down.ReadOnly = true;
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "序号";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
-            // 
-            // devicetype
-            // 
-            this.devicetype.DataPropertyName = "devicetype";
-            this.devicetype.HeaderText = "测量设备类型";
-            this.devicetype.Name = "devicetype";
-            this.devicetype.ReadOnly = true;
-            this.devicetype.Visible = false;
-            this.devicetype.Width = 120;
             // 
             // groupBox1
             // 
@@ -416,7 +329,7 @@ namespace NepslidingTools.testModel
             this.comboBox_devs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_devs.ForeColor = System.Drawing.Color.Black;
             this.comboBox_devs.FormattingEnabled = true;
-            this.comboBox_devs.Location = new System.Drawing.Point(94, 205);
+            this.comboBox_devs.Location = new System.Drawing.Point(94, 196);
             this.comboBox_devs.Name = "comboBox_devs";
             this.comboBox_devs.Size = new System.Drawing.Size(158, 21);
             this.comboBox_devs.TabIndex = 32;
@@ -530,7 +443,7 @@ namespace NepslidingTools.testModel
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.panel1.Controls.Add(this.button_add);
-            this.panel1.Location = new System.Drawing.Point(763, 68);
+            this.panel1.Location = new System.Drawing.Point(677, 68);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(595, 581);
             this.panel1.TabIndex = 36;
@@ -556,11 +469,107 @@ namespace NepslidingTools.testModel
             this.timer_shine.Interval = 500;
             this.timer_shine.Tick += new System.EventHandler(this.timer_shine_Tick);
             // 
+            // timer_ref
+            // 
+            this.timer_ref.Interval = 400;
+            this.timer_ref.Tick += new System.EventHandler(this.timer_ref_Tick);
+            // 
+            // step
+            // 
+            this.step.DataPropertyName = "step";
+            this.step.HeaderText = "步骤";
+            this.step.Name = "step";
+            this.step.ReadOnly = true;
+            // 
+            // componentid
+            // 
+            this.componentid.DataPropertyName = "componentid";
+            this.componentid.HeaderText = "零件类型ID";
+            this.componentid.Name = "componentid";
+            this.componentid.ReadOnly = true;
+            this.componentid.Visible = false;
+            // 
+            // row
+            // 
+            this.row.DataPropertyName = "row";
+            this.row.HeaderText = "row";
+            this.row.Name = "row";
+            this.row.ReadOnly = true;
+            this.row.Visible = false;
+            // 
+            // devicename
+            // 
+            this.devicename.DataPropertyName = "devicename";
+            this.devicename.HeaderText = "使用设备";
+            this.devicename.Name = "devicename";
+            this.devicename.ReadOnly = true;
+            // 
+            // tools
+            // 
+            this.tools.DataPropertyName = "tools";
+            this.tools.HeaderText = "测量工具";
+            this.tools.Name = "tools";
+            this.tools.ReadOnly = true;
+            this.tools.Visible = false;
+            // 
+            // position
+            // 
+            this.position.DataPropertyName = "position";
+            this.position.HeaderText = "测量位置";
+            this.position.Name = "position";
+            this.position.ReadOnly = true;
+            this.position.Visible = false;
+            // 
+            // CC
+            // 
+            this.CC.DataPropertyName = "CC";
+            this.CC.HeaderText = "尺寸";
+            this.CC.Name = "CC";
+            this.CC.ReadOnly = true;
+            // 
+            // standardv
+            // 
+            this.standardv.DataPropertyName = "standardv";
+            this.standardv.HeaderText = "标准值";
+            this.standardv.Name = "standardv";
+            this.standardv.ReadOnly = true;
+            // 
+            // up
+            // 
+            this.up.DataPropertyName = "up";
+            this.up.HeaderText = "上公差";
+            this.up.Name = "up";
+            this.up.ReadOnly = true;
+            // 
+            // down
+            // 
+            this.down.DataPropertyName = "down";
+            this.down.HeaderText = "下公差";
+            this.down.Name = "down";
+            this.down.ReadOnly = true;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "序号";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // devicetype
+            // 
+            this.devicetype.DataPropertyName = "devicetype";
+            this.devicetype.HeaderText = "测量设备类型";
+            this.devicetype.Name = "devicetype";
+            this.devicetype.ReadOnly = true;
+            this.devicetype.Visible = false;
+            this.devicetype.Width = 120;
+            // 
             // TestBZFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 728);
+            this.ClientSize = new System.Drawing.Size(1279, 728);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textbox_ljh);
             this.Controls.Add(this.button1);
@@ -615,6 +624,11 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textbox_ljh;
         private System.Windows.Forms.ComboBox comboBox_devs;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.OpenFileDialog ofg_cad;
+        private System.Windows.Forms.Button button_add;
+        private System.Windows.Forms.Timer timer_shine;
+        private System.Windows.Forms.Timer timer_ref;
         private System.Windows.Forms.DataGridViewTextBoxColumn step;
         private System.Windows.Forms.DataGridViewTextBoxColumn componentid;
         private System.Windows.Forms.DataGridViewTextBoxColumn row;
@@ -627,9 +641,5 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.DataGridViewTextBoxColumn down;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn devicetype;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.OpenFileDialog ofg_cad;
-        private System.Windows.Forms.Button button_add;
-        private System.Windows.Forms.Timer timer_shine;
     }
 }

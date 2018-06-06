@@ -24,7 +24,7 @@ namespace NepslidingTools
                 this.comp_name = comp_mode.name;
                 this.mode = comp_mode.sm;
             }
-            System.Windows.Forms.MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
+            // System.Windows.Forms.MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
             #endregion
         }
 
@@ -56,7 +56,7 @@ namespace NepslidingTools
                 this.comp_name = comp_mode.name;
                 this.mode = comp_mode.sm;
             }
-            System.Windows.Forms.MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
+            // System.Windows.Forms.MessageBox.Show(string.Format("comp_type : == {0}, comp_name : === {1}", this.comp_type, this.comp_name));
             #endregion
         }
     }
