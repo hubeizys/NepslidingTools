@@ -32,11 +32,10 @@ namespace NepslidingTools.toolbox
             return Convert.ToInt64(ts.TotalSeconds * 1000);
         }
 
-
-        private void save_sql_bt_Click(object sender, EventArgs e)
+        public static void SavaAll()
         {
             string cur_dict = System.IO.Directory.GetCurrentDirectory();
-            DirectoryInfo d_info = new DirectoryInfo(cur_dict+"\\backup");
+            DirectoryInfo d_info = new DirectoryInfo(cur_dict + "\\backup");
 
             // MessageBox.Show(d_info.GetFiles().ToString());
             FileInfo[] arrFi = d_info.GetFiles("*.sql");
@@ -46,7 +45,7 @@ namespace NepslidingTools.toolbox
             {
                 i++;
                 Console.WriteLine(a.FullName);
-                if (i > 10)
+                if (i > 150)
                 {
                     System.IO.File.Delete(a.FullName);
                 }
@@ -56,7 +55,7 @@ namespace NepslidingTools.toolbox
 
             System.Diagnostics.Process exep = new System.Diagnostics.Process();
             exep.StartInfo.FileName = dumptools;
-            exep.StartInfo.Arguments = string.Format( @" -h test.xtask.work -uroot  -plaozhuhenshuai GLLJ --result-file=backup\todmp{0}.sql", GetTimeStamp());
+            exep.StartInfo.Arguments = string.Format(@" -h test.xtask.work -uroot  -plaozhuhenshuai GLLJ --result-file=backup\todmp{0}.sql", GetTimeStamp());
             exep.StartInfo.CreateNoWindow = true;
             exep.StartInfo.RedirectStandardInput = true;
             exep.StartInfo.RedirectStandardOutput = true;
@@ -73,7 +72,12 @@ namespace NepslidingTools.toolbox
             exep.WaitForExit();
             Console.WriteLine(netmessage);
             // ThreadPool.QueueUserWorkItem(new WaitCallback(ExeThread), exep);
+        }
 
+
+        private void save_sql_bt_Click(object sender, EventArgs e)
+        {
+            SavaAllFrom.SavaAll();
         }
 
         private void ExeThread(object obj)

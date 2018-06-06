@@ -47,6 +47,8 @@ namespace NepslidingTools.testModel
 
         DataTable measures_tables;
 
+        bool re_test = false;
+
         public StepTestFrom()
         {
             InitializeComponent();
@@ -228,6 +230,7 @@ namespace NepslidingTools.testModel
                 txtll.Text = measures_tables.Rows[i][4].ToString();
                 comboBox1.Items.Add("步骤" + measures_tables.Rows[i]["step"].ToString());
             }
+            
             this.comboBox1.SelectedIndex = 0;
             #endregion
         }
@@ -753,6 +756,7 @@ namespace NepslidingTools.testModel
                     }    
                 }
                 create_serpoint(textcl.Text);
+                re_test = false;
             }
             #endregion
         }
@@ -808,8 +812,26 @@ namespace NepslidingTools.testModel
                     this.comboBox1.SelectedIndex = 1;
                 }
             }
+
+            if (re_test)
+            {
+                if (test_qu.Count > 0)
+                {
+                    string the_one = test_qu.Pop();
+                    comboBox1.SelectedItem = the_one;
+                }
+                else if (test_qu.Count == 0)
+                {
+                    int last = this.comboBox1.Items.Count;
+                    this.comboBox1.SelectedIndex = last - 1;
+                    string last_step = this.comboBox1.SelectedItem.ToString();
+                    textcl.Text = this.dgv1.Rows[0].Cells[last_step].Value.ToString();
+                }
+            }
         }
 
+
+        Stack<string> test_qu = new Stack<string>();
 
         /// <summary>
         /// 重测
@@ -818,6 +840,25 @@ namespace NepslidingTools.testModel
         /// <param name="e"></param>
         private void buttonX4_Click(object sender, EventArgs e)
         {
+            test_qu.Clear();
+            int start_rowsnum = -1;
+            // Array.Sort<DataGridViewCell>(dgv1.SelectedCells);
+            re_test = true;
+            foreach (DataGridViewCell cell in dgv1.SelectedCells)
+            {
+                if (start_rowsnum == -1)
+                {
+                    start_rowsnum = cell.RowIndex;
+                }
+
+                if (start_rowsnum == cell.RowIndex)
+                {
+                    test_qu.Push(dgv1.Columns[cell.ColumnIndex].Name);
+                }
+            }
+
+            // MessageBox.Show(comboBox1.Items.Contains("步骤1").ToString());
+            // comboBox1.SelectedItem = "步骤2";
             string colname = this.dgv1.Columns[this.dgv1.CurrentCell.ColumnIndex].HeaderText;
             colname = colname.Replace("步骤", "");
 
@@ -839,7 +880,22 @@ namespace NepslidingTools.testModel
             dt.Rows.InsertAt(dr, 0);
             this.dgv1.Rows[0].Selected = true;
             this.dgv1.CurrentCell = this.dgv1.Rows[0].Cells[this.dgv1.CurrentCell.ColumnIndex];
-            //this
+
+            if (re_test)
+            {
+                if (test_qu.Count > 0)
+                {
+                    string the_one = test_qu.Pop();
+                    comboBox1.SelectedItem = the_one;
+                }
+                else if (test_qu.Count == 0)
+                {
+                    int last = this.comboBox1.Items.Count;
+                    this.comboBox1.SelectedIndex = last - 1;
+                    string last_step = this.comboBox1.SelectedItem.ToString();
+                    textcl.Text = this.dgv1.Rows[0].Cells[last_step].Value.ToString();
+                }
+            }
         }
 
 
@@ -1113,6 +1169,21 @@ namespace NepslidingTools.testModel
                 this.comboBox1.SelectedIndex += 1;
             }
             this.timer_tostep.Enabled = false;
+            if (re_test)
+            {
+                if (test_qu.Count > 0)
+                {
+                    string the_one = test_qu.Pop();
+                    comboBox1.SelectedItem = the_one;
+                }
+                else if (test_qu.Count == 0)
+                {
+                    int last = this.comboBox1.Items.Count;
+                    this.comboBox1.SelectedIndex = last - 1;
+                    string last_step = this.comboBox1.SelectedItem.ToString();
+                    textcl.Text = this.dgv1.Rows[0].Cells[last_step].Value.ToString();
+                }
+            }
         }
 
         private void clearcolor()

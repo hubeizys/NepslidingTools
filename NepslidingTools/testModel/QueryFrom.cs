@@ -134,6 +134,8 @@ namespace NepslidingTools.testModel
 
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
+
+
             Program.type = Convert.ToInt32( textBox_ljhao.Text);
             StepTestFrom stf = new StepTestFrom();
             stf.Show();
@@ -483,7 +485,7 @@ namespace NepslidingTools.testModel
 
             //////////////// ok or ng
             #region 是否成功的条件
-            if (radioGroup1.SelectedIndex == 0)
+            if (radioGroup1.SelectedIndex == 2)
             {
                 where_str += string.Format(" and OKorNG = '{0}' ", "OK");
             }
@@ -491,7 +493,7 @@ namespace NepslidingTools.testModel
             {
                 where_str += string.Format(" and OKorNG = '{0}' ", "NG");
             }
-            else if (radioGroup1.SelectedIndex == 2)
+            else if (radioGroup1.SelectedIndex == 0)
             {
                 // where_str += string.Format(" and OKorNG = '{0}' ", "ALL");
             }
@@ -527,7 +529,6 @@ namespace NepslidingTools.testModel
             }
             else
             {
-                // MessageBox.Show("请输入零件号");
                 return where_str;
             }
             #endregion
@@ -583,7 +584,7 @@ namespace NepslidingTools.testModel
                         int index = glo_str.IndexOf("偏差");
                         if (index != -1 )
                         {
-                            row.Cells[dgc.Name].Style.BackColor = Color.Red;
+                            row.Cells[dgc.Name].Style.BackColor = Color.LightSalmon;
                         }
                     }
                 }));
@@ -647,7 +648,6 @@ namespace NepslidingTools.testModel
                 int count = local_dt.Rows.Count;
                 string[] ret = new string[count];
 
-                // MessageBox.Show("一共多少行" + dt.Rows.Count.ToString());
                 for (int i = 0; i < count; i++)
                 {
                     DataRow xin_dr = dest_table.NewRow();
@@ -689,26 +689,17 @@ namespace NepslidingTools.testModel
                             dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
                             if (stand_info - Convert.ToDouble(mea_obj.down) > test_info)
                             {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Blue;
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSkyBlue;
                             }
 
                             else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
                             {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Red;
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSalmon;
                             }
                             else
                             {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Green;
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSeaGreen;
                             }
-                            //else if ()
-                            //{ }
-
-                            //if (  <= test_info &&  Convert.ToDouble(mea_obj.up) >= test_info)
-                            //{
-                            //}
-                            //else {
-                            //    dgv.Rows[i].Cells[sg].Style.BackColor = Color.Red;
-                            //}
                         }
                     }
                 }
@@ -774,8 +765,7 @@ namespace NepslidingTools.testModel
 
         private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //MessageBox.Show(dgv.CurrentCell.ColumnIndex.ToString());
-            contextMenuStrip1.Show(Cursor.Position);
+
         }
 
         private void dgv_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -876,6 +866,8 @@ namespace NepslidingTools.testModel
         {
             Program.type = Convert.ToInt32( textBox_ljhao.Text);
             StepTestFrom stf = new StepTestFrom();
+
+            stf.CompId = dgv.CurrentRow.Cells["零件号"].Value.ToString(); ;
             stf.Show();
         }
 
@@ -920,6 +912,59 @@ namespace NepslidingTools.testModel
         private void radioGroup1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgv_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dgv_MouseDown(object sender, MouseEventArgs e)
+        {
+
+
+            //if (e.Button == MouseButtons.Right)
+            //{
+            //    Console.WriteLine(string.Format("dgv.CurrentCell.ColumnIndex {0}  == dgv.Columns[dgv.CurrentCell.ColumnIndex].Name {1}", dgv.CurrentCell.ColumnIndex, dgv.Columns[dgv.CurrentCell.ColumnIndex].Name));
+            //    bool if_tr = dgv.Columns[dgv.CurrentCell.ColumnIndex].Name.Contains("步骤");
+            //    MessageBox.Show(if_tr.ToString());
+            //    if (if_tr)
+            //    {
+            //        dgv.ContextMenuStrip.Show(Cursor.Position);
+               
+            //    }
+                    
+            //}
+            // MessageBox.Show(dgv.CurrentCell.ColumnIndex.ToString());
+
+        }
+
+        private void dgv_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.RowIndex == -1 || e.ColumnIndex == -1) return;
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+
+                this.dgv.ClearSelection();
+                this.dgv.CurrentRow.Selected = false;
+                this.dgv.Rows[e.RowIndex].Selected = true;
+                this.dgv.CurrentCell = dgv.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                Console.WriteLine(string.Format("dgv.CurrentCell.ColumnIndex {0}  == dgv.Columns[dgv.CurrentCell.ColumnIndex].Name {1}", dgv.CurrentCell.ColumnIndex, dgv.Columns[dgv.CurrentCell.ColumnIndex].Name));
+                bool if_tr = dgv.Columns[dgv.CurrentCell.ColumnIndex].Name.Contains("步骤");
+                // MessageBox.Show(if_tr.ToString());
+                if (if_tr)
+                {
+                    dgv.ContextMenuStrip = contextMenuStrip1;
+                    dgv.ContextMenuStrip.Enabled = true;
+                    contextMenuStrip1.Enabled = true;
+                    dgv.ContextMenuStrip.Show(Cursor.Position);
+                }
+            }
+        }
+
+        private void contextMenuStrip1_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            dgv.ContextMenuStrip = null;
         }
     }
 }

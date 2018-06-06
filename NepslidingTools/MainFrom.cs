@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -184,5 +185,60 @@ namespace NepslidingTools
             //a.Add(aaa);
             //a.Update(aaa);
         }
+
+        //获取最近创建的文件名和创建时间
+        //如果没有指定类型的文件，返回null
+        static FileTimeInfo GetLatestFileTimeInfo(string dir, string ext)
+        {
+            List<FileTimeInfo> list = new List<FileTimeInfo>();
+            DirectoryInfo d = new DirectoryInfo(dir);
+            foreach (FileInfo fi in d.GetFiles())
+            {
+                if (fi.Extension.ToUpper() == ext.ToUpper())
+                {
+                    list.Add(new FileTimeInfo()
+                    {
+                        FileName = fi.FullName,
+                        FileCreateTime = fi.CreationTime
+                    });
+                }
+            }
+            var qry = from x in list
+                      orderby x.FileCreateTime
+                      select x;
+            return qry.LastOrDefault();
+        }
+        private void save_timer_Tick(object sender, EventArgs e)
+        {
+            Console.WriteLine("OK sava");
+            string cur_dict = System.IO.Directory.GetCurrentDirectory();
+            // DirectoryInfo d_info = new DirectoryInfo(cur_dict + "\\backup");
+            //使用 GetLatestFileTimeInfo
+            //获取d:\test文件中，扩展名为.txt的最新文件
+            FileTimeInfo fi = GetLatestFileTimeInfo(cur_dict + "\\backup", ".sql");
+            if (fi != null)
+            {
+                Console.WriteLine("文件名：{0} 创建时间：{1}", fi.FileName, fi.FileCreateTime);
+                if (fi.FileCreateTime.CompareTo(DateTime.Now.AddHours(-10)) <= 0)
+                {
+                    Console.WriteLine("需要备份了");
+                    SavaAllFrom.SavaAll();
+                }
+                else
+                {
+                    Console.WriteLine("不需要备份");
+                }
+            }
+            else
+            {
+                Console.WriteLine("文件夹中没有指定扩展名的文件!");
+            }
+        }
+    }
+    //自定义一个类
+    public class FileTimeInfo
+    {
+        public string FileName;  //文件名
+        public DateTime FileCreateTime; //创建时间
     }
 }
