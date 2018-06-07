@@ -26,11 +26,7 @@ namespace NepslidingTools.toolbox
                     MessageBox.Show("名称不可以为空");
                     return;
                 }
-                if (textBox_gongdan.Text == "")
-                {
-                    MessageBox.Show("工单号不可以为空");
-                    return;
-                }
+
                 if (textBox_bianhao.Text == "")
                 {
                     MessageBox.Show("生产编号不可以为空");

@@ -686,10 +686,12 @@ namespace NepslidingTools.testModel
             // 
             // chartControl1
             // 
+            this.chartControl1.CrosshairEnabled = DevExpress.Utils.DefaultBoolean.False;
             xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
             xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
             this.chartControl1.Diagram = xyDiagram1;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.chartControl1.Legend.MarkerVisible = false;
             this.chartControl1.Legend.TextVisible = false;
             this.chartControl1.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
             this.chartControl1.Location = new System.Drawing.Point(0, 0);
@@ -698,8 +700,10 @@ namespace NepslidingTools.testModel
             series1.View = lineSeriesView1;
             series2.Name = "³¬²î";
             series2.View = pointSeriesView1;
+            series2.Visible = false;
             series3.Name = "¸º³¬²î";
             series3.View = pointSeriesView2;
+            series3.Visible = false;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1,
         series2,

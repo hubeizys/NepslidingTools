@@ -261,7 +261,7 @@ namespace NepslidingTools
             }
             else
             {
-                String str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                String str = Interaction.InputBox("请输入本机编号", "请输入编号", "", -1, -1);
                 if (str == "")
                 {
                     System.Environment.Exit(0);

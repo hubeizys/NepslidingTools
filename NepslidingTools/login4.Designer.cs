@@ -161,11 +161,11 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 25F);
             this.label1.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.label1.Location = new System.Drawing.Point(140, 12);
+            this.label1.Location = new System.Drawing.Point(34, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(326, 45);
+            this.label1.Size = new System.Drawing.Size(558, 45);
             this.label1.TabIndex = 0;
-            this.label1.Text = "量具信息化管理系统";
+            this.label1.Text = "MIMS Lite 2.1 量具信息化管理系统";
             // 
             // panel1
             // 

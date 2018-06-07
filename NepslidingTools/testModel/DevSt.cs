@@ -103,7 +103,8 @@ namespace NepslidingTools.testModel
             foreach (var test_obj in com_list)
             {
                 Button a = new Button();
-                a.Text = test_obj.componentId.ToString();
+                a.Text = test_obj.name.ToString();
+                a.Tag = test_obj.componentId.ToString();
                 a.Click += new System.EventHandler(this.button_Click);
                 this.last_flp.Controls.Add(a);
             }
@@ -111,14 +112,14 @@ namespace NepslidingTools.testModel
 
         private void button_Click2(object sender, EventArgs e)
         {   
-            Program.txtbh = (sender as Button) .Text;
+            Program.txtbh = (sender as Button) .Tag.ToString();
             StepTestFrom stf = new StepTestFrom();
             stf.ShowDialog();
         }
 
         private void button_Click(object sender, EventArgs e)
         {
-            Program.type = Convert.ToInt32( (sender as Button).Text);
+            Program.type = Convert.ToInt32( (sender as Button).Tag);
             StepTestFrom stf = new StepTestFrom();
             stf.ShowDialog();
 

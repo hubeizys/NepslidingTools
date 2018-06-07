@@ -243,16 +243,19 @@ namespace NepslidingTools.testModel
             toolbox.SplashScreen.Show(typeof(SplashForm));
 
             Task sp_from = new Task(new Action(()=> {
+                Thread.Sleep(1000);
+                toolbox.SplashScreen.ChangeTitle("正在读取数模");
+                Thread.Sleep(1000);
+                SplashScreen.ChangeTitle("解析构造");
+                Thread.Sleep(1000);
+                SplashScreen.ChangeTitle("开始渲染");
+                Thread.Sleep(1000);
+                SplashScreen.ChangeTitle("图像构造");
+                int n = 0;
                 while (! cts.IsCancellationRequested)
                 {
-                    Thread.Sleep(1000);
-                    toolbox.SplashScreen.ChangeTitle("111");
-                    Thread.Sleep(1000);
-                    SplashScreen.ChangeTitle("222");
-                    Thread.Sleep(1000);
-                    SplashScreen.ChangeTitle("333");
-                    Thread.Sleep(1000);
-                    SplashScreen.ChangeTitle("444");
+                    Thread.Sleep(10);
+                    SplashScreen.ChangeTitle("加载数模" + (n++).ToString() );
                 }
             }), cts.Token);
             sp_from.Start();
@@ -376,6 +379,8 @@ namespace NepslidingTools.testModel
                         this.chartControl1.Invoke(new Action(() =>
                         {
                             n++;
+                            if (test_obj.PN == "")
+                                test_obj.PN = "0";
                             if (results[cur_index - 1] != "")
                             {                // 理论值
                                 double LL = Convert.ToDouble(txtll.Text);
@@ -388,16 +393,16 @@ namespace NepslidingTools.testModel
                                 double hz = LL + GC;
                                 if (BZ >= hz)
                                 {
-                                    this.chartControl1.Series[1].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                                    this.chartControl1.Series[1].Points.Add(new DevExpress.XtraCharts.SeriesPoint(test_obj.PN, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
                                 }
                                 if (BZ < cz)
                                 {
-                                    this.chartControl1.Series[2].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                                    this.chartControl1.Series[2].Points.Add(new DevExpress.XtraCharts.SeriesPoint(test_obj.PN, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
                                 }
                                 double cur_de = Convert.ToDouble(results[cur_index - 1]);
                             }
                             //this.chartControl1.Series[0].Points.Insert(0,new DevExpress.XtraCharts.SeriesPoint( results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
-                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(test_obj.PN, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
                             Console.WriteLine(string.Format("this.chartControl1.Series[0].Points {0}", n));
                         }));
                     }
@@ -643,12 +648,12 @@ namespace NepslidingTools.testModel
                     if (BZ > hz)
                     {
                         lab_cc.ForeColor = Color.Red;
-                        lab_cc.Text = (BZ - hz).ToString();
+                        lab_cc.Text = "+" + (BZ - hz).ToString("f3");
                     }
                     if (BZ < cz)
                     {
                         lab_cc.ForeColor = Color.Blue;
-                        lab_cc.Text = (cz - BZ).ToString();
+                        lab_cc.Text = "-" + (cz - BZ).ToString("f3");
                     }
 
                 }
@@ -781,8 +786,8 @@ namespace NepslidingTools.testModel
                 if (need_change_rows["零件号"].ToString() == "")
                 {
                     str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                    need_change_rows["零件号"] = str;
                 }
-                need_change_rows["零件号"] = str;
                 this.CompId = "";
                 create_serpoint(textcl.Text);
                 re_test = false;
@@ -948,6 +953,23 @@ namespace NepslidingTools.testModel
             //{
             //    Console.WriteLine(dt.Columns[n].ColumnName);
             //}
+            if(dgv1.Rows.Count > 0 )
+            {
+                string str = "";
+                var need_change_rows = (dgv1.DataSource as DataTable).Rows[0];
+                if (need_change_rows["零件号"].ToString() == "")
+                {
+                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                    if (str == "")
+                    {
+                        MessageBox.Show("请输入零件号， 否则无法保存");
+                        return;
+                    }
+                }
+                need_change_rows["零件号"] = str;
+                this.CompId = "";
+            }
+
 
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             List<Maticsoft.Model.test>  tear_mode = test_bll.GetModelList(string.Format(" measureb='{0}'", dgv1.Rows[test_rowindex].Cells["测试编号"].Value.ToString()));
@@ -1334,5 +1356,6 @@ namespace NepslidingTools.testModel
         {
 
         }
+
     }
 }

@@ -427,16 +427,17 @@ namespace NepslidingTools.testModel
             radioGroup1.Invoke(new Action(() =>
             {
                 Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
-                radioGroup1.SelectedIndex = 2;
+                radioGroup1.SelectedIndex = 0;
                 string where_string1 = this.query_wherestring();
                 int tot = test_bll.GetRecordCount2(where_string1);
 
-                radioGroup1.SelectedIndex = 0;
+                radioGroup1.SelectedIndex = 2;
                 string where_string2 = this.query_wherestring();
                 int ok_num = test_bll.GetRecordCount2(where_string2);
 
                 double percent = Convert.ToDouble(ok_num) / Convert.ToDouble(tot);
                 result = string.Format("{0:0.00%}", percent);//µÃµ½5.88%
+                radioGroup1.SelectedIndex = 0;
             }));
             
             //MessageBox.Show(result);
@@ -689,7 +690,7 @@ namespace NepslidingTools.testModel
                             dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
                             if (stand_info - Convert.ToDouble(mea_obj.down) > test_info)
                             {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSkyBlue;
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Cyan;
                             }
 
                             else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
@@ -698,7 +699,8 @@ namespace NepslidingTools.testModel
                             }
                             else
                             {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSeaGreen;
+                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Lime;
+;
                             }
                         }
                     }
