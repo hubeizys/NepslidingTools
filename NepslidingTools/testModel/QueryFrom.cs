@@ -868,8 +868,10 @@ namespace NepslidingTools.testModel
         {
             Program.type = Convert.ToInt32( textBox_ljhao.Text);
             StepTestFrom stf = new StepTestFrom();
-
-            stf.CompId = dgv.CurrentRow.Cells["Áã¼þºÅ"].Value.ToString(); ;
+            stf.CompId = dgv.CurrentRow.Cells["Áã¼þºÅ"].Value.ToString(); 
+            stf.Pn = dgv.CurrentRow.Cells["Áã¼þºÅ"].Value.ToString(); 
+            //MessageBox.Show(dgv.SelectedCells.Count.ToString());
+            stf.Dselect_Cells = dgv.SelectedCells;
             stf.Show();
         }
 
@@ -947,9 +949,9 @@ namespace NepslidingTools.testModel
             if (e.Button == System.Windows.Forms.MouseButtons.Right)
             {
 
-                this.dgv.ClearSelection();
-                this.dgv.CurrentRow.Selected = false;
-                this.dgv.Rows[e.RowIndex].Selected = true;
+                //this.dgv.ClearSelection();
+                //this.dgv.CurrentRow.Selected = false;
+                // this.dgv.Rows[e.RowIndex].Selected = true;
                 this.dgv.CurrentCell = dgv.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 Console.WriteLine(string.Format("dgv.CurrentCell.ColumnIndex {0}  == dgv.Columns[dgv.CurrentCell.ColumnIndex].Name {1}", dgv.CurrentCell.ColumnIndex, dgv.Columns[dgv.CurrentCell.ColumnIndex].Name));
                 bool if_tr = dgv.Columns[dgv.CurrentCell.ColumnIndex].Name.Contains("²½Öè");
@@ -960,6 +962,7 @@ namespace NepslidingTools.testModel
                     dgv.ContextMenuStrip.Enabled = true;
                     contextMenuStrip1.Enabled = true;
                     dgv.ContextMenuStrip.Show(Cursor.Position);
+                    
                 }
             }
         }

@@ -12,7 +12,7 @@ using AnyCAD.Platform;
 using AnyCAD.Exchange;
 using System.Threading.Tasks;
 using System.Threading;
-
+using System.Runtime.InteropServices;
 
 namespace NepslidingTools.testModel
 {
@@ -30,13 +30,18 @@ namespace NepslidingTools.testModel
             this.renderView.TabIndex = 1;
             this.panel1.Controls.Add(this.renderView);
             this.renderView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnRenderWindow_MouseClick);
+            //this.renderView.Click += new EventHandler(this.RenderWindow_Click);
+            //this.renderView.ForeColorChanged += new EventHandler(RenderWindow_colorchange);
+            //this.renderView.SystemColorsChanged += new EventHandler(RenderWindow_ColorsChanged);
+            this.renderView.RenderTick += new AnyCAD.Presentation.RenderEventHandler(Render_Ev);  
         }
 
-        private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
+        private void Render_Ev()
         {
             SceneNode sc_node = this.renderView.SceneManager.GetSelectedNode();
             if (sc_node != null)
             {
+                Console.WriteLine("sasa");
                 // MessageBox.Show(sc_node.GetName() + "===" + sc_node.GetHashCode() + "--00--" + sc_node.GetId().AsInt());
                 FaceStyle style = new FaceStyle();
                 this.renderView.SceneManager.ClearSelection();
@@ -49,7 +54,74 @@ namespace NepslidingTools.testModel
                         gdno_tb.Text += ",";
                     }
                     gdno_tb.Text += id;
-                    return;
+
+                }
+                else
+                {
+                    gdno_tb.Text = "";
+                    // жиж§Ъ§Он
+                    foreach (string temp_date in pos_list)
+                    {
+                        if (id == temp_date)
+                        {
+
+                            continue;
+                        }
+                        gdno_tb.Text += temp_date;
+                        gdno_tb.Text += ",";
+                    }
+                    FaceStyle fa = null;
+                    if (key_colors.TryGetValue(Convert.ToInt32( id), out fa))
+                    {
+                        sc_node.SetFaceStyle(fa);
+                    }
+                }
+            }
+        }
+        private void RenderWindow_ColorsChanged(object sender, EventArgs e)
+        {
+            SceneNode sc_node = this.renderView.SceneManager.GetSelectedNode();
+            if (sc_node != null)
+            {
+                Console.WriteLine("sasa");
+            }
+        }
+
+        private void RenderWindow_colorchange(object sender, EventArgs e) {
+            SceneNode sc_node = this.renderView.SceneManager.GetSelectedNode();
+            if (sc_node != null)
+            {
+                Console.WriteLine("sasa");
+            }
+        }
+        private void RenderWindow_Click(object sender, EventArgs e)
+        {
+            SceneNode sc_node = this.renderView.SceneManager.GetSelectedNode();
+            if (sc_node != null)
+            {
+                Console.WriteLine("sasa");
+            }
+        }
+
+        private void OnRenderWindow_MouseClick(object sender, MouseEventArgs e)
+        {
+            /*
+            SceneNode sc_node = this.renderView.SceneManager.GetSelectedNode();
+            if (sc_node != null)
+            {
+                // MessageBox.Show(sc_node.GetName() + "===" + sc_node.GetHashCode() + "--00--" + sc_node.GetId().AsInt());
+                FaceStyle style = new FaceStyle();
+                //this.renderView.SceneManager.ClearSelection();
+                string[] pos_list = gdno_tb.Text.Split(',');
+                string id = sc_node.GetId().AsInt().ToString();
+                if (-1 == Array.IndexOf(pos_list, id))
+                {
+                    if (gdno_tb.Text != "" && !gdno_tb.Text.EndsWith(","))
+                    {
+                        gdno_tb.Text += ",";
+                    }
+                    gdno_tb.Text += id;
+                    
                 }
                 else
                 {
@@ -66,6 +138,12 @@ namespace NepslidingTools.testModel
                     }
                 }
             }
+            MouseFlag.MouseLefDownEvent(this.renderView.Location.X, this.renderView.Location.Y, 0);
+            MouseFlag.MouseLefUpEvent(this.renderView.Location.X, this.renderView.Location.Y, 0);
+            this.renderView.SceneManager.ClearSelection();
+            this.renderView.Refresh();
+            this.panel1.Focus();
+            this.renderView.Focus();*/
         }
 
         public string LjHao { get; set; }
@@ -534,10 +612,10 @@ namespace NepslidingTools.testModel
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (ofg_cad.ShowDialog() == DialogResult.OK)
-            {
+            //if (ofg_cad.ShowDialog() == DialogResult.OK)
+            //{
 
-            }
+            //}
         }
 
         private void panel1_Click(object sender, EventArgs e)
@@ -550,7 +628,8 @@ namespace NepslidingTools.testModel
 
         private void button2_Click_1(object sender, EventArgs e)
         {
-            OnRenderWindow_MouseClick(sender, e as MouseEventArgs);
+            // OnRenderWindow_MouseClick(sender, e as MouseEventArgs);
+            gdno_tb.Text = "";
         }
 
         private void clearcolor()
@@ -588,7 +667,7 @@ namespace NepslidingTools.testModel
                             if (key_colors.TryGetValue(index, out value))
                             {
                                 if (n % 2 == 0)
-                                {
+                                { 
                                     node.SetFaceStyle(value);
                                 }
                                 else
@@ -622,6 +701,38 @@ namespace NepslidingTools.testModel
         {
             this.renderView.Height += 1;
             this.renderView.Height -= 1;
+        }
+    }
+
+    public class MouseFlag
+    {
+        [DllImport("user32.dll")]
+
+        static extern void mouse_event(MouseEventFlag flags, int dx, int dy, uint data, UIntPtr extraInfo);
+
+        [Flags]
+        enum MouseEventFlag : uint
+        {
+            Move = 0x0001,
+            LeftDown = 0x0002,
+            LeftUp = 0x0004,
+            RightDown = 0x0008,
+            RightUp = 0x0010,
+            MiddleDown = 0x0020,
+            MiddleUp = 0x0040,
+            XDown = 0x0080,
+            XUp = 0x0100,
+            Wheel = 0x0800,
+            VirtualDesk = 0x4000,
+            Absolute = 0x8000
+        }
+        public static void MouseLefDownEvent(int dx, int dy, uint data)
+        {
+            mouse_event(MouseEventFlag.LeftDown, dx, dy, data, UIntPtr.Zero);
+        }
+        public static void MouseLefUpEvent(int dx, int dy, uint data)
+        {
+            mouse_event(MouseEventFlag.LeftUp, dx, dy, data, UIntPtr.Zero);
         }
     }
 }

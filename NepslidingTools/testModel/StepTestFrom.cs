@@ -15,6 +15,7 @@ using DevExpress.XtraCharts;
 using Microsoft.VisualBasic;
 
 using NepslidingTools.toolbox;
+using DevExpress.Utils;
 
 namespace NepslidingTools.testModel
 {
@@ -23,8 +24,10 @@ namespace NepslidingTools.testModel
         string name = "steptest";
         private AnyCAD.Presentation.RenderWindow3d renderView = null;
         public int comp_tp = -1;
-
+        public DataGridViewSelectedCellCollection Dselect_Cells = null;
         public string CompId { get; set; }
+        public string Pn { get; set; }
+        ToolTipController toolTipController = new ToolTipController();
 
         #region 串口变量
         private SerPort sp_obj = new SerPort();
@@ -326,8 +329,130 @@ namespace NepslidingTools.testModel
             this.timer_portst.Enabled = true;
             create_serpoint();
             this.Refresh();
+
+            dgv1.ClearSelection();
+            test_qu.Clear();
+            DataGridViewRow temp_dr = null;
+            if (Dselect_Cells != null)
+            {
+                foreach (DataGridViewRow dr2 in dgv1.Rows)
+                {
+                    if (dr2.Cells["零件号"].Value.ToString() != this.Pn || dr2.Index == 0) { continue; }
+
+                    temp_dr = dr2;
+                    // 把第一步
+                    foreach (DataGridViewCell cell in Dselect_Cells)
+                    {
+                        dr2.Cells[cell.OwningColumn.HeaderText].Selected = true;
+                        test_qu.Push(cell.OwningColumn.HeaderText);
+                    }
+                }
+                
+                //int start_rowsnum = -1;
+
+                re_test = true;
+                //foreach (DataGridViewCell cell in dgv1.SelectedCells)
+                //{
+                //    if (start_rowsnum == -1)
+                //    {
+                //        start_rowsnum = cell.RowIndex;
+                //    }
+
+                //    if (start_rowsnum == cell.RowIndex)
+                //    {
+                        
+                //    }
+                //}
+
+                // MessageBox.Show(comboBox1.Items.Contains("步骤1").ToString());
+                // comboBox1.SelectedItem = "步骤2";
+                string colname = this.dgv1.Columns[this.dgv1.CurrentCell.ColumnIndex].HeaderText;
+                colname = colname.Replace("步骤", "");
+
+                int col_num = 0;
+                if (int.TryParse(colname, out col_num))
+                {
+                    this.comboBox1.SelectedIndex = col_num > 0 ? col_num - 1 : 0;
+                }
+
+                DataTable dt = this.dgv1.DataSource as DataTable;
+                //DataTable dt2 = dt.Copy();
+                DataRow dr = dt.NewRow();
+                foreach (DataColumn aDataColumn in dt.Columns)
+                {
+                    dr[aDataColumn.ColumnName] = temp_dr.Cells[aDataColumn.ColumnName].Value;
+                }
+                dr["测试结果"] = "";
+                dt.Rows.RemoveAt(dgv1.CurrentRow.Index);
+                dt.Rows.InsertAt(dr, 0);
+                this.dgv1.CurrentCell = this.dgv1.Rows[0].Cells[this.dgv1.CurrentCell.ColumnIndex];
+
+                if (re_test)
+                {
+                    if (test_qu.Count > 0)
+                    {
+                        string the_one = test_qu.Pop();
+                        comboBox1.SelectedItem = the_one;
+                    }
+                    else if (test_qu.Count == 0)
+                    {
+                        int last = this.comboBox1.Items.Count;
+                        this.comboBox1.SelectedIndex = last - 1;
+                        string last_step = this.comboBox1.SelectedItem.ToString();
+                        textcl.Text = this.dgv1.Rows[0].Cells[last_step].Value.ToString();
+                    }
+                }
+
+
+            }
+            chartControl1.RuntimeHitTesting = true;
+            chartControl1.MouseMove += new MouseEventHandler(chartControl4_MouseMove);
+            chartControl1.MouseLeave += new EventHandler(chartControl4_MouseLeave);
         }
 
+        private void chartControl4_MouseLeave(object sender, EventArgs e)
+        {
+            toolTipController.HideHint();
+        }
+
+        private void chartControl4_MouseMove(object sender, MouseEventArgs e)
+        {
+            ChartHitInfo hitInfo = chartControl1.CalcHitInfo(e.Location);
+            StringBuilder builder = new StringBuilder();
+            //if (hitInfo.InDiagram)
+            //    builder.AppendLine("In diagram");
+            //if (hitInfo.InNonDefaultPane)
+            //    builder.AppendLine("In non-default pane: " + hitInfo.NonDefaultPane.Name);
+            //if (hitInfo.InAxis)
+            //{
+            //    builder.AppendLine("In axis: " + hitInfo.Axis.Name);
+            //    if (hitInfo.AxisLabelItem != null)
+            //        builder.AppendLine("  Label item: " + hitInfo.AxisLabelItem.Text);
+            //    if (hitInfo.AxisTitle != null)
+            //        builder.AppendLine("  Axis title: " + hitInfo.AxisTitle.Text);
+            //}
+            //if (hitInfo.InChartTitle)
+            //    builder.AppendLine("In chart title: " + hitInfo.ChartTitle.Text);
+            //if (hitInfo.InLegend)
+            //    builder.AppendLine("In legend");
+            //if (hitInfo.InSeries)
+            //    builder.AppendLine("In series: " + ((Series)hitInfo.Series).Name);
+            //if (hitInfo.InSeriesLabel)
+            //{
+            //    builder.AppendLine("In series label");
+            //    builder.AppendLine("  Series: " + ((Series)hitInfo.Series).Name);
+            //}
+            if (hitInfo.SeriesPoint != null)
+            {
+                builder.AppendLine(" 零件号: " + dgv1.Rows[ Convert.ToInt32( hitInfo.SeriesPoint.Argument)-1].Cells["零件号"].Value);
+                if (!hitInfo.SeriesPoint.IsEmpty)
+                    builder.AppendLine(" 测量值: " + hitInfo.SeriesPoint.Values[0]);
+            }
+            if (builder.Length > 0)
+                toolTipController.ShowHint(/*"Hit-testing results:\n" + */builder.ToString(), chartControl1.PointToScreen(e.Location));
+            else
+                toolTipController.HideHint();
+        }
         private void create_serpoint(string value = "")
         {
             Task<string> one = new Task<string>(() =>
@@ -393,16 +518,16 @@ namespace NepslidingTools.testModel
                                 double hz = LL + GC;
                                 if (BZ >= hz)
                                 {
-                                    this.chartControl1.Series[1].Points.Add(new DevExpress.XtraCharts.SeriesPoint(test_obj.PN, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                                    this.chartControl1.Series[1].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
                                 }
                                 if (BZ < cz)
                                 {
-                                    this.chartControl1.Series[2].Points.Add(new DevExpress.XtraCharts.SeriesPoint(test_obj.PN, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                                    this.chartControl1.Series[2].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
                                 }
                                 double cur_de = Convert.ToDouble(results[cur_index - 1]);
                             }
                             //this.chartControl1.Series[0].Points.Insert(0,new DevExpress.XtraCharts.SeriesPoint( results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
-                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(test_obj.PN, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
+                            this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(n, results[cur_index - 1] == "" ? "0" : results[cur_index - 1]));
                             Console.WriteLine(string.Format("this.chartControl1.Series[0].Points {0}", n));
                         }));
                     }
@@ -863,10 +988,7 @@ namespace NepslidingTools.testModel
                 }
             }
         }
-
-
         Stack<string> test_qu = new Stack<string>();
-
         /// <summary>
         /// 重测
         /// </summary>
@@ -876,7 +998,7 @@ namespace NepslidingTools.testModel
         {
             test_qu.Clear();
             int start_rowsnum = -1;
-            // Array.Sort<DataGridViewCell>(dgv1.SelectedCells);
+       
             re_test = true;
             foreach (DataGridViewCell cell in dgv1.SelectedCells)
             {

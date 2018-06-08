@@ -104,6 +104,8 @@ namespace NepslidingTools.testModel
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
+            DevExpress.XtraCharts.SplineSeriesView splineSeriesView1 = new DevExpress.XtraCharts.SplineSeriesView();
+            ((System.ComponentModel.ISupportInitialize)(splineSeriesView1)).BeginInit();
             this.SuspendLayout();
             // 
             // lj_lab
@@ -691,11 +693,12 @@ namespace NepslidingTools.testModel
             xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
             this.chartControl1.Diagram = xyDiagram1;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chartControl1.Legend.MarkerVisible = false;
+            this.chartControl1.Legend.MarkerVisible = true;
             this.chartControl1.Legend.TextVisible = false;
             this.chartControl1.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
             this.chartControl1.Location = new System.Drawing.Point(0, 0);
             this.chartControl1.Name = "chartControl1";
+            lineSeriesView1.MarkerVisibility = DevExpress.Utils.DefaultBoolean.True;
             series1.Name = "测量结果波动";
             series1.View = lineSeriesView1;
             series2.Name = "超差";
@@ -761,7 +764,11 @@ namespace NepslidingTools.testModel
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(splineSeriesView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(series1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
+            
             this.ResumeLayout(false);
 
         }
