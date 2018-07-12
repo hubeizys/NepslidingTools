@@ -105,6 +105,10 @@ namespace NepslidingTools.toolbox
             {
                 MessageBox.Show(err.Message);
             }
+            finally
+            {
+                this.DialogResult = DialogResult.OK;
+            }
         }
     }
 }

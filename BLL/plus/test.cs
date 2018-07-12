@@ -16,6 +16,14 @@ namespace Maticsoft.BLL
             DataSet ds = dal.GetList2(strWhere);
             return DataTableToList(ds.Tables[0]);
         }
+
+
+        public DataSet GetModelListLast()
+        {
+            DataSet ds = dal.GetListLast();
+            return ds;
+        }
+
         /// <summary>
         /// 获得数据列表
         /// </summary>

@@ -38,7 +38,6 @@ namespace NepslidingTools.testModel
         //DataGridView dgv
         public void DataGridViewToExcel()
         {
-
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.Filter = "Execl files (*.xls)|*.xls";
             dlg.FilterIndex = 0;
@@ -98,9 +97,18 @@ namespace NepslidingTools.testModel
         }
         #endregion
 
-
         private void QueryFrom_Load(object sender, EventArgs e)
         {
+            string default_str = "";
+            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+            // 获得最后一条
+            DataSet ds = test_bll.GetModelListLast();
+            DataTable dt = ds.Tables[0];
+            if (dt.Rows.Count == 1)
+            {
+                this.textBox_ljhao.Text = dt.Rows[0]["componentId"].ToString();
+            }
+            
             //textBox_ljhao.Text = Program.gdvid;
             global.CurActive = "QueryFrom";
 
@@ -109,8 +117,9 @@ namespace NepslidingTools.testModel
 
             #region 一共有多少
             // 下一页
-            Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
+
             string where_string = this.query_wherestring();
+            reQuery();
             this.totle_num = test_bll.GetRecordCount2(where_string);
 
             // 当前多少页面
@@ -126,22 +135,18 @@ namespace NepslidingTools.testModel
             string parem_num = string.Format("1/{0}", this.totle_page_num);
             labelX1.Text = parem_num;
             #endregion
-
-
             // 添加 智能补全
             this.AddAutoComp();
         }
 
         private void repositoryItemButtonEdit1_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
         {
-
-
             Program.type = Convert.ToInt32( textBox_ljhao.Text);
             StepTestFrom stf = new StepTestFrom();
             stf.Show();
         }
-
-        private void jisuan()
+        private bool jisuan_f = false;
+        private void jisuan(bool all = false)
         {
             DataTable dt2 = NewMethod();
             //构建一个计算用的表格
@@ -149,7 +154,8 @@ namespace NepslidingTools.testModel
             List<Maticsoft.Model.measures> mea_list = mea_bll.GetModelList(string.Format(" componentId = '{0}' order by step ", this.comp_type));
             foreach (Maticsoft.Model.measures mea_obj in mea_list)
             {
-                dt2.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
+                // dt2.Columns.Add(new DataColumn("s" + mea_obj.step.ToString(), typeof(Double)));
+                dt2.Columns.Add(new DataColumn(mea_obj.CC.ToString(), typeof(Double)));
             }
 
             // 取得数据。 分解数据。 填充数据
@@ -173,7 +179,8 @@ namespace NepslidingTools.testModel
                     {
                         double temp_d = 0;
                         Double.TryParse(temp_step[i], out temp_d);
-                        dr_temp["s" + (i + 1).ToString()] = temp_d;
+                        // dr_temp["s" + (i + 1).ToString()] = temp_d;
+                        dr_temp[i] = temp_d;
                         Console.WriteLine("temp_step[i] == " + temp_step[i] + " ===  " + i);
                     }
                     dt2.Rows.Add(dr_temp);
@@ -196,36 +203,35 @@ namespace NepslidingTools.testModel
             // 分析数据
             // mea_list
             string all_cpk = "";
-            Dictionary<string, double> cpk_dic = new Dictionary<string, double>();
+            Dictionary<int, double> cpk_dic = new Dictionary<int, double>();
             foreach (DataColumn aa in dt2.Columns)
             {
+                int step = dt2.Columns.IndexOf(aa);
                 string col_name = aa.ColumnName.Replace("s", "");
-                List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x => x.step == Convert.ToInt32(col_name)).Select(x => x).ToList<Maticsoft.Model.measures>();
+                //dt2.Columns[1].
+                // List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x => x.step == Convert.ToInt32(col_name)).Select(x => x).ToList<Maticsoft.Model.measures>();
+                List<Maticsoft.Model.measures> mea_obj = mea_list.Where(x => x.step == step + 1).Select(x => x).ToList<Maticsoft.Model.measures>();
                 //string rr = dt2.Select("", aa.ColumnName + " DESC")[0][aa.ColumnName].ToString();
-                object max = dt2.Compute(string.Format("Max({0})", aa.ColumnName), "true");
+                object max = dt2.Compute(string.Format("Max([{0}])", aa.ColumnName), "true");
                 //  MessageBox.Show(max.ToString());
-                object min = dt2.Compute(string.Format("Min({0})", aa.ColumnName), "true");
-
+                object min = dt2.Compute(string.Format("Min([{0}])", aa.ColumnName), "true");
                 double sta = Convert.ToDouble(mea_obj[0].standardv);
-
                 double va_x1 = Convert.ToDouble(max is DBNull ? 0 : max);
                 double va_x2 = Convert.ToDouble(min is DBNull ? 0 : min);
                 double va_x = va_x1 - sta > sta - va_x2 ? va_x1 : va_x2;
                 double va_s = sta - va_x;
-
                 double tu = sta + Convert.ToDouble(mea_obj[0].up);
                 double ti = sta - Convert.ToDouble(mea_obj[0].down);
-
                 double v_m = (tu + ti) / 2;
                 double sgm = Math.Abs(sta - va_x);
                 double v_t = tu - ti;
-
                 double cpk = (v_t - 2 * sgm) / (6 * va_s);
                 Console.WriteLine(string.Format("max == {0} --- min {1}----- {2}::{3}", max, min, mea_obj[0].up, mea_obj[0].down));
                 Console.WriteLine(Environment.NewLine);
                 Console.WriteLine(string.Format("cpk == {0}", cpk));
                 all_cpk += " " + aa.ColumnName + "= " + cpk;
-                cpk_dic.Add(aa.ColumnName, cpk);
+                //cpk_dic.Add(aa.ColumnName, cpk);
+                cpk_dic.Add(step +1 , cpk);
             }
             string op = "\t" + get_okpara();
             //MessageBox.Show("all_cpk" + all_cpk + "   op" + op);
@@ -233,16 +239,47 @@ namespace NepslidingTools.testModel
                 label_result.Text = string.Format("all_cpk" + all_cpk + "   op" + op);
             }));
 
+            if (all == true) { 
+            dataGridView1.Invoke(new Action(() =>
+            {
+                #region 添加一行总结
+                DataTable temp_table = dataGridView1.DataSource as DataTable;
+                int last_row = temp_table.Rows.Count;
+                if (temp_table.Rows[last_row-1]["零件号"].ToString() == "结果与CPK")
+                {
+                    return;
+                }
+                DataRow temp_dr = temp_table.NewRow();
+                temp_dr["零件号"] = "结果与CPK";
+                foreach (KeyValuePair<int, double> par in cpk_dic)
+                {
+                    // string key_name = par.Key.Replace("s", "步骤");
+                    // string key_name = par.Key;
+                    temp_dr[par.Key+1] = par.Value.ToString("0.00");
+                }
+                temp_dr["结果"] = op.Replace("\t", "");
+                temp_table.Rows.Add(temp_dr);
+                dataGridView1.Refresh();
+                jisuan_f = true;
+            }));
+            }
+            else { }
+
             dgv.Invoke(new Action(() =>
             {
                 #region 添加一行总结
                 DataTable temp_table = dgv.DataSource as DataTable;
+                int last_row = temp_table.Rows.Count;
+                if (temp_table.Rows[last_row-1]["零件号"].ToString() == "结果与CPK")
+                {
+                    return;
+                }
                 DataRow temp_dr = temp_table.NewRow();
                 temp_dr["零件号"] = "结果与CPK";
-                foreach (KeyValuePair<string, double> par in cpk_dic)
+                foreach (KeyValuePair<int, double> par in cpk_dic)
                 {
-                    string key_name = par.Key.Replace("s", "步骤");
-                    temp_dr[key_name] = par.Value.ToString("0.00");
+                    // string key_name = par.Key.Replace("s", "步骤");
+                    temp_dr[par.Key + 1] = par.Value.ToString("0.00");
                 }
                 temp_dr["结果"] = op.Replace("\t", "");
                 temp_table.Rows.Add(temp_dr);
@@ -303,6 +340,7 @@ namespace NepslidingTools.testModel
             range.ClearContents(); //清空要合并的区域
             range.MergeCells = true; //合并单元格
                                      //6.填写第二行：生成时间
+            
             xlsApp.Cells[1][2] = "报表生成于：" + DateTime.Now.ToString();
             xlsApp.Cells[1][2].Font.Name = "宋体";
             xlsApp.Cells[1][2].Font.Size = 15;
@@ -313,7 +351,7 @@ namespace NepslidingTools.testModel
             xlsApp.Cells[1][3] = "序号";
             for (int i = 0; i < dt.Columns.Count; i++)
             {
-                xlsApp.Cells[i + 2][3] = dt.Columns[i].ColumnName;
+                xlsApp.Cells[i + 2][3] = dt.Columns[i].ColumnName + 1;
             }
             xlsApp.Rows[3].Font.Name = "宋体";
             xlsApp.Rows[3].Font.Size = 15;
@@ -321,11 +359,17 @@ namespace NepslidingTools.testModel
             xlsApp.Rows[3].HorizontalAlignment = Excel.XlVAlign.xlVAlignCenter;//居中
                                                                                //设置颜色
             range = xlsApp.get_Range("A3", temp + "3");
-            range.Interior.ColorIndex = 33;
-
+            // range.Interior.ColorIndex = 33;
+            xlsApp.Columns[1].ColumnWidth = 20;
+            xlsApp.Columns[1].HorizontalAlignment = Excel.XlVAlign.xlVAlignJustify;
+            xlsApp.Columns[2].ColumnWidth = 20;
+            // xlsApp.Columns[2].HorizontalAlignment = Excel.
             xlsApp.Columns[3].ColumnWidth = 20;
-            xlsApp.Columns[4].ColumnWidth = 20;
+            //xlsApp.Columns[4].ColumnWidth = 20;
             xlsApp.Columns[3].NumberFormat = "@";
+            //xlsApp.Columns[2].NumberFormat = "@";
+            xlsApp.Columns[8].ColumnWidth = 20;
+            xlsApp.Columns[8].NumberFormat = "@";
             //8.填写DataTable中的数据
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -333,15 +377,32 @@ namespace NepslidingTools.testModel
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
                     xlsApp.Cells[j + 2][i + 4] = dt.Rows[i][j];
+                    if (dgv.Rows[i].Cells[j+1].Style.BackColor == Color.LightSalmon)
+                    {
+                        xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 3;
+                    }
+                    if (dgv.Rows[i].Cells[j + 1].Style.BackColor == Color.Cyan)
+                    {
+                        xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 23;
+                    }
+                    if (dgv.Rows[i].Cells[j + 1].Style.BackColor == Color.Lime)
+                    {
+                        xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 50;
+                    }
+                    if (dgv.Rows[i].Cells[j + 1].Value.ToString() == "NG")
+                    {
+                        xlsApp.Cells[j + 2][i + 4].Interior.ColorIndex = 3;
+                    }
+                    // Console.WriteLine("color : %s", dgv.Rows[i].Cells[j].Style.ForeColor);
                 }
             }
             range = xlsApp.get_Range("A4", temp + (dt.Rows.Count + 3).ToString());
-            range.Interior.ColorIndex = 37;
+            // range.Interior.ColorIndex = 37;
             range.HorizontalAlignment = Excel.XlVAlign.xlVAlignCenter;
             //9.描绘边框
             range = xlsApp.get_Range("A1", temp + (dt.Rows.Count + 3).ToString());
             range.Borders.LineStyle = 1;
-            range.Borders.Weight = 3;
+            //range.Borders.Weight = 3;
             //10.打开制作完毕的表格
             //xlsApp.Visible = true;
             //11.保存表格到根目录下指定名称的文件中
@@ -358,7 +419,14 @@ namespace NepslidingTools.testModel
             {
                 string fName = saveFileDialog1.FileName;
                 //this.DataToExcel(this.dgv.DataSource as DataTable, fName, "");
-                SaveToExcel(fName, this.dgv.DataSource as DataTable);
+                reQuery(true);
+                Task a = new Task(new Action(() => {
+                    while (jisuan_f == false)
+                        System.Threading.Thread.Sleep(1000);
+                    SaveToExcel(fName, this.dataGridView1.DataSource as DataTable);
+                    jisuan_f = false;
+                }));
+                a.Start();
             }
             return;
         }
@@ -594,9 +662,7 @@ namespace NepslidingTools.testModel
 
         private void reQuery(bool all=false)
         {
-
             string where_string = this.query_wherestring();
-
             // 同步处理好 零件的基础信息的事情
             string lijianhao = textBox_ljhao.Text;
             if (lijianhao != null && lijianhao != "")
@@ -611,35 +677,44 @@ namespace NepslidingTools.testModel
             #region 构建基本的表形状
             DataTable mea_dt = new DataTable();
             Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
-            List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}", this.comp_type));
+            List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}  order by step", this.comp_type));
             mea_dt.Columns.Add("零件号");
             mea_dt.Columns.Add("测量编号");
-            mea_dt.Columns.Add("测量时间");
             mea_modes = mea_modes.OrderBy(obj => obj.step).ToList();
             foreach (Maticsoft.Model.measures mea_obj in mea_modes)
             {
                 //string sg = "步骤" + mea_dt.Tables[0].Rows[i]["step"].ToString();// comboBox1.Items.Add()
                 // comboBox1.Text = sg;
-                string sg = "步骤" + mea_obj.step.ToString();
+                string sg = mea_obj.CC.ToString();
                 mea_dt.Columns.Add(sg.ToString());
             }
             mea_dt.Columns.Add("结果");
-            dgv.DataSource = mea_dt;
+            mea_dt.Columns.Add("测量时间");
+            if (all == false)
+            { dgv.DataSource = mea_dt; }
+            dgv.Columns["测量编号"].Width = 140;
+            dgv.Columns["测量时间"].Width = 140;
+            dataGridView1.DataSource = mea_dt.Copy();
             #endregion
 
             // 查询出来test 数据
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             // List<Maticsoft.Model.test> test_lists =  test_bll.GetModelList(where_str);
             DataSet ds = new DataSet();
-            if (all == true)
-            {
+
+            DataTable dest_table = null;
+            //DataTable dest_table2 = null;
+            if (all == false)
+            {   
                 ds = test_bll.GetListByPage2(where_string, "", cur_page_lenb * cur_page_num, cur_page_lenb  * (1+cur_page_num));
+                dest_table = dgv.DataSource as DataTable;
             }
             else {
                 ds = test_bll.GetListByPage2(where_string, "", 0, 10000);
+                dest_table = dataGridView1.DataSource as DataTable;
             }
             DataTable dt = ds.Tables[0];
-            DataTable dest_table = dgv.DataSource as DataTable;
+            
 
             #region 根据数据 更新表结构  ==== 惰性加入数据
             // 放入基础信息
@@ -676,11 +751,12 @@ namespace NepslidingTools.testModel
                     {
                         int ret_col_num = 1;
                         bool col_if = int.TryParse(mea_obj.step.ToString(), out ret_col_num);
-                        string sg = "步骤" + mea_obj.step.ToString();
+                        // string sg = "步骤" + mea_obj.CC.ToString();
+                        string sg = mea_obj.CC.ToString();
                         //mea_modes
                         if (col_if && ret_col_num < sp_l.Length + 1)
                         {
-                            int stand_info = Convert.ToInt32(mea_obj.standardv);
+                            double stand_info = Convert.ToDouble(mea_obj.standardv);
                             string test_str = sp_l[ret_col_num - 1];
                             if (test_str == "")
                             {
@@ -688,30 +764,47 @@ namespace NepslidingTools.testModel
                             }
                             double test_info = Convert.ToDouble(test_str);
                             dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
-                            if (stand_info - Convert.ToDouble(mea_obj.down) > test_info)
+                            if (all == false)
                             {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Cyan;
-                            }
+                                if (stand_info + Convert.ToDouble(mea_obj.down) > test_info)
+                                {
+                                    dgv.Rows[i].Cells[sg].Style.BackColor = Color.Cyan;
+                                }
 
-                            else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
-                            {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSalmon;
+                                else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
+                                {
+                                    dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSalmon;
+                                }
+                                else
+                                {
+                                    dgv.Rows[i].Cells[sg].Style.BackColor = Color.Lime;
+                                }
                             }
                             else
                             {
-                                dgv.Rows[i].Cells[sg].Style.BackColor = Color.Lime;
-;
+                                if (stand_info + Convert.ToDouble(mea_obj.down) > test_info)
+                                {
+                                    dataGridView1.Rows[i].Cells[sg].Style.BackColor = Color.Cyan;
+                                }
+
+                                else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
+                                {
+                                    dataGridView1.Rows[i].Cells[sg].Style.BackColor = Color.LightSalmon;
+                                }
+                                else
+                                {
+                                    dataGridView1.Rows[i].Cells[sg].Style.BackColor = Color.Lime;
+                                }
                             }
+
                         }
                     }
                 }
 
                 // 计算 
-                jisuan();
+                jisuan(all);
             });
-
             parent.Start();
-
             #endregion
 
             #endregion
@@ -720,14 +813,13 @@ namespace NepslidingTools.testModel
 
         private void query_bt_Click(object sender, EventArgs e)
         {
-            // MessageBox.Show(radioGroup1.SelectedIndex.ToString());
             this.defalut_select = radioGroup1.SelectedIndex;
             if (textBox_ljhao.Text == "")
             {
                 MessageBox.Show("请输入查询字段");
                 return;
             }
-            this.reQuery(true);
+            this.reQuery();
 
             Maticsoft.BLL.test test_bll = new Maticsoft.BLL.test();
             string where_string = this.query_wherestring();
@@ -821,7 +913,7 @@ namespace NepslidingTools.testModel
                 this.labelX1.Text = page_par;
             }
 
-            this.reQuery(true);
+            this.reQuery();
             return;
             // 上一页
             if (cur_step >= cur_page_lenb)
@@ -849,7 +941,7 @@ namespace NepslidingTools.testModel
                 string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
                 this.labelX1.Text = page_par;
             }
-            this.reQuery(true);
+            this.reQuery();
             return;
             if (cur_step + cur_page_lenb > this.totle_num)
             {
@@ -971,6 +1063,12 @@ namespace NepslidingTools.testModel
         {
             dgv.ContextMenuStrip = null;
         }
+
+        private void bt_out_ClientSizeChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+#endregion
 #endregion

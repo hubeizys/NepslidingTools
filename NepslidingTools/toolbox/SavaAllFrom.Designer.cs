@@ -143,7 +143,7 @@ namespace NepslidingTools.toolbox
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(148, 23);
             this.button1.TabIndex = 1;
-            this.button1.Text = "导入选中行";
+            this.button1.Text = "还原选中行";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -156,7 +156,7 @@ namespace NepslidingTools.toolbox
             this.save_sql_bt.Size = new System.Drawing.Size(125, 23);
             this.save_sql_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.save_sql_bt.TabIndex = 0;
-            this.save_sql_bt.Text = "保存当前数据";
+            this.save_sql_bt.Text = "数据备份";
             this.save_sql_bt.Click += new System.EventHandler(this.save_sql_bt_Click);
             // 
             // SavaAllFrom
@@ -171,7 +171,7 @@ namespace NepslidingTools.toolbox
             this.MaximizeBox = false;
             this.Name = "SavaAllFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "持久化";
+            this.Text = "数据备份";
             this.Load += new System.EventHandler(this.SavaAllFrom_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

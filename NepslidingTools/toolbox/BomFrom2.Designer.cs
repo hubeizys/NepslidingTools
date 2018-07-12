@@ -341,9 +341,9 @@
             this.label_tot.AutoSize = true;
             this.label_tot.Location = new System.Drawing.Point(118, 11);
             this.label_tot.Name = "label_tot";
-            this.label_tot.Size = new System.Drawing.Size(29, 12);
+            this.label_tot.Size = new System.Drawing.Size(23, 12);
             this.label_tot.TabIndex = 0;
-            this.label_tot.Text = "0/10";
+            this.label_tot.Text = "0/1";
             this.label_tot.Click += new System.EventHandler(this.label_tot_Click);
             // 
             // tabPage_lj

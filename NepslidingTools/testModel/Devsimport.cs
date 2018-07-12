@@ -144,7 +144,7 @@ namespace NepslidingTools.testModel
                 else if (this.radioGroup1.SelectedIndex == 1)
                 {
                     // 热敏打印机
-                    this.type = 2;
+                    this.type = 4;
                     importdev_st.SelectedPageIndex = 2;
                     e.Handled = true;
                     return;
@@ -172,7 +172,7 @@ namespace NepslidingTools.testModel
                 else if (this.radioGroup1.SelectedIndex == 3)
                 {                    // 卡尺
                     MessageBox.Show("正在加载硬件------- 高度尺");
-                    this.type = 4;
+                    this.type = 2;
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
                     {
@@ -211,7 +211,7 @@ namespace NepslidingTools.testModel
         void doing_test(string a)
         {
             //MessageBox.Show(" test data : " + a);
-            textBoxX1.Invoke(new Action(() =>
+            textBoxX1.BeginInvoke(new Action(() =>
             {
                 this.textBoxX1.Text = a;
             }));

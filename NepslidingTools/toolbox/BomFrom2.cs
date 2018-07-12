@@ -47,6 +47,31 @@ namespace NepslidingTools.toolbox
             }
             else if (tabControl_main.SelectedIndex == 1)
             {
+                string where_str = " 1=1 ";
+                if (this.textBoxljjl_query.Text != "")
+                {
+                    where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
+                }
+                if (this.textBox_type.Text != "")
+                {
+                    where_str += string.Format(" and componentId = {0} ", this.textBox_type.Text);
+                }
+
+                Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+                totle_num2 = parts_bll.GetRecordCount(where_str);
+
+                if (this.totle_num2 % this.cur_page_lenb == 0)
+                {
+                    this.totle_page_num2 = this.totle_num2 / this.cur_page_lenb;
+                }
+                else
+                {
+                    this.totle_page_num2 = this.totle_num2 / this.cur_page_lenb + 1;
+                }
+
+                //int tot_page_index = this.totle_num / this.cur_page_lenb + (this.totle_num % this.cur_page_lenb == 0 ? 0 : 1);
+                string page_info = string.Format("{0}/{1}", 1, totle_page_num2);
+                this.label_baifen1.Text = page_info;
                 this.init_ljjldgv();
             }
         }
@@ -60,22 +85,27 @@ namespace NepslidingTools.toolbox
                 where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
             }
 
+            if (this.textBox_type.Text != "")
+            {
+                where_str += string.Format(" and T.componentId = {0} ", this.textBox_type.Text);
+            }
+
             Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
             DataSet ds = parts_bll.GetListByPage2(where_str, "", cur_page_lenb * cur_page_num2, cur_page_lenb * (1 + cur_page_num2));
             DataTable dt = ds.Tables[0];
 
-            if (this.textBox_type.Text != "")
-            {
-                DataTable dtNew = dt.Clone();
-                // where_str += string.Format(" and   {0}", textBox_type.Text);
-                DataRow[] drArr = dt.Select(string.Format(" componentId = {0}", this.textBox_type.Text));
-                for (int i = 0; i < drArr.Length; i++)
-                {
-                    dtNew.ImportRow(drArr[i]);
-                }
-                this.dgvljjl.DataSource = dtNew;
-                return;
-            }
+            //if (this.textBox_type.Text != "")
+            //{
+            //    DataTable dtNew = dt.Clone();
+            //    where_str += string.Format(" and   {0}", textBox_type.Text);
+            //    DataRow[] drArr = dt.Select(string.Format(" componentId = {0}", this.textBox_type.Text));
+            //    for (int i = 0; i < drArr.Length; i++)
+            //    {
+            //        dtNew.ImportRow(drArr[i]);
+            //    }
+            //    this.dgvljjl.DataSource = dtNew;
+            //    return;
+            //}
 
             this.dgvljjl.DataSource = dt;
             #endregion
@@ -97,7 +127,7 @@ namespace NepslidingTools.toolbox
             #endregion
         }
 
-        private void button_query_Click(object sender, EventArgs e)
+        private void requery()
         {
             string where_str = " 1=1 ";
             if (this.textBox_query.Text != "")
@@ -121,16 +151,26 @@ namespace NepslidingTools.toolbox
             this.init_dgv();
         }
 
-        private void button_likequery_Click(object sender, EventArgs e)
+        private void button_query_Click(object sender, EventArgs e)
+        {
+            requery();
+        }
+
+        private void requery2()
         {
             string where_str = " 1=1 ";
             if (this.textBoxljjl_query.Text != "")
             {
+
                 where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
+            }
+            if (this.textBox_type.Text != "")
+            {
+                where_str += string.Format(" and componentId = {0} ", this.textBox_type.Text);
             }
 
             Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
-            totle_num2 =  parts_bll.GetRecordCount(where_str);
+            totle_num2 = parts_bll.GetRecordCount(where_str);
 
             if (this.totle_num2 % this.cur_page_lenb == 0)
             {
@@ -147,15 +187,20 @@ namespace NepslidingTools.toolbox
             init_ljjldgv();
         }
 
+        private void button_likequery_Click(object sender, EventArgs e)
+        {
+            requery2();
+        }
+
         private void BomFrom2_Load(object sender, EventArgs e)
         {
             string where_str = " 1=1 ";
             if (this.textBoxljjl_query.Text != "")
             {
-                where_str += string.Format(" and ( PN like  '%{0}%'  or Barcode like '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
+                where_str += string.Format(" and ( componentId = {0}'  or Barcode ARef '%{1}%') ", this.textBoxljjl_query.Text, this.textBoxljjl_query.Text);
             }
 
-            Maticsoft.BLL.parts parts_bll = new Maticsoft.BLL.parts();
+            Maticsoft.BLL.component parts_bll = new Maticsoft.BLL.component();
             totle_num = parts_bll.GetRecordCount(where_str);
             if (this.totle_num % this.cur_page_lenb == 0)
             {
@@ -175,10 +220,10 @@ namespace NepslidingTools.toolbox
         {
             //MessageBox.Show(e.ColumnIndex.ToString());
             this.tabControl_main.SelectedIndex = 1;
-            if (e.RowIndex >= 0 && e.RowIndex < dgvljjl.Rows.Count)
+            if (e.RowIndex >= 0 && e.RowIndex < dgvljjl.Rows.Count && e.ColumnIndex >= 0 && e.ColumnIndex < dgvljjl.Columns.Count)
             {
                 // MessageBox.Show(dgvljjl.Columns.Count.ToString() + " "+ e.ColumnIndex);
-                if (e.ColumnIndex == 6)
+                if(dgvljjl.Columns[e.ColumnIndex].HeaderText == "零件类型基础管理")
                 {
                     addparts addp = new addparts();
                     string ljh = dgvljjl.Rows[e.RowIndex].Cells["PN"].Value.ToString();
@@ -207,9 +252,9 @@ namespace NepslidingTools.toolbox
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show(dataGridView1.Columns[e.ColumnIndex].Name);
+            // MessageBox.Show(dataGridView1.Columns[e.ColumnIndex].Name);
             TestBZFrom tb = new TestBZFrom();
-            if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count)
+            if (e.RowIndex >= 0 && e.RowIndex < dataGridView1.Rows.Count && e.ColumnIndex >=0 && e.ColumnIndex < dataGridView1.Columns.Count)
             {
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "remark")
                 {
@@ -249,11 +294,10 @@ namespace NepslidingTools.toolbox
 
         private void buttonjl_pre_Click(object sender, EventArgs e)
         {
-
-            if (this.cur_page_num > 0)
+            if (this.cur_page_num2 > 0)
             {
-                cur_page_num--;
-                string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
+                cur_page_num2--;
+                string page_par = string.Format("{0}/{1}", cur_page_num2 + 1, totle_page_num2);
                 this.label_baifen1.Text = page_par;
             }
             init_ljjldgv();
@@ -278,7 +322,7 @@ namespace NepslidingTools.toolbox
         private void buttonjl_next_Click(object sender, EventArgs e)
         {
 
-            if (this.cur_page_num2 < this.totle_page_num2)
+            if (this.cur_page_num2 +1  < this.totle_page_num2)
             {
                 cur_page_num2++;
                 string page_par = string.Format("{0}/{1}", cur_page_num2 + 1, totle_page_num2);
@@ -330,7 +374,7 @@ namespace NepslidingTools.toolbox
         private void button_next_Click(object sender, EventArgs e)
         {
 
-            if (this.cur_page_num < this.totle_page_num)
+            if (this.cur_page_num  +1 < this.totle_page_num)
             {
                 cur_page_num++;
                 string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
@@ -366,6 +410,7 @@ namespace NepslidingTools.toolbox
                 }
                 else { MessageBox.Show("未删除成功"); }
             }
+            requery2();
         }
 
         private void button_del_Click(object sender, EventArgs e)
@@ -383,18 +428,26 @@ namespace NepslidingTools.toolbox
                     MessageBox.Show("没有删除成功");
                 }
             }
+            requery();
         }
 
         private void button_add_Click(object sender, EventArgs e)
         {
             AddComponent add_from = new AddComponent();
-            add_from.Show();
+            if( DialogResult.OK == add_from.ShowDialog())
+            {
+                requery();
+            }
+  
         }
 
         private void buttolj_add_Click(object sender, EventArgs e)
         {
             addparts add_from = new addparts();
-            add_from.Show();
+            if(DialogResult.OK == add_from.ShowDialog())
+            {
+                requery2();
+            }
         }
         /// <summary>
         /// 将excel中的数据导入到DataTable中

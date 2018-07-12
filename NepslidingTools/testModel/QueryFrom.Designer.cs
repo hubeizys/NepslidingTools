@@ -29,11 +29,11 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem1 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.Utils.KeyShortcut keyShortcut1 = new DevExpress.Utils.KeyShortcut();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem13 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem14 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem15 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.Utils.KeyShortcut keyShortcut5 = new DevExpress.Utils.KeyShortcut();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
             this.tlp_main = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.head_tpl = new System.Windows.Forms.TableLayoutPanel();
@@ -54,6 +54,7 @@ namespace NepslidingTools.testModel
             this.bt_zou = new System.Windows.Forms.Button();
             this.bt_ri = new System.Windows.Forms.Button();
             this.panelend = new System.Windows.Forms.Panel();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bt_out = new DevComponents.DotNetBar.ButtonX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.button2 = new System.Windows.Forms.Button();
@@ -84,6 +85,7 @@ namespace NepslidingTools.testModel
             ((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).BeginInit();
             this.panel1.SuspendLayout();
             this.panelend.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.query_gc)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
@@ -283,16 +285,16 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
-            radioGroupItem1.Description = "All";
-            radioGroupItem1.Value = null;
-            radioGroupItem2.Description = "NG";
-            radioGroupItem2.Value = null;
-            radioGroupItem3.Description = "OK";
-            radioGroupItem3.Value = null;
+            radioGroupItem13.Description = "All";
+            radioGroupItem13.Value = null;
+            radioGroupItem14.Description = "NG";
+            radioGroupItem14.Value = null;
+            radioGroupItem15.Description = "OK";
+            radioGroupItem15.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            radioGroupItem1,
-            radioGroupItem2,
-            radioGroupItem3});
+            radioGroupItem13,
+            radioGroupItem14,
+            radioGroupItem15});
             this.radioGroup1.Size = new System.Drawing.Size(114, 23);
             this.radioGroup1.TabIndex = 8;
             this.radioGroup1.Click += new System.EventHandler(this.radioGroup1_Click);
@@ -373,6 +375,7 @@ namespace NepslidingTools.testModel
             // 
             // panelend
             // 
+            this.panelend.Controls.Add(this.dataGridView1);
             this.panelend.Controls.Add(this.bt_out);
             this.panelend.Controls.Add(this.labelX1);
             this.panelend.Controls.Add(this.button2);
@@ -385,6 +388,16 @@ namespace NepslidingTools.testModel
             this.panelend.TabIndex = 4;
             this.panelend.Paint += new System.Windows.Forms.PaintEventHandler(this.panelend_Paint);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(380, 12);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(210, 2);
+            this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.Visible = false;
+            // 
             // bt_out
             // 
             this.bt_out.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
@@ -395,6 +408,7 @@ namespace NepslidingTools.testModel
             this.bt_out.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.bt_out.TabIndex = 3;
             this.bt_out.Text = "µ¼³ö";
+            this.bt_out.ClientSizeChanged += new System.EventHandler(this.bt_out_ClientSizeChanged);
             this.bt_out.Click += new System.EventHandler(this.buttonX1_Click);
             // 
             // labelX1
@@ -558,7 +572,7 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1.AutoHeight = false;
             this.repositoryItemButtonEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut1, serializableAppearanceObject1, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut5, serializableAppearanceObject5, "", null, null, true)});
             this.repositoryItemButtonEdit1.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -660,6 +674,7 @@ namespace NepslidingTools.testModel
             ((System.ComponentModel.ISupportInitialize)(this.radioGroup1.Properties)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panelend.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.query_gc)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
@@ -715,5 +730,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Button bt_zou;
         private System.Windows.Forms.Button bt_ri;
         public System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

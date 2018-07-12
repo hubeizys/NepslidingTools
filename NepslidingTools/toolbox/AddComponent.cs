@@ -71,7 +71,8 @@ namespace NepslidingTools.toolbox
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
-            } 
+            }
+            this.Close();
         }
 
         private void textBox_sm_TextChanged(object sender, EventArgs e)
@@ -116,6 +117,11 @@ namespace NepslidingTools.toolbox
                 MessageBox.Show(ofd_sm.FileName);
             }
             textBox_picname.Text = Path.GetFileName(ofd_sm.FileName);
+        }
+
+        private void AddComponent_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
         }
     }
 }

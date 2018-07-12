@@ -182,6 +182,7 @@
             this.Name = "AddComponent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddComponent";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AddComponent_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

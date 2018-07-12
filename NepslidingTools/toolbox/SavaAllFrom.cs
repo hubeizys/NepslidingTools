@@ -55,7 +55,7 @@ namespace NepslidingTools.toolbox
 
             System.Diagnostics.Process exep = new System.Diagnostics.Process();
             exep.StartInfo.FileName = dumptools;
-            exep.StartInfo.Arguments = string.Format(@" -h test.xtask.work -uroot  -plaozhuhenshuai GLLJ --result-file=backup\todmp{0}.sql", GetTimeStamp());
+            exep.StartInfo.Arguments = string.Format(@" -h 221.233.62.63 -uroot  -plaozhuhenshuai GLLJ --result-file=backup\todmp{0}.sql", GetTimeStamp());
             exep.StartInfo.CreateNoWindow = true;
             exep.StartInfo.RedirectStandardInput = true;
             exep.StartInfo.RedirectStandardOutput = true;
@@ -78,6 +78,7 @@ namespace NepslidingTools.toolbox
         private void save_sql_bt_Click(object sender, EventArgs e)
         {
             SavaAllFrom.SavaAll();
+            requery();
         }
 
         private void ExeThread(object obj)
@@ -119,14 +120,15 @@ namespace NepslidingTools.toolbox
             Console.WriteLine(e.Data);
         }
 
-        private void SavaAllFrom_Load(object sender, EventArgs e)
+
+        private void requery()
         {
             string cur_dict = System.IO.Directory.GetCurrentDirectory();
             DirectoryInfo d_info = new DirectoryInfo(cur_dict + "\\backup");
 
             // MessageBox.Show(d_info.GetFiles().ToString());
             FileInfo[] arrFi = d_info.GetFiles("*.sql");
-            Array.Sort(arrFi, delegate (FileInfo x, FileInfo y) { return y.Name.CompareTo(x.Name) ; });
+            Array.Sort(arrFi, delegate (FileInfo x, FileInfo y) { return y.Name.CompareTo(x.Name); });
             int i = 0;
             this.dataGridView1.Rows.Clear();
             foreach (var a in arrFi)
@@ -136,10 +138,15 @@ namespace NepslidingTools.toolbox
                 this.dataGridView1.Rows.Add();
                 this.dataGridView1.Rows[i].Cells[0].Value = Path.GetFileName(a.FullName);
                 this.dataGridView1.Rows[i].Cells[1].Value = a.CreationTime;
-                
+
                 i++;
                 Console.WriteLine("aaaaa " + i);
             }
+        }
+
+        private void SavaAllFrom_Load(object sender, EventArgs e)
+        {
+            requery();
         }
 
         private void button1_Click(object sender, EventArgs e)

@@ -39,6 +39,17 @@ namespace Maticsoft.DAL
             }
             return DbHelperMySQL.Query(strSql.ToString());
         }
+
+        /// <summary>
+        /// 获得数据列表
+        /// </summary>
+        public DataSet GetListLast()
+        {
+            StringBuilder strSql = new StringBuilder();
+            strSql.Append("SELECT test.*, parts.componentId FROM test LEFT JOIN parts ON test.PN = parts.PN order by id DESC LIMIT 1");
+            return DbHelperMySQL.Query(strSql.ToString());
+        }
+
         /// <summary>
         /// 获取记录总数
         /// </summary>

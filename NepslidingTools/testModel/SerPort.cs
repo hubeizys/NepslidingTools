@@ -65,8 +65,22 @@ namespace NepslidingTools.testModel
 
         public void close()
         {
-            if (this.sp1.IsOpen)
-            { this.sp1.Close(); }
+            try
+            {
+                if (this.sp1.IsOpen)
+                {
+                    //Closing = true;
+                    //while (Listening)
+                    //    System.Windows.Forms.Application.DoEvents();
+                    this.sp1.Close();
+                    //Closing = false;
+                }
+
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show(err.Message);
+            }
         }
 
         #region 内部子函数
@@ -84,10 +98,13 @@ namespace NepslidingTools.testModel
 
         void sp1_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
+            //if (Closing) return;//如果正在关闭，忽略操作，直接返回，尽快的完成串口监听线程的一次循环  
             try { 
+
             if (sp1.IsOpen)     //此处可能没有必要判断是否打开串口，但为了严谨性，我还是加上了
-            {
-                Thread.Sleep(500);
+                {
+                    //Listening = true;//设置标记，说明我已经开始处理数据，一会儿要使用系统UI的。  
+                    Thread.Sleep(500);
                
                 byte[] byteRead = new byte[sp1.BytesToRead];    //BytesToRead:sp1接收的字符个数
 
@@ -159,6 +176,10 @@ namespace NepslidingTools.testModel
             }catch(Exception err)
             {
                 Console.WriteLine(err.Message);
+            }
+            finally
+            {
+                //Listening = false;//我用完了，ui可以关闭串口了。  
             }
         }
 
