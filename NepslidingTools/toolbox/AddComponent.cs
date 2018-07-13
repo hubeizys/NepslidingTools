@@ -42,11 +42,11 @@ namespace NepslidingTools.toolbox
                     MessageBox.Show("数模不可以为空");
                     return;
                 }
-                if (textBox_picname.Text == "")
-                {
-                    MessageBox.Show("图片不可以为空");
-                    return;
-                }
+                //if (textBox_picname.Text == "")
+                //{
+                //    MessageBox.Show("图片不可以为空");
+                //    return;
+                //}
 
                 Maticsoft.BLL.component com_bll = new Maticsoft.BLL.component();
                 Maticsoft.Model.component copm_mode = new Maticsoft.Model.component()

@@ -363,13 +363,16 @@ namespace NepslidingTools.testModel
             xlsApp.Columns[1].ColumnWidth = 20;
             xlsApp.Columns[1].HorizontalAlignment = Excel.XlVAlign.xlVAlignJustify;
             xlsApp.Columns[2].ColumnWidth = 20;
+            xlsApp.Columns[2].NumberFormat = "@";
             // xlsApp.Columns[2].HorizontalAlignment = Excel.
             xlsApp.Columns[3].ColumnWidth = 20;
             //xlsApp.Columns[4].ColumnWidth = 20;
             xlsApp.Columns[3].NumberFormat = "@";
             //xlsApp.Columns[2].NumberFormat = "@";
-            xlsApp.Columns[8].ColumnWidth = 20;
-            xlsApp.Columns[8].NumberFormat = "@";
+            
+            int cur_lie = dataGridView1.ColumnCount;
+            xlsApp.Columns[cur_lie +1].NumberFormat = "@";
+            xlsApp.Columns[cur_lie +1 ].ColumnWidth = 20;
             //8.填写DataTable中的数据
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -377,21 +380,23 @@ namespace NepslidingTools.testModel
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
                     xlsApp.Cells[j + 2][i + 4] = dt.Rows[i][j];
-                    if (dgv.Rows[i].Cells[j+1].Style.BackColor == Color.LightSalmon)
-                    {
-                        xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 3;
-                    }
-                    if (dgv.Rows[i].Cells[j + 1].Style.BackColor == Color.Cyan)
-                    {
-                        xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 23;
-                    }
-                    if (dgv.Rows[i].Cells[j + 1].Style.BackColor == Color.Lime)
-                    {
-                        xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 50;
-                    }
-                    if (dgv.Rows[i].Cells[j + 1].Value.ToString() == "NG")
-                    {
-                        xlsApp.Cells[j + 2][i + 4].Interior.ColorIndex = 3;
+                    if (j  < dataGridView1.ColumnCount) {
+                        if (dataGridView1.Rows[i].Cells[j ].Style.BackColor == Color.LightSalmon)
+                        {
+                            xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 3;
+                        }
+                        if (dataGridView1.Rows[i].Cells[j].Style.BackColor == Color.Cyan)
+                        {
+                            xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 23;
+                        }
+                        if (dataGridView1.Rows[i].Cells[j].Style.BackColor == Color.Lime)
+                        {
+                            xlsApp.Cells[j + 2][i + 4].Font.ColorIndex = 50;
+                        }
+                        if (dataGridView1.Rows[i].Cells[j ].Value.ToString() == "NG")
+                        {
+                            xlsApp.Cells[j + 2][i + 4].Interior.ColorIndex = 3;
+                        }
                     }
                     // Console.WriteLine("color : %s", dgv.Rows[i].Cells[j].Style.ForeColor);
                 }
@@ -714,7 +719,7 @@ namespace NepslidingTools.testModel
                 dest_table = dataGridView1.DataSource as DataTable;
             }
             DataTable dt = ds.Tables[0];
-            
+
 
             #region 根据数据 更新表结构  ==== 惰性加入数据
             // 放入基础信息

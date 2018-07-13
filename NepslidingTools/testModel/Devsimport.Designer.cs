@@ -33,6 +33,8 @@ namespace NepslidingTools.testModel
             DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem4 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem5 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem6 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.importdev_st = new DevExpress.XtraWizard.WizardControl();
@@ -139,11 +141,18 @@ namespace NepslidingTools.testModel
             radioGroupItem3.Value = null;
             radioGroupItem4.Description = "高度尺";
             radioGroupItem4.Value = null;
+            radioGroupItem5.Description = "千分尺";
+            radioGroupItem5.Value = null;
+            radioGroupItem6.Description = "角度尺";
+            radioGroupItem6.Value = null;
+
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
             radioGroupItem1,
             radioGroupItem2,
             radioGroupItem3,
-            radioGroupItem4});
+            radioGroupItem4,
+            radioGroupItem5,
+            radioGroupItem6});
             this.radioGroup1.Size = new System.Drawing.Size(559, 207);
             this.radioGroup1.TabIndex = 0;
             // 

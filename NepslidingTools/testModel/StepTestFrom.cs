@@ -1273,7 +1273,7 @@ namespace NepslidingTools.testModel
             else {
                 MessageBox.Show("记录重复， 请管理数据库 ");
             }
-            MessageBox.Show("记录以保存");
+            // MessageBox.Show("记录以保存");
 
             #endregion
             

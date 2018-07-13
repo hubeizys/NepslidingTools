@@ -151,16 +151,22 @@ namespace NepslidingTools.toolbox
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string start_time = dataGridView1.Rows[this.index].Cells[1].Value.ToString();
+            start_time = "是否还原到" + start_time + "的备份";
+            if (  MessageBox.Show(start_time, "提醒",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                Console.WriteLine("成功了");
+                string file_name = dataGridView1.Rows[this.index].Cells[0].Value.ToString();
+                string cur_dict = System.IO.Directory.GetCurrentDirectory();
+                DirectoryInfo d_info = new DirectoryInfo(cur_dict + "\\backup\\" + file_name);
 
-            string file_name = dataGridView1.Rows[this.index].Cells[0].Value.ToString();
-            string cur_dict = System.IO.Directory.GetCurrentDirectory();
-            DirectoryInfo d_info = new DirectoryInfo(cur_dict + "\\backup\\" + file_name);
-
-            FileInfo file = new FileInfo(cur_dict + "\\backup\\" + file_name);  //filename是sql脚本文件路径。
-            string sql = file.OpenText().ReadToEnd();
-            Maticsoft.BLL.baseconfig bf = new Maticsoft.BLL.baseconfig();
-            bf.backup(sql);
-            MessageBox.Show(sql);
+                FileInfo file = new FileInfo(cur_dict + "\\backup\\" + file_name);  //filename是sql脚本文件路径。
+                string sql = file.OpenText().ReadToEnd();
+                Maticsoft.BLL.baseconfig bf = new Maticsoft.BLL.baseconfig();
+                bf.backup(sql);
+                MessageBox.Show(sql);
+            }
+            Console.WriteLine("取消了");
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

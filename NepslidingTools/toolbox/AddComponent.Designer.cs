@@ -144,6 +144,7 @@
             this.textBox_picname.Name = "textBox_picname";
             this.textBox_picname.Size = new System.Drawing.Size(100, 21);
             this.textBox_picname.TabIndex = 12;
+            this.textBox_picname.Visible = false;
             this.textBox_picname.Click += new System.EventHandler(this.textBox_picname_Click);
             this.textBox_picname.TextChanged += new System.EventHandler(this.textBox_picname_TextChanged);
             // 
@@ -155,6 +156,7 @@
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 11;
             this.label6.Text = "图片名称";
+            this.label6.Visible = false;
             // 
             // ofd_sm
             // 

@@ -732,31 +732,34 @@ namespace NepslidingTools.toolbox
 
         private void bt_update_Click(object sender, EventArgs e)
         {
-            DataGridViewRow dgr = dataGridView1.CurrentRow;
-            if (dgr != null)
+            foreach (DataGridViewRow dgr in dataGridView1.Rows)
             {
-                Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
-                Maticsoft.Model.component comp_mode = new Maticsoft.Model.component
+                if (dgr != null)
                 {
-                    ARef = dgr.Cells["ARef"].Value.ToString(),
-                    componentId = Convert.ToInt32(dgr.Cells["componentId"].Value),
-                    jobnum = dgr.Cells["jobnum"].Value.ToString(),
-                    size = dgr.Cells["size"].Value.ToString(),
-                    name = dgr.Cells["name"].Value.ToString(),
-                    photo = dgr.Cells["photo"].Value.ToString(),
-                    remark = dgr.Cells["remark"].Value.ToString(),
-                    sm = dgr.Cells["sm"].Value.ToString(),
-                };
-                if (comp_bll.Update(comp_mode))
-                {
-                    MessageBox.Show("更新成功");
+                    Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
+                    Maticsoft.Model.component comp_mode = new Maticsoft.Model.component
+                    {
+                        ARef = dgr.Cells["ARef"].Value.ToString(),
+                        componentId = Convert.ToInt32(dgr.Cells["componentId"].Value),
+                        jobnum = dgr.Cells["jobnum"].Value.ToString(),
+                        size = dgr.Cells["size"].Value.ToString(),
+                        name = dgr.Cells["name"].Value.ToString(),
+                        photo = dgr.Cells["photo"].Value.ToString(),
+                        remark = dgr.Cells["remark"].Value.ToString(),
+                        sm = dgr.Cells["sm"].Value.ToString(),
+                    };
+                    if (comp_bll.Update(comp_mode))
+                    {
+                        // MessageBox.Show("更新成功");
+                    }
+                    else
+                    {
+                        MessageBox.Show("更新失败");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("更新失败");
-                }
+
             }
-           
+            // DataGridViewRow dgr = dataGridView1.CurrentRow
         }
 
         private void bt_updata2_Click(object sender, EventArgs e)

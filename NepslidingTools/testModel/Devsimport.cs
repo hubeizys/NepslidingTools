@@ -135,7 +135,7 @@ namespace NepslidingTools.testModel
                 // 吧类型定下来
                 if (this.radioGroup1.SelectedIndex == 0)
                 {
-                    this.type = 3;
+                    this.type = 13;
                     // 扫描枪
                     importdev_st.SelectedPageIndex = 2;
                     e.Handled = true;
@@ -144,7 +144,7 @@ namespace NepslidingTools.testModel
                 else if (this.radioGroup1.SelectedIndex == 1)
                 {
                     // 热敏打印机
-                    this.type = 4;
+                    this.type = 14;
                     importdev_st.SelectedPageIndex = 2;
                     e.Handled = true;
                     return;
@@ -170,9 +170,47 @@ namespace NepslidingTools.testModel
                     }
                 }
                 else if (this.radioGroup1.SelectedIndex == 3)
+                {    
+                    this.type = 2;
+                    listBox1.Items.Clear();
+                    foreach (string port in SerPort.CurPorts())
+                    {
+                        listBox1.Items.Add(port);
+                    }
+
+                    // 如果没有发现 控件列表就 继续这一步
+                    if (SerPort.CurPorts().Length <= 0)
+                    {
+                        //this.importdev_st.SelectedPageIndex = 0;
+                        MessageBox.Show("没有发现硬件");
+                        e.Handled = true;
+                        return;
+                    }
+
+                }
+                else if (this.radioGroup1.SelectedIndex == 4)
+                {               
+                    this.type = 3;
+                    listBox1.Items.Clear();
+                    foreach (string port in SerPort.CurPorts())
+                    {
+                        listBox1.Items.Add(port);
+                    }
+
+                    // 如果没有发现 控件列表就 继续这一步
+                    if (SerPort.CurPorts().Length <= 0)
+                    {
+                        //this.importdev_st.SelectedPageIndex = 0;
+                        MessageBox.Show("没有发现硬件");
+                        e.Handled = true;
+                        return;
+                    }
+
+                }
+                else if (this.radioGroup1.SelectedIndex == 5)
                 {                    // 卡尺
                     MessageBox.Show("正在加载硬件------- 高度尺");
-                    this.type = 2;
+                    this.type = 4;
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
                     {
