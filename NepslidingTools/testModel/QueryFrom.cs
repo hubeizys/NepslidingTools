@@ -696,7 +696,13 @@ namespace NepslidingTools.testModel
             mea_dt.Columns.Add("结果");
             mea_dt.Columns.Add("测量时间");
             if (all == false)
-            { dgv.DataSource = mea_dt; }
+            {
+                dgv.DataSource = mea_dt;
+                for (int i = 0; i < this.dgv.Columns.Count; i++)
+                {
+                    this.dgv.Columns[i].SortMode = DataGridViewColumnSortMode.Programmatic;
+                }
+            }
             dgv.Columns["测量编号"].Width = 140;
             dgv.Columns["测量时间"].Width = 140;
             dataGridView1.DataSource = mea_dt.Copy();
@@ -1072,6 +1078,150 @@ namespace NepslidingTools.testModel
         private void bt_out_ClientSizeChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgv_RowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            
+        }
+
+        private void CustomSort(string columnBindingName, string sortMode)
+        {
+            DataTable dt = this.dgv.DataSource as DataTable;
+            DataRow dr = dt.NewRow();
+            int last_num = dt.Rows.Count;
+            foreach (DataColumn aDataColumn in dt.Columns)
+            {
+                dr[aDataColumn.ColumnName] = dt.Rows[last_num-1][aDataColumn.ColumnName];
+            }
+            dt.Rows.RemoveAt(last_num-1);
+           
+
+            DataView dv = dt.DefaultView;
+            dv.Sort = columnBindingName + " " + sortMode;
+
+            DataTable dt2 = dv.ToTable();
+            DataRow dr2 = dt2.NewRow();
+            foreach (DataColumn aDataColumn in dr.Table.Columns)
+            {
+                dr2[aDataColumn.ColumnName] = dr[aDataColumn.ColumnName];
+            }
+
+            dt2.Rows.InsertAt(dr2, last_num-1);
+            this.dgv.DataSource = dt2;
+            this.dgv.Refresh();
+        }
+
+        private void dgv_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            DataGridView dgv = sender as DataGridView;
+            if (dgv.Columns[e.ColumnIndex].SortMode == DataGridViewColumnSortMode.Programmatic)
+            {
+                string columnBindingName = dgv.Columns[e.ColumnIndex].DataPropertyName;
+                switch (dgv.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection)
+                {
+                    case System.Windows.Forms.SortOrder.None:
+                    case System.Windows.Forms.SortOrder.Ascending:
+                        CustomSort(columnBindingName, "desc");
+                        dgv.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = System.Windows.Forms.SortOrder.Descending;
+                        break;
+                    case System.Windows.Forms.SortOrder.Descending:
+                        CustomSort(columnBindingName, "asc");
+                        dgv.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection = System.Windows.Forms.SortOrder.Ascending;
+                        break;
+                }
+            }
+            /*
+            double test_info = Convert.ToDouble(test_str);
+            dest_table.Rows[i][sg] = sp_l[ret_col_num - 1];
+            if (all == false)
+            {
+                if (stand_info + Convert.ToDouble(mea_obj.down) > test_info)
+                {
+                    dgv.Rows[i].Cells[sg].Style.BackColor = Color.Cyan;
+                }
+                else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
+                {
+                    dgv.Rows[i].Cells[sg].Style.BackColor = Color.LightSalmon;
+                }
+                else
+                {
+                    dgv.Rows[i].Cells[sg].Style.BackColor = Color.Lime;
+                }
+            }*/
+            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
+            List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}  order by step", this.comp_type));
+
+            foreach (DataGridViewRow dr in dgv.Rows)
+            {
+                if (dgv.Rows.Count - 1 == dr.Index)
+                {
+                    continue;
+                }
+                if (dr.Cells["结果"].Value.ToString() == "NG")
+                {
+
+                }
+                foreach (Maticsoft.Model.measures mea_obj in mea_modes)
+                {
+                    // Console.WriteLine(mea_obj.CC+ "\t的值\t" +dr.Cells[mea_obj.CC].Value.ToString());
+                    if( dr.Cells[mea_obj.CC].Value.ToString() == "")
+                    {
+                        continue;
+                    }
+                    double test_info = Convert.ToDouble(dr.Cells[mea_obj.CC].Value.ToString());
+                    double stand_info = Convert.ToDouble(mea_obj.standardv);
+                    if (stand_info + Convert.ToDouble(mea_obj.down) > test_info)
+                    {
+                        dr.Cells[mea_obj.CC].Style.BackColor = Color.Cyan;
+                    }
+                    else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
+                    {
+                        dr.Cells[mea_obj.CC].Style.BackColor = Color.LightSalmon;
+                    }
+                    else
+                    {
+                        dr.Cells[mea_obj.CC].Style.BackColor = Color.Lime;
+                    }
+                }
+            }
+
+        }
+
+        private void dgv_Sorted(object sender, EventArgs e)
+        {
+            //int last_num = dgv.Rows.Count;
+            //if (last_num <= 0)
+            //{ return; }
+            //DataTable dt1 = dgv.DataSource as DataTable;
+            //DataRow dr_xin = dt1.NewRow();
+            
+            //if (dgv.Rows[0].Cells["零件号"].Value.ToString() == "结果与CPK")
+            //{
+            //    foreach (DataColumn aDataColumn in dt1.Columns)
+            //    {
+            //        dr_xin[aDataColumn.ColumnName] = dt1.Rows[last_num - 1][aDataColumn.ColumnName];
+            //    }
+            //    dt1.Rows.RemoveAt(last_num - 1);
+            //    dt1.Rows.InsertAt(dr_xin,0);
+            //    dgv.Refresh();
+            //}  
+            // 再加上新行
+            // dgv.Rows.Insert(last_num - 1, dr_xin);
+        }
+
+        private void dgv_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
+        {
+            //int last_num = dgv.Rows.Count;
+            //MessageBox.Show(dgv.Rows[last_num - 1].Cells["零件号"].Value.ToString());
+        }
+
+        private void dgv_ColumnSortModeChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            //int last_num = dgv.Rows.Count;
+            //if(last_num <= 0)
+            //{ return; }
+            //MessageBox.Show(dgv.Rows[last_num - 1].Cells["零件号"].Value.ToString());
         }
     }
 }
