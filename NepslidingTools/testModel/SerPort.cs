@@ -145,13 +145,14 @@ namespace NepslidingTools.testModel
                     int str5 = Convert.ToInt32(ss.Substring(10, 2));
                     int str6 = Convert.ToInt32(ss.Substring(12, 2));
                     string str7 = ss.Substring(14, 2);
+                        int i_7 = Convert.ToInt32(str7);
                     if (str4 == ss.Substring(8, 2))
                     {
                         str4 = ".";
-                        string sz = (str1 - 30).ToString() + (str2 - 30).ToString() + (str3 - 30).ToString() + str4 + (str5 - 30).ToString() + (str6 - 30).ToString();
+                        string sz = (str1 - 30).ToString() + (str2 - 30).ToString() + (str3 - 30).ToString() + str4 + (str5 - 30).ToString() + (str6 - 30).ToString() + (i_7 - 30).ToString();
                         if (Convert.ToInt32(sz.Substring(0, 1)) == 0)
                         {
-                            sz = (str2 - 30).ToString() + (str3 - 30).ToString() + str4 + (str5 - 30).ToString() + (str6 - 30).ToString();
+                            sz = (str2 - 30).ToString() + (str3 - 30).ToString() + str4 + (str5 - 30).ToString() + (str6 - 30).ToString() + (i_7 - 30).ToString();
                         }
                         Processfunc(sz);
                         //Program.txtstr = sz;

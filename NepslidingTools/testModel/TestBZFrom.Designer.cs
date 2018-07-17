@@ -62,6 +62,7 @@ namespace NepslidingTools.testModel
             this.del_bt = new DevComponents.DotNetBar.ButtonX();
             this.xy_xzh = new DevComponents.DotNetBar.ButtonX();
             this.sy_bt = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label_ljh = new System.Windows.Forms.Label();
@@ -163,10 +164,10 @@ namespace NepslidingTools.testModel
             // 
             this.send_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.send_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.send_bt.Font = new System.Drawing.Font("Segoe UI", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.send_bt.Location = new System.Drawing.Point(476, 570);
+            this.send_bt.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.send_bt.Location = new System.Drawing.Point(421, 430);
             this.send_bt.Name = "send_bt";
-            this.send_bt.Size = new System.Drawing.Size(175, 123);
+            this.send_bt.Size = new System.Drawing.Size(75, 23);
             this.send_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.send_bt.TabIndex = 22;
             this.send_bt.Text = "提交";
@@ -443,6 +444,7 @@ namespace NepslidingTools.testModel
             this.groupBox2.Controls.Add(this.del_bt);
             this.groupBox2.Controls.Add(this.xy_xzh);
             this.groupBox2.Controls.Add(this.sy_bt);
+            this.groupBox2.Controls.Add(this.buttonX1);
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(315, 347);
             this.groupBox2.Name = "groupBox2";
@@ -455,12 +457,12 @@ namespace NepslidingTools.testModel
             // 
             this.del_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.del_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.del_bt.Location = new System.Drawing.Point(204, 42);
+            this.del_bt.Location = new System.Drawing.Point(200, 79);
             this.del_bt.Name = "del_bt";
             this.del_bt.Size = new System.Drawing.Size(75, 23);
             this.del_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.del_bt.TabIndex = 2;
-            this.del_bt.Text = "删除选中行";
+            this.del_bt.Text = "删除";
             this.del_bt.Click += new System.EventHandler(this.del_bt_Click);
             // 
             // xy_xzh
@@ -472,7 +474,7 @@ namespace NepslidingTools.testModel
             this.xy_xzh.Size = new System.Drawing.Size(75, 23);
             this.xy_xzh.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.xy_xzh.TabIndex = 1;
-            this.xy_xzh.Text = "下移选中行";
+            this.xy_xzh.Text = "下移";
             this.xy_xzh.Click += new System.EventHandler(this.xy_xzh_Click);
             // 
             // sy_bt
@@ -484,8 +486,20 @@ namespace NepslidingTools.testModel
             this.sy_bt.Size = new System.Drawing.Size(75, 23);
             this.sy_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.sy_bt.TabIndex = 0;
-            this.sy_bt.Text = "上移选中行";
+            this.sy_bt.Text = "上移";
             this.sy_bt.Click += new System.EventHandler(this.sy_bt_Click);
+            // 
+            // buttonX1
+            // 
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(200, 40);
+            this.buttonX1.Name = "del_bt";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX1.TabIndex = 2;
+            this.buttonX1.Text = "撤销";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
             // 
             // button1
             // 
@@ -583,13 +597,13 @@ namespace NepslidingTools.testModel
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1279, 650);
+            this.Controls.Add(this.send_bt);
             this.Controls.Add(this.textbox_ljh);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgv);
-            this.Controls.Add(this.send_bt);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -655,5 +669,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.TextBox textbox_ljh;
         private DevComponents.DotNetBar.LabelX bom_no_lab;
         private System.Windows.Forms.Label label_ljh;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }

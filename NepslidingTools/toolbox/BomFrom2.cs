@@ -78,6 +78,7 @@ namespace NepslidingTools.toolbox
 
         private void init_ljjldgv()
         {
+            this.del_list.Clear();
             #region 获得查询语句
             string where_str = " 1=1 ";
             if (this.textBoxljjl_query.Text != "")
@@ -113,6 +114,7 @@ namespace NepslidingTools.toolbox
 
         private void init_dgv()
         {
+            del_list_for_part.Clear();
             #region 获得查询语句
             string where_str = " 1=1 ";
             if (this.textBox_query.Text != "")
@@ -247,7 +249,7 @@ namespace NepslidingTools.toolbox
             }
             else
             {
-                MessageBox.Show("选中了无效的行");
+               //  MessageBox.Show("选中了无效的行");
             }
         }
 
@@ -289,7 +291,7 @@ namespace NepslidingTools.toolbox
             }
             else
             {
-                MessageBox.Show("选中了无效的行");
+               //  MessageBox.Show("选中了无效的行");
             }
         }
 
@@ -399,6 +401,14 @@ namespace NepslidingTools.toolbox
 
         private void buttonlj_del_Click(object sender, EventArgs e)
         {
+            foreach (DataGridViewRow dr in dgvljjl.SelectedRows)
+            {
+                int will_del_id = Convert.ToInt32(dr.Cells["id"].Value);
+                del_list_for_part.Add(will_del_id);
+                dgvljjl.Rows.Remove(dr);
+            }
+
+            return;
             // 获得选中行
             int index = this.dgvljjl.CurrentCell.RowIndex;
             if (index >=0 && index < this.dgvljjl.Rows.Count)
@@ -413,9 +423,18 @@ namespace NepslidingTools.toolbox
             }
             requery2();
         }
-
+        List<int> del_list = new List<int>();
+        List<int> del_list_for_part = new List<int>();
         private void button_del_Click(object sender, EventArgs e)
         {
+            //dataGridView1.SelectedRows
+            foreach(DataGridViewRow dr in dataGridView1.SelectedRows)
+            {
+                int will_del_id = Convert.ToInt32(dr.Cells["componentId"].Value);
+                del_list.Add(will_del_id);
+                dataGridView1.Rows.Remove(dr);
+            }
+            return;
             int index = this.dataGridView1.CurrentCell.RowIndex;
             if (index >= 0 && index < this.dgvljjl.Rows.Count)
             {
@@ -733,11 +752,12 @@ namespace NepslidingTools.toolbox
 
         private void bt_update_Click(object sender, EventArgs e)
         {
+            Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
             foreach (DataGridViewRow dgr in dataGridView1.Rows)
             {
                 if (dgr != null)
                 {
-                    Maticsoft.BLL.component comp_bll = new Maticsoft.BLL.component();
+
                     Maticsoft.Model.component comp_mode = new Maticsoft.Model.component
                     {
                         ARef = dgr.Cells["ARef"].Value.ToString(),
@@ -760,6 +780,18 @@ namespace NepslidingTools.toolbox
                 }
 
             }
+            foreach (int del_id in del_list)
+            {
+                if (comp_bll.Delete(del_id))
+                {
+                   // MessageBox.Show("删除成功");
+                }
+                else
+                {
+                    MessageBox.Show("没有删除成功");
+                }
+            }
+            MessageBox.Show("提交成功");
             // DataGridViewRow dgr = dataGridView1.CurrentRow
         }
 
@@ -772,6 +804,23 @@ namespace NepslidingTools.toolbox
         private void label_tot_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Maticsoft.BLL.parts comp_bll = new Maticsoft.BLL.parts();
+            foreach (int del_id in del_list_for_part)
+            {
+                if (comp_bll.Delete(del_id))
+                {
+                   //  MessageBox.Show("删除成功");
+                }
+                else
+                {
+                    MessageBox.Show("没有删除成功");
+                }
+            }
+            MessageBox.Show("提交成功");
         }
     }
 }

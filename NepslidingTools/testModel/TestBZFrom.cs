@@ -207,6 +207,11 @@ namespace NepslidingTools.testModel
         {
             allupdate();
             groupBox1.Enabled = true;
+            Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
+            foreach (int del_id in del_list)
+            {
+                use.Delete(del_id);
+            }
             MessageBox.Show("数据已经提交");
         }
 
@@ -323,6 +328,7 @@ namespace NepslidingTools.testModel
         /// </summary>
         private void initdgv()
         {
+            this.del_list.Clear();
             Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
             string aa = string.Format("componentId = '{0}'ORDER BY step", LjHao);//ORDER BY step
             DataSet ds = use1.GetListByPage2(aa, "", 0, 100);
@@ -454,6 +460,9 @@ namespace NepslidingTools.testModel
 
         }
 
+
+        List<int> del_list = new List<int>();
+
         /// <summary>
         ///  删除按钮
         /// </summary>
@@ -461,6 +470,10 @@ namespace NepslidingTools.testModel
         /// <param name="e"></param>
         private void del_bt_Click(object sender, EventArgs e)
         {
+            int del_row_index = Convert.ToInt32(dgv.Rows[dgv.CurrentRow.Index].Cells["id"].Value);
+            del_list.Add(del_row_index);
+            dgv.Rows.RemoveAt(dgv.CurrentRow.Index);
+            return;
             string DR = dgv.Rows[dgv.CurrentRow.Index].Cells["id"].Value.ToString();
             Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
             use.Delete(Convert.ToInt32(DR));
@@ -469,7 +482,10 @@ namespace NepslidingTools.testModel
             initdgv();
             allupdate();
         }
-
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            initdgv();
+        }
         private void dgv_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
             /*

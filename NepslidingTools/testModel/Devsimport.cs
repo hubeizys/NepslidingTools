@@ -209,8 +209,48 @@ namespace NepslidingTools.testModel
                 }
                 else if (this.radioGroup1.SelectedIndex == 5)
                 {                    // 卡尺
-                    MessageBox.Show("正在加载硬件------- 高度尺");
+                    //MessageBox.Show("正在加载硬件------- 高度尺");
                     this.type = 4;
+                    listBox1.Items.Clear();
+                    foreach (string port in SerPort.CurPorts())
+                    {
+                        listBox1.Items.Add(port);
+                    }
+
+                    // 如果没有发现 控件列表就 继续这一步
+                    if (SerPort.CurPorts().Length <= 0)
+                    {
+                        //this.importdev_st.SelectedPageIndex = 0;
+                        MessageBox.Show("没有发现硬件");
+                        e.Handled = true;
+                        return;
+                    }
+
+                }
+                else if (this.radioGroup1.SelectedIndex == 6)
+                {                    // 百分尺
+                    //MessageBox.Show("正在加载硬件------- 高度尺");
+                    this.type = 5;
+                    listBox1.Items.Clear();
+                    foreach (string port in SerPort.CurPorts())
+                    {
+                        listBox1.Items.Add(port);
+                    }
+
+                    // 如果没有发现 控件列表就 继续这一步
+                    if (SerPort.CurPorts().Length <= 0)
+                    {
+                        //this.importdev_st.SelectedPageIndex = 0;
+                        MessageBox.Show("没有发现硬件");
+                        e.Handled = true;
+                        return;
+                    }
+
+                }
+                else if (this.radioGroup1.SelectedIndex == 7)
+                {                    // 千分
+                    //MessageBox.Show("正在加载硬件------- 高度尺");
+                    this.type = 6;
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
                     {

@@ -80,6 +80,7 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ofd_sm = new System.Windows.Forms.OpenFileDialog();
+            this.button3 = new System.Windows.Forms.Button();
             this.tabControl_main.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel_configmain.SuspendLayout();
@@ -492,6 +493,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.button3);
             this.panel4.Controls.Add(this.buttolj_add);
             this.panel4.Controls.Add(this.buttonlj_del);
             this.panel4.Controls.Add(this.button_likequery);
@@ -507,7 +509,7 @@
             // 
             // buttolj_add
             // 
-            this.buttolj_add.Location = new System.Drawing.Point(517, 6);
+            this.buttolj_add.Location = new System.Drawing.Point(435, 6);
             this.buttolj_add.Name = "buttolj_add";
             this.buttolj_add.Size = new System.Drawing.Size(75, 23);
             this.buttolj_add.TabIndex = 6;
@@ -517,7 +519,7 @@
             // 
             // buttonlj_del
             // 
-            this.buttonlj_del.Location = new System.Drawing.Point(434, 6);
+            this.buttonlj_del.Location = new System.Drawing.Point(519, 6);
             this.buttonlj_del.Name = "buttonlj_del";
             this.buttonlj_del.Size = new System.Drawing.Size(75, 23);
             this.buttonlj_del.TabIndex = 5;
@@ -581,6 +583,16 @@
             // 
             this.ofd_sm.FileName = "file";
             this.ofd_sm.InitialDirectory = "shumo";
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(603, 6);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "保存";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // BomFrom2
             // 
@@ -667,5 +679,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn sm;
         private System.Windows.Forms.DataGridViewTextBoxColumn photo;
         private System.Windows.Forms.DataGridViewButtonColumn remark;
+        private System.Windows.Forms.Button button3;
     }
 }
