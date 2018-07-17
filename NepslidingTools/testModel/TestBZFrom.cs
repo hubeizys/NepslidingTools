@@ -165,6 +165,7 @@ namespace NepslidingTools.testModel
             #endregion
             // textbox_ljh.Text = Program.gdvid;
             textbox_ljh.Text = LjHao;
+            label_ljh.Text = "¡„º˛¿‡–Õ:"+ LjHao;
             initdgv();
             this.timer_shine.Enabled = true;
             this.timer_ref.Enabled = true;

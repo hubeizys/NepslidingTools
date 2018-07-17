@@ -39,9 +39,11 @@ namespace NepslidingTools.toolbox
             this.username_tb = new DevComponents.DotNetBar.Controls.TextBoxX();
             this.caozuo_gb = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.edit_bt = new DevComponents.DotNetBar.ButtonX();
             this.add_bt = new DevComponents.DotNetBar.ButtonX();
             this.del_bt = new DevComponents.DotNetBar.ButtonX();
-            this.edit_bt = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
+            this.buttonX2 = new DevComponents.DotNetBar.ButtonX();
             this.info_bt = new DevComponents.DotNetBar.ButtonX();
             this.users_gc = new DevExpress.XtraGrid.GridControl();
             this.manuser = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -72,7 +74,7 @@ namespace NepslidingTools.toolbox
             this.main_tlp.Location = new System.Drawing.Point(0, 0);
             this.main_tlp.Name = "main_tlp";
             this.main_tlp.RowCount = 3;
-            this.main_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 120F));
+            this.main_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 1F));
             this.main_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.main_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.main_tlp.Size = new System.Drawing.Size(665, 652);
@@ -86,10 +88,11 @@ namespace NepslidingTools.toolbox
             this.search_gb.ForeColor = System.Drawing.Color.Black;
             this.search_gb.Location = new System.Drawing.Point(3, 3);
             this.search_gb.Name = "search_gb";
-            this.search_gb.Size = new System.Drawing.Size(659, 114);
+            this.search_gb.Size = new System.Drawing.Size(659, 1);
             this.search_gb.TabIndex = 0;
             this.search_gb.TabStop = false;
             this.search_gb.Text = "²éÑ¯Ñ¡Ïî";
+            this.search_gb.Visible = false;
             // 
             // head_tlp
             // 
@@ -111,7 +114,7 @@ namespace NepslidingTools.toolbox
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.head_tlp.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.head_tlp.Size = new System.Drawing.Size(653, 93);
+            this.head_tlp.Size = new System.Drawing.Size(653, 0);
             this.head_tlp.TabIndex = 0;
             // 
             // query_bt
@@ -236,7 +239,7 @@ namespace NepslidingTools.toolbox
             this.caozuo_gb.Controls.Add(this.flowLayoutPanel1);
             this.caozuo_gb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.caozuo_gb.ForeColor = System.Drawing.Color.Black;
-            this.caozuo_gb.Location = new System.Drawing.Point(3, 123);
+            this.caozuo_gb.Location = new System.Drawing.Point(3, 4);
             this.caozuo_gb.Name = "caozuo_gb";
             this.caozuo_gb.Size = new System.Drawing.Size(659, 54);
             this.caozuo_gb.TabIndex = 1;
@@ -245,9 +248,11 @@ namespace NepslidingTools.toolbox
             // 
             // flowLayoutPanel1
             // 
+            this.flowLayoutPanel1.Controls.Add(this.edit_bt);
             this.flowLayoutPanel1.Controls.Add(this.add_bt);
             this.flowLayoutPanel1.Controls.Add(this.del_bt);
-            this.flowLayoutPanel1.Controls.Add(this.edit_bt);
+            this.flowLayoutPanel1.Controls.Add(this.buttonX1);
+            this.flowLayoutPanel1.Controls.Add(this.buttonX2);
             this.flowLayoutPanel1.Controls.Add(this.info_bt);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.ForeColor = System.Drawing.Color.Black;
@@ -256,11 +261,24 @@ namespace NepslidingTools.toolbox
             this.flowLayoutPanel1.Size = new System.Drawing.Size(653, 33);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
+            // edit_bt
+            // 
+            this.edit_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.edit_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.edit_bt.Location = new System.Drawing.Point(15, 3);
+            this.edit_bt.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
+            this.edit_bt.Name = "edit_bt";
+            this.edit_bt.Size = new System.Drawing.Size(75, 23);
+            this.edit_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.edit_bt.TabIndex = 2;
+            this.edit_bt.Text = "ÐÞ¸ÄÃÜÂë";
+            this.edit_bt.Click += new System.EventHandler(this.edit_bt_Click);
+            // 
             // add_bt
             // 
             this.add_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.add_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.add_bt.Location = new System.Drawing.Point(15, 3);
+            this.add_bt.Location = new System.Drawing.Point(120, 3);
             this.add_bt.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.add_bt.Name = "add_bt";
             this.add_bt.Size = new System.Drawing.Size(75, 23);
@@ -273,7 +291,7 @@ namespace NepslidingTools.toolbox
             // 
             this.del_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.del_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.del_bt.Location = new System.Drawing.Point(120, 3);
+            this.del_bt.Location = new System.Drawing.Point(225, 3);
             this.del_bt.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
             this.del_bt.Name = "del_bt";
             this.del_bt.Size = new System.Drawing.Size(75, 23);
@@ -282,18 +300,31 @@ namespace NepslidingTools.toolbox
             this.del_bt.Text = "É¾³ý";
             this.del_bt.Click += new System.EventHandler(this.del_bt_Click);
             // 
-            // edit_bt
+            // buttonX1
             // 
-            this.edit_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
-            this.edit_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.edit_bt.Location = new System.Drawing.Point(225, 3);
-            this.edit_bt.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
-            this.edit_bt.Name = "edit_bt";
-            this.edit_bt.Size = new System.Drawing.Size(75, 23);
-            this.edit_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
-            this.edit_bt.TabIndex = 2;
-            this.edit_bt.Text = "ÐÞ¸ÄÃÜÂë";
-            this.edit_bt.Click += new System.EventHandler(this.edit_bt_Click);
+            this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX1.Location = new System.Drawing.Point(330, 3);
+            this.buttonX1.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
+            this.buttonX1.Name = "del_bt";
+            this.buttonX1.Size = new System.Drawing.Size(75, 23);
+            this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX1.TabIndex = 1;
+            this.buttonX1.Text = "³·Ïú";
+            this.buttonX1.Click += new System.EventHandler(this.buttonX1_Click);
+            // 
+            // buttonX2
+            // 
+            this.buttonX2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.buttonX2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.buttonX2.Location = new System.Drawing.Point(435, 3);
+            this.buttonX2.Margin = new System.Windows.Forms.Padding(15, 3, 15, 3);
+            this.buttonX2.Name = "del_bt";
+            this.buttonX2.Size = new System.Drawing.Size(75, 23);
+            this.buttonX2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.buttonX2.TabIndex = 1;
+            this.buttonX2.Text = "±£´æ";
+            this.buttonX2.Click += new System.EventHandler(this.buttonX2_Click);
             // 
             // info_bt
             // 
@@ -321,10 +352,10 @@ namespace NepslidingTools.toolbox
             gridLevelNode1.RelationName = "Level1";
             this.users_gc.LevelTree.Nodes.AddRange(new DevExpress.XtraGrid.GridLevelNode[] {
             gridLevelNode1});
-            this.users_gc.Location = new System.Drawing.Point(3, 183);
+            this.users_gc.Location = new System.Drawing.Point(3, 64);
             this.users_gc.MainView = this.manuser;
             this.users_gc.Name = "users_gc";
-            this.users_gc.Size = new System.Drawing.Size(659, 466);
+            this.users_gc.Size = new System.Drawing.Size(659, 585);
             this.users_gc.TabIndex = 2;
             this.users_gc.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.manuser});
@@ -423,5 +454,7 @@ namespace NepslidingTools.toolbox
         private DevComponents.Editors.DateTimeAdv.DateTimeInput time_dtp;
         private DevComponents.DotNetBar.Controls.TextBoxX username_tb;
         private DevExpress.XtraGrid.Columns.GridColumn num;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
+        private DevComponents.DotNetBar.ButtonX buttonX2;
     }
 }

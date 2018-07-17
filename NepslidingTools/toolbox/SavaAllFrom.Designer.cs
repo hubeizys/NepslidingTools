@@ -30,12 +30,12 @@ namespace NepslidingTools.toolbox
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.backup_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.backup_tim = new DevComponents.DotNetBar.Controls.DataGridViewDateTimeInputColumn();
-            this.remake = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.save_sql_bt = new DevComponents.DotNetBar.ButtonX();
+            this.backup_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.backup_tim = new DevComponents.DotNetBar.Controls.DataGridViewDateTimeInputColumn();
+            this.remake = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -79,51 +79,6 @@ namespace NepslidingTools.toolbox
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // backup_name
-            // 
-            this.backup_name.HeaderText = "备份文件";
-            this.backup_name.Name = "backup_name";
-            this.backup_name.ReadOnly = true;
-            // 
-            // backup_tim
-            // 
-            // 
-            // 
-            // 
-            this.backup_tim.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
-            this.backup_tim.BackgroundStyle.Class = "DataGridViewDateTimeBorder";
-            this.backup_tim.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.backup_tim.BackgroundStyle.TextColor = System.Drawing.Color.Black;
-            this.backup_tim.HeaderText = "备份时间";
-            this.backup_tim.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.backup_tim.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.backup_tim.MonthCalendar.CalendarDimensions = new System.Drawing.Size(1, 1);
-            // 
-            // 
-            // 
-            this.backup_tim.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.backup_tim.MonthCalendar.DisplayMonth = new System.DateTime(2017, 12, 1, 0, 0, 0, 0);
-            this.backup_tim.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday;
-            // 
-            // 
-            // 
-            this.backup_tim.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.backup_tim.Name = "backup_tim";
-            this.backup_tim.ReadOnly = true;
-            this.backup_tim.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // remake
-            // 
-            this.remake.HeaderText = "注释";
-            this.remake.Name = "remake";
-            this.remake.ReadOnly = true;
-            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.button1);
@@ -159,6 +114,53 @@ namespace NepslidingTools.toolbox
             this.save_sql_bt.Text = "数据备份";
             this.save_sql_bt.Click += new System.EventHandler(this.save_sql_bt_Click);
             // 
+            // backup_name
+            // 
+            this.backup_name.HeaderText = "备份文件";
+            this.backup_name.Name = "backup_name";
+            this.backup_name.ReadOnly = true;
+            // 
+            // backup_tim
+            // 
+            // 
+            // 
+            // 
+            this.backup_tim.BackgroundStyle.BackColor = System.Drawing.SystemColors.Window;
+            this.backup_tim.BackgroundStyle.Class = "DataGridViewDateTimeBorder";
+            this.backup_tim.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.backup_tim.BackgroundStyle.TextColor = System.Drawing.Color.Black;
+            this.backup_tim.CustomFormat = "yyyy/MM/dd hh:mm";
+            this.backup_tim.Format = DevComponents.Editors.eDateTimePickerFormat.Custom;
+            this.backup_tim.HeaderText = "备份时间";
+            this.backup_tim.InputHorizontalAlignment = DevComponents.Editors.eHorizontalAlignment.Left;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.backup_tim.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.backup_tim.MonthCalendar.CalendarDimensions = new System.Drawing.Size(1, 1);
+            // 
+            // 
+            // 
+            this.backup_tim.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.backup_tim.MonthCalendar.DisplayMonth = new System.DateTime(2017, 12, 1, 0, 0, 0, 0);
+            this.backup_tim.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday;
+            // 
+            // 
+            // 
+            this.backup_tim.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
+            this.backup_tim.Name = "backup_tim";
+            this.backup_tim.ReadOnly = true;
+            this.backup_tim.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // remake
+            // 
+            this.remake.HeaderText = "注释";
+            this.remake.Name = "remake";
+            this.remake.ReadOnly = true;
+            // 
             // SavaAllFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,11 +186,11 @@ namespace NepslidingTools.toolbox
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn backup_name;
-        private DevComponents.DotNetBar.Controls.DataGridViewDateTimeInputColumn backup_tim;
-        private System.Windows.Forms.DataGridViewTextBoxColumn remake;
         private System.Windows.Forms.Panel panel1;
         private DevComponents.DotNetBar.ButtonX save_sql_bt;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn backup_name;
+        private DevComponents.DotNetBar.Controls.DataGridViewDateTimeInputColumn backup_tim;
+        private System.Windows.Forms.DataGridViewTextBoxColumn remake;
     }
 }

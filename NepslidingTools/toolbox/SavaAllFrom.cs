@@ -79,6 +79,7 @@ namespace NepslidingTools.toolbox
         {
             SavaAllFrom.SavaAll();
             requery();
+            MessageBox.Show("备份成功");
         }
 
         private void ExeThread(object obj)

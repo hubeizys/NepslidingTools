@@ -219,6 +219,7 @@ namespace Maticsoft.DAL
             {
                 strSql.Append(" where " + strWhere);
             }
+            strSql.Append(" ORDER BY id DESC");
             return DbHelperMySQL.Query(strSql.ToString());
         }
 

@@ -92,8 +92,12 @@ namespace Maticsoft.DAL
             {
                 strSql.Append(" WHERE " + strWhere);
             }
+            if (!string.IsNullOrEmpty(orderby.Trim()))
+            {
+                strSql.Append(orderby);
+            }
             strSql.Append(" ) TT");
-            strSql.AppendFormat(" WHERE TT.Row between {0} and {1}", startIndex, endIndex);
+            strSql.AppendFormat(" WHERE TT.Row LIMIT {0} ,{1}", startIndex, endIndex);
             return DbHelperMySQL.Query(strSql.ToString());
         }
 

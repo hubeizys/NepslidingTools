@@ -195,7 +195,6 @@
             // pictureBox1
             // 
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Image = global::NepslidingTools.Properties.Resources.logo1;
             this.pictureBox1.Location = new System.Drawing.Point(101, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(714, 132);
@@ -365,7 +364,6 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::NepslidingTools.Properties.Resources.背景aaa;
             this.ClientSize = new System.Drawing.Size(922, 577);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

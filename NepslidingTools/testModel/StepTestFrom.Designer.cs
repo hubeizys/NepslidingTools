@@ -31,13 +31,13 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
-            Series series1 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
-            Series series2 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView1 = new DevExpress.XtraCharts.PointSeriesView();
-            Series series3 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView2 = new DevExpress.XtraCharts.PointSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram2 = new DevExpress.XtraCharts.XYDiagram();
+            Series series4 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView2 = new DevExpress.XtraCharts.LineSeriesView();
+            Series series5 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView3 = new DevExpress.XtraCharts.PointSeriesView();
+            Series series6 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView4 = new DevExpress.XtraCharts.PointSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -104,8 +104,6 @@ namespace NepslidingTools.testModel
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
-            DevExpress.XtraCharts.SplineSeriesView splineSeriesView1 = new DevExpress.XtraCharts.SplineSeriesView();
-            ((System.ComponentModel.ISupportInitialize)(splineSeriesView1)).BeginInit();
             this.SuspendLayout();
             // 
             // lj_lab
@@ -689,34 +687,33 @@ namespace NepslidingTools.testModel
             // chartControl1
             // 
             this.chartControl1.CrosshairEnabled = DevExpress.Utils.DefaultBoolean.False;
-            xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram1;
+            xyDiagram2.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram2.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram2;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.chartControl1.Legend.MarkerVisible = true;
             this.chartControl1.Legend.TextVisible = false;
             this.chartControl1.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
             this.chartControl1.Location = new System.Drawing.Point(0, 0);
             this.chartControl1.Name = "chartControl1";
-            lineSeriesView1.MarkerVisibility = DevExpress.Utils.DefaultBoolean.True;
-            series1.Name = "测量结果波动";
-            series1.View = lineSeriesView1;
-            series2.Name = "超差";
-            series2.View = pointSeriesView1;
-            series2.Visible = false;
-            series3.Name = "负超差";
-            series3.View = pointSeriesView2;
-            series3.Visible = false;
+            series4.Name = "测量结果波动";
+            lineSeriesView2.MarkerVisibility = DevExpress.Utils.DefaultBoolean.True;
+            series4.View = lineSeriesView2;
+            series5.Name = "超差";
+            series5.View = pointSeriesView3;
+            series5.Visible = false;
+            series6.Name = "负超差";
+            series6.View = pointSeriesView4;
+            series6.Visible = false;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series1,
-        series2,
-        series3};
+        series4,
+        series5,
+        series6};
             this.chartControl1.Size = new System.Drawing.Size(950, 143);
             this.chartControl1.TabIndex = 8;
             // 
             // timer_portst
             // 
-            this.timer_portst.Interval = 3000;
+            this.timer_portst.Interval = 500;
             this.timer_portst.Tick += new System.EventHandler(this.timer_portst_Tick);
             // 
             // timer_tostep
@@ -764,11 +761,7 @@ namespace NepslidingTools.testModel
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(splineSeriesView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(series1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
-            
             this.ResumeLayout(false);
 
         }

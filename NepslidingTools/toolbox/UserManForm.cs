@@ -71,10 +71,20 @@ namespace NepslidingTools.toolbox
             ADDzhForm zh = new ADDzhForm();
             zh.ShowDialog();
         }
-
+        List<int> del_list = new List<int>();
         private void del_bt_Click(object sender, EventArgs e)
         {
+            int[] aa = manuser.GetSelectedRows();
+            foreach (int testa in aa)
+            {
+                DataRow drt = manuser.GetDataRow(testa);
+                string id = drt["ID"].ToString();
+                del_list.Add(Convert.ToInt32(id));
+                manuser.DeleteRow(testa);
+            }
 
+            // MessageBox.Show(aa.Length.ToString());
+            return;
             DataRow a = manuser.GetDataRow(manuser.FocusedRowHandle);
 
             Maticsoft.BLL.username use = new Maticsoft.BLL.username();
@@ -126,7 +136,24 @@ namespace NepslidingTools.toolbox
             }
             MessageBox.Show("ÐÞ¸Ä³É¹¦");
         }
+        private void buttonX1_Click(object sender, EventArgs e)
+        {
+            Maticsoft.BLL.username use = new Maticsoft.BLL.username();
+            DataSet ds = use.GetAllList();
+            users_gc.DataSource = ds.Tables[0];
+            del_list.Clear();
+        }
+        private void buttonX2_Click(object sender, EventArgs e)
+        {
+            Maticsoft.BLL.username use = new Maticsoft.BLL.username();
+            foreach (int del_index in del_list)
+            {
+                use.Delete(del_index);
+            }
 
+            DataSet ds = use.GetAllList();
+            users_gc.DataSource = ds.Tables[0];
+        }
         private void users_gc_Click(object sender, EventArgs e)
         {
             

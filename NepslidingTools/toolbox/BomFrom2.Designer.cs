@@ -41,6 +41,15 @@
             this.textBox_query = new System.Windows.Forms.TextBox();
             this.label_lj = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.componentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.jobnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ARef = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.size = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sm = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.photo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.remark = new System.Windows.Forms.DataGridViewButtonColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button_next = new System.Windows.Forms.Button();
             this.button_pre = new System.Windows.Forms.Button();
@@ -71,15 +80,6 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.ofd_sm = new System.Windows.Forms.OpenFileDialog();
-            this.componentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Row = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.jobnum = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ARef = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.size = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.sm = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.photo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.remark = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tabControl_main.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tableLayoutPanel_configmain.SuspendLayout();
@@ -155,7 +155,7 @@
             this.bt_update.Name = "bt_update";
             this.bt_update.Size = new System.Drawing.Size(89, 23);
             this.bt_update.TabIndex = 8;
-            this.bt_update.Text = "更新选中行";
+            this.bt_update.Text = "保存更改";
             this.bt_update.UseVisualStyleBackColor = true;
             this.bt_update.Click += new System.EventHandler(this.bt_update_Click);
             // 
@@ -211,7 +211,7 @@
             // 
             // textBox_query
             // 
-            this.textBox_query.Location = new System.Drawing.Point(49, 6);
+            this.textBox_query.Location = new System.Drawing.Point(53, 6);
             this.textBox_query.Name = "textBox_query";
             this.textBox_query.Size = new System.Drawing.Size(179, 21);
             this.textBox_query.TabIndex = 1;
@@ -221,9 +221,9 @@
             this.label_lj.AutoSize = true;
             this.label_lj.Location = new System.Drawing.Point(10, 10);
             this.label_lj.Name = "label_lj";
-            this.label_lj.Size = new System.Drawing.Size(29, 12);
+            this.label_lj.Size = new System.Drawing.Size(41, 12);
             this.label_lj.TabIndex = 0;
-            this.label_lj.Text = "零件";
+            this.label_lj.Text = "关键字";
             // 
             // dataGridView1
             // 
@@ -247,6 +247,64 @@
             this.dataGridView1.Size = new System.Drawing.Size(946, 443);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // componentId
+            // 
+            this.componentId.DataPropertyName = "componentId";
+            this.componentId.HeaderText = "零件类型号";
+            this.componentId.Name = "componentId";
+            // 
+            // Row
+            // 
+            this.Row.DataPropertyName = "Row";
+            this.Row.HeaderText = "Row";
+            this.Row.Name = "Row";
+            this.Row.Visible = false;
+            // 
+            // name
+            // 
+            this.name.DataPropertyName = "name";
+            this.name.HeaderText = "零件名";
+            this.name.Name = "name";
+            // 
+            // jobnum
+            // 
+            this.jobnum.DataPropertyName = "jobnum";
+            this.jobnum.HeaderText = "工单号";
+            this.jobnum.Name = "jobnum";
+            this.jobnum.Visible = false;
+            // 
+            // ARef
+            // 
+            this.ARef.DataPropertyName = "ARef";
+            this.ARef.HeaderText = "生成编号";
+            this.ARef.Name = "ARef";
+            // 
+            // size
+            // 
+            this.size.DataPropertyName = "size";
+            this.size.HeaderText = "尺寸";
+            this.size.Name = "size";
+            // 
+            // sm
+            // 
+            this.sm.DataPropertyName = "sm";
+            this.sm.HeaderText = "数模";
+            this.sm.Name = "sm";
+            // 
+            // photo
+            // 
+            this.photo.DataPropertyName = "photo";
+            this.photo.HeaderText = "photo";
+            this.photo.Name = "photo";
+            this.photo.Visible = false;
+            // 
+            // remark
+            // 
+            this.remark.DataPropertyName = "remark";
+            this.remark.HeaderText = "标准管理";
+            this.remark.Name = "remark";
+            this.remark.Text = "管理";
             // 
             // panel2
             // 
@@ -523,64 +581,6 @@
             // 
             this.ofd_sm.FileName = "file";
             this.ofd_sm.InitialDirectory = "shumo";
-            // 
-            // componentId
-            // 
-            this.componentId.DataPropertyName = "componentId";
-            this.componentId.HeaderText = "零件类型号";
-            this.componentId.Name = "componentId";
-            // 
-            // Row
-            // 
-            this.Row.DataPropertyName = "Row";
-            this.Row.HeaderText = "Row";
-            this.Row.Name = "Row";
-            this.Row.Visible = false;
-            // 
-            // name
-            // 
-            this.name.DataPropertyName = "name";
-            this.name.HeaderText = "零件名";
-            this.name.Name = "name";
-            // 
-            // jobnum
-            // 
-            this.jobnum.DataPropertyName = "jobnum";
-            this.jobnum.HeaderText = "工单号";
-            this.jobnum.Name = "jobnum";
-            this.jobnum.Visible = false;
-            // 
-            // ARef
-            // 
-            this.ARef.DataPropertyName = "ARef";
-            this.ARef.HeaderText = "生成编号";
-            this.ARef.Name = "ARef";
-            // 
-            // size
-            // 
-            this.size.DataPropertyName = "size";
-            this.size.HeaderText = "尺寸";
-            this.size.Name = "size";
-            // 
-            // sm
-            // 
-            this.sm.DataPropertyName = "sm";
-            this.sm.HeaderText = "数模";
-            this.sm.Name = "sm";
-            // 
-            // photo
-            // 
-            this.photo.DataPropertyName = "photo";
-            this.photo.HeaderText = "photo";
-            this.photo.Name = "photo";
-            this.photo.Visible = false;
-            // 
-            // remark
-            // 
-            this.remark.DataPropertyName = "remark";
-            this.remark.HeaderText = "标准管理";
-            this.remark.Name = "remark";
-            this.remark.Text = "管理";
             // 
             // BomFrom2
             // 

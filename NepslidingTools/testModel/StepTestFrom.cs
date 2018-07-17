@@ -106,6 +106,10 @@ namespace NepslidingTools.testModel
             {
                 if (sp_obj.port_st())
                 {
+                    this.lab_st.Invoke(new Action(() =>
+                    {
+                        lab_st.Text = "未连接";
+                    }));
                     sp_obj.close();
                 }
                 #region 当前可用设备展示
@@ -232,7 +236,12 @@ namespace NepslidingTools.testModel
                 }
                 else
                 {
-                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1,-1);
+                    QrDlg qr_dlg = new QrDlg();
+                    if( qr_dlg.ShowDialog() == DialogResult.OK)
+                    {
+                            str = qr_dlg.MyCode;
+                    }
+                    // str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1,-1);
                 }
                 dr2["零件号"] = str;
                 this.CompId = "";
@@ -879,7 +888,12 @@ namespace NepslidingTools.testModel
                 }
                 else
                 {
-                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                    QrDlg qr_dlg = new QrDlg();
+                    if (qr_dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        str = qr_dlg.MyCode;
+                    }
+                    // str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
                 }
                 need_change_rows["零件号"] = str;
                 this.CompId = "";
@@ -962,7 +976,12 @@ namespace NepslidingTools.testModel
                 string str = "";
                 if (need_change_rows["零件号"].ToString() == "")
                 {
-                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                    QrDlg qr_dlg = new QrDlg();
+                    if (qr_dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        str = qr_dlg.MyCode;
+                    }
+                    //str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
                     need_change_rows["零件号"] = str;
                 }
                 this.CompId = "";
@@ -1014,7 +1033,12 @@ namespace NepslidingTools.testModel
                 }
                 else
                 {
-                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                    QrDlg qr_dlg = new QrDlg();
+                    if (qr_dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        str = qr_dlg.MyCode;
+                    }
+                    // str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
                 }
                 need_change_rows["零件号"] = str;
                 this.CompId = "";
@@ -1134,7 +1158,12 @@ namespace NepslidingTools.testModel
                 var need_change_rows = (dgv1.DataSource as DataTable).Rows[0];
                 if (need_change_rows["零件号"].ToString() == "")
                 {
-                    str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
+                    QrDlg qr_dlg = new QrDlg();
+                    if (qr_dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        str = qr_dlg.MyCode;
+                    }
+                    // str = Interaction.InputBox("请手动输入或者使用扫描枪", "请输入编号", "", -1, -1);
                     if (str == "")
                     {
                         MessageBox.Show("请输入零件号， 否则无法保存");
@@ -1188,7 +1217,7 @@ namespace NepslidingTools.testModel
                             };
                             if (parts_bll.Add(temp_part_mode))
                             {
-                                MessageBox.Show("数据保存成功");
+                                // MessageBox.Show("数据保存成功");
                             }
                             else
                             {
@@ -1202,7 +1231,7 @@ namespace NepslidingTools.testModel
                             temp_part_mode.Barcode = lingjianhao;
                             if (parts_bll.Add(temp_part_mode))
                             {
-                                MessageBox.Show("数据保存成功");
+                                // MessageBox.Show("数据保存成功");
                             }
                             else
                             {
@@ -1324,12 +1353,14 @@ namespace NepslidingTools.testModel
                 dr["测试结果"] = test_lists[start_test].OKorNG.ToString();
                 foreach (string j in sp)
                 {
+                    if (sp_num < comboBox1.Items.Count)
+                    {
+                        string col_name = comboBox1.Items[sp_num].ToString();
+                        if (dtb.Columns.Contains(col_name))
+                        { dr[col_name] = j; }
+                    }
                     sp_num++;
                     // string col_name = string.Format("步骤{0}", sp_num);
-                    string col_name = comboBox1.Items[sp_num].ToString();
-                    if (dtb.Columns.Contains(col_name))
-                    { dr[col_name] = j; }
-                   
                 }
                 dtb.Rows.InsertAt(dr, 0);
             }

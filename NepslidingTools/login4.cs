@@ -188,6 +188,18 @@ namespace NepslidingTools
 
         private void login4_Load(object sender, EventArgs e)
         {
+            // 设置logo
+            string cur_dict = System.IO.Directory.GetCurrentDirectory();
+            System.IO.FileStream fs = new System.IO.FileStream(cur_dict + "\\images\\configimg\\logo1.png", System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            pictureBox1.Image = System.Drawing.Image.FromStream(fs);
+            fs.Close();
+
+            //string cur_dict = System.IO.Directory.GetCurrentDirectory();
+            //System.IO.FileStream fs2 = new System.IO.FileStream(, System.IO.FileMode.Open, System.IO.FileAccess.Read);
+            this.BackgroundImage = System.Drawing.Image.FromFile(cur_dict + "\\images\\configimg\\bg.png");
+            // fs2.Close();
+
+
             Maticsoft.BLL.baseconfig config_bll = new Maticsoft.BLL.baseconfig();
             //config_bll.backup();
             int count = config_bll.GetRecordCount("");

@@ -189,6 +189,7 @@ namespace NepslidingTools.toolbox
 
         private void button_likequery_Click(object sender, EventArgs e)
         {
+            cur_page_num2 = 0;
             requery2();
         }
 

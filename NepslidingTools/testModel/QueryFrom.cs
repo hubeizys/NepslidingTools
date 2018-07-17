@@ -270,20 +270,23 @@ namespace NepslidingTools.testModel
                 #region 添加一行总结
                 DataTable temp_table = dgv.DataSource as DataTable;
                 int last_row = temp_table.Rows.Count;
-                if (temp_table.Rows[last_row-1]["零件号"].ToString() == "结果与CPK")
+                if (last_row >= 1)
                 {
-                    return;
+                    if (temp_table.Rows[last_row - 1]["零件号"].ToString() == "结果与CPK")
+                    {
+                        return;
+                    }
+                    DataRow temp_dr = temp_table.NewRow();
+                    temp_dr["零件号"] = "结果与CPK";
+                    foreach (KeyValuePair<int, double> par in cpk_dic)
+                    {
+                        // string key_name = par.Key.Replace("s", "步骤");
+                        temp_dr[par.Key + 1] = par.Value.ToString("0.00");
+                    }
+                    temp_dr["结果"] = op.Replace("\t", "");
+                    temp_table.Rows.Add(temp_dr);
+                    dgv.Refresh();
                 }
-                DataRow temp_dr = temp_table.NewRow();
-                temp_dr["零件号"] = "结果与CPK";
-                foreach (KeyValuePair<int, double> par in cpk_dic)
-                {
-                    // string key_name = par.Key.Replace("s", "步骤");
-                    temp_dr[par.Key + 1] = par.Value.ToString("0.00");
-                }
-                temp_dr["结果"] = op.Replace("\t", "");
-                temp_table.Rows.Add(temp_dr);
-                dgv.Refresh();
             }));
             #endregion
         }
@@ -360,8 +363,8 @@ namespace NepslidingTools.testModel
                                                                                //设置颜色
             range = xlsApp.get_Range("A3", temp + "3");
             // range.Interior.ColorIndex = 33;
-            xlsApp.Columns[1].ColumnWidth = 20;
-            xlsApp.Columns[1].HorizontalAlignment = Excel.XlVAlign.xlVAlignJustify;
+            // xlsApp.Columns[1].ColumnWidth = 20;
+            // xlsApp.Columns[1].HorizontalAlignment = Excel.XlVAlign.xlVAlignJustify;
             xlsApp.Columns[2].ColumnWidth = 20;
             xlsApp.Columns[2].NumberFormat = "@";
             // xlsApp.Columns[2].HorizontalAlignment = Excel.
@@ -376,7 +379,7 @@ namespace NepslidingTools.testModel
             //8.填写DataTable中的数据
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                xlsApp.Cells[1][i + 4] = i.ToString();
+                xlsApp.Cells[1][i + 4] = (1+i).ToString();
                 for (int j = 0; j < dt.Columns.Count; j++)
                 {
                     xlsApp.Cells[j + 2][i + 4] = dt.Rows[i][j];
@@ -429,6 +432,7 @@ namespace NepslidingTools.testModel
                     while (jisuan_f == false)
                         System.Threading.Thread.Sleep(1000);
                     SaveToExcel(fName, this.dataGridView1.DataSource as DataTable);
+                    System.Diagnostics.Process.Start(fName);
                     jisuan_f = false;
                 }));
                 a.Start();
@@ -665,7 +669,7 @@ namespace NepslidingTools.testModel
             }
         }
 
-        private void reQuery(bool all=false)
+        private void reQuery(bool all=false, string order = "")
         {
             string where_string = this.query_wherestring();
             // 同步处理好 零件的基础信息的事情
@@ -680,6 +684,7 @@ namespace NepslidingTools.testModel
             }
 
             #region 构建基本的表形状
+            
             DataTable mea_dt = new DataTable();
             Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
             List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}  order by step", this.comp_type));
@@ -697,6 +702,7 @@ namespace NepslidingTools.testModel
             mea_dt.Columns.Add("测量时间");
             if (all == false)
             {
+                dgv.DataSource = null;
                 dgv.DataSource = mea_dt;
                 for (int i = 0; i < this.dgv.Columns.Count; i++)
                 {
@@ -705,6 +711,7 @@ namespace NepslidingTools.testModel
             }
             dgv.Columns["测量编号"].Width = 140;
             dgv.Columns["测量时间"].Width = 140;
+            // dgv.AutoGenerateColumns = false;
             dataGridView1.DataSource = mea_dt.Copy();
             #endregion
 
@@ -717,11 +724,11 @@ namespace NepslidingTools.testModel
             //DataTable dest_table2 = null;
             if (all == false)
             {   
-                ds = test_bll.GetListByPage2(where_string, "", cur_page_lenb * cur_page_num, cur_page_lenb  * (1+cur_page_num));
+                ds = test_bll.GetListByPage2(where_string, order, cur_page_lenb * cur_page_num, cur_page_lenb);
                 dest_table = dgv.DataSource as DataTable;
             }
             else {
-                ds = test_bll.GetListByPage2(where_string, "", 0, 10000);
+                ds = test_bll.GetListByPage2(where_string, order, 0, 10000);
                 dest_table = dataGridView1.DataSource as DataTable;
             }
             DataTable dt = ds.Tables[0];
@@ -734,7 +741,10 @@ namespace NepslidingTools.testModel
                 DataTable local_dt = aa as DataTable;
                 int count = local_dt.Rows.Count;
                 string[] ret = new string[count];
-
+                dgv.Columns["零件号"].Tag = "PN";
+                dgv.Columns["测量编号"].Tag = "measureb";
+                dgv.Columns["测量时间"].Tag = "time";
+                dgv.Columns["结果"].Tag = "OKorNG";
                 for (int i = 0; i < count; i++)
                 {
                     DataRow xin_dr = dest_table.NewRow();
@@ -742,6 +752,7 @@ namespace NepslidingTools.testModel
                     xin_dr["测量编号"] = local_dt.Rows[i]["measureb"];
                     xin_dr["测量时间"] = local_dt.Rows[i]["time"];
                     xin_dr["结果"] = local_dt.Rows[i]["OKorNG"];
+                    
                     dest_table.Rows.Add(xin_dr);
                     //xin_dr.Rows[][] = local_dt.Rows[i][0] 
                     new Task((index) =>
@@ -760,10 +771,12 @@ namespace NepslidingTools.testModel
                     string[] sp_l = t.Result[i].Split('/');
                     foreach (Maticsoft.Model.measures mea_obj in mea_modes)
                     {
+                        
                         int ret_col_num = 1;
                         bool col_if = int.TryParse(mea_obj.step.ToString(), out ret_col_num);
                         // string sg = "步骤" + mea_obj.CC.ToString();
                         string sg = mea_obj.CC.ToString();
+                        dgv.Columns[sg].Tag = "step1";
                         //mea_modes
                         if (col_if && ret_col_num < sp_l.Length + 1)
                         {
@@ -924,7 +937,7 @@ namespace NepslidingTools.testModel
                 this.labelX1.Text = page_par;
             }
 
-            this.reQuery();
+            this.reQuery(false, cur_order);
             return;
             // 上一页
             if (cur_step >= cur_page_lenb)
@@ -946,13 +959,13 @@ namespace NepslidingTools.testModel
         private void button2_Click(object sender, EventArgs e)
         {
 
-            if (this.cur_page_num < this.totle_page_num)
+            if (this.cur_page_num + 1 < this.totle_page_num)
             {
                 cur_page_num++;
                 string page_par = string.Format("{0}/{1}", cur_page_num + 1, totle_page_num);
                 this.labelX1.Text = page_par;
             }
-            this.reQuery();
+            this.reQuery(false, cur_order);
             return;
             if (cur_step + cur_page_lenb > this.totle_num)
             {
@@ -1057,7 +1070,7 @@ namespace NepslidingTools.testModel
                 // this.dgv.Rows[e.RowIndex].Selected = true;
                 this.dgv.CurrentCell = dgv.Rows[e.RowIndex].Cells[e.ColumnIndex];
                 Console.WriteLine(string.Format("dgv.CurrentCell.ColumnIndex {0}  == dgv.Columns[dgv.CurrentCell.ColumnIndex].Name {1}", dgv.CurrentCell.ColumnIndex, dgv.Columns[dgv.CurrentCell.ColumnIndex].Name));
-                bool if_tr = dgv.Columns[dgv.CurrentCell.ColumnIndex].Name.Contains("步骤");
+                bool if_tr = ( dgv.Columns[dgv.CurrentCell.ColumnIndex].Tag.ToString() == "step1");
                 // MessageBox.Show(if_tr.ToString());
                 if (if_tr)
                 {
@@ -1087,6 +1100,7 @@ namespace NepslidingTools.testModel
 
         private void CustomSort(string columnBindingName, string sortMode)
         {
+            /*
             DataTable dt = this.dgv.DataSource as DataTable;
             DataRow dr = dt.NewRow();
             int last_num = dt.Rows.Count;
@@ -1108,16 +1122,24 @@ namespace NepslidingTools.testModel
             }
 
             dt2.Rows.InsertAt(dr2, last_num-1);
-            this.dgv.DataSource = dt2;
-            this.dgv.Refresh();
+            */
+            cur_order = " ORDER BY T." + columnBindingName + " " + sortMode;
+            reQuery(false, cur_order);
+            //this.dgv.DataSource = dt2;
+            //this.dgv.Refresh();
         }
-
+        string cur_order = "";
         private void dgv_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
+            if(dgv.Columns[e.ColumnIndex].Tag.ToString() == "step1")
+            {
+                return;
+            }
+
             if (dgv.Columns[e.ColumnIndex].SortMode == DataGridViewColumnSortMode.Programmatic)
             {
-                string columnBindingName = dgv.Columns[e.ColumnIndex].DataPropertyName;
+                string columnBindingName = dgv.Columns[e.ColumnIndex].Tag.ToString();
                 switch (dgv.Columns[e.ColumnIndex].HeaderCell.SortGlyphDirection)
                 {
                     case System.Windows.Forms.SortOrder.None:
@@ -1149,6 +1171,7 @@ namespace NepslidingTools.testModel
                     dgv.Rows[i].Cells[sg].Style.BackColor = Color.Lime;
                 }
             }*/
+            return;
             Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
             List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}  order by step", this.comp_type));
 
