@@ -169,6 +169,7 @@ namespace NepslidingTools.testModel
             initdgv();
             this.timer_shine.Enabled = true;
             this.timer_ref.Enabled = true;
+            dgv.ClearSelection();
         }
 
         private void allupdate()
@@ -251,7 +252,6 @@ namespace NepslidingTools.testModel
             try
             {
                 #region 判断条件
-
 
                 if (gdno_tb.Text == "")
                 {
@@ -453,6 +453,22 @@ namespace NepslidingTools.testModel
             {
                 row.Cells["step"].Value = row.Index + 1;
             }
+
+
+            // 选中下一行
+            dgv.ClearSelection();
+            step_index += 1;
+            int last_line = dgv.Rows.Count;
+            if (step_index >= last_line -1)
+            {
+                step_index = last_line - 1;
+            }
+                
+            dgv.Rows[step_index].Selected = true;
+            dgv.Rows[step_index].Cells[0].Selected = true;
+            dgv.CurrentCell = dgv.Rows[step_index].Cells["step"];
+
+
         }
 
         private void dgv_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -647,6 +663,7 @@ namespace NepslidingTools.testModel
         {
             // OnRenderWindow_MouseClick(sender, e as MouseEventArgs);
             gdno_tb.Text = "";
+            clearcolor();
         }
 
         private void clearcolor()
@@ -718,6 +735,19 @@ namespace NepslidingTools.testModel
         {
             this.renderView.Height += 1;
             this.renderView.Height -= 1;
+        }
+
+        private void dgv_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if(e.Row.Selected == true)
+            {
+                gdno_tb.Text = e.Row.Cells["position"].Value.ToString();
+                scbh_tb.Text = e.Row.Cells["standardv"].Value.ToString();
+                sandsm_tb.Text = e.Row.Cells["up"].Value.ToString();
+                tm_tb.Text = e.Row.Cells["down"].Value.ToString();
+                cicun_tb.Text = e.Row.Cells["CC"].Value.ToString();
+                clearcolor();
+            }
         }
     }
 

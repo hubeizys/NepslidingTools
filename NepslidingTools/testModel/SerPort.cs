@@ -145,6 +145,10 @@ namespace NepslidingTools.testModel
                     int str5 = Convert.ToInt32(ss.Substring(10, 2));
                     int str6 = Convert.ToInt32(ss.Substring(12, 2));
                     string str7 = ss.Substring(14, 2);
+                        if (str7 == "0D")
+                        {
+                            str7 = "30";
+                        }
                         int i_7 = Convert.ToInt32(str7);
                     if (str4 == ss.Substring(8, 2))
                     {

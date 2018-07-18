@@ -32,7 +32,7 @@ namespace NepslidingTools.testModel
             //MessageBox.Show(string.Format("您的设备昵称是 {0}", textBoxX2.Text));
 
             string gz_name = textBoxX2.Text;
-            MessageBox.Show(string.Format("当前选择的串口是 == {0} == ", cur_work_portname));
+            // MessageBox.Show(string.Format("当前选择的串口是 == {0} == ", cur_work_portname));
 
             Maticsoft.BLL.port tempport_bll = new Maticsoft.BLL.port();
 
@@ -42,19 +42,19 @@ namespace NepslidingTools.testModel
 
             // 先找是不是有
             if (port_objs.Count > 0)
-            {
-                // 如果存在的话 就先提醒一下。 用户点确认之后 覆盖以前的com
-                DialogResult ret = MessageBox.Show("发现已经存在com的记录", "是否使用这个名字", MessageBoxButtons.OKCancel);
-                if (ret == DialogResult.OK)
-                {
-                    // 覆盖掉
-                    Maticsoft.Model.port temp_port = port_objs[0];
-                    temp_port.manufacturer = gz_name;
-                    temp_port.workid = textBoxX3.Text;
-                    temp_port.devicetype = type;
-                    tempport_bll.Update(temp_port);
-                    MessageBox.Show("以更新,工具已经可以使用");
-                }
+            {                    
+                // 覆盖掉
+                Maticsoft.Model.port temp_port = port_objs[0];
+                temp_port.manufacturer = gz_name;
+                temp_port.workid = textBoxX3.Text;
+                temp_port.devicetype = type;
+                tempport_bll.Update(temp_port);
+                //// 如果存在的话 就先提醒一下。 用户点确认之后 覆盖以前的com
+                //DialogResult ret = MessageBox.Show("发现已经存在com的记录", "是否使用这个名字", MessageBoxButtons.OKCancel);
+                //if (ret == DialogResult.OK)
+                //{
+                //    // MessageBox.Show("以更新,工具已经可以使用");
+                //}
             }
             else
             {
@@ -69,6 +69,7 @@ namespace NepslidingTools.testModel
                 };
                 tempport_bll.Add(tmp_portobj);
             }
+            sp_obj.close();
             this.Close();
         }
 
@@ -151,9 +152,10 @@ namespace NepslidingTools.testModel
                 }
                 else if (this.radioGroup1.SelectedIndex == 2)
                 {
+                    // 卡尺
                     this.type = 1;
                     // 卡尺
-                    MessageBox.Show("正在加载硬件------- 卡尺");
+                    // MessageBox.Show("正在加载硬件------- 卡尺");
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
                     {
@@ -171,6 +173,7 @@ namespace NepslidingTools.testModel
                 }
                 else if (this.radioGroup1.SelectedIndex == 3)
                 {    
+                    // 高度尺
                     this.type = 2;
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
@@ -189,27 +192,8 @@ namespace NepslidingTools.testModel
 
                 }
                 else if (this.radioGroup1.SelectedIndex == 4)
-                {               
-                    this.type = 3;
-                    listBox1.Items.Clear();
-                    foreach (string port in SerPort.CurPorts())
-                    {
-                        listBox1.Items.Add(port);
-                    }
-
-                    // 如果没有发现 控件列表就 继续这一步
-                    if (SerPort.CurPorts().Length <= 0)
-                    {
-                        //this.importdev_st.SelectedPageIndex = 0;
-                        MessageBox.Show("没有发现硬件");
-                        e.Handled = true;
-                        return;
-                    }
-
-                }
-                else if (this.radioGroup1.SelectedIndex == 5)
-                {                    // 卡尺
-                    //MessageBox.Show("正在加载硬件------- 高度尺");
+                {            
+                    // 千分尺
                     this.type = 4;
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
@@ -227,9 +211,30 @@ namespace NepslidingTools.testModel
                     }
 
                 }
-                else if (this.radioGroup1.SelectedIndex == 6)
-                {                    // 百分尺
+                else if (this.radioGroup1.SelectedIndex == 5)
+                {                    
+                    // 角度尺
                     //MessageBox.Show("正在加载硬件------- 高度尺");
+                    this.type = 3;
+                    listBox1.Items.Clear();
+                    foreach (string port in SerPort.CurPorts())
+                    {
+                        listBox1.Items.Add(port);
+                    }
+
+                    // 如果没有发现 控件列表就 继续这一步
+                    if (SerPort.CurPorts().Length <= 0)
+                    {
+                        //this.importdev_st.SelectedPageIndex = 0;
+                        MessageBox.Show("没有发现硬件");
+                        e.Handled = true;
+                        return;
+                    }
+
+                }
+                else if (this.radioGroup1.SelectedIndex == 6)
+                {                   
+                    // 百分表
                     this.type = 5;
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
@@ -248,8 +253,9 @@ namespace NepslidingTools.testModel
 
                 }
                 else if (this.radioGroup1.SelectedIndex == 7)
-                {                    // 千分
-                    //MessageBox.Show("正在加载硬件------- 高度尺");
+                {                    
+                    // 千分
+                    //
                     this.type = 6;
                     listBox1.Items.Clear();
                     foreach (string port in SerPort.CurPorts())
@@ -274,7 +280,7 @@ namespace NepslidingTools.testModel
             if ("请选择设备" == e.Page.Text)
             {
                 // 串口设置
-                MessageBox.Show("SelectedValue + : " + listBox1.SelectedValue + "  item " + listBox1.SelectedItem);
+                // MessageBox.Show("SelectedValue + : " + listBox1.SelectedValue + "  item " + listBox1.SelectedItem);
                 sp_obj.CheckPort();
                 cur_work_portname = listBox1.SelectedItem.ToString();
                 sp_obj.init_port(cur_work_portname);

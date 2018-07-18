@@ -165,7 +165,7 @@ namespace NepslidingTools.testModel
             this.send_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.send_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
             this.send_bt.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.send_bt.Location = new System.Drawing.Point(421, 430);
+            this.send_bt.Location = new System.Drawing.Point(160, 80);
             this.send_bt.Name = "send_bt";
             this.send_bt.Size = new System.Drawing.Size(75, 23);
             this.send_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -285,6 +285,7 @@ namespace NepslidingTools.testModel
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
             this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
             this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
+            this.dgv.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgv_RowStateChanged);
             // 
             // step
             // 
@@ -445,8 +446,9 @@ namespace NepslidingTools.testModel
             this.groupBox2.Controls.Add(this.xy_xzh);
             this.groupBox2.Controls.Add(this.sy_bt);
             this.groupBox2.Controls.Add(this.buttonX1);
+            this.groupBox2.Controls.Add(this.send_bt);
             this.groupBox2.ForeColor = System.Drawing.Color.Black;
-            this.groupBox2.Location = new System.Drawing.Point(315, 347);
+            this.groupBox2.Location = new System.Drawing.Point(310, 347);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(336, 130);
             this.groupBox2.TabIndex = 32;
@@ -457,7 +459,7 @@ namespace NepslidingTools.testModel
             // 
             this.del_bt.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.del_bt.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.del_bt.Location = new System.Drawing.Point(200, 79);
+            this.del_bt.Location = new System.Drawing.Point(200, 42);
             this.del_bt.Name = "del_bt";
             this.del_bt.Size = new System.Drawing.Size(75, 23);
             this.del_bt.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -469,7 +471,7 @@ namespace NepslidingTools.testModel
             // 
             this.xy_xzh.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.xy_xzh.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.xy_xzh.Location = new System.Drawing.Point(16, 84);
+            this.xy_xzh.Location = new System.Drawing.Point(104, 42);
             this.xy_xzh.Name = "xy_xzh";
             this.xy_xzh.Size = new System.Drawing.Size(75, 23);
             this.xy_xzh.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -493,7 +495,7 @@ namespace NepslidingTools.testModel
             // 
             this.buttonX1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(200, 40);
+            this.buttonX1.Location = new System.Drawing.Point(60, 80);
             this.buttonX1.Name = "del_bt";
             this.buttonX1.Size = new System.Drawing.Size(75, 23);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -529,7 +531,8 @@ namespace NepslidingTools.testModel
             // label_ljh
             // 
             this.label_ljh.AutoSize = true;
-            this.label_ljh.BackColor = System.Drawing.Color.Transparent;
+            this.label_ljh.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(168)))), ((int)(((byte)(194)))), ((int)(((byte)(238)))));
+            this.label_ljh.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_ljh.Location = new System.Drawing.Point(30, 18);
             this.label_ljh.Name = "label_ljh";
             this.label_ljh.Size = new System.Drawing.Size(0, 13);
@@ -597,7 +600,6 @@ namespace NepslidingTools.testModel
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1279, 650);
-            this.Controls.Add(this.send_bt);
             this.Controls.Add(this.textbox_ljh);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.button1);

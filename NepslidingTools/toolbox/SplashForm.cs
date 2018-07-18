@@ -27,5 +27,11 @@ namespace NepslidingTools.toolbox
         {
 
         }
+
+        private void SplashForm_Load(object sender, EventArgs e)
+        {
+            string cur_dict = System.IO.Directory.GetCurrentDirectory();
+            this.pictureBox1.Image = System.Drawing.Image.FromFile(cur_dict + "\\images\\configimg\\logo1.png");
+        }
     }
 }
