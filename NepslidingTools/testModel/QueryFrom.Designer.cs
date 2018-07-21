@@ -29,11 +29,11 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem19 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem20 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem21 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-            DevExpress.Utils.KeyShortcut keyShortcut7 = new DevExpress.Utils.KeyShortcut();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem1 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem2 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem3 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
+            DevExpress.Utils.KeyShortcut keyShortcut1 = new DevExpress.Utils.KeyShortcut();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             this.tlp_main = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.head_tpl = new System.Windows.Forms.TableLayoutPanel();
@@ -206,13 +206,15 @@ namespace NepslidingTools.testModel
             // dtp
             // 
             this.dtp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.dtp.CalendarFont = new System.Drawing.Font("Segoe UI", 8.25F);
             this.dtp.CustomFormat = "MMMM dd, yyyy - dddd";
             this.dtp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtp.Font = new System.Drawing.Font("Segoe UI", 13.25F);
+            this.dtp.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.dtp.ForeColor = System.Drawing.Color.Black;
-            this.dtp.Location = new System.Drawing.Point(547, 3);
+            this.dtp.Location = new System.Drawing.Point(547, 10);
+            this.dtp.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.dtp.Name = "dtp";
-            this.dtp.Size = new System.Drawing.Size(158, 31);
+            this.dtp.Size = new System.Drawing.Size(158, 22);
             this.dtp.TabIndex = 6;
             // 
             // label3
@@ -254,12 +256,14 @@ namespace NepslidingTools.testModel
             // timeselect_dtp
             // 
             this.timeselect_dtp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.timeselect_dtp.CalendarFont = new System.Drawing.Font("Segoe UI", 8.25F);
             this.timeselect_dtp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timeselect_dtp.Font = new System.Drawing.Font("Segoe UI", 13.25F);
+            this.timeselect_dtp.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.timeselect_dtp.ForeColor = System.Drawing.Color.Black;
-            this.timeselect_dtp.Location = new System.Drawing.Point(353, 3);
+            this.timeselect_dtp.Location = new System.Drawing.Point(353, 10);
+            this.timeselect_dtp.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.timeselect_dtp.Name = "timeselect_dtp";
-            this.timeselect_dtp.Size = new System.Drawing.Size(158, 31);
+            this.timeselect_dtp.Size = new System.Drawing.Size(158, 22);
             this.timeselect_dtp.TabIndex = 3;
             // 
             // query_bt
@@ -285,16 +289,16 @@ namespace NepslidingTools.testModel
             this.radioGroup1.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
             this.radioGroup1.Properties.Appearance.Options.UseBackColor = true;
             this.radioGroup1.Properties.Appearance.Options.UseForeColor = true;
-            radioGroupItem19.Description = "All";
-            radioGroupItem19.Value = null;
-            radioGroupItem20.Description = "NG";
-            radioGroupItem20.Value = null;
-            radioGroupItem21.Description = "OK";
-            radioGroupItem21.Value = null;
+            radioGroupItem1.Description = "All";
+            radioGroupItem1.Value = null;
+            radioGroupItem2.Description = "NG";
+            radioGroupItem2.Value = null;
+            radioGroupItem3.Description = "OK";
+            radioGroupItem3.Value = null;
             this.radioGroup1.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            radioGroupItem19,
-            radioGroupItem20,
-            radioGroupItem21});
+            radioGroupItem1,
+            radioGroupItem2,
+            radioGroupItem3});
             this.radioGroup1.Size = new System.Drawing.Size(114, 23);
             this.radioGroup1.TabIndex = 8;
             this.radioGroup1.Click += new System.EventHandler(this.radioGroup1_Click);
@@ -572,7 +576,7 @@ namespace NepslidingTools.testModel
             this.repositoryItemButtonEdit1.AutoHeight = false;
             this.repositoryItemButtonEdit1.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut7, serializableAppearanceObject7, "", null, null, true)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Glyph, "¸´²â", -1, true, true, false, DevExpress.XtraEditors.ImageLocation.MiddleCenter, null, keyShortcut1, serializableAppearanceObject1, "", null, null, true)});
             this.repositoryItemButtonEdit1.ButtonsStyle = DevExpress.XtraEditors.Controls.BorderStyles.Simple;
             this.repositoryItemButtonEdit1.Name = "repositoryItemButtonEdit1";
             this.repositoryItemButtonEdit1.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;

@@ -575,6 +575,12 @@
     <None Include="Resources\employee_91.924897959184px_1200325_easyicon.net.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Audio\faulse.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Audio\right.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Code_Window_32px_1197680_easyicon.net.ico" />
     <None Include="Resources\设备管理.png" />
     <None Include="Resources\用户管理.png" />

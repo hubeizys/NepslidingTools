@@ -37,7 +37,6 @@ namespace NepslidingTools.testModel
             DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem6 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem7 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
             DevExpress.XtraEditors.Controls.RadioGroupItem radioGroupItem8 = new DevExpress.XtraEditors.Controls.RadioGroupItem();
-
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.importdev_st = new DevExpress.XtraWizard.WizardControl();
@@ -311,6 +310,7 @@ namespace NepslidingTools.testModel
             this.Name = "Devsimport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "µº»Î";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Devsimport_FormClosed);
             this.Load += new System.EventHandler(this.Devsimport_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.importdev_st)).EndInit();

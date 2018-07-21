@@ -17,6 +17,7 @@ using Microsoft.VisualBasic;
 using NepslidingTools.toolbox;
 using DevExpress.Utils;
 using System.Runtime.InteropServices;
+using System.Media;
 
 namespace NepslidingTools.testModel
 {
@@ -820,6 +821,7 @@ namespace NepslidingTools.testModel
                 }
                 else
                 {
+                    // Console.Beep();
                     combjg.Text = "Ng";
                     label5.Text = "³¬²î";
                     lab_cc.Font = new System.Drawing.Font(lab_cc.Font.FontFamily, 36, lab_cc.Font.Style);
@@ -1464,7 +1466,22 @@ namespace NepslidingTools.testModel
 
         private void timer_tostep_Tick(object sender, EventArgs e)
         {
-
+            string dir = System.Environment.CurrentDirectory;
+            SoundPlayer player = new SoundPlayer();
+            if (lab_cc.ForeColor != Color.Green) {
+                //Console.Beep();
+                //Console.Beep();
+                //Console.Beep();    
+                player.SoundLocation = dir + "\\Audio\\faulse.wav";
+                player.Load();
+                player.Play();
+            }
+            else
+            {
+                player.SoundLocation = dir + "\\Audio\\right.wav";
+                player.Load();
+                player.Play();
+            }
             if (this.comboBox1.Items.Count > this.comboBox1.SelectedIndex + 1)
             {
                 this.comboBox1.SelectedIndex += 1;

@@ -1132,7 +1132,7 @@ namespace NepslidingTools.testModel
         private void dgv_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             DataGridView dgv = sender as DataGridView;
-            if(dgv.Columns[e.ColumnIndex].Tag.ToString() == "step1")
+            if(dgv.Columns[e.ColumnIndex].Tag== null || dgv.Columns[e.ColumnIndex].Tag.ToString() == "step1")
             {
                 return;
             }
@@ -1172,43 +1172,6 @@ namespace NepslidingTools.testModel
                 }
             }*/
             return;
-            Maticsoft.BLL.measures mea_bll = new Maticsoft.BLL.measures();
-            List<Maticsoft.Model.measures> mea_modes = mea_bll.GetModelList(string.Format(" componentId={0}  order by step", this.comp_type));
-
-            foreach (DataGridViewRow dr in dgv.Rows)
-            {
-                if (dgv.Rows.Count - 1 == dr.Index)
-                {
-                    continue;
-                }
-                if (dr.Cells["结果"].Value.ToString() == "NG")
-                {
-
-                }
-                foreach (Maticsoft.Model.measures mea_obj in mea_modes)
-                {
-                    // Console.WriteLine(mea_obj.CC+ "\t的值\t" +dr.Cells[mea_obj.CC].Value.ToString());
-                    if( dr.Cells[mea_obj.CC].Value.ToString() == "")
-                    {
-                        continue;
-                    }
-                    double test_info = Convert.ToDouble(dr.Cells[mea_obj.CC].Value.ToString());
-                    double stand_info = Convert.ToDouble(mea_obj.standardv);
-                    if (stand_info + Convert.ToDouble(mea_obj.down) > test_info)
-                    {
-                        dr.Cells[mea_obj.CC].Style.BackColor = Color.Cyan;
-                    }
-                    else if (stand_info + Convert.ToDouble(mea_obj.up) < test_info)
-                    {
-                        dr.Cells[mea_obj.CC].Style.BackColor = Color.LightSalmon;
-                    }
-                    else
-                    {
-                        dr.Cells[mea_obj.CC].Style.BackColor = Color.Lime;
-                    }
-                }
-            }
-
         }
 
         private void dgv_Sorted(object sender, EventArgs e)

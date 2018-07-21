@@ -14,5 +14,10 @@ namespace Maticsoft.BLL
         {
             return dal.GetListByPage2(strWhere, orderby, startIndex, endIndex);
         }
+
+        public DataSet GetListByPage3(string strWhere, string orderby, int startIndex, int endIndex)
+        {
+            return dal.GetListByPage3(strWhere, orderby, startIndex, endIndex);
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace NepslidingTools.testModel
                 };
                 tempport_bll.Add(tmp_portobj);
             }
-            sp_obj.close();
+
             this.Close();
         }
 
@@ -308,6 +308,11 @@ namespace NepslidingTools.testModel
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void Devsimport_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            sp_obj.close();
         }
     }
     class a

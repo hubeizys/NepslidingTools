@@ -42,18 +42,6 @@ namespace NepslidingTools.testModel
             this.testloc_lab = new DevComponents.DotNetBar.LabelX();
             this.testtoolname_lab = new DevComponents.DotNetBar.LabelX();
             this.dgv = new System.Windows.Forms.DataGridView();
-            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.componentid = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.row = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.devicename = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tools = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.position = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CC = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.standardv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.up = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.down = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.devicetype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox_devs = new System.Windows.Forms.ComboBox();
             this.mdf_bt = new DevComponents.DotNetBar.ButtonX();
@@ -72,6 +60,18 @@ namespace NepslidingTools.testModel
             this.timer_ref = new System.Windows.Forms.Timer(this.components);
             this.textbox_ljh = new System.Windows.Forms.TextBox();
             this.bom_no_lab = new DevComponents.DotNetBar.LabelX();
+            this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.componentid = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.row = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.manufacturer = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tools = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.position = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CC = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.standardv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.up = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.down = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.devicetype = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -267,7 +267,7 @@ namespace NepslidingTools.testModel
             this.step,
             this.componentid,
             this.row,
-            this.devicename,
+            this.manufacturer,
             this.tools,
             this.position,
             this.CC,
@@ -283,100 +283,10 @@ namespace NepslidingTools.testModel
             this.dgv.Size = new System.Drawing.Size(649, 316);
             this.dgv.TabIndex = 30;
             this.dgv.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellClick);
+            this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentClick);
             this.dgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_CellContentDoubleClick);
             this.dgv.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgv_RowPostPaint);
             this.dgv.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.dgv_RowStateChanged);
-            // 
-            // step
-            // 
-            this.step.DataPropertyName = "step";
-            this.step.HeaderText = "步骤";
-            this.step.Name = "step";
-            this.step.ReadOnly = true;
-            // 
-            // componentid
-            // 
-            this.componentid.DataPropertyName = "componentid";
-            this.componentid.HeaderText = "零件类型ID";
-            this.componentid.Name = "componentid";
-            this.componentid.ReadOnly = true;
-            this.componentid.Visible = false;
-            // 
-            // row
-            // 
-            this.row.DataPropertyName = "row";
-            this.row.HeaderText = "row";
-            this.row.Name = "row";
-            this.row.ReadOnly = true;
-            this.row.Visible = false;
-            // 
-            // devicename
-            // 
-            this.devicename.DataPropertyName = "devicename";
-            this.devicename.HeaderText = "使用设备";
-            this.devicename.Name = "devicename";
-            this.devicename.ReadOnly = true;
-            // 
-            // tools
-            // 
-            this.tools.DataPropertyName = "tools";
-            this.tools.HeaderText = "测量工具";
-            this.tools.Name = "tools";
-            this.tools.ReadOnly = true;
-            this.tools.Visible = false;
-            // 
-            // position
-            // 
-            this.position.DataPropertyName = "position";
-            this.position.HeaderText = "测量位置";
-            this.position.Name = "position";
-            this.position.ReadOnly = true;
-            this.position.Visible = false;
-            // 
-            // CC
-            // 
-            this.CC.DataPropertyName = "CC";
-            this.CC.HeaderText = "尺寸";
-            this.CC.Name = "CC";
-            this.CC.ReadOnly = true;
-            // 
-            // standardv
-            // 
-            this.standardv.DataPropertyName = "standardv";
-            this.standardv.HeaderText = "标准值";
-            this.standardv.Name = "standardv";
-            this.standardv.ReadOnly = true;
-            // 
-            // up
-            // 
-            this.up.DataPropertyName = "up";
-            this.up.HeaderText = "上公差";
-            this.up.Name = "up";
-            this.up.ReadOnly = true;
-            // 
-            // down
-            // 
-            this.down.DataPropertyName = "down";
-            this.down.HeaderText = "下公差";
-            this.down.Name = "down";
-            this.down.ReadOnly = true;
-            // 
-            // id
-            // 
-            this.id.DataPropertyName = "id";
-            this.id.HeaderText = "序号";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Visible = false;
-            // 
-            // devicetype
-            // 
-            this.devicetype.DataPropertyName = "devicetype";
-            this.devicetype.HeaderText = "测量设备类型";
-            this.devicetype.Name = "devicetype";
-            this.devicetype.ReadOnly = true;
-            this.devicetype.Visible = false;
-            this.devicetype.Width = 120;
             // 
             // groupBox1
             // 
@@ -595,6 +505,97 @@ namespace NepslidingTools.testModel
             this.bom_no_lab.TabIndex = 15;
             this.bom_no_lab.Text = "零件类型";
             // 
+            // step
+            // 
+            this.step.DataPropertyName = "step";
+            this.step.HeaderText = "步骤";
+            this.step.Name = "step";
+            this.step.ReadOnly = true;
+            // 
+            // componentid
+            // 
+            this.componentid.DataPropertyName = "componentid";
+            this.componentid.HeaderText = "零件类型ID";
+            this.componentid.Name = "componentid";
+            this.componentid.ReadOnly = true;
+            this.componentid.Visible = false;
+            // 
+            // row
+            // 
+            this.row.DataPropertyName = "row";
+            this.row.HeaderText = "row";
+            this.row.Name = "row";
+            this.row.ReadOnly = true;
+            this.row.Visible = false;
+            // 
+            // manufacturer
+            // 
+            this.manufacturer.DataPropertyName = "manufacturer";
+            this.manufacturer.HeaderText = "使用设备";
+            this.manufacturer.Name = "manufacturer";
+            this.manufacturer.ReadOnly = true;
+            // 
+            // tools
+            // 
+            this.tools.DataPropertyName = "tools";
+            this.tools.HeaderText = "测量工具";
+            this.tools.Name = "tools";
+            this.tools.ReadOnly = true;
+            this.tools.Visible = false;
+            // 
+            // position
+            // 
+            this.position.DataPropertyName = "position";
+            this.position.HeaderText = "测量位置";
+            this.position.Name = "position";
+            this.position.ReadOnly = true;
+            this.position.Visible = false;
+            // 
+            // CC
+            // 
+            this.CC.DataPropertyName = "CC";
+            this.CC.HeaderText = "尺寸";
+            this.CC.Name = "CC";
+            this.CC.ReadOnly = true;
+            // 
+            // standardv
+            // 
+            this.standardv.DataPropertyName = "standardv";
+            this.standardv.HeaderText = "标准值";
+            this.standardv.Name = "standardv";
+            this.standardv.ReadOnly = true;
+            // 
+            // up
+            // 
+            this.up.DataPropertyName = "up";
+            this.up.HeaderText = "上公差";
+            this.up.Name = "up";
+            this.up.ReadOnly = true;
+            // 
+            // down
+            // 
+            this.down.DataPropertyName = "down";
+            this.down.HeaderText = "下公差";
+            this.down.Name = "down";
+            this.down.ReadOnly = true;
+            // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "序号";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Visible = false;
+            // 
+            // devicetype
+            // 
+            this.devicetype.DataPropertyName = "devicetype";
+            this.devicetype.HeaderText = "测量设备类型";
+            this.devicetype.Name = "devicetype";
+            this.devicetype.ReadOnly = true;
+            this.devicetype.Visible = false;
+            this.devicetype.Width = 120;
+            // 
             // TestBZFrom
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -656,10 +657,14 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Button button_add;
         private System.Windows.Forms.Timer timer_shine;
         private System.Windows.Forms.Timer timer_ref;
+        private System.Windows.Forms.TextBox textbox_ljh;
+        private DevComponents.DotNetBar.LabelX bom_no_lab;
+        private System.Windows.Forms.Label label_ljh;
+        private DevComponents.DotNetBar.ButtonX buttonX1;
         private System.Windows.Forms.DataGridViewTextBoxColumn step;
         private System.Windows.Forms.DataGridViewTextBoxColumn componentid;
         private System.Windows.Forms.DataGridViewTextBoxColumn row;
-        private System.Windows.Forms.DataGridViewTextBoxColumn devicename;
+        private System.Windows.Forms.DataGridViewTextBoxColumn manufacturer;
         private System.Windows.Forms.DataGridViewTextBoxColumn tools;
         private System.Windows.Forms.DataGridViewTextBoxColumn position;
         private System.Windows.Forms.DataGridViewTextBoxColumn CC;
@@ -668,9 +673,5 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.DataGridViewTextBoxColumn down;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn devicetype;
-        private System.Windows.Forms.TextBox textbox_ljh;
-        private DevComponents.DotNetBar.LabelX bom_no_lab;
-        private System.Windows.Forms.Label label_ljh;
-        private DevComponents.DotNetBar.ButtonX buttonX1;
     }
 }

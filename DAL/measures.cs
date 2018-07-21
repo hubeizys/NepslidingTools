@@ -1,4 +1,20 @@
-﻿using System;
+﻿/**  版本信息模板在安装目录下，可自行修改。
+* measures.cs
+*
+* 功 能： N/A
+* 类 名： measures
+*
+* Ver    变更日期             负责人  变更内容
+* ───────────────────────────────────
+* V0.01  2018/7/20 22:05:39   N/A    初版
+*
+* Copyright (c) 2012 Maticsoft Corporation. All rights reserved.
+*┌──────────────────────────────────┐
+*│　此技术信息为本公司机密信息，未经本公司书面同意禁止向第三方披露．　│
+*│　版权所有：动软卓越（北京）科技有限公司　　　　　　　　　　　　　　│
+*└──────────────────────────────────┘
+*/
+using System;
 using System.Data;
 using System.Text;
 using MySql.Data.MySqlClient;
@@ -13,6 +29,15 @@ namespace Maticsoft.DAL
         public measures()
         { }
         #region  BasicMethod
+
+        /// <summary>
+        /// 得到最大ID
+        /// </summary>
+        public int GetMaxId()
+        {
+            return DbHelperMySQL.GetMaxID("id", "measures");
+        }
+
         /// <summary>
         /// 是否存在该记录
         /// </summary>
@@ -37,9 +62,9 @@ namespace Maticsoft.DAL
         {
             StringBuilder strSql = new StringBuilder();
             strSql.Append("insert into measures(");
-            strSql.Append("step,Tools,position,standardv,up,down,componentId,CC,devicetype)");
+            strSql.Append("step,Tools,position,standardv,up,down,componentId,CC,devicetype,portid)");
             strSql.Append(" values (");
-            strSql.Append("@step,@Tools,@position,@standardv,@up,@down,@componentId,@CC,@devicetype)");
+            strSql.Append("@step,@Tools,@position,@standardv,@up,@down,@componentId,@CC,@devicetype,@portid)");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@step", MySqlDbType.Int32,64),
                     new MySqlParameter("@Tools", MySqlDbType.VarChar,64),
@@ -49,7 +74,8 @@ namespace Maticsoft.DAL
                     new MySqlParameter("@down", MySqlDbType.VarChar,64),
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11),
                     new MySqlParameter("@CC", MySqlDbType.VarChar,64),
-                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11)};
+                    new MySqlParameter("@devicetype", MySqlDbType.Int32,11),
+                    new MySqlParameter("@portid", MySqlDbType.Int32,11)};
             parameters[0].Value = model.step;
             parameters[1].Value = model.Tools;
             parameters[2].Value = model.position;
@@ -59,6 +85,7 @@ namespace Maticsoft.DAL
             parameters[6].Value = model.componentId;
             parameters[7].Value = model.CC;
             parameters[8].Value = model.devicetype;
+            parameters[9].Value = model.portid;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -85,7 +112,8 @@ namespace Maticsoft.DAL
             strSql.Append("down=@down,");
             strSql.Append("componentId=@componentId,");
             strSql.Append("CC=@CC,");
-            strSql.Append("devicetype=@devicetype");
+            strSql.Append("devicetype=@devicetype,");
+            strSql.Append("portid=@portid");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@step", MySqlDbType.Int32,64),
@@ -97,6 +125,7 @@ namespace Maticsoft.DAL
                     new MySqlParameter("@componentId", MySqlDbType.Int32,11),
                     new MySqlParameter("@CC", MySqlDbType.VarChar,64),
                     new MySqlParameter("@devicetype", MySqlDbType.Int32,11),
+                    new MySqlParameter("@portid", MySqlDbType.Int32,11),
                     new MySqlParameter("@id", MySqlDbType.Int32,64)};
             parameters[0].Value = model.step;
             parameters[1].Value = model.Tools;
@@ -107,7 +136,8 @@ namespace Maticsoft.DAL
             parameters[6].Value = model.componentId;
             parameters[7].Value = model.CC;
             parameters[8].Value = model.devicetype;
-            parameters[9].Value = model.id;
+            parameters[9].Value = model.portid;
+            parameters[10].Value = model.id;
 
             int rows = DbHelperMySQL.ExecuteSql(strSql.ToString(), parameters);
             if (rows > 0)
@@ -171,7 +201,7 @@ namespace Maticsoft.DAL
         {
 
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC,devicetype from measures ");
+            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC,devicetype,portid from measures ");
             strSql.Append(" where id=@id");
             MySqlParameter[] parameters = {
                     new MySqlParameter("@id", MySqlDbType.Int32)
@@ -239,6 +269,10 @@ namespace Maticsoft.DAL
                 {
                     model.devicetype = int.Parse(row["devicetype"].ToString());
                 }
+                if (row["portid"] != null && row["portid"].ToString() != "")
+                {
+                    model.portid = int.Parse(row["portid"].ToString());
+                }
             }
             return model;
         }
@@ -249,7 +283,7 @@ namespace Maticsoft.DAL
         public DataSet GetList(string strWhere)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC,devicetype ");
+            strSql.Append("select id,step,Tools,position,standardv,up,down,componentId,CC,devicetype,portid ");
             strSql.Append(" FROM measures ");
             if (strWhere.Trim() != "")
             {

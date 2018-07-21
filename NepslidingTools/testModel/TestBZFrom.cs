@@ -21,6 +21,7 @@ namespace NepslidingTools.testModel
         private AnyCAD.Presentation.RenderWindow3d renderView = null;
         string name = "TestBZFrom";
         List<Maticsoft.Model.testdevice> td_lists;
+        List<Maticsoft.Model.port> port_list;
         public TestBZFrom()
         {
             InitializeComponent();
@@ -157,9 +158,14 @@ namespace NepslidingTools.testModel
         {
             // 获得工具信息 并放进combox
             #region 获得所有测量工具信息
-            Maticsoft.BLL.testdevice td = new Maticsoft.BLL.testdevice();
-            td_lists = td.GetModelList("");
-            List<string> device_lists = td_lists.ConvertAll<string>(a => a.devicename);
+            //Maticsoft.BLL.testdevice td = new Maticsoft.BLL.testdevice();
+            //td_lists = td.GetModelList("");
+            //List<string> device_lists = td_lists.ConvertAll<string>(a => a.devicename);
+
+
+            Maticsoft.BLL.port port_bll = new Maticsoft.BLL.port();
+            port_list = port_bll.GetModelList(string.Format( " mac = '{0}' ", global.MachineID));
+            List<string> device_lists = port_list.ConvertAll<string>(a => a.manufacturer);
             //绑定推荐的数据源  
             comboBox_devs.Items.AddRange(device_lists.ToArray());
             #endregion
@@ -331,7 +337,7 @@ namespace NepslidingTools.testModel
             this.del_list.Clear();
             Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
             string aa = string.Format("componentId = '{0}'ORDER BY step", LjHao);//ORDER BY step
-            DataSet ds = use1.GetListByPage2(aa, "", 0, 100);
+            DataSet ds = use1.GetListByPage3(aa, "", 0, 100);
             dgv.DataSource = ds.Tables[0];
             foreach (DataGridViewRow row in dgv.Rows)
             {
@@ -447,7 +453,7 @@ namespace NepslidingTools.testModel
             textbox_ljh.Text = "";
             Maticsoft.BLL.measures use1 = new Maticsoft.BLL.measures();
             string aa = string.Format("componentId = '{0}'ORDER BY step", LjHao);
-            DataSet ds = use1.GetListByPage2(aa, "", 0, 100);
+            DataSet ds = use1.GetListByPage3(aa, "", 0, 100);
             dgv.DataSource = ds.Tables[0];
             foreach (DataGridViewRow row in dgv.Rows)
             {
@@ -490,13 +496,7 @@ namespace NepslidingTools.testModel
             del_list.Add(del_row_index);
             dgv.Rows.RemoveAt(dgv.CurrentRow.Index);
             return;
-            string DR = dgv.Rows[dgv.CurrentRow.Index].Cells["id"].Value.ToString();
-            Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
-            use.Delete(Convert.ToInt32(DR));
-            //MessageBox.Show(a["id"].ToString());
-            MessageBox.Show("删除成功");
-            initdgv();
-            allupdate();
+
         }
         private void buttonX1_Click(object sender, EventArgs e)
         {
@@ -546,24 +546,6 @@ namespace NepslidingTools.testModel
                 row.Cells["step"].Value = row.Index + 1;
             }
             return;
-            List<string> list = new List<string>();
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                list.Add(dgv.SelectedRows[0].Cells[i].Value.ToString());   //把当前选中行的数据存入list数组中     
-            }
-
-            for (int j = 0; j < dgv.Columns.Count; j++)
-            {
-                dgv.Rows[rowIndex].Cells[j].Value = dgv.Rows[rowIndex - 1].Cells[j].Value;
-                dgv.Rows[rowIndex - 1].Cells[j].Value = list[j].ToString();
-            }
-            dgv.Rows[rowIndex - 1].Selected = true;
-            dgv.Rows[rowIndex].Selected = false;
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                row.Cells["step"].Value = row.Index + 1;
-            }
-            //dgv.Rows[dgv.CurrentRow.Index-1].Selected = true;
         }
 
         /// <summary>
@@ -597,23 +579,6 @@ namespace NepslidingTools.testModel
                 row.Cells["step"].Value = row.Index + 1;
             }
             return;
-            List<string> list = new List<string>();
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                list.Add(dgv.SelectedRows[0].Cells[i].Value.ToString());   //把当前选中行的数据存入list数组中     
-            }
-
-            for (int j = 0; j < dgv.Columns.Count; j++)
-            {
-                dgv.Rows[rowIndex].Cells[j].Value = dgv.Rows[rowIndex + 1].Cells[j].Value;
-                dgv.Rows[rowIndex + 1].Cells[j].Value = list[j].ToString();
-            }
-            dgv.Rows[rowIndex + 1].Selected = true;
-            dgv.Rows[rowIndex].Selected = false;
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                row.Cells["step"].Value = row.Index + 1;
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -748,6 +713,11 @@ namespace NepslidingTools.testModel
                 cicun_tb.Text = e.Row.Cells["CC"].Value.ToString();
                 clearcolor();
             }
+        }
+
+        private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 
