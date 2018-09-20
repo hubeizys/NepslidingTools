@@ -31,13 +31,13 @@ namespace NepslidingTools.testModel
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            DevExpress.XtraCharts.XYDiagram xyDiagram2 = new DevExpress.XtraCharts.XYDiagram();
-            Series series4 = new DevExpress.XtraCharts.Series();
-            LineSeriesView lineSeriesView2 = new DevExpress.XtraCharts.LineSeriesView();
-            Series series5 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView3 = new DevExpress.XtraCharts.PointSeriesView();
-            Series series6 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.PointSeriesView pointSeriesView4 = new DevExpress.XtraCharts.PointSeriesView();
+            DevExpress.XtraCharts.XYDiagram xyDiagram1 = new DevExpress.XtraCharts.XYDiagram();
+            Series series1 = new DevExpress.XtraCharts.Series();
+            LineSeriesView lineSeriesView1 = new DevExpress.XtraCharts.LineSeriesView();
+            Series series2 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView1 = new DevExpress.XtraCharts.PointSeriesView();
+            Series series3 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.PointSeriesView pointSeriesView2 = new DevExpress.XtraCharts.PointSeriesView();
             this.lj_lab = new DevComponents.DotNetBar.LabelX();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.panel3d = new System.Windows.Forms.Panel();
@@ -71,6 +71,7 @@ namespace NepslidingTools.testModel
             this.toptime = new System.Windows.Forms.Timer(this.components);
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lab_step_data = new System.Windows.Forms.Label();
             this.lab_st = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.lab_canselect = new System.Windows.Forms.Label();
@@ -480,6 +481,7 @@ namespace NepslidingTools.testModel
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.Controls.Add(this.lab_step_data);
             this.panel1.Controls.Add(this.lab_st);
             this.panel1.Controls.Add(this.label4);
             this.panel1.Controls.Add(this.lab_canselect);
@@ -497,6 +499,15 @@ namespace NepslidingTools.testModel
             this.tableLayoutPanel1.SetRowSpan(this.panel1, 2);
             this.panel1.Size = new System.Drawing.Size(331, 261);
             this.panel1.TabIndex = 7;
+            // 
+            // lab_step_data
+            // 
+            this.lab_step_data.AutoSize = true;
+            this.lab_step_data.Location = new System.Drawing.Point(267, 13);
+            this.lab_step_data.Name = "lab_step_data";
+            this.lab_step_data.Size = new System.Drawing.Size(38, 13);
+            this.lab_step_data.TabIndex = 13;
+            this.lab_step_data.Text = "label6";
             // 
             // lab_st
             // 
@@ -528,6 +539,7 @@ namespace NepslidingTools.testModel
             this.lab_canselect.Size = new System.Drawing.Size(55, 13);
             this.lab_canselect.TabIndex = 10;
             this.lab_canselect.Text = "可选工具";
+            this.lab_canselect.Visible = false;
             // 
             // cbb_canselect
             // 
@@ -537,6 +549,7 @@ namespace NepslidingTools.testModel
             this.cbb_canselect.Name = "cbb_canselect";
             this.cbb_canselect.Size = new System.Drawing.Size(121, 21);
             this.cbb_canselect.TabIndex = 9;
+            this.cbb_canselect.Visible = false;
             this.cbb_canselect.SelectedIndexChanged += new System.EventHandler(this.cbb_canselect_SelectedIndexChanged);
             // 
             // lab_defportname
@@ -680,34 +693,33 @@ namespace NepslidingTools.testModel
             this.lab_cc.Font = new System.Drawing.Font("微软雅黑", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lab_cc.Location = new System.Drawing.Point(0, 71);
             this.lab_cc.Name = "lab_cc";
-            this.lab_cc.Size = new System.Drawing.Size(172, 64);
+            this.lab_cc.Size = new System.Drawing.Size(0, 64);
             this.lab_cc.TabIndex = 0;
-            this.lab_cc.Text = "超差值";
             // 
             // chartControl1
             // 
             this.chartControl1.CrosshairEnabled = DevExpress.Utils.DefaultBoolean.False;
-            xyDiagram2.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram2.AxisY.VisibleInPanesSerializable = "-1";
-            this.chartControl1.Diagram = xyDiagram2;
+            xyDiagram1.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram1.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram1;
             this.chartControl1.Dock = System.Windows.Forms.DockStyle.Left;
             this.chartControl1.Legend.TextVisible = false;
             this.chartControl1.Legend.Visibility = DevExpress.Utils.DefaultBoolean.False;
             this.chartControl1.Location = new System.Drawing.Point(0, 0);
             this.chartControl1.Name = "chartControl1";
-            series4.Name = "测量结果波动";
-            lineSeriesView2.MarkerVisibility = DevExpress.Utils.DefaultBoolean.True;
-            series4.View = lineSeriesView2;
-            series5.Name = "超差";
-            series5.View = pointSeriesView3;
-            series5.Visible = false;
-            series6.Name = "负超差";
-            series6.View = pointSeriesView4;
-            series6.Visible = false;
+            series1.Name = "测量结果波动";
+            lineSeriesView1.MarkerVisibility = DevExpress.Utils.DefaultBoolean.True;
+            series1.View = lineSeriesView1;
+            series2.Name = "超差";
+            series2.View = pointSeriesView1;
+            series2.Visible = false;
+            series3.Name = "负超差";
+            series3.View = pointSeriesView2;
+            series3.Visible = false;
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series4,
-        series5,
-        series6};
+        series1,
+        series2,
+        series3};
             this.chartControl1.Size = new System.Drawing.Size(950, 143);
             this.chartControl1.TabIndex = 8;
             // 
@@ -742,7 +754,7 @@ namespace NepslidingTools.testModel
             this.MinimizeBox = false;
             this.Name = "StepTestFrom";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "测试界面";
+            this.Text = "测量界面";
             this.Deactivate += new System.EventHandler(this.StepTestFrom_Deactivate);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.StepTestFrom_FormClosed);
             this.Load += new System.EventHandler(this.StepTestFrom_Load);
@@ -825,5 +837,6 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label lab_cc;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lab_step_data;
     }
 }

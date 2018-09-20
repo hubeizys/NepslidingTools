@@ -39,3 +39,6 @@ D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\DAL.csproj.CopyCom
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\Maticsoft.DAL.dll
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\Maticsoft.DAL.pdb
 D:\360Downloads\NepslidingTools\NepslidingTools\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
+D:\360Downloads\NepslidingTools\NepslidingTools\DAL\bin\Debug\office.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\DAL\bin\Debug\Microsoft.Vbe.Interop.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\DAL\bin\Debug\stdole.dll

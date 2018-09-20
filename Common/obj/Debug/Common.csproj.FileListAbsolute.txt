@@ -18,3 +18,6 @@ D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Common.csproj.C
 D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Maticsoft.Common.dll
 D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Maticsoft.Common.pdb
 D:\360Downloads\NepslidingTools\NepslidingTools\Common\obj\Debug\Common.csprojAssemblyReference.cache
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\office.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\Microsoft.Vbe.Interop.dll
+D:\360Downloads\NepslidingTools\NepslidingTools\Common\bin\Debug\stdole.dll

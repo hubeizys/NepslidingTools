@@ -161,8 +161,6 @@ namespace NepslidingTools.testModel
             //Maticsoft.BLL.testdevice td = new Maticsoft.BLL.testdevice();
             //td_lists = td.GetModelList("");
             //List<string> device_lists = td_lists.ConvertAll<string>(a => a.devicename);
-
-
             Maticsoft.BLL.port port_bll = new Maticsoft.BLL.port();
             port_list = port_bll.GetModelList(string.Format( " mac = '{0}' ", global.MachineID));
             List<string> device_lists = port_list.ConvertAll<string>(a => a.manufacturer);
@@ -192,6 +190,7 @@ namespace NepslidingTools.testModel
                 int XH = Convert.ToInt32(dgv.Rows[i].Cells["id"].Value);
                 int st = Convert.ToInt32(dgv.Rows[i].Cells["step"].Value);
                 int device_type = Convert.ToInt32( dgv.Rows[i].Cells["devicetype"].Value == null ? "0" : dgv.Rows[i].Cells["devicetype"].Value);
+                int port_id = Convert.ToInt32(dgv.Rows[i].Cells["portid"].Value);
                 Maticsoft.BLL.measures use = new Maticsoft.BLL.measures();
                 Maticsoft.Model.measures us = new measures()
                 {
@@ -205,6 +204,7 @@ namespace NepslidingTools.testModel
                     componentId = componentid,
                     CC = cun,
                     devicetype = device_type,
+                    portid = port_id,
                 };
                 use.Update(us);
             }
@@ -308,7 +308,8 @@ namespace NepslidingTools.testModel
                     down = tm_tb.Text,
                     CC = cicun_tb.Text,
                     componentId = Convert.ToInt32(this.LjHao),
-                    devicetype = this.td_lists[comboBox_devs.SelectedIndex].devicetype,
+                    devicetype = port_list[comboBox_devs.SelectedIndex].devicetype,
+                    portid = port_list[comboBox_devs.SelectedIndex].id,
                     step = max_step + 1,
                     Tools = comboBox_devs.Text,
                 };
@@ -438,7 +439,9 @@ namespace NepslidingTools.testModel
                 CC = CI,
                 componentId = Convert.ToInt32(this.LjHao),
                 step = Convert.ToInt32(dgv.Rows[step_index].Cells["step"].Value),
-                devicetype = this.td_lists[comboBox_devs.SelectedIndex].devicetype
+                //devicetype = this.td_lists[comboBox_devs.SelectedIndex].devicetype
+                devicetype = port_list[comboBox_devs.SelectedIndex].devicetype,
+                portid = port_list[comboBox_devs.SelectedIndex].id,
             };
             use.Update(us);
             // }
@@ -600,12 +603,13 @@ namespace NepslidingTools.testModel
             sandsm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["up"].Value.ToString();
             tm_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["down"].Value.ToString();
             cicun_tb.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["CC"].Value.ToString();
+            comboBox_devs.Text = dgv.Rows[dgv.CurrentRow.Index].Cells["manufacturer"].Value.ToString();
             clearcolor();
         }
 
         private void comboBox_devs_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            // MessageBox.Show(port_list[comboBox_devs.SelectedIndex].id.ToString());
         }
 
         private void panel1_MouseClick(object sender, MouseEventArgs e)
@@ -711,6 +715,7 @@ namespace NepslidingTools.testModel
                 sandsm_tb.Text = e.Row.Cells["up"].Value.ToString();
                 tm_tb.Text = e.Row.Cells["down"].Value.ToString();
                 cicun_tb.Text = e.Row.Cells["CC"].Value.ToString();
+                comboBox_devs.SelectedText = e.Row.Cells["manufacturer"].Value.ToString();
                 clearcolor();
             }
         }

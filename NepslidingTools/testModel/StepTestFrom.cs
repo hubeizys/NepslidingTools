@@ -124,8 +124,7 @@ namespace NepslidingTools.testModel
                 {
                     // MessageBox.Show("没有任何可用的测量设备");
                 }
-                // 对当前串口的展示， 以及默认的串口
-                //lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+
                 #endregion
 
                 this.cbb_canselect.Items.Clear();
@@ -255,7 +254,7 @@ namespace NepslidingTools.testModel
                 #endregion
                 this.comboBox1.SelectedIndex = 0;
             }
-            catch(Exception err)
+            catch(InvalidOwnerException err)
             {
                 MessageBox.Show(err.Message);
             }
@@ -355,12 +354,21 @@ namespace NepslidingTools.testModel
                 string device_type = measures_tables.Rows[0]["devicetype"].ToString();
                 init_portbytype(Convert.ToInt32(device_type));
                 init_photobytype(Convert.ToInt32(device_type));
-                lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+
+                //lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+                // ports_list[0].mac
+                //MessageBox.Show("当前步骤 " + cbb_canselect.SelectedIndex.ToString());
                 txtkw.Text = ports_list[0].workid;
+
                 #region 初始化串口信息
                 sp_obj.CheckPort();
-                sp_obj.init_port(ports_list[0].portname);
+               
                 sp_obj.Processfunc = jiangyaozhixin;
+                if (port_mod != null)
+                {
+                    lab_defportname.Text = port_mod.manufacturer + "-" + port_mod.portname;
+                    sp_obj.init_port(port_mod.portname);
+                }
                 global.CurActive = "steptest";
                 #endregion
             }
@@ -490,8 +498,8 @@ namespace NepslidingTools.testModel
             if (hitInfo.SeriesPoint != null && dgv1.Rows.Count >= Convert.ToInt32( hitInfo.SeriesPoint.Argument) )
             {
                 Console.WriteLine(" 零件号:  " + hitInfo.SeriesPoint.Argument);
-                int rear_row = dgv1.Rows.Count - (Convert.ToInt32(hitInfo.SeriesPoint.Argument) - 1) ;
-                builder.AppendLine(" 零件号: " + dgv1.Rows[rear_row].Cells["零件号"].Value);
+                int rear_row = dgv1.Rows.Count -   Convert.ToInt32(hitInfo.SeriesPoint.Argument) ;
+                builder.AppendLine(" 零件号: " + dgv1.Rows[rear_row -1].Cells["零件号"].Value);
                 if (!hitInfo.SeriesPoint.IsEmpty)
                     builder.AppendLine(" 测量值: " + hitInfo.SeriesPoint.Values[0]);
             }
@@ -501,8 +509,12 @@ namespace NepslidingTools.testModel
                 toolTipController.HideHint();
         }
         private static object objlock = new object();
-        private void create_serpoint(string value = "0")
+        private void create_serpoint()
         {
+            
+             Console.WriteLine("dsadsadasdasdasdasd", cur_step_index.ToString());
+            return;
+            /*
             lock (objlock) {
                 int nt = 1;
                 Task<string> one = new Task<string>(() =>
@@ -631,6 +643,9 @@ namespace NepslidingTools.testModel
 
             one.Start();
             }
+
+
+            */
         }
 
         private void temp_add_serpoint(string value)
@@ -971,7 +986,7 @@ namespace NepslidingTools.testModel
                         break;
                     }
                 }
-
+                testSelect();
                 //调用保存
                 buttonX1_Click(sender, e);
 
@@ -1369,7 +1384,7 @@ namespace NepslidingTools.testModel
             #endregion
             dgv1.DataSource = dtb;
         }
-
+        Maticsoft.Model.port port_mod;
         private void InitTestData()
         {
             string cur_item = comboBox1.Items[comboBox1.SelectedIndex].ToString();
@@ -1383,19 +1398,78 @@ namespace NepslidingTools.testModel
                 txtll.Text = ms_modes[0].standardv;
                 txtgc.Text = ms_modes[0].up;
                 txtbox_gcxia.Text = ms_modes[0].down;
+
+                int cur_portId = (int)ms_modes[0].portid;
+                Maticsoft.BLL.port port_bll = new Maticsoft.BLL.port();
+                port_mod = port_bll.GetModel(cur_portId);
+                lab_step_data.Invoke(new Action(() => {
+                    lab_step_data.Text = port_mod.portname;
+                }));
             }
             else
             {
                 MessageBox.Show("测量标准没有录入。 或者录入不正常");
             }
         }
+        private void testSelect()
+        {
+            //  Console.WriteLine("comboBox1.SelectedIndex" + comboBox1.SelectedIndex.ToString());
+            int cur_index = 0;
+
+            if(dgv1.Rows.Count > 0)
+            {
+                if(dgv1.Rows[0].Cells["测试结果"].Value!=null && dgv1.Rows[0].Cells["测试结果"].Value.ToString() != "")
+                {
+                    cur_index = comboBox1.Items.Count - 1;
+                }
+                else
+                {
+                    cur_index = comboBox1.SelectedIndex - 1;
+                }
+                if (cur_index < 0)
+                {
+                    cur_index = 0;
+                }
+            }
+            Console.WriteLine("dsdsdsadasdasdasdasd :=" + cur_index);
+            // 获得当前的选项位置
+            string col_name = comboBox1.Items[cur_index].ToString();
+            //  string col_name = comboBox1.Items[sp_num].ToString();
+
+            this.chartControl1.Invoke(new Action(() =>
+            {
+                this.chartControl1.Series[0].Points.Clear();
+                this.chartControl1.Series[1].Points.Clear();
+                this.chartControl1.Series[2].Points.Clear();
+            }));
+
+            for (int i =0 ;i < dgv1.Rows.Count; i++)
+            {
+                // this.chartControl1.Series[0].Points.Insert(dgv1.Rows.Count - dr.Index, new DevExpress.XtraCharts.SeriesPoint(dr.Cells[col_name].Value.ToString()));
+                int yunsuan_index = dgv1.Rows.Count - i;
+                Console.WriteLine("dgv1.Rows[yunsuan_index - 1].Cells[col_name].Value "+ dgv1.Rows[yunsuan_index - 1].Cells[col_name].Value.ToString() + "  " + (yunsuan_index - 1) + " col_name " + col_name);
+                string input_value = dgv1.Rows[yunsuan_index - 1].Cells[col_name].Value.ToString();
+                if (input_value == "")
+                {
+                    input_value = "0";
+                }
+                this.chartControl1.Series[0].Points.Add(new DevExpress.XtraCharts.SeriesPoint(i, input_value));
+            }
+
+            chartControl1.Refresh();
+            chartControl1.RefreshData();
+            // Console.WriteLine("ddddddddddddd :=" + col_name);
+        }
+
 
         Dictionary<int, FaceStyle> key_colors = new Dictionary<int, FaceStyle>();
         string[] position_list = null;
+        int cur_step_index = 0;
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             clearcolor();
             int index = comboBox1.SelectedIndex;
+            cur_step_index = index;
             string device_type = measures_tables.Rows[index]["devicetype"].ToString();
             string loc_position = measures_tables.Rows[index]["position"].ToString();
 
@@ -1404,19 +1478,22 @@ namespace NepslidingTools.testModel
             init_photobytype(Convert.ToInt32(device_type));
 
             this.InitTestData();
-            // create_serpoint(textcl.Text);
-
+            testSelect();
             if (ports_list.Count <= 0)
             {
                 return;
             }
-            lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+            //lab_defportname.Text = ports_list[0].manufacturer + " - " + ports_list[0].portname;
+            if (port_mod != null)
+            {
+                lab_defportname.Text = port_mod.manufacturer + "-" + port_mod.portname;
+            }
+            //  MessageBox.Show("当前步骤 " + comboBox1.SelectedIndex.ToString());
             txtkw.Text = ports_list[0].workid;
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
         {
-
         }
 
         private void cbb_canselect_SelectedIndexChanged(object sender, EventArgs e)
@@ -1458,7 +1535,11 @@ namespace NepslidingTools.testModel
                     {
                         test_port = ports_list[cbb_canselect.SelectedIndex].portname;
                     }
-                    sp_obj.init_port(test_port);
+                    if (port_mod != null)
+                    {
+                        lab_defportname.Text = port_mod.manufacturer + "-" + port_mod.portname;
+                        sp_obj.init_port(port_mod.portname);
+                    }
                     sp_obj.Processfunc = jiangyaozhixin;
                 }
             }));
@@ -1466,6 +1547,7 @@ namespace NepslidingTools.testModel
 
         private void timer_tostep_Tick(object sender, EventArgs e)
         {
+            create_serpoint();
             string dir = System.Environment.CurrentDirectory;
             SoundPlayer player = new SoundPlayer();
             if (lab_cc.ForeColor != Color.Green) {

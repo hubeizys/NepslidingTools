@@ -42,7 +42,7 @@ namespace Maticsoft.DAL
         public DataSet GetListByPage3(string strWhere, string orderby, int startIndex, int endIndex)
         {
             StringBuilder strSql = new StringBuilder();
-            strSql.Append("SELECT * FROM (SELECT @row_number:= @row_number + 1 AS ROW, T.* , port.manufacturer FROM measures T LEFT JOIN port  ON T.portid = port.id, (SELECT @row_number:= 0) AS aaccc");
+            strSql.Append("SELECT * FROM (SELECT @row_number:= @row_number + 1 AS ROW, T.* , `port`.manufacturer FROM measures T LEFT JOIN `port`  ON T.portid = `port`.id, (SELECT @row_number:= 0) AS aaccc");
 
             //if (!string.IsNullOrEmpty(orderby.Trim()))
             //{

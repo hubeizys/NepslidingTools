@@ -61,6 +61,7 @@ namespace NepslidingTools.testModel
             this.textbox_ljh = new System.Windows.Forms.TextBox();
             this.bom_no_lab = new DevComponents.DotNetBar.LabelX();
             this.step = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.portid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.componentid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.row = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.manufacturer = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -265,6 +266,7 @@ namespace NepslidingTools.testModel
             this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.step,
+            this.portid,
             this.componentid,
             this.row,
             this.manufacturer,
@@ -512,6 +514,14 @@ namespace NepslidingTools.testModel
             this.step.Name = "step";
             this.step.ReadOnly = true;
             // 
+            // portid
+            // 
+            this.portid.DataPropertyName = "portid";
+            this.portid.HeaderText = "portid";
+            this.portid.Name = "portid";
+            this.portid.ReadOnly = true;
+            this.portid.Visible = false;
+            // 
             // componentid
             // 
             this.componentid.DataPropertyName = "componentid";
@@ -662,6 +672,7 @@ namespace NepslidingTools.testModel
         private System.Windows.Forms.Label label_ljh;
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private System.Windows.Forms.DataGridViewTextBoxColumn step;
+        private System.Windows.Forms.DataGridViewTextBoxColumn portid;
         private System.Windows.Forms.DataGridViewTextBoxColumn componentid;
         private System.Windows.Forms.DataGridViewTextBoxColumn row;
         private System.Windows.Forms.DataGridViewTextBoxColumn manufacturer;
